@@ -43,6 +43,7 @@ for file in $staged_files; do
   if [[ $file == *.py || $file = *.js || $file == *.ts ]]; then
     if ! has_test "$file"; then
       echo "[PRE-COMMIT] Error: No test file found for $file."
+      exit 1
     fi
   fi
 done
