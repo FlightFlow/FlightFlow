@@ -10,13 +10,6 @@ BACKEND_PATH="$SCRIPT_DIR/../backend"
 REQUIREMENTS_FILE="$BACKEND_PATH/requirements.txt"
 VENV_DIR="$BACKEND_PATH/.venv"
 
-# PNPM
-echo "Info: Installing pnpm..."
-
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-
-echo "Info: Successfully installed pnpm."
-
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
 
