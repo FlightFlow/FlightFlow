@@ -6,6 +6,7 @@
     "ms-python.python",
     "ms-python.vscode-pylance",
     "ms-python.debugpy",
-    "dsznajder.es7-react-js-snippets"
+    "dsznajder.es7-react-js-snippets",
+    "editorconfig.editorconfig"
   ]
 }
