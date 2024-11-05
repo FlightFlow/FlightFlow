@@ -26,7 +26,7 @@ rename_env_files() {
   local folder="$2"
 
   if [ ! -f "$env_file" ]; then
-    mv "$sample_file" "$env_file"
+    cp "$sample_file" "$env_file"
     if [ -f "$env_file" ]; then
       echo "Info: Successfully renamed .env file in $folder. Now you can add variables."
     else 
