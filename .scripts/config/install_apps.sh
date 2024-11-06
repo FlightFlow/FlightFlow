@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # NVM AND NODE
-
 echo "Info: Installing node.js"
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
