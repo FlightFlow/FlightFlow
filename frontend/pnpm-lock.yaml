@@ -17,6 +17,9 @@ importers:
       axios:
         specifier: ^1.7.4
         version: 1.7.4
+      easy-requester:
+        specifier: ^1.0.1
+        version: 1.0.1
       i18next:
         specifier: ^23.14.0
         version: 23.14.0
@@ -1328,6 +1331,9 @@ packages:
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
+
+  easy-requester@1.0.1:
+    resolution: {integrity: sha512-86FDiaZMUpH5oMx5GKVEhqeLVfU1SUptRaChVQu5kY26/8IWbawVV8tRqVCr5MLeap8SA9752qV10AsMXNZTaQ==}
 
   ecc-jsbn@0.1.2:
     resolution: {integrity: sha512-eh9O+hwRHNbG4BLTjEl3nw044CkGm5X6LoaCf7LPp7UU8Qrt47JYNi6nPX8xjW97TKGKm1ouctg0QSpZe9qrnw==}
@@ -4485,6 +4491,12 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
+
+  easy-requester@1.0.1:
+    dependencies:
+      axios: 1.7.4
+    transitivePeerDependencies:
+      - debug
 
   ecc-jsbn@0.1.2:
     dependencies:

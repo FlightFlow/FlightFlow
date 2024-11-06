@@ -27,6 +27,7 @@
     "@tanstack/react-query": "^5.51.24",
     "antd": "^5.20.2",
     "axios": "^1.7.4",
+    "easy-requester": "^1.0.1",
     "i18next": "^23.14.0",
     "lucide-react": "^0.428.0",
     "polished": "^4.3.1",
