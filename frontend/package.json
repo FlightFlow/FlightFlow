@@ -1,8 +1,8 @@
 {
-  "name": "flightflow",
+  "name": "flight-coordinator",
   "private": true,
   "version": "0.0.0",
-  "description": "An airport automation app",
+  "description": "Automated flight manager app",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,17 +12,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlightFlowApp/FlightFlow.git"
+    "url": "git+https://github.com/FlightCoordinator/FlightCoordinator.git"
   },
   "keywords": [
     "keywords go here"
   ],
-  "author": "<author>",
+  "author": "FlightCoordinator Dev Team",
+  "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FlightFlowApp/FlightFlow/issues"
+    "url": "https://github.com/FlightCoordinator/FlightCoordinator/issues"
   },
-  "homepage": "https://github.com/FlightFlowApp/FlightFlow",
+  "homepage": "https://github.com/FlightCoordinator/FlightCoordinator",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
