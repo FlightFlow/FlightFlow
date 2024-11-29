@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # NVM AND NODE
-echo "Info: Installing node.js"
+echo "Info: Installing Node Version Manager"
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 nvm install 22
 
-echo "Info: Succesfully installed node.js"
+echo "Info: Succesfully installed Node Version Manager"
 
 # PNPM
 echo "Info: Installing pnpm..."
