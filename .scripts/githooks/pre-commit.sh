@@ -2,7 +2,7 @@
 
 echo "[PRE-COMMIT] Info: Starting linting process..."
 
-cd ../backend
+cd ../../server
 flake8 . && pylint app && bandit -r app
 
 cd ../frontend

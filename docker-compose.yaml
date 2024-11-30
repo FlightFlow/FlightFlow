@@ -6,11 +6,11 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - flight-coordinator-backend
+      - flight-coordinator-server
 
-  flight-coordinator-backend:
+  flight-coordinator-server:
     build:
-      context: ./backend
+      context: ./server
       dockerfile: Dockerfile
     ports:
       - "8000:8000"

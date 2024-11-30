@@ -4,10 +4,10 @@
 SCRIPT_DIR="$(dirname "$(realpath "$0")")/.."
 
 FRONTEND_PATH="$SCRIPT_DIR/../frontend"
-BACKEND_PATH="$SCRIPT_DIR/../backend"
+SERVER_PATH="$SCRIPT_DIR/../server"
 
-REQUIREMENTS_FILE="$BACKEND_PATH/requirements.txt"
-VENV_DIR="$BACKEND_PATH/.venv"
+REQUIREMENTS_FILE="$SERVER_PATH/requirements.txt"
+VENV_DIR="$SERVER_PATH/.venv"
 
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
@@ -50,8 +50,8 @@ rename_env_files() {
   fi
 }
 
-rename_env_files "$FRONTEND_PATH" "backend"
-rename_env_files "$BACKEND_PATH" "frontend"
+rename_env_files "$FRONTEND_PATH" "server"
+rename_env_files "$SERVER_PATH" "frontend"
 
 echo "---"
 
@@ -71,7 +71,7 @@ fi
 
 echo "---"
 
-# BACKEND DEPENDENCIES
+# SERVER DEPENDENCIES
 echo "Info: Installing dependencies from requirements file..."
 
 source "$VENV_DIR/bin/activate"
