@@ -1,49 +1,54 @@
-from typing import Any, Dict
-
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from fastapi.routing import APIRoute
-from fastapi.openapi.utils import get_openapi
+from fastapi import Depends, FastAPI, Request, HTTPException
+from fastapi.exceptions import RequestValidationError
+from pydantic import ValidationError
 
 from app.config import AppConfig
-from app.db import Database
+from app.database import db_instance
+from app.controllers.crew_controller import router as CrewRouter
+from app.helpers.response_helper import ResponseHelper
+from app.helpers.error_helper import AppError
+from app.helpers import status_helper
 
 
-def generate_unique_id(route: APIRoute) -> str:
-    return f"{route.tags[0]}-{route.name}"
+def is_dev() -> bool:
+    AppConfig.validate_config()
+    app_env = AppConfig.app_settings.get("app_env")
+    return True if app_env == "dev" else False
 
 
-app = FastAPI(
+app: FastAPI = FastAPI(
     title=AppConfig.project_name,
-    openapi_url="",
-    generate_unique_id_function=generate_unique_id,
+    description=AppConfig.project_desc,
+    version=AppConfig.project_version,
+    openapi_url="/openapi",
+    debug=is_dev(),
 )
 app.add_event_handler("startup", AppConfig.validate_config)
-app.add_event_handler("startup", Database.connect)
-app.add_event_handler("shutdown", Database.disconnect)
+app.add_event_handler("shutdown", db_instance.disconnect)
+
+app.include_router(prefix="/api/crew", router=CrewRouter)
 
 
-def openapi_schema() -> Dict[str, Any]:
-    if app.openapi_schema:
-        return openapi_schema
-    openapi_schema = get_openapi(
-        title=AppConfig.project_name,
-        version=AppConfig.project_version,
-        routes=app.routes,
+async def app_error(request: Request, exception: AppError):
+    return ResponseHelper.generate(
+        status_code=exception.status_code,
+        is_success=False,
+        message=exception.message,
+        data=None,
     )
-    app.openapi_schema = openapi_schema
-    return app.openapi_schema
 
 
-app.openapi = openapi_schema()
+async def unknown_error(request: Request, exception: Exception):
+    return ResponseHelper.generate(
+        status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
+        is_success=False,
+        message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
+        data=None,
+    )
 
-"""
-@app.exception_handler()
-async def bad_request(req: Request, exc) -> JSONResponse:
-    return JSONResponse(status_code=500)
 
-
-@app.get("/example")
-async def example_func():
-    return {"message": "Hello World!"}
-"""
+app.add_exception_handler(AppError, app_error)
+app.add_exception_handler(ValidationError, unknown_error)
+app.add_exception_handler(HTTPException, unknown_error)
+app.add_exception_handler(RequestValidationError, unknown_error)
+app.add_exception_handler(Exception, unknown_error)

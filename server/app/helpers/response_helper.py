@@ -1,17 +1,17 @@
-from typing import Union, TypedDict
-
+from typing import Union
+from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 
 
-class ResponseObject(TypedDict):
+class ResponseObject(BaseModel):
     isSuccess: bool
     message: str
     data: Union[None, object]
 
 
 class ResponseHelper:
+    @staticmethod
     def generate(
-        self,
         status_code: int,
         is_success: bool,
         message: str,
@@ -25,4 +25,5 @@ class ResponseHelper:
             message["data"] = data
         else:
             message["data"] = "null"
+
         return JSONResponse(status_code=status_code, content=message)
