@@ -1,6 +1,6 @@
 FROM node:20.17
 
-WORKDIR /app
+WORKDIR /frontend
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"

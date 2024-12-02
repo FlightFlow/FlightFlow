@@ -1,15 +1,23 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscode",
-    "github.vscode-pull-request-github",
-    "ms-vscode.vscode-typescript-next",
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "ms-python.debugpy",
-    "dsznajder.es7-react-js-snippets",
-    "editorconfig.editorconfig",
-    "christian-kohler.npm-intellisense",
+    "ms-python.black-formatter",
+    "EditorConfig.EditorConfig",
     "dbaeumer.vscode-eslint",
-    "ms-python.isort"
+    "github.vscode-github-actions",
+    "GitHub.vscode-pull-request-github",
+    "ms-python.isort",
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.js-debug-nightly",
+    "christian-kohler.npm-intellisense",
+    "esbenp.prettier-vscode",
+    "ms-python.vscode-pylance",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "bradlc.vscode-tailwindcss",
+    "Gruntfuggly.todo-tree",
+    "ms-vscode-remote.remote-wsl",
+    "ms-vscode-remote.remote-containers",
+    "ms-azuretools.vscode-docker",
+    "dsznajder.es7-react-js-snippets"
   ]
 }
