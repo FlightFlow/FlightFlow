@@ -19,13 +19,11 @@ class Database:
         self.db_client: AsyncIOMotorClient = None
         self.database: AsyncIOMotorDatabase = None
         self.initialized: bool = False
-
         try:
             self.db_client = AsyncIOMotorClient(AppConfig.app_settings.get("db_uri"))
             self.database = self.db_client[self.db_name]
             self.initialized = True
             logger.info("Connected to MongoDB")
-
         except Exception as e:
             logger.error(
                 f"An error ocurred while trying to connect to the database: {e}"
@@ -56,7 +54,6 @@ class Database:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message="Database connection is not initialized.",
             )
-
         return self.database.get_collection(name=collection)
 
 

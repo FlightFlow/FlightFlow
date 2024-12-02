@@ -13,7 +13,7 @@ const loginSchema: ZodSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-const Form = () => {
+const ExampleForm = () => {
   const {
     handleSubmit,
     control,
@@ -61,4 +61,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default ExampleForm;

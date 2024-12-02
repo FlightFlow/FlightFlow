@@ -10,19 +10,18 @@ class CrewService:
 
     async def create_crew_member(self, crew_member: CrewModel) -> CrewModel:
         does_crew_member_exists = await self.crew_repository.get_crew_member(
-            crew_member.id
+            crew_member_id=crew_member.id
         )
         if does_crew_member_exists:
             raise AppError(
                 status_code=status_helper.STATUS_CODE_CONFLICT,
                 message="Crew member already exists",
             )
-
         create_crew_member = await self.crew_repository.create_crew_member(
             crew_member=crew_member
         )
         is_crew_member_created = await self.crew_repository.get_crew_member(
-            crew_member_id=create_crew_member.inserted_id
+            crew_member_id=create_crew_member.id
         )
         if not create_crew_member or not is_crew_member_created:
             raise AppError(
@@ -35,25 +34,22 @@ class CrewService:
         self, crew_member_id: str, updated_data: CrewUpdateModel
     ) -> None:
         does_crew_member_exists = await self.crew_repository.get_crew_member(
-            crew_member_id
+            crew_member_id=crew_member_id
         )
         if not does_crew_member_exists:
             raise AppError(
                 status_code=status_helper.STATUS_CODE_NOT_FOUND,
                 message=f"Cannot found crew member with id {crew_member_id}",
             )
-
         crew_member = {
             key: value
             for key, value in updated_data.model_dump(by_alias=True).items()
             if value is not None
         }
-
         if len(crew_member) >= 1:
             update_crew_member = await self.crew_repository.update_crew_member(
                 crew_member_id=crew_member_id, updated_data=updated_data
             )
-
             if update_crew_member is not None:
                 return
             else:
@@ -61,19 +57,17 @@ class CrewService:
                     status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                     message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
                 )
-
         return
 
     async def delete_crew_member(self, crew_member_id: str) -> None:
         does_crew_member_exists = await self.crew_repository.get_crew_member(
-            crew_member_id
+            crew_member_id=crew_member_id
         )
         if not does_crew_member_exists:
             raise AppError(
                 status_code=status_helper.STATUS_CODE_NOT_FOUND,
                 message=f"Cannot found crew member with id {crew_member_id}",
             )
-
         delete_crew_member = await self.crew_repository.delete_crew_member(
             crew_member_id=crew_member_id
         )
@@ -102,4 +96,4 @@ class CrewService:
                 status_code=status_helper.STATUS_CODE_NOT_FOUND,
                 message="Cannot find any crew member",
             )
-        return crew_members
+        return CrewCollection(crew=crew_members)

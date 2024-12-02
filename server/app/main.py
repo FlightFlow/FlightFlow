@@ -4,10 +4,13 @@ from pydantic import ValidationError
 
 from app.config import AppConfig
 from app.database import db_instance
-from app.controllers.crew_controller import router as CrewRouter
 from app.helpers.response_helper import ResponseHelper
 from app.helpers.error_helper import AppError
 from app.helpers import status_helper
+
+from app.controllers.enum_controller import router as EnumRouter
+from app.controllers.crew_controller import router as CrewRouter
+from app.controllers.certification_controller import router as CertificationRouter
 
 
 def is_dev() -> bool:
@@ -26,7 +29,9 @@ app: FastAPI = FastAPI(
 app.add_event_handler("startup", AppConfig.validate_config)
 app.add_event_handler("shutdown", db_instance.disconnect)
 
+app.include_router(prefix="/api/enums", router=EnumRouter)
 app.include_router(prefix="/api/crew", router=CrewRouter)
+app.include_router(prefix="/api/certification", router=CertificationRouter)
 
 
 async def app_error(request: Request, exception: AppError):

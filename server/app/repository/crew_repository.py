@@ -1,5 +1,5 @@
-from typing import Union, List
 from motor.motor_asyncio import AsyncIOMotorCollection
+from pymongo import ReturnDocument
 
 from app.database import PyObjectId
 from app.models.crew_model import CrewModel, CrewCollection
@@ -14,7 +14,7 @@ class CrewRepository:
     async def create_crew_member(
         self,
         crew_member: CrewModel,
-    ) -> Union[None, CrewModel]:
+    ) -> None | CrewModel:
         new_crew_member = await self.db_collection.insert_one(data=crew_member)
         if not new_crew_member:
             raise AppError(
@@ -26,7 +26,9 @@ class CrewRepository:
 
     async def update_crew_member(self, crew_member_id: str, updated_data) -> CrewModel:
         updated_crew_member = await self.db_collection.find_one_and_update(
-            {"_id": PyObjectId(crew_member_id)}, {"$set": updated_data}
+            {"_id": PyObjectId(crew_member_id)},
+            {"$set": updated_data},
+            return_document=ReturnDocument.AFTER,
         )
         if not updated_crew_member:
             raise AppError(
@@ -48,18 +50,18 @@ class CrewRepository:
 
         return True
 
-    async def get_crew_member(self, crew_member_id: str) -> Union[None, CrewModel]:
+    async def get_crew_member(self, crew_member_id: str) -> None | CrewModel:
         crew_member = await self.db_collection.find_one(
             {"_id": PyObjectId(crew_member_id)}
         )
         if crew_member is None:
             return None
 
-        return crew_member
+        return CrewCollection(crew=[crew_member])
 
-    async def get_all_crew_members(self) -> Union[None, CrewCollection]:
+    async def get_all_crew_members(self) -> None | CrewCollection:
         crew_members = await self.db_collection.find().to_list()
         if len(crew_members) == 0:
             return CrewCollection(crew=[])
 
-        return CrewCollection(crew=crew_members)
+        return crew_members

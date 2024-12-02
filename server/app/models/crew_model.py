@@ -1,38 +1,18 @@
-from enum import Enum
 from pydantic import EmailStr, Field, BaseModel, ConfigDict
 from typing import Optional, List
 
 from app.database import PyObjectId
-
-
-class Roles(str, Enum):
-    captain = "captain"
-    first_officer = "first_officer"
-    second_officer = "seconds_officer"
-    third_officer = "third_officer"
-    relief_crew_member = "relief_crew_member"
-    flight_engineer = "flight_engineer"
-    airborne_sensor_opr = "airborne_sensor_opr"
-    purser = "purser"
-    flight_attendant = "flight_attendant"
-    flight_medic = "flight_medic"
-    loadmaster = "loadmaster"
-
-
-class Availibility(str, Enum):
-    available = "available"
-    on_duty = "on_duty"
-    on_leave = "on_leave"
-    unavailable = "unavailable"
+from app.models.enums.crew_roles import CrewRoles
+from app.models.enums.crew_availability import CrewAvailibility
 
 
 class CrewModel(BaseModel):
     id: Optional[PyObjectId] = Field(alias="_id", default=None)
     name: str = Field(...)
     email: EmailStr = Field(...)
-    role: Roles = Field(..., examples=["captain"])
-    certifications: List = Field(...)
-    availability: Availibility = Field(..., examples=["on_duty"])
+    role: CrewRoles = Field(...)
+    certifications: List[PyObjectId] = Field(...)
+    availability: CrewAvailibility = Field(...)
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
@@ -40,9 +20,9 @@ class CrewModel(BaseModel):
             "example": {
                 "name": "John Doe",
                 "email": "johndoe@example.com",
-                "role": "captain",
-                "certifications": "",
-                "availability": "on_duty",
+                "role": "CAPTAIN",
+                "certifications": "[]",
+                "availability": "ON_DUTY",
             }
         },
     )
@@ -51,9 +31,9 @@ class CrewModel(BaseModel):
 class CrewUpdateModel(BaseModel):
     name: Optional[str] = None
     email: Optional[EmailStr] = None
-    role: Optional[Roles] = None
-    certifications: Optional[List] = None
-    availability: Optional[Availibility] = None
+    role: Optional[CrewRoles] = None
+    certifications: Optional[List[PyObjectId]] = None
+    availability: Optional[CrewAvailibility] = None
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
@@ -61,9 +41,9 @@ class CrewUpdateModel(BaseModel):
             "example": {
                 "name": "John Doe",
                 "email": "johndoe@example.com",
-                "role": "captain",
-                "certifications": "",
-                "availability": "on_duty",
+                "role": "CAPTAIN",
+                "certifications": "[]",
+                "availability": "ON_DUTY",
             }
         },
     )
