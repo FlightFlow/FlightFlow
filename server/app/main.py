@@ -8,9 +8,14 @@ from app.helpers.response_helper import ResponseHelper
 from app.helpers.error_helper import AppError
 from app.helpers import status_helper
 
-from app.controllers.enum_controller import router as EnumRouter
-from app.controllers.crew_controller import router as CrewRouter
+from app.controllers.airport_controller import router as AirportController
 from app.controllers.certification_controller import router as CertificationRouter
+from app.controllers.crew_controller import router as CrewRouter
+from app.controllers.plane_controller import router as PlaneController
+from app.controllers.route_controller import router as RouteController
+from app.controllers.runway_controller import router as RunwayController
+from app.controllers.vehicle_controller import router as VehicleController
+from app.controllers.enum_controller import router as EnumRouter
 
 
 def is_dev() -> bool:
@@ -29,9 +34,14 @@ app: FastAPI = FastAPI(
 app.add_event_handler("startup", AppConfig.validate_config)
 app.add_event_handler("shutdown", db_instance.disconnect)
 
-app.include_router(prefix="/api/enums", router=EnumRouter)
-app.include_router(prefix="/api/crew", router=CrewRouter)
+app.include_router(prefix="/api/airport", router=AirportController)
 app.include_router(prefix="/api/certification", router=CertificationRouter)
+app.include_router(prefix="/api/crew", router=CrewRouter)
+app.include_router(prefix="/api/plane", router=PlaneController)
+app.include_router(prefix="/api/route", router=RouteController)
+app.include_router(prefix="/api/runway", router=RunwayController)
+app.include_router(prefix="/api/vehicle", router=VehicleController)
+app.include_router(prefix="/api/enums", router=EnumRouter)
 
 
 async def app_error(request: Request, exception: AppError):

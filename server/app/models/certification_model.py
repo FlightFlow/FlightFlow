@@ -2,7 +2,6 @@ from pydantic import Field, BaseModel, ConfigDict
 from typing import Optional, List
 
 from app.database import PyObjectId
-from app.models.enums.crew_roles import CrewRoles
 from app.models.enums.cert_issuers import CertIssuers, CertIssuingCountries
 
 
@@ -14,7 +13,7 @@ class CertificationModel(BaseModel):
     issue_date: str = Field(...)
     expiration_date: str = Field(...)
     validity_period: str = Field(...)
-    assignable_roles: List[CrewRoles] = Field(...)
+    assignable_roles: List[str] = Field(...)
     description: str = Field(...)
     model_config = ConfigDict(
         populate_by_name=True,
@@ -41,7 +40,7 @@ class CertificationUpdateModel(BaseModel):
     issue_date: Optional[str] = Field(...)
     expiration_date: Optional[str] = Field(...)
     validity_period: Optional[str] = Field(...)
-    assignable_roles: Optional[List[CrewRoles]] = Field(...)
+    assignable_roles: Optional[List[str]] = Field(...)
     description: Optional[str] = Field(...)
     model_config = ConfigDict(
         populate_by_name=True,

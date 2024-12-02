@@ -50,8 +50,8 @@ rename_env_files() {
   fi
 }
 
-rename_env_files "$FRONTEND_PATH" "server"
-rename_env_files "$SERVER_PATH" "frontend"
+rename_env_files "$FRONTEND_PATH" "frontend"
+rename_env_files "$SERVER_PATH" "server"
 
 echo "---"
 

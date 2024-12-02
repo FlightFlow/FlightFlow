@@ -1,5 +1,5 @@
-from motor.motor_asyncio import AsyncIOMotorCollection
 from pymongo import ReturnDocument
+from motor.motor_asyncio import AsyncIOMotorCollection
 
 from app.database import PyObjectId
 from app.models.crew_model import CrewModel, CrewCollection
@@ -21,7 +21,6 @@ class CrewRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return new_crew_member
 
     async def update_crew_member(self, crew_member_id: str, updated_data) -> CrewModel:
@@ -35,7 +34,6 @@ class CrewRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return updated_crew_member
 
     async def delete_crew_member(self, crew_member_id: str) -> bool:
@@ -47,7 +45,6 @@ class CrewRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return True
 
     async def get_crew_member(self, crew_member_id: str) -> None | CrewModel:
@@ -56,12 +53,10 @@ class CrewRepository:
         )
         if crew_member is None:
             return None
-
         return CrewCollection(crew=[crew_member])
 
     async def get_all_crew_members(self) -> None | CrewCollection:
         crew_members = await self.db_collection.find().to_list()
         if len(crew_members) == 0:
             return CrewCollection(crew=[])
-
         return crew_members

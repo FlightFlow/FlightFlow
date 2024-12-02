@@ -25,5 +25,4 @@ class ResponseHelper:
             message["data"] = data
         else:
             message["data"] = "null"
-
         return JSONResponse(status_code=status_code, content=message)

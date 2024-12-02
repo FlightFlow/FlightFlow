@@ -10,16 +10,10 @@ export const someContext = createContext<contextProps>({
   setState: () => {},
 });
 
-export const SomeContextProvider: FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const SomeContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<boolean>(true);
 
-  return (
-    <someContext.Provider value={{ state, setState }}>
-      {children}
-    </someContext.Provider>
-  );
+  return <someContext.Provider value={{ state, setState }}>{children}</someContext.Provider>;
 };
 
 export default SomeContextProvider;

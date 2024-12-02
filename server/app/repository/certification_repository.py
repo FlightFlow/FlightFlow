@@ -23,7 +23,6 @@ class CertificationsRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return certification
 
     async def update_certification(
@@ -39,7 +38,6 @@ class CertificationsRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return updated_certification
 
     async def delete_certification(self, certification_id: str) -> bool:
@@ -51,7 +49,6 @@ class CertificationsRepository:
                 status_code=status_helper.STATUS_CODE_INTERNAL_SERVER_ERROR,
                 message=status_helper.MESSAGE_INTERNAL_SERVER_ERROR,
             )
-
         return True
 
     async def get_certification(
@@ -62,12 +59,10 @@ class CertificationsRepository:
         )
         if certification is None:
             return CertificationCollection(certifications=[])
-
         return CertificationCollection(certifications=[certification])
 
     async def get_all_certifications(self) -> None | CertificationCollection:
         certifications = await self.db_collection.find().to_list()
         if len(certifications) == 0:
             return CertificationCollection(certifications=[])
-
         return CertificationCollection(certifications=certifications)

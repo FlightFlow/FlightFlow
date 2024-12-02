@@ -1,6 +1,8 @@
 from app.models.enums.crew_roles import CrewRoles
-from app.models.enums.crew_availability import CrewAvailibility
+from app.models.enums.availabilities import CrewAvailibility
 from app.models.enums.cert_issuers import CertIssuers, CertIssuingCountries
+
+# TODO make enums be read from data file, and make a validation function
 
 
 class EnumService:

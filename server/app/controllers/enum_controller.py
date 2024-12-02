@@ -1,11 +1,7 @@
 from typing import List
-from fastapi import APIRouter, Body
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.database import db_instance
-from app.models.crew_model import CrewCollection, CrewModel, CrewUpdateModel
-from app.repository.crew_repository import CrewRepository
-from app.service.crew_service import CrewService
 from app.helpers.response_helper import ResponseHelper, ResponseObject
 from app.helpers import status_helper
 from app.service.enum_service import EnumService
