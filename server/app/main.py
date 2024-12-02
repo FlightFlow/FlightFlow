@@ -15,7 +15,8 @@ from app.controllers.plane_controller import router as PlaneController
 from app.controllers.route_controller import router as RouteController
 from app.controllers.runway_controller import router as RunwayController
 from app.controllers.vehicle_controller import router as VehicleController
-from app.controllers.enum_controller import router as EnumRouter
+
+from app.temp.enum_controller import router as EnumRouter
 
 
 def is_dev() -> bool:

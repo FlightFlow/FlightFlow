@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from app.helpers.response_helper import ResponseHelper, ResponseObject
 from app.helpers import status_helper
-from app.service.enum_service import EnumService
+from app.temp.enum_service import EnumService
 
 router: APIRouter = APIRouter(tags=["Enum Controller"])
 
