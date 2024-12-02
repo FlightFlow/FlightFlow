@@ -12,7 +12,7 @@ VENV_DIR="$SERVER_PATH/.venv"
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
 
-ln -sf ./githooks/pre-commit.sh ./.git/hooks/pre-commit
+ln -sf ./.githooks/pre-commit.sh ./.git/hooks/pre-commit
 
 echo "Info: Pre-commit hook setup completed."
 
