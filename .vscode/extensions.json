@@ -18,6 +18,14 @@
     "ms-vscode-remote.remote-wsl",
     "ms-vscode-remote.remote-containers",
     "ms-azuretools.vscode-docker",
-    "dsznajder.es7-react-js-snippets"
+    "dsznajder.es7-react-js-snippets",
+    "vscjava.vscode-java-debug",
+    "vscjava.vscode-java-pack",
+    "vscjava.vscode-gradle",
+    "Oracle.oracle-java",
+    "redhat.java",
+    "vscjava.vscode-maven",
+    "vscjava.vscode-java-dependency",
+    "vscjava.vscode-java-test"
   ]
 }

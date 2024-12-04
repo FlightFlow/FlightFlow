@@ -3,16 +3,13 @@
 # VARIABLES
 SCRIPT_DIR="$(dirname "$(realpath "$0")")/.."
 
-FRONTEND_PATH="$SCRIPT_DIR/../frontend"
-SERVER_PATH="$SCRIPT_DIR/../server"
-
-REQUIREMENTS_FILE="$SERVER_PATH/requirements.txt"
-VENV_DIR="$SERVER_PATH/.venv"
+FRONTEND_PATH="$SCRIPT_DIR/../client"
+BACKEND_PATH="$SCRIPT_DIR/../app"
 
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
 
-ln -sf ./.githooks/pre-commit.sh ./.git/hooks/pre-commit
+ln -sf ../../.githooks/pre-commit.sh ../../.git/hooks/pre-commit
 
 echo "Info: Pre-commit hook setup completed."
 
@@ -50,36 +47,8 @@ rename_env_files() {
   fi
 }
 
-rename_env_files "$FRONTEND_PATH" "frontend"
-rename_env_files "$SERVER_PATH" "server"
-
-echo "---"
-
-# PYTHON VIRTUAL ENVIRONMENT
-if [ ! -f "$REQUIREMENTS_FILE" ]; then
-  echo "Error: $REQUIREMENTS_FILE not found."
-  exit 1
-fi
-
-if [ ! -d "$VENV_DIR" ]; then
-  echo "Info: Setting up python virtual environment in $VENV_DIR..."
-  python3 -m venv "$VENV_DIR"
-  echo "Info: Successfully created python virtual environment."
-else
-  echo "Info: Python virtual environment already exists."
-fi
-
-echo "---"
-
-# SERVER DEPENDENCIES
-echo "Info: Installing dependencies from requirements file..."
-
-source "$VENV_DIR/bin/activate"
-pip install --upgrade pip
-pip install -r "$REQUIREMENTS_FILE"
-deactivate
-
-echo "Info: Successfully installed dependencies from requirements file."
+rename_env_files "$FRONTEND_PATH" "client"
+rename_env_files "$BACKEND_PATH" "app"
 
 echo "---"
 
