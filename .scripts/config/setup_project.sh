@@ -3,8 +3,8 @@
 # VARIABLES
 SCRIPT_DIR="$(dirname "$(realpath "$0")")/.."
 
-FRONTEND_PATH="$SCRIPT_DIR/../client"
-BACKEND_PATH="$SCRIPT_DIR/../app"
+FRONTEND_PATH="$SCRIPT_DIR/../frontend"
+BACKEND_PATH="$SCRIPT_DIR/../server"
 
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
@@ -47,8 +47,8 @@ rename_env_files() {
   fi
 }
 
-rename_env_files "$FRONTEND_PATH" "client"
-rename_env_files "$BACKEND_PATH" "app"
+rename_env_files "$FRONTEND_PATH" "frontend"
+rename_env_files "$BACKEND_PATH" "server"
 
 echo "---"
 
