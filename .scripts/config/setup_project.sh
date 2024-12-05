@@ -48,7 +48,7 @@ rename_frontend_env() {
 }
 
 rename_frontend_env "$FRONTEND_PATH" "frontend"
-rename_server_properties "$BACKEND_PATH" "server"
+rename_server_properties "$BACKEND_PATH" "server" # TODO
 
 echo "---"
 
