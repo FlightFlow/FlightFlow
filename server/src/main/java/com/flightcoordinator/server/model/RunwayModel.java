@@ -13,9 +13,6 @@ public class RunwayModel {
   @Id
   private String id;
 
-  @NotBlank(message = "Airport ID cannot be blank")
-  private String airportId;
-
   @NotBlank(message = "Length cannot be blank")
   private Float length;
 
@@ -32,10 +29,9 @@ public class RunwayModel {
   @NotBlank(message = "Orientation cannot be blank")
   private String orientation;
 
-  public RunwayModel(String id, String airportId, Float length, Float width, RunwaySurfaceTypes surfaceType,
+  public RunwayModel(String id, Float length, Float width, RunwaySurfaceTypes surfaceType,
       Float maxWeightCapacity, String orientation) {
     this.id = id;
-    this.airportId = airportId;
     this.length = length;
     this.width = width;
     this.surfaceType = surfaceType;
@@ -50,14 +46,6 @@ public class RunwayModel {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getAirportId() {
-    return this.airportId;
-  }
-
-  public void setAirportId(String airportId) {
-    this.airportId = airportId;
   }
 
   public Float getLength() {

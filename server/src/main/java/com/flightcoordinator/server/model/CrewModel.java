@@ -9,8 +9,6 @@ import com.flightcoordinator.server.enums.CrewAvailability;
 import com.flightcoordinator.server.enums.CrewRoles;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Document(collection = "crew")
@@ -25,9 +23,7 @@ public class CrewModel {
   private String email;
 
   @NotBlank(message = "Phone number cannot be blank")
-  @Max(value = 11, message = "Phone number should be 11 digit")
-  @Min(value = 1, message = "Phone number should be 11 digit")
-  private int phoneNumber;
+  private Float phoneNumber;
 
   @NotBlank(message = "Role cannot be blank")
   private CrewRoles role;
@@ -42,7 +38,7 @@ public class CrewModel {
   @NotBlank(message = "Availability cannot be blank")
   private CrewAvailability availability = CrewAvailability.AVAILABLE;
 
-  public CrewModel(String id, String fullName, int phoneNumber, CrewRoles role, List<String> certifications,
+  public CrewModel(String id, String fullName, Float phoneNumber, CrewRoles role, List<String> certifications,
       int totalFlightHours, String baseAirport, CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
@@ -79,11 +75,11 @@ public class CrewModel {
     this.email = email;
   }
 
-  public int getPhoneNumber() {
+  public Float getPhoneNumber() {
     return this.phoneNumber;
   }
 
-  public void setPhoneNumber(int phoneNumber) {
+  public void setPhoneNumber(Float phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 
@@ -125,5 +121,9 @@ public class CrewModel {
 
   public void setAvailability(CrewAvailability availability) {
     this.availability = availability;
+  }
+
+  public Boolean isPhoneNumberValid() {
+    return this.phoneNumber.toString().length() == 11;
   }
 }

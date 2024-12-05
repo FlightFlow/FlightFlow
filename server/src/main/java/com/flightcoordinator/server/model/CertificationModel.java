@@ -39,9 +39,6 @@ public class CertificationModel {
   @NotBlank(message = "Description cannot be blank")
   private String description;
 
-  public CertificationModel() {
-  }
-
   public CertificationModel(String id, String name, CertificationIssuers issuer,
       CertificationIssuingCountry issuingCountry, Date expirationDate, int validityPeriod,
       List<CrewRoles> assignableRoles, String description) {

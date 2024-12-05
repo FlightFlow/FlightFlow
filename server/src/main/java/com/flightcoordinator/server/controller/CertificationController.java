@@ -20,18 +20,17 @@ import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.CertificationService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/certifications")
-@Tag(name = "Certifications Controller", description = "Endpoints for managing Crew Members' certifications.")
+@RequestMapping("/api/certification")
+@Tag(name = "Certifications Controller", description = "Endpoints for managing crew members' certifications.")
 public class CertificationController {
   @Autowired
   private CertificationService service;
 
   @GetMapping("/getById/{certificationId}")
-  @Operation(summary = "Get a Certification By Id", description = "Retrieve a details of a spesific certification using it's ID.")
+  @Operation(summary = "Get a certification by id", description = "Retrieve the details of a spesific certification using it's ID.")
   public ResponseEntity<ResponseObject<CertificationModel>> getCertificationById(@PathVariable String certificationId) {
     CertificationModel certification = service.getSingleCertificationById(certificationId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
@@ -39,6 +38,7 @@ public class CertificationController {
   }
 
   @GetMapping("/getAll")
+  @Operation(summary = "Get all the certifications", description = "Retrieve the details of all certifications.")
   public ResponseEntity<ResponseObject<List<CertificationModel>>> getAllCertification() {
     List<CertificationModel> certifications = service.getAllCertifications();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
@@ -46,23 +46,25 @@ public class CertificationController {
   }
 
   @PostMapping("/create")
+  @Operation(summary = "Create a new certification", description = "Create a new certification.")
   public ResponseEntity<ResponseObject<Object>> createCertification(
-      @RequestBody CertificationModel certification) {
-    service.createCertification(certification);
+      @RequestBody CertificationModel newCertification) {
+    service.createCertification(newCertification);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @PatchMapping("/update/{certificationId}")
+  @Operation(summary = "Update a certification", description = "Update an existing certification.")
   public ResponseEntity<ResponseObject<Object>> updateCertification(@PathVariable String certificationId,
-      @RequestBody CertificationModel certification) {
-    service.updateCertification(certificationId, certification);
+      @RequestBody CertificationModel updatedCertification) {
+    service.updateCertification(certificationId, updatedCertification);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("delete/{certificationId}")
+  @Operation(summary = "Delete a certification", description = "Delete an existing certification.")
   public ResponseEntity<ResponseObject<Object>> deleteCertification(@PathVariable String certificationId) {
     service.deleteCertification(certificationId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
-
 }

@@ -22,7 +22,7 @@ public class CertificationService {
         .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<CertificationModel> getMultipleCertificationById(List<String> certificationIds) {
+  public List<CertificationModel> getMultipleCertificationsById(List<String> certificationIds) {
     List<CertificationModel> certifications = repository.findAllById(certificationIds);
     if (certifications.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
@@ -59,5 +59,15 @@ public class CertificationService {
   public void deleteCertification(String certificationId) {
     CertificationModel existingCertification = getSingleCertificationById(certificationId);
     repository.delete(existingCertification);
+  }
+
+  public Boolean doesSingleCertificationExist(String certificationId) {
+    Optional<CertificationModel> certification = repository.findById(certificationId);
+    return certification.isPresent();
+  }
+
+  public Boolean doesMultipleCertificationsExist(List<String> certificationIds) {
+    List<CertificationModel> certifications = repository.findAllById(certificationIds);
+    return certifications.isEmpty();
   }
 }
