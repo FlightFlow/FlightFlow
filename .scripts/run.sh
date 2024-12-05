@@ -2,11 +2,11 @@
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 
-FRONTEND_PATH="$SCRIPT_DIR/../client"
-BACKEND_PATH="$SCRIPT_DIR/../app"
+FRONTEND_PATH="$SCRIPT_DIR/../frontend"
+BACKEND_PATH="$SCRIPT_DIR/../server"
 
 pnpm concurrently -k \
   -n "frontend,server" \
   -c "bgBlue.bold,bgGreen.bold" \
   "cd $FRONTEND_PATH && pnpm dev" \
-  "echo 'this line will be running backend (a.k.a. app)' sometime in the future"
+  "cd $BACKEND_PATH && ./mvnw spring-boot:run"

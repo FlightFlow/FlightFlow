@@ -16,7 +16,7 @@ echo "Info: Pre-commit hook setup completed."
 echo "---"
 
 # .ENV FILES
-rename_env_files() {
+rename_frontend_env() {
   local path="$1"
   local env_file="$path/.env"
   local sample_file="$env_file.sample"
@@ -47,8 +47,8 @@ rename_env_files() {
   fi
 }
 
-rename_env_files "$FRONTEND_PATH" "frontend"
-rename_env_files "$BACKEND_PATH" "server"
+rename_frontend_env "$FRONTEND_PATH" "frontend"
+rename_server_properties "$BACKEND_PATH" "server"
 
 echo "---"
 

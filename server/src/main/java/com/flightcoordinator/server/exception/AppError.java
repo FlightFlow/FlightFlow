@@ -1,16 +1,14 @@
 package com.flightcoordinator.server.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class AppError extends RuntimeException {
-  private final HttpStatus status;
+  private final int status;
 
-  public AppError(String message, HttpStatus status) {
+  public AppError(String message, int status) {
     super(message);
     this.status = status;
   }
 
-  public HttpStatus getStatus() {
+  public int getStatus() {
     return this.status;
   }
 }

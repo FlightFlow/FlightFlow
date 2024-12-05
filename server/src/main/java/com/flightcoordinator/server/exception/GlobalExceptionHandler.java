@@ -1,33 +1,38 @@
 package com.flightcoordinator.server.exception;
 
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import com.flightcoordinator.server.response.ResponseHelper;
+import com.flightcoordinator.server.response.ResponseObject;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
   @ExceptionHandler(AppError.class)
-  public ResponseEntity<ErrorResponse> handleAppError(AppError exception) {
-    ErrorResponse errorResponse = new ErrorResponse(exception.getMessage(), exception.getStatus().value());
-    return new ResponseEntity<>(errorResponse, exception.getStatus());
+  public ResponseEntity<ResponseObject<Object>> handleAppError(AppError exception) {
+    return ResponseHelper.generateResponse(exception.getStatus(), false, exception.getMessage(), null);
   }
 
-  public static class ErrorResponse {
-    private final String message;
-    private final int status;
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ResponseObject<Object>> handleEnumValidationError(
+      MethodArgumentTypeMismatchException exception) {
+    return ResponseHelper.generateResponse(HttpStatus.BAD_REQUEST.value(), false, exception.getMessage(), null);
+  }
 
-    public ErrorResponse(String message, int status) {
-      this.message = message;
-      this.status = status;
-    }
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ResponseObject<Object>> handleIllegalArgumentException(
+      IllegalArgumentException exception) {
+    return ResponseHelper.generateResponse(HttpStatus.BAD_REQUEST.value(), false, exception.getMessage(), null);
+  }
 
-    public String getMessage() {
-      return this.message;
-    }
-
-    public int getStatus() {
-      return this.status;
-    }
+  @ExceptionHandler(OptimisticLockingFailureException.class)
+  public ResponseEntity<ResponseObject<Object>> handleOptimisticLockingFailureException(
+      OptimisticLockingFailureException exception) {
+    return ResponseHelper.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, exception.getMessage(),
+        null);
   }
 }
