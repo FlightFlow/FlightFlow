@@ -51,7 +51,7 @@ public class RunwayController {
         null);
   }
 
-  @PatchMapping("/update/{airportId}")
+  @PatchMapping("/update/{runwayId}")
   @Operation(summary = "Update a runway", description = "Update an existing runway.")
   public ResponseEntity<ResponseObject<Object>> updateRunway(@PathVariable String runwayId,
       @RequestBody RunwayModel runway) {
@@ -59,7 +59,7 @@ public class RunwayController {
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{airportId}")
+  @DeleteMapping("/delete/{runwayId}")
   @Operation(summary = "Delete a runway", description = "Delete an existing runway.")
   public ResponseEntity<ResponseObject<Object>> deleteRunway(@PathVariable String runwayId) {
     service.deleteRunway(runwayId);
