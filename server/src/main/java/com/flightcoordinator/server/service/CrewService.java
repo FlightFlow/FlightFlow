@@ -98,6 +98,9 @@ public class CrewService {
 
   public Boolean doesMultipleCrewMemberExist(List<String> crewMemberIds) {
     List<CrewModel> crewMembers = repository.findAllById(crewMemberIds);
+    if (crewMembers.size() != crewMemberIds.size()) {
+      return false;
+    }
     return crewMembers.isEmpty();
   }
 }

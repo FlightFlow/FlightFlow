@@ -79,6 +79,9 @@ public class AirportService {
 
   public Boolean doesMultipleAirportsExist(List<String> airportIds) {
     List<AirportModel> airports = repository.findAllById(airportIds);
+    if (airports.size() != airportIds.size()) {
+      return false;
+    }
     return airports.isEmpty();
   }
 }

@@ -68,6 +68,9 @@ public class CertificationService {
 
   public Boolean doesMultipleCertificationsExist(List<String> certificationIds) {
     List<CertificationModel> certifications = repository.findAllById(certificationIds);
+    if (certifications.size() != certificationIds.size()) {
+      return false;
+    }
     return certifications.isEmpty();
   }
 }

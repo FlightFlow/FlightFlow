@@ -29,7 +29,7 @@ public class RunwayService {
     return runways;
   }
 
-  public List<RunwayModel> getAllAirports() {
+  public List<RunwayModel> getAllRunways() {
     List<RunwayModel> runways = repository.findAll();
     if (runways.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
@@ -65,6 +65,9 @@ public class RunwayService {
 
   public Boolean doesMultipleRunwaysExist(List<String> runwayIds) {
     List<RunwayModel> runways = repository.findAllById(runwayIds);
+    if (runways.size() != runwayIds.size()) {
+      return false;
+    }
     return runways.isEmpty();
   }
 }
