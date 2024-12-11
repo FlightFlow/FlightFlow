@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import jakarta.validation.constraints.NotBlank;
 
 @Document(collection = "algorithm_results")
-public class AlgorithmResultsEntity {
+public class AlgorithmResultEntity {
   @Id
   private String id;
 
@@ -33,10 +33,10 @@ public class AlgorithmResultsEntity {
   @NotBlank(message = "Ground vehicle IDs cannot be blank")
   private List<String> groundVehicleIds;
 
-  public AlgorithmResultsEntity() {
+  public AlgorithmResultEntity() {
   }
 
-  public AlgorithmResultsEntity(String id, @NotBlank(message = "Route ID cannot be blank") String routeId,
+  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") String routeId,
       @NotBlank(message = "Plane ID cannot be blank") String planeId,
       @NotBlank(message = "Crew member IDs cannot be blank") List<String> crewMemberIds,
       @NotBlank(message = "Runway ID cannot be blank") String runwayId,
