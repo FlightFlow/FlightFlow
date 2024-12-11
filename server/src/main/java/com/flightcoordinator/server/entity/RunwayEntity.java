@@ -2,6 +2,7 @@ package com.flightcoordinator.server.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.RunwaySurfaceTypes;
 
@@ -13,19 +14,24 @@ public class RunwayEntity {
   @Id
   private String id;
 
+  @Field("length")
   @NotBlank(message = "Length cannot be blank")
   private Float length;
 
+  @Field("width")
   @NotBlank(message = "Width cannot be blank")
   private Float width;
 
+  @Field("surface_type")
   @NotBlank(message = "Surface type cannot be blank")
   private RunwaySurfaceTypes surfaceType;
 
+  @Field("max_weight_capacity")
   @NotBlank(message = "Max weigth capacity cannot be blank")
   @Min(value = 1, message = "Max weight capacity should be greater than '1'")
   private Float maxWeightCapacity;
 
+  @Field("orientation")
   @NotBlank(message = "Orientation cannot be blank")
   private String orientation;
 

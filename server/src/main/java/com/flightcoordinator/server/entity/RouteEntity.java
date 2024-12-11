@@ -2,6 +2,7 @@ package com.flightcoordinator.server.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,16 +12,20 @@ public class RouteEntity {
   @Id
   private String id;
 
+  @Field("origin_airport_id")
   @NotBlank(message = "Origin airport id cannot be blank")
   private String originAirportId;
 
+  @Field("destination_airport_id")
   @NotBlank(message = "Destination airport id cannot be blank")
   private String destinationAirportId;
 
+  @Field("distance")
   @NotBlank(message = "Distance cannot be blank")
   @Min(value = 1, message = "Distance should be greater than '1'")
   private Float distance;
 
+  @Field("estimated_time")
   @NotBlank(message = "Estimated time cannot be blank")
   private Float estimatedTime;
 

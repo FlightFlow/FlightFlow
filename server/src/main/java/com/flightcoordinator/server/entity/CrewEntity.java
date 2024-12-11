@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.CrewAvailability;
 import com.flightcoordinator.server.enums.CrewRoles;
@@ -16,25 +17,34 @@ public class CrewEntity {
   @Id
   private String id;
 
+  @Field("full_name")
   @NotBlank(message = "Full name cannot be blank")
   private String fullName;
 
+  @Field("email")
   @Email(message = "E-Mail is invalid")
   private String email;
 
+  @Field("phone_number")
   @NotBlank(message = "Phone number cannot be blank")
   private Float phoneNumber;
 
+  @Field("role")
   @NotBlank(message = "Role cannot be blank")
   private CrewRoles role;
+
+  @Field("certifications")
   private List<CertificationEntity> certifications;
 
+  @Field("total_flight_hours")
   @NotBlank(message = "Total flight hours cannot be blank")
   private int totalFlightHours = 0;
 
+  @Field("base_airport")
   @NotBlank(message = "Certification cannot be blank")
   private String baseAirport;
 
+  @Field("availability")
   @NotBlank(message = "Availability cannot be blank")
   private CrewAvailability availability = CrewAvailability.AVAILABLE;
 

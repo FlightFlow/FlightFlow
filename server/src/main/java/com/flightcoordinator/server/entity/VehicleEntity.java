@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.GroundVehicleAvailability;
 import com.flightcoordinator.server.enums.GroundVehicleTypes;
@@ -16,19 +17,24 @@ public class VehicleEntity {
   @Id
   private String id;
 
+  @Field("type")
   @NotBlank(message = "Capacity cannot be blank")
   private GroundVehicleTypes type;
 
+  @Field("vehicle_code")
   @NotBlank(message = "Capacity cannot be blank")
   private String vehicleCode;
 
+  @Field("capacity")
   @NotBlank(message = "Capacity cannot be blank")
   @Min(value = 1, message = "Capacity should be greater than '1'")
   private Float capacity;
 
+  @Field("availability")
   @NotBlank(message = "Capacity cannot be blank")
   private GroundVehicleAvailability availability = GroundVehicleAvailability.AVAILABLE;
 
+  @Field("maintenance_due")
   @NotBlank(message = "Capacity cannot be blank")
   private Date maintenanceDue;
 

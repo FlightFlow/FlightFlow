@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.CertificationIssuers;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
@@ -19,23 +20,31 @@ public class CertificationEntity {
   @Id
   private String id;
 
+  @Field("name")
   @NotBlank(message = "Name cannot be blank")
   private String name;
 
+  @Field("issuer")
   @NotBlank(message = "Issuer cannot be blank")
   private CertificationIssuers issuer;
 
+  @Field("issusing_country")
   @NotBlank(message = "Issuing country cannot be blank")
   private CertificationIssuingCountry issuingCountry;
 
+  @Field("expiration_date")
   @NotBlank(message = "Expiration date cannot be blank")
   private Date expirationDate;
 
+  @Field("validity_period")
   @NotBlank(message = "Validity period cannot be blank")
   @Min(value = 1, message = "Validity period should be greater than '1'")
   private int validityPeriod;
+
+  @Field("assignable_roles")
   private List<CrewRoles> assignableRoles = new ArrayList<>();
 
+  @Field("description")
   @NotBlank(message = "Description cannot be blank")
   private String description;
 

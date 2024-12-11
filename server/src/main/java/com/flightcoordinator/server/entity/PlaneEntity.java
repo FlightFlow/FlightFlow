@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.PlaneAvailability;
 
@@ -15,49 +16,62 @@ public class PlaneEntity {
   @Id
   private String id;
 
+  @Field("model")
   @NotBlank(message = "Model cannot be blank")
   private String model;
 
+  @Field("registration_number")
   @NotBlank(message = "Registration number cannot be blank")
   private String registrationNumber;
 
+  @Field("passenger_capacity")
   @NotBlank(message = "Passenger capacity cannot be blank")
   @Min(value = 1, message = "Passenger capacity should be greater than '1'")
   private int passengerCapacity;
 
+  @Field("fuel_efficiency")
   @NotBlank(message = "Fuel efficiency cannot be blank")
   @Min(value = 1, message = "Fuel efficiency should be greater than '1'")
   private Float fuelEfficiency;
 
+  @Field("max_flight_range")
   @NotBlank(message = "Max flight range cannot be blank")
   @Min(value = 1, message = "Max flight range should be greater than '1'")
   private Float maxFlightRange;
 
+  @Field("last_maintenance")
   @NotBlank(message = "Last maintenance cannot be blank")
   private Date lastMaintenance;
 
+  @Field("total_flight_hours")
   @NotBlank(message = "Total flight hours cannot be blank")
   @Min(value = 0, message = "Total flight hours should be equal or greater than '0'")
   private Float totalFlightHours;
 
+  @Field("max_takeoff_weight")
   @NotBlank(message = "Max takeoff weight cannot be blank")
   @Min(value = 1, message = "Max takeoff weight should be greater than '1'")
   private Float maxTakeoffWeight;
 
+  @Field("shortest_runway_length_required")
   @NotBlank(message = "Shortest runway length required cannot be blank")
   @Min(value = 1, message = "Shortest runway length required should be greater than '1'")
   private Float shortestRunwayLengthRequired;
 
+  @Field("shortest_runway_width_required")
   @NotBlank(message = "Shortest runway width required cannot be blank")
   @Min(value = 1, message = "Shortest runway width required should be greater than '1'")
   private Float shortestRunwayWidthRequired;
 
+  @Field("plane_status")
   @NotBlank(message = "Plane status cannot be blank")
   private PlaneAvailability planeStatus = PlaneAvailability.AVAILABLE;
 
+  @Field("current_location")
   @NotBlank(message = "Current location status cannot be blank")
   private String currentLocation;
 
+  @Field("aircraft_operator")
   @NotBlank(message = "Aircratf operator cannot be blank")
   private String aircraftOperator;
 

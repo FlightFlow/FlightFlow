@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.AirportTypes;
 
@@ -15,21 +16,27 @@ public class AirportEntity {
   @Id
   private String id;
 
+  @Field("name")
   @NotBlank(message = "Name cannot be blank")
   private String name;
 
+  @Field("iata_code")
   @NotBlank(message = "IATA Code cannot be blank")
   private String iataCode;
 
+  @Field("icao_code")
   @NotBlank(message = "ICAO Code cannot be blank")
   private String icaoCode;
 
+  @Field("country_code")
   @NotBlank(message = "Country code cannot be blank")
   private String countryCode;
 
+  @Field("airport_type")
   @NotBlank(message = "Type cannot be blank")
   private AirportTypes type;
 
+  @Field("runways")
   private List<RunwayEntity> runways = new ArrayList<>();
 
   public AirportEntity() {
