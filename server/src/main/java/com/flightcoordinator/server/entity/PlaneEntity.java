@@ -1,17 +1,18 @@
-package com.flightcoordinator.server.model;
+package com.flightcoordinator.server.entity;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.flightcoordinator.server.enums.PlaneAvailability;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "plane")
-public class PlaneModel {
+@Entity
+@Table(name = "plane")
+public class PlaneEntity {
   @Id
   private String id;
 
@@ -61,10 +62,22 @@ public class PlaneModel {
   @NotBlank(message = "Aircratf operator cannot be blank")
   private String aircraftOperator;
 
-  public PlaneModel(String id, String model, String registrationNumber, int passengerCapacity, Float fuelEfficiency,
-      Float maxFlightRange, Date lastMaintenance, Float totalFlightHours, Float maxTakeoffWeight,
-      Float shortestRunwayLengthRequired, Float shortestRunwayWidthRequired, PlaneAvailability planeStatus,
-      String currentLocation, String aircraftOperator) {
+  public PlaneEntity() {
+  }
+
+  public PlaneEntity(String id, @NotBlank(message = "Model cannot be blank") String model,
+      @NotBlank(message = "Registration number cannot be blank") String registrationNumber,
+      @NotBlank(message = "Passenger capacity cannot be blank") @Min(value = 1, message = "Passenger capacity should be greater than '1'") int passengerCapacity,
+      @NotBlank(message = "Fuel efficiency cannot be blank") @Min(value = 1, message = "Fuel efficiency should be greater than '1'") Float fuelEfficiency,
+      @NotBlank(message = "Max flight range cannot be blank") @Min(value = 1, message = "Max flight range should be greater than '1'") Float maxFlightRange,
+      @NotBlank(message = "Last maintenance cannot be blank") Date lastMaintenance,
+      @NotBlank(message = "Total flight hours cannot be blank") @Min(value = 0, message = "Total flight hours should be equal or greater than '0'") Float totalFlightHours,
+      @NotBlank(message = "Max takeoff weight cannot be blank") @Min(value = 1, message = "Max takeoff weight should be greater than '1'") Float maxTakeoffWeight,
+      @NotBlank(message = "Shortest runway length required cannot be blank") @Min(value = 1, message = "Shortest runway length required should be greater than '1'") Float shortestRunwayLengthRequired,
+      @NotBlank(message = "Shortest runway width required cannot be blank") @Min(value = 1, message = "Shortest runway width required should be greater than '1'") Float shortestRunwayWidthRequired,
+      @NotBlank(message = "Plane status cannot be blank") PlaneAvailability planeStatus,
+      @NotBlank(message = "Current location status cannot be blank") String currentLocation,
+      @NotBlank(message = "Aircratf operator cannot be blank") String aircraftOperator) {
     this.id = id;
     this.model = model;
     this.registrationNumber = registrationNumber;
@@ -81,9 +94,8 @@ public class PlaneModel {
     this.aircraftOperator = aircraftOperator;
   }
 
-  // Getter and Setters
   public String getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(String id) {
@@ -91,7 +103,7 @@ public class PlaneModel {
   }
 
   public String getModel() {
-    return this.model;
+    return model;
   }
 
   public void setModel(String model) {
@@ -99,7 +111,7 @@ public class PlaneModel {
   }
 
   public String getRegistrationNumber() {
-    return this.registrationNumber;
+    return registrationNumber;
   }
 
   public void setRegistrationNumber(String registrationNumber) {
@@ -107,7 +119,7 @@ public class PlaneModel {
   }
 
   public int getPassengerCapacity() {
-    return this.passengerCapacity;
+    return passengerCapacity;
   }
 
   public void setPassengerCapacity(int passengerCapacity) {
@@ -115,7 +127,7 @@ public class PlaneModel {
   }
 
   public Float getFuelEfficiency() {
-    return this.fuelEfficiency;
+    return fuelEfficiency;
   }
 
   public void setFuelEfficiency(Float fuelEfficiency) {
@@ -123,7 +135,7 @@ public class PlaneModel {
   }
 
   public Float getMaxFlightRange() {
-    return this.maxFlightRange;
+    return maxFlightRange;
   }
 
   public void setMaxFlightRange(Float maxFlightRange) {
@@ -131,7 +143,7 @@ public class PlaneModel {
   }
 
   public Date getLastMaintenance() {
-    return this.lastMaintenance;
+    return lastMaintenance;
   }
 
   public void setLastMaintenance(Date lastMaintenance) {
@@ -139,7 +151,7 @@ public class PlaneModel {
   }
 
   public Float getTotalFlightHours() {
-    return this.totalFlightHours;
+    return totalFlightHours;
   }
 
   public void setTotalFlightHours(Float totalFlightHours) {
@@ -147,7 +159,7 @@ public class PlaneModel {
   }
 
   public Float getMaxTakeoffWeight() {
-    return this.maxTakeoffWeight;
+    return maxTakeoffWeight;
   }
 
   public void setMaxTakeoffWeight(Float maxTakeoffWeight) {
@@ -155,7 +167,7 @@ public class PlaneModel {
   }
 
   public Float getShortestRunwayLengthRequired() {
-    return this.shortestRunwayLengthRequired;
+    return shortestRunwayLengthRequired;
   }
 
   public void setShortestRunwayLengthRequired(Float shortestRunwayLengthRequired) {
@@ -163,7 +175,7 @@ public class PlaneModel {
   }
 
   public Float getShortestRunwayWidthRequired() {
-    return this.shortestRunwayWidthRequired;
+    return shortestRunwayWidthRequired;
   }
 
   public void setShortestRunwayWidthRequired(Float shortestRunwayWidthRequired) {
@@ -171,7 +183,7 @@ public class PlaneModel {
   }
 
   public PlaneAvailability getPlaneStatus() {
-    return this.planeStatus;
+    return planeStatus;
   }
 
   public void setPlaneStatus(PlaneAvailability planeStatus) {
@@ -179,7 +191,7 @@ public class PlaneModel {
   }
 
   public String getCurrentLocation() {
-    return this.currentLocation;
+    return currentLocation;
   }
 
   public void setCurrentLocation(String currentLocation) {
@@ -187,7 +199,7 @@ public class PlaneModel {
   }
 
   public String getAircraftOperator() {
-    return this.aircraftOperator;
+    return aircraftOperator;
   }
 
   public void setAircraftOperator(String aircraftOperator) {

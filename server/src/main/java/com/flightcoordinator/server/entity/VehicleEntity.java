@@ -1,18 +1,19 @@
-package com.flightcoordinator.server.model;
+package com.flightcoordinator.server.entity;
 
 import java.util.Date;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.flightcoordinator.server.enums.GroundVehicleAvailability;
 import com.flightcoordinator.server.enums.GroundVehicleTypes;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "vehicle")
-public class VehicleModel {
+@Entity
+@Table(name = "vehicle")
+public class VehicleEntity {
   @Id
   private String id;
 
@@ -32,8 +33,14 @@ public class VehicleModel {
   @NotBlank(message = "Capacity cannot be blank")
   private Date maintenanceDue;
 
-  public VehicleModel(String id, GroundVehicleTypes type, String vehicleCode, Float capacity,
-      GroundVehicleAvailability availability, Date maintenanceDue) {
+  public VehicleEntity() {
+  }
+
+  public VehicleEntity(String id, @NotBlank(message = "Capacity cannot be blank") GroundVehicleTypes type,
+      @NotBlank(message = "Capacity cannot be blank") String vehicleCode,
+      @NotBlank(message = "Capacity cannot be blank") @Min(value = 1, message = "Capacity should be greater than '1'") Float capacity,
+      @NotBlank(message = "Capacity cannot be blank") GroundVehicleAvailability availability,
+      @NotBlank(message = "Capacity cannot be blank") Date maintenanceDue) {
     this.id = id;
     this.type = type;
     this.vehicleCode = vehicleCode;
@@ -42,9 +49,8 @@ public class VehicleModel {
     this.maintenanceDue = maintenanceDue;
   }
 
-  // Getter and Setters
   public String getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(String id) {
@@ -52,7 +58,7 @@ public class VehicleModel {
   }
 
   public GroundVehicleTypes getType() {
-    return this.type;
+    return type;
   }
 
   public void setType(GroundVehicleTypes type) {
@@ -60,7 +66,7 @@ public class VehicleModel {
   }
 
   public String getVehicleCode() {
-    return this.vehicleCode;
+    return vehicleCode;
   }
 
   public void setVehicleCode(String vehicleCode) {
@@ -68,7 +74,7 @@ public class VehicleModel {
   }
 
   public Float getCapacity() {
-    return this.capacity;
+    return capacity;
   }
 
   public void setCapacity(Float capacity) {
@@ -76,7 +82,7 @@ public class VehicleModel {
   }
 
   public GroundVehicleAvailability getAvailability() {
-    return this.availability;
+    return availability;
   }
 
   public void setAvailability(GroundVehicleAvailability availability) {
@@ -84,11 +90,10 @@ public class VehicleModel {
   }
 
   public Date getMaintenanceDue() {
-    return this.maintenanceDue;
+    return maintenanceDue;
   }
 
   public void setMaintenanceDue(Date maintenanceDue) {
     this.maintenanceDue = maintenanceDue;
   }
-
 }

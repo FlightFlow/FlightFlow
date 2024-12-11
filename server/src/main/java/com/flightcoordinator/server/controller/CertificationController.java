@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.CertificationModel;
+import com.flightcoordinator.server.entity.CertificationEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.CertificationService;
@@ -31,16 +31,16 @@ public class CertificationController {
 
   @GetMapping("/getById/{certificationId}")
   @Operation(summary = "Get a certification by id", description = "Retrieve the details of a spesific certification using it's ID.")
-  public ResponseEntity<ResponseObject<CertificationModel>> getCertificationById(@PathVariable String certificationId) {
-    CertificationModel certification = service.getSingleCertificationById(certificationId);
+  public ResponseEntity<ResponseObject<CertificationEntity>> getCertificationById(@PathVariable String certificationId) {
+    CertificationEntity certification = service.getSingleCertificationById(certificationId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
         certification);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the certifications", description = "Retrieve the details of all certifications.")
-  public ResponseEntity<ResponseObject<List<CertificationModel>>> getAllCertification() {
-    List<CertificationModel> certifications = service.getAllCertifications();
+  public ResponseEntity<ResponseObject<List<CertificationEntity>>> getAllCertification() {
+    List<CertificationEntity> certifications = service.getAllCertifications();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
         certifications);
   }
@@ -48,7 +48,7 @@ public class CertificationController {
   @PostMapping("/create")
   @Operation(summary = "Create a new certification", description = "Create a new certification.")
   public ResponseEntity<ResponseObject<Object>> createCertification(
-      @RequestBody CertificationModel newCertification) {
+      @RequestBody CertificationEntity newCertification) {
     service.createCertification(newCertification);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
@@ -56,7 +56,7 @@ public class CertificationController {
   @PatchMapping("/update/{certificationId}")
   @Operation(summary = "Update a certification", description = "Update an existing certification.")
   public ResponseEntity<ResponseObject<Object>> updateCertification(@PathVariable String certificationId,
-      @RequestBody CertificationModel updatedCertification) {
+      @RequestBody CertificationEntity updatedCertification) {
     service.updateCertification(certificationId, updatedCertification);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

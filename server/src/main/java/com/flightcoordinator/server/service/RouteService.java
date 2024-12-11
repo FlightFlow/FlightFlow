@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.RouteEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.RouteModel;
 import com.flightcoordinator.server.repository.RouteRepository;
 
 @Service
@@ -19,28 +19,28 @@ public class RouteService {
   @Autowired
   private AirportService airportService;
 
-  public RouteModel getSingleRouteById(String routeId) {
-    Optional<RouteModel> route = repository.findById(routeId);
+  public RouteEntity getSingleRouteById(String routeId) {
+    Optional<RouteEntity> route = repository.findById(routeId);
     return route.orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<RouteModel> getMultipleRouteById(List<String> routeIds) {
-    List<RouteModel> routes = repository.findAllById(routeIds);
+  public List<RouteEntity> getMultipleRouteById(List<String> routeIds) {
+    List<RouteEntity> routes = repository.findAllById(routeIds);
     if (routes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return routes;
   }
 
-  public List<RouteModel> getAllRoutes() {
-    List<RouteModel> routes = repository.findAll();
+  public List<RouteEntity> getAllRoutes() {
+    List<RouteEntity> routes = repository.findAll();
     if (routes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return routes;
   }
 
-  public void createRoute(RouteModel newRoute) {
+  public void createRoute(RouteEntity newRoute) {
     Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirportId());
     Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirportId());
     if (!doesOriginAirportExist || !doesDestinationAirportExist) {
@@ -51,7 +51,7 @@ public class RouteService {
     repository.save(newRoute);
   }
 
-  public void updateRoute(String routeId, RouteModel newRoute) {
+  public void updateRoute(String routeId, RouteEntity newRoute) {
     Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirportId());
     Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirportId());
     if (!doesOriginAirportExist || !doesDestinationAirportExist) {
@@ -60,7 +60,7 @@ public class RouteService {
           HttpStatus.BAD_REQUEST.value());
     }
 
-    RouteModel existingRoute = getSingleRouteById(routeId);
+    RouteEntity existingRoute = getSingleRouteById(routeId);
 
     existingRoute.setOriginAirportId(newRoute.getOriginAirportId());
     existingRoute.setDestinationAirportId(newRoute.getDestinationAirportId());
@@ -71,20 +71,7 @@ public class RouteService {
   }
 
   public void deleteRoute(String routeId) {
-    RouteModel existingRoute = getSingleRouteById(routeId);
+    RouteEntity existingRoute = getSingleRouteById(routeId);
     repository.delete(existingRoute);
-  }
-
-  public Boolean doesSingleRouteExist(String routeId) {
-    Optional<RouteModel> route = repository.findById(routeId);
-    return route.isPresent();
-  }
-
-  public Boolean doesMultipleRouteExist(List<String> routeIds) {
-    List<RouteModel> routes = repository.findAllById(routeIds);
-    if (routes.size() != routeIds.size()) {
-      return false;
-    }
-    return routes.isEmpty();
   }
 }

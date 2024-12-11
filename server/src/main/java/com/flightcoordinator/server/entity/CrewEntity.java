@@ -1,18 +1,19 @@
-package com.flightcoordinator.server.model;
+package com.flightcoordinator.server.entity;
 
 import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.flightcoordinator.server.enums.CrewAvailability;
 import com.flightcoordinator.server.enums.CrewRoles;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "crew")
-public class CrewModel {
+@Entity
+@Table(name = "crew")
+public class CrewEntity {
   @Id
   private String id;
 
@@ -27,7 +28,7 @@ public class CrewModel {
 
   @NotBlank(message = "Role cannot be blank")
   private CrewRoles role;
-  private List<String> certifications;
+  private List<CertificationEntity> certifications;
 
   @NotBlank(message = "Total flight hours cannot be blank")
   private int totalFlightHours = 0;
@@ -38,10 +39,19 @@ public class CrewModel {
   @NotBlank(message = "Availability cannot be blank")
   private CrewAvailability availability = CrewAvailability.AVAILABLE;
 
-  public CrewModel(String id, String fullName, Float phoneNumber, CrewRoles role, List<String> certifications,
-      int totalFlightHours, String baseAirport, CrewAvailability availability) {
+  public CrewEntity() {
+  }
+
+  public CrewEntity(String id, @NotBlank(message = "Full name cannot be blank") String fullName,
+      @Email(message = "E-Mail is invalid") String email,
+      @NotBlank(message = "Phone number cannot be blank") Float phoneNumber,
+      @NotBlank(message = "Role cannot be blank") CrewRoles role, List<CertificationEntity> certifications,
+      @NotBlank(message = "Total flight hours cannot be blank") int totalFlightHours,
+      @NotBlank(message = "Certification cannot be blank") String baseAirport,
+      @NotBlank(message = "Availability cannot be blank") CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
+    this.email = email;
     this.phoneNumber = phoneNumber;
     this.role = role;
     this.certifications = certifications;
@@ -50,9 +60,8 @@ public class CrewModel {
     this.availability = availability;
   }
 
-  // Getter and Setters
   public String getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(String id) {
@@ -60,7 +69,7 @@ public class CrewModel {
   }
 
   public String getFullName() {
-    return this.fullName;
+    return fullName;
   }
 
   public void setFullName(String fullName) {
@@ -68,7 +77,7 @@ public class CrewModel {
   }
 
   public String getEmail() {
-    return this.email;
+    return email;
   }
 
   public void setEmail(String email) {
@@ -76,7 +85,7 @@ public class CrewModel {
   }
 
   public Float getPhoneNumber() {
-    return this.phoneNumber;
+    return phoneNumber;
   }
 
   public void setPhoneNumber(Float phoneNumber) {
@@ -84,23 +93,23 @@ public class CrewModel {
   }
 
   public CrewRoles getRole() {
-    return this.role;
+    return role;
   }
 
   public void setRole(CrewRoles role) {
     this.role = role;
   }
 
-  public List<String> getCertifications() {
-    return this.certifications;
+  public List<CertificationEntity> getCertifications() {
+    return certifications;
   }
 
-  public void setCertifications(List<String> certifications) {
+  public void setCertifications(List<CertificationEntity> certifications) {
     this.certifications = certifications;
   }
 
   public int getTotalFlightHours() {
-    return this.totalFlightHours;
+    return totalFlightHours;
   }
 
   public void setTotalFlightHours(int totalFlightHours) {
@@ -108,7 +117,7 @@ public class CrewModel {
   }
 
   public String getBaseAirport() {
-    return this.baseAirport;
+    return baseAirport;
   }
 
   public void setBaseAirport(String baseAirport) {
@@ -116,14 +125,10 @@ public class CrewModel {
   }
 
   public CrewAvailability getAvailability() {
-    return this.availability;
+    return availability;
   }
 
   public void setAvailability(CrewAvailability availability) {
     this.availability = availability;
-  }
-
-  public Boolean isPhoneNumberValid() {
-    return this.phoneNumber.toString().length() == 11;
   }
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.VehicleModel;
+import com.flightcoordinator.server.entity.VehicleEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.VehicleService;
@@ -31,21 +31,21 @@ public class VehicleController {
 
   @GetMapping("/getById/{vehicleId}")
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID")
-  public ResponseEntity<ResponseObject<VehicleModel>> getVehicleById(@PathVariable String vehicleId) {
-    VehicleModel vehicle = service.getSingleVehicleById(vehicleId);
+  public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@PathVariable String vehicleId) {
+    VehicleEntity vehicle = service.getSingleVehicleById(vehicleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
-  public ResponseEntity<ResponseObject<List<VehicleModel>>> getAllVehicles() {
-    List<VehicleModel> vehicles = service.getAllVehicles();
+  public ResponseEntity<ResponseObject<List<VehicleEntity>>> getAllVehicles() {
+    List<VehicleEntity> vehicles = service.getAllVehicles();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicles);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new vehicle", description = "Create a new vehicle.")
-  public ResponseEntity<ResponseObject<Object>> createVehicle(@RequestBody VehicleModel newVehicle) {
+  public ResponseEntity<ResponseObject<Object>> createVehicle(@RequestBody VehicleEntity newVehicle) {
     service.createVehicle(newVehicle);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
@@ -54,7 +54,7 @@ public class VehicleController {
   @PatchMapping("/update/{vehicleId}")
   @Operation(summary = "Update an vehicle", description = "Update an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> updateVehicle(@PathVariable String vehicleId,
-      @RequestBody VehicleModel updatedVehicle) {
+      @RequestBody VehicleEntity updatedVehicle) {
     service.updateVehicle(vehicleId, updatedVehicle);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

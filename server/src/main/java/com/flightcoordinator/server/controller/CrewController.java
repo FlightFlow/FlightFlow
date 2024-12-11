@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.CrewModel;
+import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.CrewService;
@@ -31,21 +31,21 @@ public class CrewController {
 
   @GetMapping("/getById/{crewMemberId}")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
-  public ResponseEntity<ResponseObject<CrewModel>> getCrewMemberById(@PathVariable String crewMemberId) {
-    CrewModel crewMember = service.getSingleCrewMemberById(crewMemberId);
+  public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@PathVariable String crewMemberId) {
+    CrewEntity crewMember = service.getSingleCrewMemberById(crewMemberId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMember);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
-  public ResponseEntity<ResponseObject<List<CrewModel>>> getAllCrewMembers() {
-    List<CrewModel> crewMembers = service.getAllCrewMembers();
+  public ResponseEntity<ResponseObject<List<CrewEntity>>> getAllCrewMembers() {
+    List<CrewEntity> crewMembers = service.getAllCrewMembers();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMembers);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new crew member", description = "Create a new crew member.")
-  public ResponseEntity<ResponseObject<Object>> createCrewMember(@RequestBody CrewModel newCrewMember) {
+  public ResponseEntity<ResponseObject<Object>> createCrewMember(@RequestBody CrewEntity newCrewMember) {
     service.createCrewMember(newCrewMember);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
@@ -54,7 +54,7 @@ public class CrewController {
   @PatchMapping("/update/{crewMemberId}")
   @Operation(summary = "Update an existing crew member", description = "Update an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> updateCrewMember(@PathVariable String crewMemberId,
-      @RequestBody CrewModel updatedCrewMember) {
+      @RequestBody CrewEntity updatedCrewMember) {
     service.updateCrewMember(crewMemberId, updatedCrewMember);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

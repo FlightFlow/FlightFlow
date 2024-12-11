@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.PlaneModel;
+import com.flightcoordinator.server.entity.PlaneEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.PlaneService;
@@ -31,21 +31,21 @@ public class PlaneController {
 
   @GetMapping("/getById/{planeId}")
   @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID")
-  public ResponseEntity<ResponseObject<PlaneModel>> getPlaneById(@PathVariable String planeId) {
-    PlaneModel plane = service.getSinglePlaneById(planeId);
+  public ResponseEntity<ResponseObject<PlaneEntity>> getPlaneById(@PathVariable String planeId) {
+    PlaneEntity plane = service.getSinglePlaneById(planeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), plane);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the planes", description = "Retrieve the details of all planes.")
-  public ResponseEntity<ResponseObject<List<PlaneModel>>> getAllPlanes() {
-    List<PlaneModel> planes = service.getAllPlanes();
+  public ResponseEntity<ResponseObject<List<PlaneEntity>>> getAllPlanes() {
+    List<PlaneEntity> planes = service.getAllPlanes();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), planes);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new plane", description = "Create a new plane.")
-  public ResponseEntity<ResponseObject<Object>> createPlane(@RequestBody PlaneModel newPlane) {
+  public ResponseEntity<ResponseObject<Object>> createPlane(@RequestBody PlaneEntity newPlane) {
     service.createPlane(newPlane);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
@@ -54,7 +54,7 @@ public class PlaneController {
   @PatchMapping("/update/{planeId}")
   @Operation(summary = "Update an plane", description = "Update an existing plane.")
   public ResponseEntity<ResponseObject<Object>> updatePlane(@PathVariable String planeId,
-      @RequestBody PlaneModel updatedPlane) {
+      @RequestBody PlaneEntity updatedPlane) {
     service.updatePlane(planeId, updatedPlane);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

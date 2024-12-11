@@ -1,5 +1,7 @@
 package com.flightcoordinator.server.enums;
 
+// TODO turn into an endpoint
+
 public enum GroundVehicleTypes {
   TUG("Tug"),
   REFUELER("Refueler"),

@@ -1,13 +1,14 @@
-package com.flightcoordinator.server.model;
+package com.flightcoordinator.server.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "route")
-public class RouteModel {
+@Entity
+@Table(name = "route")
+public class RouteEntity {
   @Id
   private String id;
 
@@ -24,8 +25,13 @@ public class RouteModel {
   @NotBlank(message = "Estimated time cannot be blank")
   private Float estimatedTime;
 
-  public RouteModel(String id, String originAirportId, String destinationAirportId, Float distance,
-      Float estimatedTime) {
+  public RouteEntity() {
+  }
+
+  public RouteEntity(String id, @NotBlank(message = "Origin airport id cannot be blank") String originAirportId,
+      @NotBlank(message = "Destination airport id cannot be blank") String destinationAirportId,
+      @NotBlank(message = "Distance cannot be blank") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
+      @NotBlank(message = "Estimated time cannot be blank") Float estimatedTime) {
     this.id = id;
     this.originAirportId = originAirportId;
     this.destinationAirportId = destinationAirportId;
@@ -33,9 +39,8 @@ public class RouteModel {
     this.estimatedTime = estimatedTime;
   }
 
-  // Getter and Setters
   public String getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(String id) {
@@ -43,7 +48,7 @@ public class RouteModel {
   }
 
   public String getOriginAirportId() {
-    return this.originAirportId;
+    return originAirportId;
   }
 
   public void setOriginAirportId(String originAirportId) {
@@ -51,7 +56,7 @@ public class RouteModel {
   }
 
   public String getDestinationAirportId() {
-    return this.destinationAirportId;
+    return destinationAirportId;
   }
 
   public void setDestinationAirportId(String destinationAirportId) {
@@ -59,7 +64,7 @@ public class RouteModel {
   }
 
   public Float getDistance() {
-    return this.distance;
+    return distance;
   }
 
   public void setDistance(Float distance) {
@@ -67,10 +72,11 @@ public class RouteModel {
   }
 
   public Float getEstimatedTime() {
-    return this.estimatedTime;
+    return estimatedTime;
   }
 
   public void setEstimatedTime(Float estimatedTime) {
     this.estimatedTime = estimatedTime;
   }
+
 }

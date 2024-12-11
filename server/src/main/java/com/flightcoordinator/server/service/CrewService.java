@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.CrewModel;
 import com.flightcoordinator.server.repository.CrewRepository;
 
 @Service
@@ -22,29 +22,29 @@ public class CrewService {
   @Autowired
   private AirportService airportService;
 
-  public CrewModel getSingleCrewMemberById(String crewMemberId) {
-    Optional<CrewModel> crewMember = repository.findById(crewMemberId);
+  public CrewEntity getSingleCrewMemberById(String crewMemberId) {
+    Optional<CrewEntity> crewMember = repository.findById(crewMemberId);
     return crewMember
         .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<CrewModel> getMultipleCrewMemberById(List<String> crewMemberIds) {
-    List<CrewModel> crewMembers = repository.findAllById(crewMemberIds);
+  public List<CrewEntity> getMultipleCrewMemberById(List<String> crewMemberIds) {
+    List<CrewEntity> crewMembers = repository.findAllById(crewMemberIds);
     if (crewMembers.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return crewMembers;
   }
 
-  public List<CrewModel> getAllCrewMembers() {
-    List<CrewModel> crewMembers = repository.findAll();
+  public List<CrewEntity> getAllCrewMembers() {
+    List<CrewEntity> crewMembers = repository.findAll();
     if (crewMembers.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return crewMembers;
   }
 
-  public void createCrewMember(CrewModel newCrewMember) {
+  public void createCrewMember(CrewEntity newCrewMember) {
     Boolean doesCertificationsExist = certificationService
         .doesMultipleCertificationsExist(newCrewMember.getCertifications());
     Boolean doesBaseAirportExist = airportService.doesSingleAirportExist(newCrewMember.getBaseAirport());
@@ -52,14 +52,15 @@ public class CrewService {
       throw new AppError(doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base airport",
           HttpStatus.BAD_REQUEST.value());
     }
-    Boolean doesPhoneNumberValid = newCrewMember.isPhoneNumberValid();
+    Boolean doesPhoneNumberValid;
+    doesPhoneNumberValid = isPhoneNumberValid(newCrewMember.getPhoneNumber());
     if (doesPhoneNumberValid) {
       throw new AppError("Cannot validate phone number", HttpStatus.BAD_REQUEST.value());
     }
     repository.save(newCrewMember);
   }
 
-  public void updateCrewMember(String crewMemberId, CrewModel updatedCrewMember) {
+  public void updateCrewMember(String crewMemberId, CrewEntity updatedCrewMember) {
     Boolean doesCertificationsExist = certificationService
         .doesMultipleCertificationsExist(updatedCrewMember.getCertifications());
     Boolean doesBaseAirportExist = airportService.doesSingleAirportExist(updatedCrewMember.getBaseAirport());
@@ -67,12 +68,12 @@ public class CrewService {
       throw new AppError(doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base airport",
           HttpStatus.BAD_REQUEST.value());
     }
-    Boolean doesPhoneNumberValid = updatedCrewMember.isPhoneNumberValid();
+    Boolean doesPhoneNumberValid = isPhoneNumberValid(updatedCrewMember.getPhoneNumber());
     if (doesPhoneNumberValid) {
       throw new AppError("Cannot validate phone number", HttpStatus.BAD_REQUEST.value());
     }
 
-    CrewModel existingCrewMember = getSingleCrewMemberById(crewMemberId);
+    CrewEntity existingCrewMember = getSingleCrewMemberById(crewMemberId);
 
     existingCrewMember.setFullName(updatedCrewMember.getFullName());
     existingCrewMember.setEmail(updatedCrewMember.getEmail());
@@ -87,20 +88,11 @@ public class CrewService {
   }
 
   public void deleteCrewMember(String crewMemberId) {
-    CrewModel existingCrewMember = getSingleCrewMemberById(crewMemberId);
+    CrewEntity existingCrewMember = getSingleCrewMemberById(crewMemberId);
     repository.delete(existingCrewMember);
   }
 
-  public Boolean doesSingleCrewMemberExist(String crewMemberId) {
-    Optional<CrewModel> crewMember = repository.findById(crewMemberId);
-    return crewMember.isPresent();
-  }
-
-  public Boolean doesMultipleCrewMemberExist(List<String> crewMemberIds) {
-    List<CrewModel> crewMembers = repository.findAllById(crewMemberIds);
-    if (crewMembers.size() != crewMemberIds.size()) {
-      return false;
-    }
-    return crewMembers.isEmpty();
+  private Boolean isPhoneNumberValid(Float phoneNumber) {
+    return phoneNumber.toString().length() == 11;
   }
 }

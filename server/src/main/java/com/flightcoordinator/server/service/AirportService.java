@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.AirportModel;
 import com.flightcoordinator.server.repository.AirportRepository;
 
 @Service
@@ -19,29 +19,29 @@ public class AirportService {
   @Autowired
   private RunwayService runwayService;
 
-  public AirportModel getSingleAirportById(String airportId) {
-    Optional<AirportModel> airport = repository.findById(airportId);
+  public AirportEntity getSingleAirportById(String airportId) {
+    Optional<AirportEntity> airport = repository.findById(airportId);
     return airport
         .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<AirportModel> getMultipleAirportsById(List<String> airportIds) {
-    List<AirportModel> airports = repository.findAllById(airportIds);
+  public List<AirportEntity> getMultipleAirportsById(List<String> airportIds) {
+    List<AirportEntity> airports = repository.findAllById(airportIds);
     if (airports.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return airports;
   }
 
-  public List<AirportModel> getAllAirports() {
-    List<AirportModel> airports = repository.findAll();
+  public List<AirportEntity> getAllAirports() {
+    List<AirportEntity> airports = repository.findAll();
     if (airports.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return airports;
   }
 
-  public void createAirport(AirportModel newAirport) {
+  public void createAirport(AirportEntity newAirport) {
     Boolean doesRunwaysExist = runwayService.doesMultipleRunwaysExist(newAirport.getRunways());
     if (!doesRunwaysExist) {
       throw new AppError("Cannot validate runways", HttpStatus.BAD_REQUEST.value());
@@ -49,13 +49,13 @@ public class AirportService {
     repository.save(newAirport);
   }
 
-  public void updateAirport(String airportId, AirportModel updatedAirport) {
+  public void updateAirport(String airportId, AirportEntity updatedAirport) {
     Boolean doesRunwaysExist = runwayService.doesMultipleRunwaysExist(updatedAirport.getRunways());
     if (!doesRunwaysExist) {
       throw new AppError("Cannot validate runways", HttpStatus.BAD_REQUEST.value());
     }
 
-    AirportModel existingAirport = getSingleAirportById(airportId);
+    AirportEntity existingAirport = getSingleAirportById(airportId);
 
     existingAirport.setName(updatedAirport.getName());
     existingAirport.setIataCode(updatedAirport.getIataCode());
@@ -68,17 +68,17 @@ public class AirportService {
   }
 
   public void deleteAirport(String airportId) {
-    AirportModel existingAirport = getSingleAirportById(airportId);
+    AirportEntity existingAirport = getSingleAirportById(airportId);
     repository.delete(existingAirport);
   }
 
   public Boolean doesSingleAirportExist(String airportId) {
-    Optional<AirportModel> airport = repository.findById(airportId);
+    Optional<AirportEntity> airport = repository.findById(airportId);
     return airport.isPresent();
   }
 
   public Boolean doesMultipleAirportsExist(List<String> airportIds) {
-    List<AirportModel> airports = repository.findAllById(airportIds);
+    List<AirportEntity> airports = repository.findAllById(airportIds);
     if (airports.size() != airportIds.size()) {
       return false;
     }

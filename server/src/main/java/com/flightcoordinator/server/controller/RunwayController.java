@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.RunwayModel;
+import com.flightcoordinator.server.entity.RunwayEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.RunwayService;
@@ -31,21 +31,21 @@ public class RunwayController {
 
   @GetMapping("/getById/{runwayId}")
   @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
-  public ResponseEntity<ResponseObject<RunwayModel>> getRunwayById(@PathVariable String runwayId) {
-    RunwayModel runway = service.getSingleRunwayById(runwayId);
+  public ResponseEntity<ResponseObject<RunwayEntity>> getRunwayById(@PathVariable String runwayId) {
+    RunwayEntity runway = service.getSingleRunwayById(runwayId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runway);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the runways", description = "Retrieve the details of all runways.")
-  public ResponseEntity<ResponseObject<List<RunwayModel>>> getAllRunways() {
-    List<RunwayModel> runways = service.getAllRunways();
+  public ResponseEntity<ResponseObject<List<RunwayEntity>>> getAllRunways() {
+    List<RunwayEntity> runways = service.getAllRunways();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runways);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new runway", description = "Create a new runway.")
-  public ResponseEntity<ResponseObject<Object>> createRunway(@RequestBody RunwayModel runway) {
+  public ResponseEntity<ResponseObject<Object>> createRunway(@RequestBody RunwayEntity runway) {
     service.createRunway(runway);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
@@ -54,7 +54,7 @@ public class RunwayController {
   @PatchMapping("/update/{runwayId}")
   @Operation(summary = "Update a runway", description = "Update an existing runway.")
   public ResponseEntity<ResponseObject<Object>> updateRunway(@PathVariable String runwayId,
-      @RequestBody RunwayModel runway) {
+      @RequestBody RunwayEntity runway) {
     service.updateRunway(runwayId, runway);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

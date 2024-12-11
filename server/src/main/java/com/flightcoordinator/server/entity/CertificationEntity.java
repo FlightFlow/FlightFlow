@@ -1,21 +1,22 @@
-package com.flightcoordinator.server.model;
+package com.flightcoordinator.server.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.flightcoordinator.server.enums.CertificationIssuers;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
 import com.flightcoordinator.server.enums.CrewRoles;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "certification")
-public class CertificationModel {
+@Entity
+@Table(name = "certifications")
+public class CertificationEntity {
   @Id
   private String id;
 
@@ -39,9 +40,15 @@ public class CertificationModel {
   @NotBlank(message = "Description cannot be blank")
   private String description;
 
-  public CertificationModel(String id, String name, CertificationIssuers issuer,
-      CertificationIssuingCountry issuingCountry, Date expirationDate, int validityPeriod,
-      List<CrewRoles> assignableRoles, String description) {
+  public CertificationEntity() {
+  }
+
+  public CertificationEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
+      @NotBlank(message = "Issuer cannot be blank") CertificationIssuers issuer,
+      @NotBlank(message = "Issuing country cannot be blank") CertificationIssuingCountry issuingCountry,
+      @NotBlank(message = "Expiration date cannot be blank") Date expirationDate,
+      @NotBlank(message = "Validity period cannot be blank") @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
+      List<CrewRoles> assignableRoles, @NotBlank(message = "Description cannot be blank") String description) {
     this.id = id;
     this.name = name;
     this.issuer = issuer;
@@ -52,9 +59,8 @@ public class CertificationModel {
     this.description = description;
   }
 
-  // Getter and Setters
   public String getId() {
-    return this.id;
+    return id;
   }
 
   public void setId(String id) {
@@ -62,7 +68,7 @@ public class CertificationModel {
   }
 
   public String getName() {
-    return this.name;
+    return name;
   }
 
   public void setName(String name) {
@@ -70,7 +76,7 @@ public class CertificationModel {
   }
 
   public CertificationIssuers getIssuer() {
-    return this.issuer;
+    return issuer;
   }
 
   public void setIssuer(CertificationIssuers issuer) {
@@ -78,7 +84,7 @@ public class CertificationModel {
   }
 
   public CertificationIssuingCountry getIssuingCountry() {
-    return this.issuingCountry;
+    return issuingCountry;
   }
 
   public void setIssuingCountry(CertificationIssuingCountry issuingCountry) {
@@ -86,7 +92,7 @@ public class CertificationModel {
   }
 
   public Date getExpirationDate() {
-    return this.expirationDate;
+    return expirationDate;
   }
 
   public void setExpirationDate(Date expirationDate) {
@@ -94,7 +100,7 @@ public class CertificationModel {
   }
 
   public int getValidityPeriod() {
-    return this.validityPeriod;
+    return validityPeriod;
   }
 
   public void setValidityPeriod(int validityPeriod) {
@@ -102,7 +108,7 @@ public class CertificationModel {
   }
 
   public List<CrewRoles> getAssignableRoles() {
-    return this.assignableRoles;
+    return assignableRoles;
   }
 
   public void setAssignableRoles(List<CrewRoles> assignableRoles) {
@@ -110,7 +116,7 @@ public class CertificationModel {
   }
 
   public String getDescription() {
-    return this.description;
+    return description;
   }
 
   public void setDescription(String description) {

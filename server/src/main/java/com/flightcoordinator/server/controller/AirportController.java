@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flightcoordinator.server.model.AirportModel;
+import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.AirportService;
@@ -31,21 +31,21 @@ public class AirportController {
 
   @GetMapping("/getById/{airportId}")
   @Operation(summary = "Get a airport by id", description = "Retrieve the details of a spesific airpot using it's ID")
-  public ResponseEntity<ResponseObject<AirportModel>> getAirportById(@PathVariable String airportId) {
-    AirportModel airport = service.getSingleAirportById(airportId);
+  public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@PathVariable String airportId) {
+    AirportEntity airport = service.getSingleAirportById(airportId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
-  public ResponseEntity<ResponseObject<List<AirportModel>>> getAllAirports() {
-    List<AirportModel> airports = service.getAllAirports();
+  public ResponseEntity<ResponseObject<List<AirportEntity>>> getAllAirports() {
+    List<AirportEntity> airports = service.getAllAirports();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airports);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
-  public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportModel newAirport) {
+  public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportEntity newAirport) {
     service.createAirport(newAirport);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
@@ -54,7 +54,7 @@ public class AirportController {
   @PatchMapping("/update/{airportId}")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
   public ResponseEntity<ResponseObject<Object>> updateAirport(@PathVariable String airportId,
-      @RequestBody AirportModel updatedAirport) {
+      @RequestBody AirportEntity updatedAirport) {
     service.updateAirport(airportId, updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

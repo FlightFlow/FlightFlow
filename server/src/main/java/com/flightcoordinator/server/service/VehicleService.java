@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.VehicleEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.VehicleModel;
 import com.flightcoordinator.server.repository.VehicleRepository;
 
 @Service
@@ -16,34 +16,34 @@ public class VehicleService {
   @Autowired
   private VehicleRepository repository;
 
-  public VehicleModel getSingleVehicleById(String vehicleId) {
-    Optional<VehicleModel> vehicle = repository.findById(vehicleId);
+  public VehicleEntity getSingleVehicleById(String vehicleId) {
+    Optional<VehicleEntity> vehicle = repository.findById(vehicleId);
     return vehicle
         .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<VehicleModel> getMultipleVehicleById(List<String> vehicleIds) {
-    List<VehicleModel> vehicles = repository.findAllById(vehicleIds);
+  public List<VehicleEntity> getMultipleVehicleById(List<String> vehicleIds) {
+    List<VehicleEntity> vehicles = repository.findAllById(vehicleIds);
     if (vehicles.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return vehicles;
   }
 
-  public List<VehicleModel> getAllVehicles() {
-    List<VehicleModel> vehicles = repository.findAll();
+  public List<VehicleEntity> getAllVehicles() {
+    List<VehicleEntity> vehicles = repository.findAll();
     if (vehicles.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return vehicles;
   }
 
-  public void createVehicle(VehicleModel newVehicle) {
+  public void createVehicle(VehicleEntity newVehicle) {
     repository.save(newVehicle);
   }
 
-  public void updateVehicle(String vehicleId, VehicleModel updatedVehicle) {
-    VehicleModel existingVehicle = getSingleVehicleById(vehicleId);
+  public void updateVehicle(String vehicleId, VehicleEntity updatedVehicle) {
+    VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
 
     existingVehicle.setType(updatedVehicle.getType());
     existingVehicle.setVehicleCode(updatedVehicle.getVehicleCode());
@@ -55,20 +55,7 @@ public class VehicleService {
   }
 
   public void deleteVehicle(String vehicleId) {
-    VehicleModel existingVehicle = getSingleVehicleById(vehicleId);
+    VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
     repository.delete(existingVehicle);
-  }
-
-  public Boolean doesSingleVehicleExist(String vehicleId) {
-    Optional<VehicleModel> vehicle = repository.findById(vehicleId);
-    return vehicle.isPresent();
-  }
-
-  public Boolean doesMultipleVehicleExist(List<String> vehicleIds) {
-    List<VehicleModel> vehicles = repository.findAllById(vehicleIds);
-    if (vehicles.size() != vehicleIds.size()) {
-      return false;
-    }
-    return vehicles.isEmpty();
   }
 }

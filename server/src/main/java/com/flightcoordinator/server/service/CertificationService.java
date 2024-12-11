@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.CertificationEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.CertificationModel;
 import com.flightcoordinator.server.repository.CertificationRepository;
 
 @Service
@@ -16,34 +17,34 @@ public class CertificationService {
   @Autowired
   private CertificationRepository repository;
 
-  public CertificationModel getSingleCertificationById(String certificationId) {
-    Optional<CertificationModel> certification = repository.findById(certificationId);
+  public CertificationEntity getSingleCertificationById(String certificationId) {
+    Optional<CertificationEntity> certification = repository.findById(certificationId);
     return certification
         .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<CertificationModel> getMultipleCertificationsById(List<String> certificationIds) {
-    List<CertificationModel> certifications = repository.findAllById(certificationIds);
+  public List<CertificationEntity> getMultipleCertificationsById(List<String> certificationIds) {
+    List<CertificationEntity> certifications = repository.findAllById(certificationIds);
     if (certifications.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return certifications;
   }
 
-  public List<CertificationModel> getAllCertifications() {
-    List<CertificationModel> certifications = repository.findAll();
+  public List<CertificationEntity> getAllCertifications() {
+    List<CertificationEntity> certifications = repository.findAll();
     if (certifications.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return certifications;
   }
 
-  public void createCertification(CertificationModel newCertification) {
+  public void createCertification(CertificationEntity newCertification) {
     repository.save(newCertification);
   }
 
-  public void updateCertification(String certificationId, CertificationModel updatedCertification) {
-    CertificationModel existingCertification = getSingleCertificationById(certificationId);
+  public void updateCertification(String certificationId, CertificationEntity updatedCertification) {
+    CertificationEntity existingCertification = getSingleCertificationById(certificationId);
 
     existingCertification.setName(updatedCertification.getName());
     existingCertification.setIssuer(updatedCertification.getIssuer());
@@ -57,18 +58,24 @@ public class CertificationService {
   }
 
   public void deleteCertification(String certificationId) {
-    CertificationModel existingCertification = getSingleCertificationById(certificationId);
+    CertificationEntity existingCertification = getSingleCertificationById(certificationId);
     repository.delete(existingCertification);
   }
 
   public Boolean doesSingleCertificationExist(String certificationId) {
-    Optional<CertificationModel> certification = repository.findById(certificationId);
+    Optional<CertificationEntity> certification = repository.findById(certificationId);
     return certification.isPresent();
   }
 
-  public Boolean doesMultipleCertificationsExist(List<String> certificationIds) {
-    List<CertificationModel> certifications = repository.findAllById(certificationIds);
-    if (certifications.size() != certificationIds.size()) {
+  public Boolean doesMultipleCertificationsExist(List<CertificationEntity> certifications) {
+    List<Boolean> checkedCertifications = new ArrayList<>();
+    for (CertificationEntity certification : certifications) {
+      Optional<CertificationEntity> currentCertification = repository.findById(certification.getId());
+      if (currentCertification.isPresent()) {
+        checkedCertifications.add(true);
+      }
+    }
+    if (certifications.size() != checkedCertifications.size()) {
       return false;
     }
     return certifications.isEmpty();

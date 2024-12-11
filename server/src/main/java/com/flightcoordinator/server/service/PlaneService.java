@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.PlaneEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.PlaneModel;
 import com.flightcoordinator.server.repository.PlaneRepository;
 
 @Service
@@ -19,28 +19,28 @@ public class PlaneService {
   @Autowired
   private AirportService airportService;
 
-  public PlaneModel getSinglePlaneById(String planeId) {
-    Optional<PlaneModel> plane = repository.findById(planeId);
+  public PlaneEntity getSinglePlaneById(String planeId) {
+    Optional<PlaneEntity> plane = repository.findById(planeId);
     return plane.orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<PlaneModel> getMultiplePlaneById(List<String> planeIds) {
-    List<PlaneModel> planes = repository.findAllById(planeIds);
+  public List<PlaneEntity> getMultiplePlaneById(List<String> planeIds) {
+    List<PlaneEntity> planes = repository.findAllById(planeIds);
     if (planes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return planes;
   }
 
-  public List<PlaneModel> getAllPlanes() {
-    List<PlaneModel> planes = repository.findAll();
+  public List<PlaneEntity> getAllPlanes() {
+    List<PlaneEntity> planes = repository.findAll();
     if (planes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return planes;
   }
 
-  public void createPlane(PlaneModel newPlane) {
+  public void createPlane(PlaneEntity newPlane) {
     if (newPlane.getCurrentLocation() == null) {
       Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(newPlane.getCurrentLocation());
       if (!doesSingleAirportExist) {
@@ -50,7 +50,7 @@ public class PlaneService {
     repository.save(newPlane);
   }
 
-  public void updatePlane(String planeId, PlaneModel updatedPlane) {
+  public void updatePlane(String planeId, PlaneEntity updatedPlane) {
     if (updatedPlane.getCurrentLocation() == null) {
       Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(updatedPlane.getCurrentLocation());
       if (!doesSingleAirportExist) {
@@ -58,7 +58,7 @@ public class PlaneService {
       }
     }
 
-    PlaneModel existingPlane = getSinglePlaneById(planeId);
+    PlaneEntity existingPlane = getSinglePlaneById(planeId);
 
     existingPlane.setModel(updatedPlane.getModel());
     existingPlane.setRegistrationNumber(updatedPlane.getRegistrationNumber());
@@ -78,20 +78,7 @@ public class PlaneService {
   }
 
   public void deletePlane(String planeId) {
-    PlaneModel existingPlane = getSinglePlaneById(planeId);
+    PlaneEntity existingPlane = getSinglePlaneById(planeId);
     repository.delete(existingPlane);
-  }
-
-  public Boolean doesSinglePlaneExist(String planeId) {
-    Optional<PlaneModel> plane = repository.findById(planeId);
-    return plane.isPresent();
-  }
-
-  public Boolean doesMultiplePlaneExist(List<String> planeIds) {
-    List<PlaneModel> planes = repository.findAllById(planeIds);
-    if (planes.size() != planeIds.size()) {
-      return false;
-    }
-    return planes.isEmpty();
   }
 }

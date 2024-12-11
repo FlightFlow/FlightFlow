@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.entity.RunwayEntity;
 import com.flightcoordinator.server.exception.AppError;
-import com.flightcoordinator.server.model.RunwayModel;
 import com.flightcoordinator.server.repository.RunwayRepository;
 
 @Service
@@ -16,37 +17,37 @@ public class RunwayService {
   @Autowired
   private RunwayRepository repository;
 
-  public RunwayModel getSingleRunwayById(String runwayId) {
-    Optional<RunwayModel> runway = repository.findById(runwayId);
+  public RunwayEntity getSingleRunwayById(String runwayId) {
+    Optional<RunwayEntity> runway = repository.findById(runwayId);
     return runway.orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
   }
 
-  public List<RunwayModel> getMultipleRunwaysById(List<String> runwayIds) {
-    List<RunwayModel> runways = repository.findAllById(runwayIds);
+  public List<RunwayEntity> getMultipleRunwaysById(List<String> runwayIds) {
+    List<RunwayEntity> runways = repository.findAllById(runwayIds);
     if (runways.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return runways;
   }
 
-  public List<RunwayModel> getAllRunways() {
-    List<RunwayModel> runways = repository.findAll();
+  public List<RunwayEntity> getAllRunways() {
+    List<RunwayEntity> runways = repository.findAll();
     if (runways.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
     return runways;
   }
 
-  public void createRunway(RunwayModel newRunway) {
+  public void createRunway(RunwayEntity newRunway) {
     repository.save(newRunway);
   }
 
-  public void updateRunway(String runwayId, RunwayModel updatedRunway) {
-    RunwayModel existingRunway = getSingleRunwayById(runwayId);
+  public void updateRunway(String runwayId, RunwayEntity updatedRunway) {
+    RunwayEntity existingRunway = getSingleRunwayById(runwayId);
 
     existingRunway.setLength(updatedRunway.getLength());
     existingRunway.setWidth(updatedRunway.getWidth());
-    existingRunway.getSurfaceType(updatedRunway.getSurfaceType());
+    existingRunway.setSurfaceType(updatedRunway.getSurfaceType());
     existingRunway.setMaxWeightCapacity(updatedRunway.getMaxWeightCapacity());
     existingRunway.setOrientation(updatedRunway.getOrientation());
 
@@ -54,18 +55,24 @@ public class RunwayService {
   }
 
   public void deleteRunway(String runwayId) {
-    RunwayModel existingRunway = getSingleRunwayById(runwayId);
+    RunwayEntity existingRunway = getSingleRunwayById(runwayId);
     repository.delete(existingRunway);
   }
 
   public Boolean doesSingleRunwayExist(String runwayId) {
-    Optional<RunwayModel> airport = repository.findById(runwayId);
+    Optional<RunwayEntity> airport = repository.findById(runwayId);
     return airport.isPresent();
   }
 
-  public Boolean doesMultipleRunwaysExist(List<String> runwayIds) {
-    List<RunwayModel> runways = repository.findAllById(runwayIds);
-    if (runways.size() != runwayIds.size()) {
+  public Boolean doesMultipleRunwaysExist(List<RunwayEntity> runways) {
+    List<Boolean> checkedRunways = new ArrayList<>();
+    for (RunwayEntity runway : runways) {
+      Optional<RunwayEntity> currentRunway = repository.findById(runway.getId());
+      if (currentRunway.isPresent()) {
+        checkedRunways.add(true);
+      }
+    }
+    if (runways.size() != checkedRunways.size()) {
       return false;
     }
     return runways.isEmpty();
