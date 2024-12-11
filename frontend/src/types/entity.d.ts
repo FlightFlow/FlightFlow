@@ -12,6 +12,27 @@ namespace EntityTypes {
     type: Enums.AirportTypes;
     runways: string[];
   }
+  export interface AlgorithmResultEntity extends BaseEntity {
+    routeId: string;
+    planeId: string;
+    crewMemberIds: string[];
+    runwayId: string;
+    groundVehicleIds: string[];
+  }
+  export interface AlgorithmRunEntity extends BaseEntity {
+    algorithmName: string;
+    startTime: Date;
+    endTime: Date;
+    runtimeInMilliseconds: number;
+    parameters: Map<string, object>;
+    resourcesUsed: Map<string, object>;
+    constrainsMet: Map<string, boolean>;
+    logs: string[];
+    isSuccessful: boolean;
+    failureReason: string;
+    isResultsSaved: boolean;
+    resultId: string;
+  }
   export interface CertificationEntity extends BaseEntity {
     name: string;
     issuer: Enums.CertificationIssuers;
