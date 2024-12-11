@@ -2,17 +2,16 @@ package com.flightcoordinator.server.entity;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.flightcoordinator.server.enums.GroundVehicleAvailability;
 import com.flightcoordinator.server.enums.GroundVehicleTypes;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "vehicle")
+@Document(collection = "vehicle")
 public class VehicleEntity {
   @Id
   private String id;

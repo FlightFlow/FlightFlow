@@ -2,16 +2,15 @@ package com.flightcoordinator.server.entity;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.flightcoordinator.server.enums.PlaneAvailability;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "plane")
+@Document(collection = "plane")
 public class PlaneEntity {
   @Id
   private String id;

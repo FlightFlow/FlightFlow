@@ -2,17 +2,16 @@ package com.flightcoordinator.server.entity;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.flightcoordinator.server.enums.CrewAvailability;
 import com.flightcoordinator.server.enums.CrewRoles;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "crew")
+@Document(collection = "crew")
 public class CrewEntity {
   @Id
   private String id;

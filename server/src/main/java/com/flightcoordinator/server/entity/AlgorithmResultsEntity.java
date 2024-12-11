@@ -1,15 +1,10 @@
 package com.flightcoordinator.server.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "algorithm_results")
+@Document(collection = "algorithm_results")
 public class AlgorithmResultsEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id;
 }

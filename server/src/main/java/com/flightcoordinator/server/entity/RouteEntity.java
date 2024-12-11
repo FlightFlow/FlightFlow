@@ -1,13 +1,12 @@
 package com.flightcoordinator.server.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "route")
+@Document(collection = "route")
 public class RouteEntity {
   @Id
   private String id;

@@ -1,15 +1,14 @@
 package com.flightcoordinator.server.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.flightcoordinator.server.enums.RunwaySurfaceTypes;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "runway")
+@Document(collection = "runway")
 public class RunwayEntity {
   @Id
   private String id;
