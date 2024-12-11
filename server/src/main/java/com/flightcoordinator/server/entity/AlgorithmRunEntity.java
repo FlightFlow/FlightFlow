@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import jakarta.validation.constraints.NotBlank;
 
 @Document(collection = "algorithm_runs")
-public class AlgorithmRunsEntity {
+public class AlgorithmRunEntity {
   @Id
   private String id;
 
@@ -58,10 +58,10 @@ public class AlgorithmRunsEntity {
   @Field("result_id")
   private String resultId;
 
-  public AlgorithmRunsEntity() {
+  public AlgorithmRunEntity() {
   }
 
-  public AlgorithmRunsEntity(String id, @NotBlank(message = "Algorithm name cannot be blank") String algorithmName,
+  public AlgorithmRunEntity(String id, @NotBlank(message = "Algorithm name cannot be blank") String algorithmName,
       @NotBlank(message = "Start time cannot be blank") Date startTime,
       @NotBlank(message = "End time cannot be blank") Date endTime,
       @NotBlank(message = "Runtime in ms cannot be blank") long runtimeInMilliseconds,
