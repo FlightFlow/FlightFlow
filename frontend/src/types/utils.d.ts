@@ -18,7 +18,7 @@ namespace UtilTypes {
     type AuthActions = "login" | "register" | "logout" | "resetpassword";
 
     interface EndpointProps {
-      route: EndpointRoutes;
+      controller: EndpointRoutes;
       action: EndpointActions | AuthActions | AlgorithmActions;
     }
 
