@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "[PRE-COMMIT] Info: Starting linting process..."
+
+cd ../server
+flake8 . && pylint app && bandit -r app
+
+cd ../frontend
+pnpm run lint && prettier --write
+
+echo "[PRE-COMMIT] Info: Completed linting process."
+
+exit 0

@@ -9,7 +9,7 @@ BACKEND_PATH="$SCRIPT_DIR/../server"
 # PRE-COMMIT HOOKS
 echo "Info: Setting up pre-commit hook..."
 
-ln -sf "$SCRIPT_DIR/../.githooks/pre-commit.sh" "$SCRIPT_DIR/../.git/hooks/pre-commit"
+ln -sf "$SCRIPT_DIR/../.githooks/pre-commit" "$SCRIPT_DIR/../.git/hooks/pre-commit"
 
 echo "Info: Pre-commit hook setup completed."
 
