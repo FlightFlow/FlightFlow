@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: FlightCoordinator Backend Server
+  security:
+    user:
+      name: NAME
+      password: PASSWORD
+  data:
+    mongodb:
+      uri: DATABASE_URI
+      database: DATABASE_NAME
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+
+server:
+  port: PORT
