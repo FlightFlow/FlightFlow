@@ -9,8 +9,8 @@ namespace RunwayTypes {
     export type DeleteMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.BaseEntity;
   }
   export namespace Queries {
-    export type CertificateQueryRequestParams = GlobalTypes.BaseRequestParams;
-    export type CertificateQueryResponseParams = EntityTypes.RunwayEntity[];
+    export type RunwayQueryRequestParams = GlobalTypes.BaseRequestParams;
+    export type RunwayQueryResponseParams = EntityTypes.RunwayEntity[];
   }
 }
 export default RunwayTypes;

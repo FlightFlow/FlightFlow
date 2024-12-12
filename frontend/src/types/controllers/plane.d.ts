@@ -9,8 +9,8 @@ namespace PlaneTypes {
     export type DeleteMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.BaseEntity;
   }
   export namespace Queries {
-    export type CertificateQueryRequestParams = GlobalTypes.BaseRequestParams;
-    export type CertificateQueryResponseParams = EntityTypes.PlaneEntity[];
+    export type PlaneQueryRequestParams = GlobalTypes.BaseRequestParams;
+    export type PlaneQueryResponseParams = EntityTypes.PlaneEntity[];
   }
 }
 export default PlaneTypes;

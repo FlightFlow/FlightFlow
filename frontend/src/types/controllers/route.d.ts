@@ -9,8 +9,8 @@ namespace RouteTypes {
     export type DeleteMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.BaseEntity;
   }
   export namespace Queries {
-    export type CertificateQueryRequestParams = GlobalTypes.BaseRequestParams;
-    export type CertificateQueryResponseParams = EntityTypes.RouteEntity[];
+    export type RouteQueryRequestParams = GlobalTypes.BaseRequestParams;
+    export type RouteQueryResponseParams = EntityTypes.RouteEntity[];
   }
 }
 export default RouteTypes;

@@ -9,8 +9,8 @@ namespace VehicleTypes {
     export type DeleteMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.BaseEntity;
   }
   export namespace Queries {
-    export type CertificateQueryRequestParams = GlobalTypes.BaseRequestParams;
-    export type CertificateQueryResponseParams = EntityTypes.VehicleEntity[];
+    export type VehicleQueryRequestParams = GlobalTypes.BaseRequestParams;
+    export type VehicleQueryResponseParams = EntityTypes.VehicleEntity[];
   }
 }
 export default VehicleTypes;
