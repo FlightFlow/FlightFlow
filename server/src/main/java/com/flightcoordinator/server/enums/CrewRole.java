@@ -2,7 +2,7 @@ package com.flightcoordinator.server.enums;
 
 // TODO turn into an endpoint
 
-public enum CrewRoles {
+public enum CrewRole {
   CAPTAIN("Captain"),
   FIRST_OFFICER("First Officer"),
   SECOND_OFFICER("Seconds Officer"),
@@ -17,7 +17,7 @@ public enum CrewRoles {
 
   public final String role;
 
-  private CrewRoles(String role) {
+  private CrewRole(String role) {
     this.role = role;
   }
 }
