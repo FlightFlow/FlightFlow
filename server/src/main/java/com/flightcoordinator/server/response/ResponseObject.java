@@ -3,11 +3,9 @@ package com.flightcoordinator.server.response;
 public class ResponseObject<T> {
   private boolean isSuccess = false;
 
-  @SuppressWarnings("FieldMayBeFinal")
-  private String message;
+  private final String message;
 
-  @SuppressWarnings("FieldMayBeFinal")
-  private T data;
+  private final T data;
 
   public ResponseObject(Boolean isSuccess, String message, T data) {
     this.isSuccess = isSuccess;
