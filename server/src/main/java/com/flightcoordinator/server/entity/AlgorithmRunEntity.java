@@ -5,58 +5,66 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "algorithm_runs")
+@Entity
+@Table(name = "algorithm_runs_table")
 public class AlgorithmRunEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("algorithm_name")
   @NotBlank(message = "Algorithm name cannot be blank")
+  @Column(name = "algorithm_name", nullable = false)
   private String algorithmName;
 
-  @Field("start_time")
   @NotBlank(message = "Start time cannot be blank")
+  @Column(name = "start_time", nullable = false)
   private Date startTime;
 
-  @Field("end_time")
   @NotBlank(message = "End time cannot be blank")
+  @Column(name = "end_time", nullable = false)
   private Date endTime;
 
-  @Field("runtime_in_milliseconds")
   @NotBlank(message = "Runtime in ms cannot be blank")
+  @Column(name = "runtime_in_milliseconds", nullable = false)
   private long runtimeInMilliseconds;
 
-  @Field("parameters")
   @NotBlank(message = "Parameters cannot be blank")
+  @Column(name = "runtime_in_milliseconds", nullable = false)
   private Map<String, Object> parameters;
 
-  @Field("resources_met")
   @NotBlank(message = "Resources used cannot be blank")
+  @Column(name = "resources_used", nullable = false)
   private Map<String, Object> resourcesUsed;
 
-  @Field("constrains_met")
   @NotBlank(message = "Constraints met cannot be blank")
+  @Column(name = "constraints_met", nullable = false)
   private Map<String, Boolean> constrainsMet;
 
-  @Field("logs")
+  @Column(name = "logs", nullable = false)
   private List<String> logs;
 
-  @Field("is_successful")
+  @Column(name = "is_successful", nullable = false)
   private boolean isSuccessful;
 
-  @Field("failure_reason")
+  @Column(name = "failure_reason", nullable = false)
   private String failureReason;
 
-  @Field("is_results_saved")
+  @Column(name = "is_results_saved", nullable = false)
   private boolean isResultsSaved;
 
-  @Field("result_id")
-  private String resultId;
+  @OneToOne
+  @JoinColumn(name = "result_id", nullable = false)
+  private AlgorithmResultEntity result;
 
   public AlgorithmRunEntity() {
   }
@@ -68,7 +76,7 @@ public class AlgorithmRunEntity {
       @NotBlank(message = "Parameters cannot be blank") Map<String, Object> parameters,
       @NotBlank(message = "Resources used cannot be blank") Map<String, Object> resourcesUsed,
       @NotBlank(message = "Constraints met cannot be blank") Map<String, Boolean> constrainsMet, List<String> logs,
-      boolean isSuccessful, String failureReason, boolean isResultsSaved, String resultId) {
+      boolean isSuccessful, String failureReason, boolean isResultsSaved, AlgorithmResultEntity result) {
     this.id = id;
     this.algorithmName = algorithmName;
     this.startTime = startTime;
@@ -81,7 +89,7 @@ public class AlgorithmRunEntity {
     this.isSuccessful = isSuccessful;
     this.failureReason = failureReason;
     this.isResultsSaved = isResultsSaved;
-    this.resultId = resultId;
+    this.result = result;
   }
 
   public String getId() {
@@ -180,11 +188,11 @@ public class AlgorithmRunEntity {
     this.isResultsSaved = isResultsSaved;
   }
 
-  public String getResultId() {
-    return resultId;
+  public AlgorithmResultEntity getResult() {
+    return result;
   }
 
-  public void setResultId(String resultId) {
-    this.resultId = resultId;
+  public void setResult(AlgorithmResultEntity result) {
+    this.result = result;
   }
 }
