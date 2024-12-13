@@ -11,7 +11,7 @@
     <groupId>com.flightcoordinator</groupId>
     <artifactId>server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>FlightCoordinator Backend Server</name>
+    <name>FlightCoordinator Server</name>
     <description> Automated flight manager app</description>
     <url>https://github.com/FlightCoordinator/FlightCoordinator</url>
     <licenses>

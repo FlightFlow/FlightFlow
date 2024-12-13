@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FlightCoordinatorBackendServerApplication {
-
+public class FlightCoordinatorServerApplication {
   public static void main(String[] args) {
-    SpringApplication.run(FlightCoordinatorBackendServerApplication.class, args);
+    SpringApplication.run(FlightCoordinatorServerApplication.class, args);
   }
-
 }
