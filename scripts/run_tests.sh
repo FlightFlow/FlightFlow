@@ -1,9 +1,10 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+ROOT_DIR="$SCRIPT_DIR/../.."
 
-FRONTEND_PATH="$SCRIPT_DIR/../frontend"
-BACKEND_PATH="$SCRIPT_DIR/../server"
+FRONTEND_PATH="$ROOT_DIR/frontend"
+BACKEND_PATH="$ROOT_DIR/server"
 
 
 echo "Info: Running frontend tests..."

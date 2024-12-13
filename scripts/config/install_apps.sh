@@ -1,10 +1,18 @@
 #!/bin/bash
 
+# JAVA_VERSION="jdk-23_linux-x64_bin"
 MAVEN_VERSION="apache-maven-3.9.9"
+
+# JAVA_SOURCE="https://download.oracle.com/java/23/latest/$JAVA_VERSION.tar.gz"
+MAVEN_SOURCE="https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/$MAVEN_VERSION.tar.gz"
 
 NVM_SOURCE="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh"
 PNPM_SOURCE="https://get.pnpm.io/install.sh"
-MAVEN_SOURCE="https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/$MAVEN_VERSION.tar.gz"
+
+# Uptade and upgrade the package manager
+
+sudo apt update
+sudo apt upgrade
 
 # NVM AND NODE
 echo "Info: Installing Node Version Manager..."
@@ -20,6 +28,13 @@ echo "Info: Installing pnpm..."
 curl -fsSL "$PNPM_SOURCE"| sh -
 
 echo "Info: Successfully installed pnpm."
+
+# JAVA
+echo "Info: Installing JDK..."
+
+sudo apt install default-jre
+
+echo "Info: Successfully installed JDK..."
 
 # MAVEN
 echo "Info: Installing Maven..."
