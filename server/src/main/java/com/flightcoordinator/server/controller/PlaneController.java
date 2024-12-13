@@ -23,30 +23,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/plane")
+@RequestMapping("/api/${api.version}/plane")
 @Tag(name = "Plane Controller", description = "Endpoints for managing planes.")
 public class PlaneController {
   @Autowired
-  private PlaneService service;
+  private PlaneService planeService;
 
   @GetMapping("/getById/{planeId}")
   @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID")
   public ResponseEntity<ResponseObject<PlaneEntity>> getPlaneById(@PathVariable String planeId) {
-    PlaneEntity plane = service.getSinglePlaneById(planeId);
+    PlaneEntity plane = planeService.getSinglePlaneById(planeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), plane);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the planes", description = "Retrieve the details of all planes.")
   public ResponseEntity<ResponseObject<List<PlaneEntity>>> getAllPlanes() {
-    List<PlaneEntity> planes = service.getAllPlanes();
+    List<PlaneEntity> planes = planeService.getAllPlanes();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), planes);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new plane", description = "Create a new plane.")
   public ResponseEntity<ResponseObject<Object>> createPlane(@RequestBody PlaneEntity newPlane) {
-    service.createPlane(newPlane);
+    planeService.createPlane(newPlane);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   }
@@ -55,14 +55,14 @@ public class PlaneController {
   @Operation(summary = "Update an plane", description = "Update an existing plane.")
   public ResponseEntity<ResponseObject<Object>> updatePlane(@PathVariable String planeId,
       @RequestBody PlaneEntity updatedPlane) {
-    service.updatePlane(planeId, updatedPlane);
+    planeService.updatePlane(planeId, updatedPlane);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("/delete/{planeId}")
   @Operation(summary = "Delete an plane", description = "Delete an existing plane.")
   public ResponseEntity<ResponseObject<Object>> deletePlane(@PathVariable String planeId) {
-    service.deletePlane(planeId);
+    planeService.deletePlane(planeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }

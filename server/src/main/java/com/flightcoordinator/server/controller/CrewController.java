@@ -23,30 +23,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/crew")
+@RequestMapping("/api/${api.version}/crew")
 @Tag(name = "Crew Controller", description = "Endpoints for managing crew members.")
 public class CrewController {
   @Autowired
-  private CrewService service;
+  private CrewService crewService;
 
   @GetMapping("/getById/{crewMemberId}")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@PathVariable String crewMemberId) {
-    CrewEntity crewMember = service.getSingleCrewMemberById(crewMemberId);
+    CrewEntity crewMember = crewService.getSingleCrewMemberById(crewMemberId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMember);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<List<CrewEntity>>> getAllCrewMembers() {
-    List<CrewEntity> crewMembers = service.getAllCrewMembers();
+    List<CrewEntity> crewMembers = crewService.getAllCrewMembers();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMembers);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new crew member", description = "Create a new crew member.")
   public ResponseEntity<ResponseObject<Object>> createCrewMember(@RequestBody CrewEntity newCrewMember) {
-    service.createCrewMember(newCrewMember);
+    crewService.createCrewMember(newCrewMember);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   }
@@ -55,14 +55,14 @@ public class CrewController {
   @Operation(summary = "Update an existing crew member", description = "Update an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> updateCrewMember(@PathVariable String crewMemberId,
       @RequestBody CrewEntity updatedCrewMember) {
-    service.updateCrewMember(crewMemberId, updatedCrewMember);
+    crewService.updateCrewMember(crewMemberId, updatedCrewMember);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("/delete/{crewMemberId}")
   @Operation(summary = "Delete an existing crew member", description = "Delete an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> deleteCrewMember(@PathVariable String crewMemberId) {
-    service.deleteCrewMember(crewMemberId);
+    crewService.deleteCrewMember(crewMemberId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }
