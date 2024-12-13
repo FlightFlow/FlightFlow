@@ -15,16 +15,17 @@ import com.flightcoordinator.server.repository.CertificationRepository;
 @Service
 public class CertificationService {
   @Autowired
-  private CertificationRepository repository;
+  private CertificationRepository certificationRepository;
 
   public CertificationEntity getSingleCertificationById(String certificationId) {
-    Optional<CertificationEntity> certification = repository.findById(certificationId);
-    return certification
-        .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
+    Optional<CertificationEntity> certification = certificationRepository.findById(certificationId);
+    return certification.orElseThrow(() -> new AppError(
+        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        HttpStatus.NOT_FOUND.value()));
   }
 
   public List<CertificationEntity> getMultipleCertificationsById(List<String> certificationIds) {
-    List<CertificationEntity> certifications = repository.findAllById(certificationIds);
+    List<CertificationEntity> certifications = certificationRepository.findAllById(certificationIds);
     if (certifications.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -32,7 +33,7 @@ public class CertificationService {
   }
 
   public List<CertificationEntity> getAllCertifications() {
-    List<CertificationEntity> certifications = repository.findAll();
+    List<CertificationEntity> certifications = certificationRepository.findAll();
     if (certifications.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -40,7 +41,7 @@ public class CertificationService {
   }
 
   public void createCertification(CertificationEntity newCertification) {
-    repository.save(newCertification);
+    certificationRepository.save(newCertification);
   }
 
   public void updateCertification(String certificationId, CertificationEntity updatedCertification) {
@@ -54,23 +55,23 @@ public class CertificationService {
     existingCertification.setAssignableRoles(updatedCertification.getAssignableRoles());
     existingCertification.setDescription(updatedCertification.getDescription());
 
-    repository.save(existingCertification);
+    certificationRepository.save(existingCertification);
   }
 
   public void deleteCertification(String certificationId) {
     CertificationEntity existingCertification = getSingleCertificationById(certificationId);
-    repository.delete(existingCertification);
+    certificationRepository.delete(existingCertification);
   }
 
   public Boolean doesSingleCertificationExist(String certificationId) {
-    Optional<CertificationEntity> certification = repository.findById(certificationId);
+    Optional<CertificationEntity> certification = certificationRepository.findById(certificationId);
     return certification.isPresent();
   }
 
   public Boolean doesMultipleCertificationsExist(List<CertificationEntity> certifications) {
     List<Boolean> checkedCertifications = new ArrayList<>();
     for (CertificationEntity certification : certifications) {
-      Optional<CertificationEntity> currentCertification = repository.findById(certification.getId());
+      Optional<CertificationEntity> currentCertification = certificationRepository.findById(certification.getId());
       if (currentCertification.isPresent()) {
         checkedCertifications.add(true);
       }
