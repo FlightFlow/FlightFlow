@@ -1,16 +1,16 @@
 package com.flightcoordinator.server.dto;
 
-public class RegisterRequestDTO {
+public class RegisterDetailsDTO {
   private String fullName;
   private String username;
   private String email;
   private String password;
   private String passwordAgain;
 
-  public RegisterRequestDTO() {
+  public RegisterDetailsDTO() {
   }
 
-  public RegisterRequestDTO(String fullName, String username, String email, String password, String passwordAgain) {
+  public RegisterDetailsDTO(String fullName, String username, String email, String password, String passwordAgain) {
     this.fullName = fullName;
     this.username = username;
     this.email = email;

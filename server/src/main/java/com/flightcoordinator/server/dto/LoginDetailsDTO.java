@@ -1,14 +1,14 @@
 package com.flightcoordinator.server.dto;
 
-public class LoginRequestDTO {
+public class LoginDetailsDTO {
   private String username;
   private String email;
   private String password;
 
-  public LoginRequestDTO() {
+  public LoginDetailsDTO() {
   }
 
-  public LoginRequestDTO(String username, String email, String password) {
+  public LoginDetailsDTO(String username, String email, String password) {
     this.username = username;
     this.email = email;
     this.password = password;
