@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,5 +76,21 @@ public class RouteService {
   public void deleteRoute(String routeId) {
     RouteEntity existingRoute = getSingleRouteById(routeId);
     routeRepository.delete(existingRoute);
+  }
+
+  public Boolean doesSingleRouteExist(RouteEntity route) {
+    String routeId = route.getId();
+    Optional<RouteEntity> routeFound = routeRepository.findById(routeId);
+    return routeFound.isPresent();
+  }
+
+  public Boolean doesMultipleRoutesExist(List<RouteEntity> routes) {
+    List<String> routeIds = new ArrayList<>();
+    routes.forEach(route -> routeIds.add(route.getId()));
+    List<RouteEntity> routesFound = routeRepository.findAllById(routeIds);
+    if (routes.size() != routesFound.size()) {
+      return false;
+    }
+    return routesFound.isEmpty();
   }
 }

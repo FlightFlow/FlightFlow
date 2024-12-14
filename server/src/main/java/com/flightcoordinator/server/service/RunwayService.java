@@ -61,22 +61,19 @@ public class RunwayService {
     runwayRepository.delete(existingRunway);
   }
 
-  public Boolean doesSingleRunwayExist(String runwayId) {
-    Optional<RunwayEntity> airport = runwayRepository.findById(runwayId);
-    return airport.isPresent();
+  public Boolean doesSingleRunwayExist(RunwayEntity runway) {
+    String runwayId = runway.getId();
+    Optional<RunwayEntity> runwayFound = runwayRepository.findById(runwayId);
+    return runwayFound.isPresent();
   }
 
   public Boolean doesMultipleRunwaysExist(List<RunwayEntity> runways) {
-    List<Boolean> checkedRunways = new ArrayList<>();
-    for (RunwayEntity runway : runways) {
-      Optional<RunwayEntity> currentRunway = runwayRepository.findById(runway.getId());
-      if (currentRunway.isPresent()) {
-        checkedRunways.add(true);
-      }
-    }
-    if (runways.size() != checkedRunways.size()) {
+    List<String> runwayIds = new ArrayList<>();
+    runways.forEach(runway -> runwayIds.add(runway.getId()));
+    List<RunwayEntity> runwaysFound = runwayRepository.findAllById(runwayIds);
+    if (runways.size() != runwaysFound.size()) {
       return false;
     }
-    return runways.isEmpty();
+    return runwaysFound.isEmpty();
   }
 }

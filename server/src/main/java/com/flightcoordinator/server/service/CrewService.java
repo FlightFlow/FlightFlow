@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class CrewService {
 
     if (!doesCertificationsExist || !doesBaseAirportExist) {
       throw new AppError(
-          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base airport",
+          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base crew",
           HttpStatus.BAD_REQUEST.value());
     }
 
@@ -74,7 +75,7 @@ public class CrewService {
 
     if (!doesCertificationsExist || !doesBaseAirportExist) {
       throw new AppError(
-          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base airport",
+          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base crew",
           HttpStatus.BAD_REQUEST.value());
     }
 
@@ -104,5 +105,21 @@ public class CrewService {
 
   private Boolean isPhoneNumberValid(Float phoneNumber) {
     return phoneNumber.toString().length() == 11;
+  }
+
+  public Boolean doesSingleCrewExist(CrewEntity crewMember) {
+    String crewMemberId = crewMember.getId();
+    Optional<CrewEntity> crewMemberFound = crewRepository.findById(crewMemberId);
+    return crewMemberFound.isPresent();
+  }
+
+  public Boolean doesMultipleCrewsExist(List<CrewEntity> crewMembers) {
+    List<String> crewMemberIds = new ArrayList<>();
+    crewMembers.forEach(crewMember -> crewMemberIds.add(crewMember.getId()));
+    List<CrewEntity> crewMembersFound = crewRepository.findAllById(crewMemberIds);
+    if (crewMembers.size() != crewMembersFound.size()) {
+      return false;
+    }
+    return crewMembersFound.isEmpty();
   }
 }

@@ -63,22 +63,19 @@ public class CertificationService {
     certificationRepository.delete(existingCertification);
   }
 
-  public Boolean doesSingleCertificationExist(String certificationId) {
-    Optional<CertificationEntity> certification = certificationRepository.findById(certificationId);
-    return certification.isPresent();
+  public Boolean doesSingleCertificationExist(CertificationEntity certification) {
+    String certificationId = certification.getId();
+    Optional<CertificationEntity> certificationFound = certificationRepository.findById(certificationId);
+    return certificationFound.isPresent();
   }
 
   public Boolean doesMultipleCertificationsExist(List<CertificationEntity> certifications) {
-    List<Boolean> checkedCertifications = new ArrayList<>();
-    for (CertificationEntity certification : certifications) {
-      Optional<CertificationEntity> currentCertification = certificationRepository.findById(certification.getId());
-      if (currentCertification.isPresent()) {
-        checkedCertifications.add(true);
-      }
-    }
-    if (certifications.size() != checkedCertifications.size()) {
+    List<String> certificationIds = new ArrayList<>();
+    certifications.forEach(certification -> certificationIds.add(certification.getId()));
+    List<CertificationEntity> certificationsFound = certificationRepository.findAllById(certificationIds);
+    if (certifications.size() != certificationsFound.size()) {
       return false;
     }
-    return certifications.isEmpty();
+    return certificationsFound.isEmpty();
   }
 }

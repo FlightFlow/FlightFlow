@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class PlaneService {
     if (newPlane.getCurrentLocation() == null) {
       Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(newPlane.getCurrentLocation());
       if (!doesSingleAirportExist) {
-        throw new AppError("Cannot validate current location airport", HttpStatus.BAD_REQUEST.value());
+        throw new AppError("Cannot validate current location plane", HttpStatus.BAD_REQUEST.value());
       }
     }
     planeRepository.save(newPlane);
@@ -56,7 +57,7 @@ public class PlaneService {
     if (updatedPlane.getCurrentLocation() == null) {
       Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(updatedPlane.getCurrentLocation());
       if (!doesSingleAirportExist) {
-        throw new AppError("Cannot validate current location airport", HttpStatus.BAD_REQUEST.value());
+        throw new AppError("Cannot validate current location plane", HttpStatus.BAD_REQUEST.value());
       }
     }
 
@@ -82,5 +83,21 @@ public class PlaneService {
   public void deletePlane(String planeId) {
     PlaneEntity existingPlane = getSinglePlaneById(planeId);
     planeRepository.delete(existingPlane);
+  }
+
+  public Boolean doesSinglePlaneExist(PlaneEntity plane) {
+    String planeId = plane.getId();
+    Optional<PlaneEntity> planeFound = planeRepository.findById(planeId);
+    return planeFound.isPresent();
+  }
+
+  public Boolean doesMultiplePlanesExist(List<PlaneEntity> planes) {
+    List<String> planeIds = new ArrayList<>();
+    planes.forEach(plane -> planeIds.add(plane.getId()));
+    List<PlaneEntity> planesFound = planeRepository.findAllById(planeIds);
+    if (planes.size() != planesFound.size()) {
+      return false;
+    }
+    return planesFound.isEmpty();
   }
 }

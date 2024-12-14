@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,5 +59,21 @@ public class VehicleService {
   public void deleteVehicle(String vehicleId) {
     VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
     vehicleRepository.delete(existingVehicle);
+  }
+
+  public Boolean doesSingleVehicleExist(VehicleEntity vehicle) {
+    String vehicleId = vehicle.getId();
+    Optional<VehicleEntity> vehicleFound = vehicleRepository.findById(vehicleId);
+    return vehicleFound.isPresent();
+  }
+
+  public Boolean doesMultipleVehiclesExist(List<VehicleEntity> vehicles) {
+    List<String> vehicleIds = new ArrayList<>();
+    vehicles.forEach(vehicle -> vehicleIds.add(vehicle.getId()));
+    List<VehicleEntity> vehiclesFound = vehicleRepository.findAllById(vehicleIds);
+    if (vehicles.size() != vehiclesFound.size()) {
+      return false;
+    }
+    return vehiclesFound.isEmpty();
   }
 }
