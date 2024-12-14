@@ -1,12 +1,15 @@
 package com.flightcoordinator.server.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import com.flightcoordinator.server.token.TokenEntity;
-import com.flightcoordinator.server.token.TokenRepository;
+import com.flightcoordinator.server.entity.UserEntity;
+import com.flightcoordinator.server.exception.AppError;
+import com.flightcoordinator.server.repository.UserRepository;
+import com.flightcoordinator.server.token.TokenService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +17,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CustomLogoutHandler implements LogoutHandler {
 
   @Autowired
-  private TokenRepository tokenRepository;
+  private TokenService tokenService;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
+  private JWTService jwtService;
 
   @Override
   public void logout(
@@ -26,14 +35,18 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       authToken = authHeader.substring(7);
-      TokenEntity savedToken = tokenRepository.findByToken(authToken).orElse(null);
+      String userEmailAsUsername = jwtService.extractUsername(authToken);
+      UserEntity user = userRepository.findByEmail(userEmailAsUsername).orElse(null);
 
-      if (savedToken != null) {
-        savedToken.setExpired(true);
-        savedToken.setRevoked(true);
-        tokenRepository.save(savedToken);
+      if (user != null) {
+        tokenService.revokeSingleToken(authToken);
+        tokenService.revokeAllTokensForUser(user);
 
         SecurityContextHolder.clearContext();
+      } else {
+        throw new AppError(
+            HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value());
       }
     }
   }
