@@ -3,50 +3,65 @@ package com.flightcoordinator.server.entity;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "algorithm_results")
+@Entity
+@Table(name = "algorithm_result_table")
 public class AlgorithmResultEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("route_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "route_id", nullable = false)
   @NotBlank(message = "Route ID cannot be blank")
-  private String routeId;
+  private RouteEntity route;
 
-  @Field("plane_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "plane_id", nullable = false)
   @NotBlank(message = "Plane ID cannot be blank")
-  private String planeId;
+  private PlaneEntity plane;
 
-  @Field("crew_member_ids")
-  @NotBlank(message = "Crew member IDs cannot be blank")
-  private List<String> crewMemberIds;
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "algorithm_result_crew_members", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "crew_member_id"))
+  @NotBlank(message = "Crew members list cannot be blank")
+  private List<CrewEntity> crewMembers;
 
-  @Field("runway_id")
-  @NotBlank(message = "Runway ID cannot be blank")
-  private String runwayId;
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "algorithm_result_runway", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
+  @NotBlank(message = "Runways list cannot be blank")
+  private List<RunwayEntity> runways;
 
-  @Field("ground_vehicle_ids")
-  @NotBlank(message = "Ground vehicle IDs cannot be blank")
-  private List<String> groundVehicleIds;
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "algorithm_result_ground_vehicles", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
+  @NotBlank(message = "Ground vehicles list cannot be blank")
+  private List<VehicleEntity> groundVehicles;
 
   public AlgorithmResultEntity() {
   }
 
-  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") String routeId,
-      @NotBlank(message = "Plane ID cannot be blank") String planeId,
-      @NotBlank(message = "Crew member IDs cannot be blank") List<String> crewMemberIds,
-      @NotBlank(message = "Runway ID cannot be blank") String runwayId,
-      @NotBlank(message = "Ground vehicle IDs cannot be blank") List<String> groundVehicleIds) {
+  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") RouteEntity route,
+      @NotBlank(message = "Plane ID cannot be blank") PlaneEntity plane,
+      @NotBlank(message = "Crew members list cannot be blank") List<CrewEntity> crewMembers,
+      @NotBlank(message = "Runways list cannot be blank") List<RunwayEntity> runways,
+      @NotBlank(message = "Ground vehicles list cannot be blank") List<VehicleEntity> groundVehicles) {
     this.id = id;
-    this.routeId = routeId;
-    this.planeId = planeId;
-    this.crewMemberIds = crewMemberIds;
-    this.runwayId = runwayId;
-    this.groundVehicleIds = groundVehicleIds;
+    this.route = route;
+    this.plane = plane;
+    this.crewMembers = crewMembers;
+    this.runways = runways;
+    this.groundVehicles = groundVehicles;
   }
 
   public String getId() {
@@ -57,43 +72,43 @@ public class AlgorithmResultEntity {
     this.id = id;
   }
 
-  public String getRouteId() {
-    return routeId;
+  public RouteEntity getRoute() {
+    return route;
   }
 
-  public void setRouteId(String routeId) {
-    this.routeId = routeId;
+  public void setRoute(RouteEntity route) {
+    this.route = route;
   }
 
-  public String getPlaneId() {
-    return planeId;
+  public PlaneEntity getPlane() {
+    return plane;
   }
 
-  public void setPlaneId(String planeId) {
-    this.planeId = planeId;
+  public void setPlane(PlaneEntity plane) {
+    this.plane = plane;
   }
 
-  public List<String> getCrewMemberIds() {
-    return crewMemberIds;
+  public List<CrewEntity> getCrewMembers() {
+    return crewMembers;
   }
 
-  public void setCrewMemberIds(List<String> crewMemberIds) {
-    this.crewMemberIds = crewMemberIds;
+  public void setCrewMembers(List<CrewEntity> crewMembers) {
+    this.crewMembers = crewMembers;
   }
 
-  public String getRunwayId() {
-    return runwayId;
+  public List<RunwayEntity> getRunways() {
+    return runways;
   }
 
-  public void setRunwayId(String runwayId) {
-    this.runwayId = runwayId;
+  public void setRunways(List<RunwayEntity> runways) {
+    this.runways = runways;
   }
 
-  public List<String> getGroundVehicleIds() {
-    return groundVehicleIds;
+  public List<VehicleEntity> getGroundVehicles() {
+    return groundVehicles;
   }
 
-  public void setGroundVehicleIds(List<String> groundVehicleIds) {
-    this.groundVehicleIds = groundVehicleIds;
+  public void setGroundVehicles(List<VehicleEntity> groundVehicles) {
+    this.groundVehicles = groundVehicles;
   }
 }

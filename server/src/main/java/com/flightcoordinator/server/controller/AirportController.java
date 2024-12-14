@@ -23,30 +23,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/airport")
+@RequestMapping("/api/${api.version}/airport")
 @Tag(name = "Airports Controller", description = "Endpoints for managing airports.")
 public class AirportController {
   @Autowired
-  private AirportService service;
+  private AirportService airportService;
 
   @GetMapping("/getById/{airportId}")
   @Operation(summary = "Get a airport by id", description = "Retrieve the details of a spesific airpot using it's ID")
   public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@PathVariable String airportId) {
-    AirportEntity airport = service.getSingleAirportById(airportId);
+    AirportEntity airport = airportService.getSingleAirportById(airportId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportEntity>>> getAllAirports() {
-    List<AirportEntity> airports = service.getAllAirports();
+    List<AirportEntity> airports = airportService.getAllAirports();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airports);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
   public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportEntity newAirport) {
-    service.createAirport(newAirport);
+    airportService.createAirport(newAirport);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   };
@@ -55,14 +55,14 @@ public class AirportController {
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
   public ResponseEntity<ResponseObject<Object>> updateAirport(@PathVariable String airportId,
       @RequestBody AirportEntity updatedAirport) {
-    service.updateAirport(airportId, updatedAirport);
+    airportService.updateAirport(airportId, updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("/delete/{airportId}")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
   public ResponseEntity<ResponseObject<Object>> deleteAirport(@PathVariable String airportId) {
-    service.deleteAirport(airportId);
+    airportService.deleteAirport(airportId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }

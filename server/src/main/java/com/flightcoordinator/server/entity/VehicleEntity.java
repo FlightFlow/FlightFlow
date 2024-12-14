@@ -3,45 +3,53 @@ package com.flightcoordinator.server.entity;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.GroundVehicleAvailability;
-import com.flightcoordinator.server.enums.GroundVehicleTypes;
+import com.flightcoordinator.server.enums.GroundVehicleType;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "vehicle")
+@Entity
+@Table(name = "vehicle_table")
 public class VehicleEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("type")
   @NotBlank(message = "Capacity cannot be blank")
-  private GroundVehicleTypes type;
+  @Column(name = "type", nullable = false)
+  private GroundVehicleType type;
 
-  @Field("vehicle_code")
   @NotBlank(message = "Capacity cannot be blank")
+  @Column(name = "vehicle_code", nullable = false)
   private String vehicleCode;
 
-  @Field("capacity")
   @NotBlank(message = "Capacity cannot be blank")
   @Min(value = 1, message = "Capacity should be greater than '1'")
+  @Column(name = "capacity", nullable = false)
   private Float capacity;
 
-  @Field("availability")
   @NotBlank(message = "Capacity cannot be blank")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "availability", nullable = false)
   private GroundVehicleAvailability availability = GroundVehicleAvailability.AVAILABLE;
 
-  @Field("maintenance_due")
+  @Column(name = "maintenance_due", nullable = false)
   @NotBlank(message = "Capacity cannot be blank")
   private Date maintenanceDue;
 
   public VehicleEntity() {
   }
 
-  public VehicleEntity(String id, @NotBlank(message = "Capacity cannot be blank") GroundVehicleTypes type,
+  public VehicleEntity(String id, @NotBlank(message = "Capacity cannot be blank") GroundVehicleType type,
       @NotBlank(message = "Capacity cannot be blank") String vehicleCode,
       @NotBlank(message = "Capacity cannot be blank") @Min(value = 1, message = "Capacity should be greater than '1'") Float capacity,
       @NotBlank(message = "Capacity cannot be blank") GroundVehicleAvailability availability,
@@ -62,11 +70,11 @@ public class VehicleEntity {
     this.id = id;
   }
 
-  public GroundVehicleTypes getType() {
+  public GroundVehicleType getType() {
     return type;
   }
 
-  public void setType(GroundVehicleTypes type) {
+  public void setType(GroundVehicleType type) {
     this.type = type;
   }
 

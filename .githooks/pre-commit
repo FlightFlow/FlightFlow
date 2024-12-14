@@ -3,7 +3,7 @@
 echo "[PRE-COMMIT] Info: Starting linting process..."
 
 cd ../server
-flake8 . && pylint app && bandit -r app
+# currently does nothing
 
 cd ../frontend
 pnpm run lint && prettier --write

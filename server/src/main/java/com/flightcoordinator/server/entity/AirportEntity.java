@@ -4,39 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.flightcoordinator.server.enums.AirportTypes;
+import com.flightcoordinator.server.enums.AirportType;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "airports")
+@Entity
+@Table(name = "airport_table")
 public class AirportEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("name")
+  @Column(name = "name", nullable = false)
   @NotBlank(message = "Name cannot be blank")
   private String name;
 
-  @Field("iata_code")
+  @Column(name = "iata_code", nullable = false, unique = true)
   @NotBlank(message = "IATA Code cannot be blank")
   private String iataCode;
 
-  @Field("icao_code")
+  @Column(name = "icao_code", nullable = false, unique = true)
   @NotBlank(message = "ICAO Code cannot be blank")
   private String icaoCode;
 
-  @Field("country_code")
+  @Column(name = "country_code", nullable = false, unique = true)
   @NotBlank(message = "Country code cannot be blank")
   private String countryCode;
 
-  @Field("airport_type")
-  @NotBlank(message = "Type cannot be blank")
-  private AirportTypes type;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "type", nullable = false)
+  private AirportType type;
 
-  @Field("runways")
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @JoinTable(name = "airport_runways", joinColumns = @JoinColumn(name = "airport_id"), inverseJoinColumns = @JoinColumn(name = "runway_id"))
   private List<RunwayEntity> runways = new ArrayList<>();
 
   public AirportEntity() {
@@ -45,8 +58,8 @@ public class AirportEntity {
   public AirportEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
       @NotBlank(message = "IATA Code cannot be blank") String iataCode,
       @NotBlank(message = "ICAO Code cannot be blank") String icaoCode,
-      @NotBlank(message = "Country code cannot be blank") String countryCode,
-      @NotBlank(message = "Type cannot be blank") AirportTypes type, List<RunwayEntity> runways) {
+      @NotBlank(message = "Country code cannot be blank") String countryCode, AirportType type,
+      List<RunwayEntity> runways) {
     this.id = id;
     this.name = name;
     this.iataCode = iataCode;
@@ -96,11 +109,11 @@ public class AirportEntity {
     this.countryCode = countryCode;
   }
 
-  public AirportTypes getType() {
+  public AirportType getType() {
     return type;
   }
 
-  public void setType(AirportTypes type) {
+  public void setType(AirportType type) {
     this.type = type;
   }
 

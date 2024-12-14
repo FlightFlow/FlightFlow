@@ -8,5 +8,5 @@ import com.flightcoordinator.server.repository.AlgorithmRunRepository;
 @Service
 public class AlgorithmRunService {
   @Autowired
-  private AlgorithmRunRepository repository;
+  private AlgorithmRunRepository algorithmRunRepository;
 }

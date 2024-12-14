@@ -14,16 +14,17 @@ import com.flightcoordinator.server.repository.VehicleRepository;
 @Service
 public class VehicleService {
   @Autowired
-  private VehicleRepository repository;
+  private VehicleRepository vehicleRepository;
 
   public VehicleEntity getSingleVehicleById(String vehicleId) {
-    Optional<VehicleEntity> vehicle = repository.findById(vehicleId);
-    return vehicle
-        .orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
+    Optional<VehicleEntity> vehicle = vehicleRepository.findById(vehicleId);
+    return vehicle.orElseThrow(() -> new AppError(
+        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        HttpStatus.NOT_FOUND.value()));
   }
 
   public List<VehicleEntity> getMultipleVehicleById(List<String> vehicleIds) {
-    List<VehicleEntity> vehicles = repository.findAllById(vehicleIds);
+    List<VehicleEntity> vehicles = vehicleRepository.findAllById(vehicleIds);
     if (vehicles.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -31,7 +32,7 @@ public class VehicleService {
   }
 
   public List<VehicleEntity> getAllVehicles() {
-    List<VehicleEntity> vehicles = repository.findAll();
+    List<VehicleEntity> vehicles = vehicleRepository.findAll();
     if (vehicles.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -39,7 +40,7 @@ public class VehicleService {
   }
 
   public void createVehicle(VehicleEntity newVehicle) {
-    repository.save(newVehicle);
+    vehicleRepository.save(newVehicle);
   }
 
   public void updateVehicle(String vehicleId, VehicleEntity updatedVehicle) {
@@ -51,11 +52,11 @@ public class VehicleService {
     existingVehicle.setAvailability(updatedVehicle.getAvailability());
     existingVehicle.setMaintenanceDue(updatedVehicle.getMaintenanceDue());
 
-    repository.save(existingVehicle);
+    vehicleRepository.save(existingVehicle);
   }
 
   public void deleteVehicle(String vehicleId) {
     VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
-    repository.delete(existingVehicle);
+    vehicleRepository.delete(existingVehicle);
   }
 }

@@ -14,18 +14,20 @@ import com.flightcoordinator.server.repository.RouteRepository;
 @Service
 public class RouteService {
   @Autowired
-  private RouteRepository repository;
+  private RouteRepository routeRepository;
 
   @Autowired
   private AirportService airportService;
 
   public RouteEntity getSingleRouteById(String routeId) {
-    Optional<RouteEntity> route = repository.findById(routeId);
-    return route.orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
+    Optional<RouteEntity> route = routeRepository.findById(routeId);
+    return route.orElseThrow(() -> new AppError(
+        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        HttpStatus.NOT_FOUND.value()));
   }
 
   public List<RouteEntity> getMultipleRouteById(List<String> routeIds) {
-    List<RouteEntity> routes = repository.findAllById(routeIds);
+    List<RouteEntity> routes = routeRepository.findAllById(routeIds);
     if (routes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -33,7 +35,7 @@ public class RouteService {
   }
 
   public List<RouteEntity> getAllRoutes() {
-    List<RouteEntity> routes = repository.findAll();
+    List<RouteEntity> routes = routeRepository.findAll();
     if (routes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -41,19 +43,19 @@ public class RouteService {
   }
 
   public void createRoute(RouteEntity newRoute) {
-    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirportId());
-    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirportId());
+    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirport());
+    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirport());
     if (!doesOriginAirportExist || !doesDestinationAirportExist) {
       throw new AppError(
           doesOriginAirportExist ? "Cannot validate origin airport" : "Cannot validate destination airport",
           HttpStatus.BAD_REQUEST.value());
     }
-    repository.save(newRoute);
+    routeRepository.save(newRoute);
   }
 
   public void updateRoute(String routeId, RouteEntity newRoute) {
-    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirportId());
-    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirportId());
+    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirport());
+    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirport());
     if (!doesOriginAirportExist || !doesDestinationAirportExist) {
       throw new AppError(
           doesOriginAirportExist ? "Cannot validate origin airport" : "Cannot validate destination airport",
@@ -62,16 +64,16 @@ public class RouteService {
 
     RouteEntity existingRoute = getSingleRouteById(routeId);
 
-    existingRoute.setOriginAirportId(newRoute.getOriginAirportId());
-    existingRoute.setDestinationAirportId(newRoute.getDestinationAirportId());
+    existingRoute.setOriginAirport(newRoute.getOriginAirport());
+    existingRoute.setDestinationAirport(newRoute.getDestinationAirport());
     existingRoute.setDistance(newRoute.getDistance());
     existingRoute.setEstimatedTime(newRoute.getEstimatedTime());
 
-    repository.save(existingRoute);
+    routeRepository.save(existingRoute);
   }
 
   public void deleteRoute(String routeId) {
     RouteEntity existingRoute = getSingleRouteById(routeId);
-    repository.delete(existingRoute);
+    routeRepository.delete(existingRoute);
   }
 }

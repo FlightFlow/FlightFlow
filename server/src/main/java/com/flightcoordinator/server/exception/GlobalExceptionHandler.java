@@ -14,25 +14,40 @@ import com.flightcoordinator.server.response.ResponseObject;
 public class GlobalExceptionHandler {
   @ExceptionHandler(AppError.class)
   public ResponseEntity<ResponseObject<Object>> handleAppError(AppError exception) {
-    return ResponseHelper.generateResponse(exception.getStatus(), false, exception.getMessage(), null);
+    return ResponseHelper.generateResponse(
+        exception.getStatus(),
+        false,
+        exception.getMessage(),
+        null);
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<ResponseObject<Object>> handleEnumValidationError(
       MethodArgumentTypeMismatchException exception) {
-    return ResponseHelper.generateResponse(HttpStatus.BAD_REQUEST.value(), false, exception.getMessage(), null);
+    return ResponseHelper.generateResponse(
+        HttpStatus.BAD_REQUEST.value(),
+        false,
+        exception.getMessage(),
+        null);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ResponseObject<Object>> handleIllegalArgumentException(
       IllegalArgumentException exception) {
-    return ResponseHelper.generateResponse(HttpStatus.BAD_REQUEST.value(), false, exception.getMessage(), null);
+    return ResponseHelper.generateResponse(
+        HttpStatus.BAD_REQUEST.value(),
+        false,
+        exception.getMessage(),
+        null);
   }
 
   @ExceptionHandler(OptimisticLockingFailureException.class)
   public ResponseEntity<ResponseObject<Object>> handleOptimisticLockingFailureException(
       OptimisticLockingFailureException exception) {
-    return ResponseHelper.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, exception.getMessage(),
+    return ResponseHelper.generateResponse(
+        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        false,
+        exception.getMessage(),
         null);
   }
 }

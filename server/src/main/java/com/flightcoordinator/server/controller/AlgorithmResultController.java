@@ -9,9 +9,9 @@ import com.flightcoordinator.server.service.AlgorithmResultService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/algorithm/result")
+@RequestMapping("/api/${api.version}/algorithm/result")
 @Tag(name = "Algorithm Result Controller", description = "Endpoints for managing algorithm results.")
 public class AlgorithmResultController {
   @Autowired
-  private AlgorithmResultService service;
+  private AlgorithmResultService algorithmResultService;
 }

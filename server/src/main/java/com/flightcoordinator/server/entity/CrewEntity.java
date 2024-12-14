@@ -3,49 +3,64 @@ package com.flightcoordinator.server.entity;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.flightcoordinator.server.enums.CrewAvailability;
-import com.flightcoordinator.server.enums.CrewRoles;
+import com.flightcoordinator.server.enums.CrewRole;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "crew")
+@Entity
+@Table(name = "crew_table")
 public class CrewEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("full_name")
   @NotBlank(message = "Full name cannot be blank")
+  @Column(name = "full_name", nullable = false)
   private String fullName;
 
-  @Field("email")
   @Email(message = "E-Mail is invalid")
+  @Column(name = "email", nullable = false, unique = true)
   private String email;
 
-  @Field("phone_number")
   @NotBlank(message = "Phone number cannot be blank")
+  @Column(name = "phone_number", nullable = false)
   private Float phoneNumber;
 
-  @Field("role")
   @NotBlank(message = "Role cannot be blank")
-  private CrewRoles role;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", nullable = false)
+  private CrewRole role;
 
-  @Field("certifications")
+  @ManyToMany
+  @JoinTable(name = "certifications", joinColumns = @JoinColumn(name = "crew_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
   private List<CertificationEntity> certifications;
 
-  @Field("total_flight_hours")
   @NotBlank(message = "Total flight hours cannot be blank")
+  @Column(name = "total_flight_hours", nullable = false)
   private int totalFlightHours = 0;
 
-  @Field("base_airport")
   @NotBlank(message = "Certification cannot be blank")
-  private String baseAirport;
+  @OneToMany
+  @JoinColumn(name = "base_airport", nullable = false)
+  private AirportEntity baseAirport;
 
-  @Field("availability")
   @NotBlank(message = "Availability cannot be blank")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "availability", nullable = false)
   private CrewAvailability availability = CrewAvailability.AVAILABLE;
 
   public CrewEntity() {
@@ -54,9 +69,9 @@ public class CrewEntity {
   public CrewEntity(String id, @NotBlank(message = "Full name cannot be blank") String fullName,
       @Email(message = "E-Mail is invalid") String email,
       @NotBlank(message = "Phone number cannot be blank") Float phoneNumber,
-      @NotBlank(message = "Role cannot be blank") CrewRoles role, List<CertificationEntity> certifications,
+      @NotBlank(message = "Role cannot be blank") CrewRole role, List<CertificationEntity> certifications,
       @NotBlank(message = "Total flight hours cannot be blank") int totalFlightHours,
-      @NotBlank(message = "Certification cannot be blank") String baseAirport,
+      @NotBlank(message = "Certification cannot be blank") AirportEntity baseAirport,
       @NotBlank(message = "Availability cannot be blank") CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
@@ -101,11 +116,11 @@ public class CrewEntity {
     this.phoneNumber = phoneNumber;
   }
 
-  public CrewRoles getRole() {
+  public CrewRole getRole() {
     return role;
   }
 
-  public void setRole(CrewRoles role) {
+  public void setRole(CrewRole role) {
     this.role = role;
   }
 
@@ -125,11 +140,11 @@ public class CrewEntity {
     this.totalFlightHours = totalFlightHours;
   }
 
-  public String getBaseAirport() {
+  public AirportEntity getBaseAirport() {
     return baseAirport;
   }
 
-  public void setBaseAirport(String baseAirport) {
+  public void setBaseAirport(AirportEntity baseAirport) {
     this.baseAirport = baseAirport;
   }
 

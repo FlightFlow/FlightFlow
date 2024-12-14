@@ -9,9 +9,9 @@ import com.flightcoordinator.server.service.AlgorithmRunService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/algorithm/run")
+@RequestMapping("/api/${api.version}/algorithm/run")
 @Tag(name = "Algorithm Run Controller", description = "Endpoints for managing details of algorithm runs.")
 public class AlgorithmRunController {
   @Autowired
-  private AlgorithmRunService service;
+  private AlgorithmRunService algorithmRunService;
 }

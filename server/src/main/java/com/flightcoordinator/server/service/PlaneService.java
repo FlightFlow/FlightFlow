@@ -14,18 +14,20 @@ import com.flightcoordinator.server.repository.PlaneRepository;
 @Service
 public class PlaneService {
   @Autowired
-  private PlaneRepository repository;
+  private PlaneRepository planeRepository;
 
   @Autowired
   private AirportService airportService;
 
   public PlaneEntity getSinglePlaneById(String planeId) {
-    Optional<PlaneEntity> plane = repository.findById(planeId);
-    return plane.orElseThrow(() -> new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value()));
+    Optional<PlaneEntity> plane = planeRepository.findById(planeId);
+    return plane.orElseThrow(() -> new AppError(
+        HttpStatus.NOT_FOUND.getReasonPhrase(),
+        HttpStatus.NOT_FOUND.value()));
   }
 
   public List<PlaneEntity> getMultiplePlaneById(List<String> planeIds) {
-    List<PlaneEntity> planes = repository.findAllById(planeIds);
+    List<PlaneEntity> planes = planeRepository.findAllById(planeIds);
     if (planes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -33,7 +35,7 @@ public class PlaneService {
   }
 
   public List<PlaneEntity> getAllPlanes() {
-    List<PlaneEntity> planes = repository.findAll();
+    List<PlaneEntity> planes = planeRepository.findAll();
     if (planes.isEmpty()) {
       throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
     }
@@ -47,7 +49,7 @@ public class PlaneService {
         throw new AppError("Cannot validate current location airport", HttpStatus.BAD_REQUEST.value());
       }
     }
-    repository.save(newPlane);
+    planeRepository.save(newPlane);
   }
 
   public void updatePlane(String planeId, PlaneEntity updatedPlane) {
@@ -74,11 +76,11 @@ public class PlaneService {
     existingPlane.setCurrentLocation(updatedPlane.getCurrentLocation());
     existingPlane.setAircraftOperator(updatedPlane.getAircraftOperator());
 
-    repository.save(existingPlane);
+    planeRepository.save(existingPlane);
   }
 
   public void deletePlane(String planeId) {
     PlaneEntity existingPlane = getSinglePlaneById(planeId);
-    repository.delete(existingPlane);
+    planeRepository.delete(existingPlane);
   }
 }

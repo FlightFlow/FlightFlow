@@ -2,7 +2,7 @@ package com.flightcoordinator.server.enums;
 
 // TODO turn into an endpoint
 
-public enum CertificationIssuers {
+public enum CertificationIssuer {
   FAA("Federal Aviation Administration"),
   EASA("European Union Aviation Safety Agency"),
   CAA("Civil Aviation Authority"),
@@ -29,7 +29,7 @@ public enum CertificationIssuers {
 
   public final String organization;
 
-  private CertificationIssuers(String organization) {
+  private CertificationIssuer(String organization) {
     this.organization = organization;
   }
 }

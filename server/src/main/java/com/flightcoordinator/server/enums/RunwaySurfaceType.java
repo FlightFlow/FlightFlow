@@ -2,7 +2,7 @@ package com.flightcoordinator.server.enums;
 
 // TODO turn into an endpoint
 
-public enum RunwaySurfaceTypes {
+public enum RunwaySurfaceType {
   ASPHALT("Asphalt"),
   CONCRETE("Concrete"),
   GRASS("Grass"),
@@ -12,7 +12,7 @@ public enum RunwaySurfaceTypes {
 
   public final String type;
 
-  private RunwaySurfaceTypes(String type) {
+  private RunwaySurfaceType(String type) {
     this.type = type;
   }
 }

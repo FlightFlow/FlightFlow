@@ -23,30 +23,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/runway")
+@RequestMapping("/api/${api.version}/runway")
 @Tag(name = "Runway Controller", description = "Endpoints for managing airports' runways.")
 public class RunwayController {
   @Autowired
-  private RunwayService service;
+  private RunwayService runwayService;
 
   @GetMapping("/getById/{runwayId}")
   @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
   public ResponseEntity<ResponseObject<RunwayEntity>> getRunwayById(@PathVariable String runwayId) {
-    RunwayEntity runway = service.getSingleRunwayById(runwayId);
+    RunwayEntity runway = runwayService.getSingleRunwayById(runwayId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runway);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the runways", description = "Retrieve the details of all runways.")
   public ResponseEntity<ResponseObject<List<RunwayEntity>>> getAllRunways() {
-    List<RunwayEntity> runways = service.getAllRunways();
+    List<RunwayEntity> runways = runwayService.getAllRunways();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runways);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new runway", description = "Create a new runway.")
   public ResponseEntity<ResponseObject<Object>> createRunway(@RequestBody RunwayEntity runway) {
-    service.createRunway(runway);
+    runwayService.createRunway(runway);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   }
@@ -55,14 +55,14 @@ public class RunwayController {
   @Operation(summary = "Update a runway", description = "Update an existing runway.")
   public ResponseEntity<ResponseObject<Object>> updateRunway(@PathVariable String runwayId,
       @RequestBody RunwayEntity runway) {
-    service.updateRunway(runwayId, runway);
+    runwayService.updateRunway(runwayId, runway);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("/delete/{runwayId}")
   @Operation(summary = "Delete a runway", description = "Delete an existing runway.")
   public ResponseEntity<ResponseObject<Object>> deleteRunway(@PathVariable String runwayId) {
-    service.deleteRunway(runwayId);
+    runwayService.deleteRunway(runwayId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }

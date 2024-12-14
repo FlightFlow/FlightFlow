@@ -1,44 +1,50 @@
 package com.flightcoordinator.server.entity;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "route")
+@Entity
+@Table(name = "route_table")
 public class RouteEntity {
   @Id
   private String id;
 
-  @Field("origin_airport_id")
   @NotBlank(message = "Origin airport id cannot be blank")
-  private String originAirportId;
+  @ManyToOne
+  @JoinColumn(name = "origin_airport_id", nullable = false)
+  private AirportEntity originAirport;
 
-  @Field("destination_airport_id")
   @NotBlank(message = "Destination airport id cannot be blank")
-  private String destinationAirportId;
+  @ManyToOne
+  @JoinColumn(name = "destination_airport_id", nullable = false)
+  private AirportEntity destinationAirport;
 
-  @Field("distance")
   @NotBlank(message = "Distance cannot be blank")
   @Min(value = 1, message = "Distance should be greater than '1'")
+  @Column(name = "distance", nullable = false)
   private Float distance;
 
-  @Field("estimated_time")
   @NotBlank(message = "Estimated time cannot be blank")
+  @Column(name = "estimated_time", nullable = false)
   private Float estimatedTime;
 
   public RouteEntity() {
   }
 
-  public RouteEntity(String id, @NotBlank(message = "Origin airport id cannot be blank") String originAirportId,
-      @NotBlank(message = "Destination airport id cannot be blank") String destinationAirportId,
+  public RouteEntity(String id, @NotBlank(message = "Origin airport id cannot be blank") AirportEntity originAirport,
+      @NotBlank(message = "Destination airport id cannot be blank") AirportEntity destinationAirport,
       @NotBlank(message = "Distance cannot be blank") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
       @NotBlank(message = "Estimated time cannot be blank") Float estimatedTime) {
     this.id = id;
-    this.originAirportId = originAirportId;
-    this.destinationAirportId = destinationAirportId;
+    this.originAirport = originAirport;
+    this.destinationAirport = destinationAirport;
     this.distance = distance;
     this.estimatedTime = estimatedTime;
   }
@@ -51,20 +57,20 @@ public class RouteEntity {
     this.id = id;
   }
 
-  public String getOriginAirportId() {
-    return originAirportId;
+  public AirportEntity getOriginAirport() {
+    return originAirport;
   }
 
-  public void setOriginAirportId(String originAirportId) {
-    this.originAirportId = originAirportId;
+  public void setOriginAirport(AirportEntity originAirport) {
+    this.originAirport = originAirport;
   }
 
-  public String getDestinationAirportId() {
-    return destinationAirportId;
+  public AirportEntity getDestinationAirport() {
+    return destinationAirport;
   }
 
-  public void setDestinationAirportId(String destinationAirportId) {
-    this.destinationAirportId = destinationAirportId;
+  public void setDestinationAirport(AirportEntity destinationAirport) {
+    this.destinationAirport = destinationAirport;
   }
 
   public Float getDistance() {

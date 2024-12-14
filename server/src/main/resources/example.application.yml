@@ -1,18 +1,27 @@
 spring:
   application:
     name: FlightCoordinator Backend Server
-  security:
-    user:
-      name: NAME
-      password: PASSWORD
-  data:
-    mongodb:
-      uri: DATABASE_URI
-      database: DATABASE_NAME
+  datasource:
+    url: REQUIRED
+    username: REQUIRED
+    password: REQUIRED
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 springdoc:
   swagger-ui:
     path: /swagger.html
 
 server:
-  port: PORT
+  port: 8081
+
+api:
+  version: v1

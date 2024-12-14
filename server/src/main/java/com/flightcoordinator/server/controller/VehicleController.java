@@ -23,30 +23,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/vehicle")
+@RequestMapping("/api/${api.version}/vehicle")
 @Tag(name = "Vehicle Controller", description = "Endpoints for managing vehicles.")
 public class VehicleController {
   @Autowired
-  private VehicleService service;
+  private VehicleService vehicleService;
 
   @GetMapping("/getById/{vehicleId}")
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID")
   public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@PathVariable String vehicleId) {
-    VehicleEntity vehicle = service.getSingleVehicleById(vehicleId);
+    VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);
   }
 
   @GetMapping("/getAll")
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
   public ResponseEntity<ResponseObject<List<VehicleEntity>>> getAllVehicles() {
-    List<VehicleEntity> vehicles = service.getAllVehicles();
+    List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicles);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new vehicle", description = "Create a new vehicle.")
   public ResponseEntity<ResponseObject<Object>> createVehicle(@RequestBody VehicleEntity newVehicle) {
-    service.createVehicle(newVehicle);
+    vehicleService.createVehicle(newVehicle);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   }
@@ -55,14 +55,14 @@ public class VehicleController {
   @Operation(summary = "Update an vehicle", description = "Update an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> updateVehicle(@PathVariable String vehicleId,
       @RequestBody VehicleEntity updatedVehicle) {
-    service.updateVehicle(vehicleId, updatedVehicle);
+    vehicleService.updateVehicle(vehicleId, updatedVehicle);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
   @DeleteMapping("/delete/{vehicleId}")
   @Operation(summary = "Delete an vehicle", description = "Delete an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> deleteVehicle(@PathVariable String vehicleId) {
-    service.deleteVehicle(vehicleId);
+    vehicleService.deleteVehicle(vehicleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }

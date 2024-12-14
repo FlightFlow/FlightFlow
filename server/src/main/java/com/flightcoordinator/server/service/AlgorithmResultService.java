@@ -8,5 +8,5 @@ import com.flightcoordinator.server.repository.AlgorithmResultRepository;
 @Service
 public class AlgorithmResultService {
   @Autowired
-  private AlgorithmResultRepository repository;
+  private AlgorithmResultRepository algorithmResultRepository;
 }

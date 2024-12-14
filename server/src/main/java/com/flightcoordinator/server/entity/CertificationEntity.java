@@ -5,58 +5,73 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.flightcoordinator.server.enums.CertificationIssuers;
+import com.flightcoordinator.server.enums.CertificationIssuer;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
-import com.flightcoordinator.server.enums.CrewRoles;
+import com.flightcoordinator.server.enums.CrewRole;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Document(collection = "certifications")
+@Entity
+@Table(name = "certification_table")
 public class CertificationEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Field("name")
   @NotBlank(message = "Name cannot be blank")
+  @Column(name = "name", nullable = false)
   private String name;
 
-  @Field("issuer")
   @NotBlank(message = "Issuer cannot be blank")
-  private CertificationIssuers issuer;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "issuer", nullable = false)
+  private CertificationIssuer issuer;
 
-  @Field("issusing_country")
   @NotBlank(message = "Issuing country cannot be blank")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "issusing_country", nullable = false)
   private CertificationIssuingCountry issuingCountry;
 
-  @Field("expiration_date")
   @NotBlank(message = "Expiration date cannot be blank")
+  @Column(name = "expiration_date", nullable = false)
   private Date expirationDate;
 
-  @Field("validity_period")
   @NotBlank(message = "Validity period cannot be blank")
   @Min(value = 1, message = "Validity period should be greater than '1'")
+  @Column(name = "validity_period", nullable = false)
   private int validityPeriod;
 
-  @Field("assignable_roles")
-  private List<CrewRoles> assignableRoles = new ArrayList<>();
+  @ElementCollection(targetClass = CrewRole.class)
+  @Enumerated(EnumType.STRING)
+  @CollectionTable(name = "assignale_roles_list", joinColumns = @JoinColumn(name = "certification_id"))
+  @Column(name = "assignable_roles", nullable = false)
+  private List<CrewRole> assignableRoles = new ArrayList<>();
 
-  @Field("description")
   @NotBlank(message = "Description cannot be blank")
+  @Column(name = "description", nullable = false)
   private String description;
 
   public CertificationEntity() {
   }
 
   public CertificationEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
-      @NotBlank(message = "Issuer cannot be blank") CertificationIssuers issuer,
+      @NotBlank(message = "Issuer cannot be blank") CertificationIssuer issuer,
       @NotBlank(message = "Issuing country cannot be blank") CertificationIssuingCountry issuingCountry,
       @NotBlank(message = "Expiration date cannot be blank") Date expirationDate,
       @NotBlank(message = "Validity period cannot be blank") @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
-      List<CrewRoles> assignableRoles, @NotBlank(message = "Description cannot be blank") String description) {
+      List<CrewRole> assignableRoles, @NotBlank(message = "Description cannot be blank") String description) {
     this.id = id;
     this.name = name;
     this.issuer = issuer;
@@ -83,11 +98,11 @@ public class CertificationEntity {
     this.name = name;
   }
 
-  public CertificationIssuers getIssuer() {
+  public CertificationIssuer getIssuer() {
     return issuer;
   }
 
-  public void setIssuer(CertificationIssuers issuer) {
+  public void setIssuer(CertificationIssuer issuer) {
     this.issuer = issuer;
   }
 
@@ -115,11 +130,11 @@ public class CertificationEntity {
     this.validityPeriod = validityPeriod;
   }
 
-  public List<CrewRoles> getAssignableRoles() {
+  public List<CrewRole> getAssignableRoles() {
     return assignableRoles;
   }
 
-  public void setAssignableRoles(List<CrewRoles> assignableRoles) {
+  public void setAssignableRoles(List<CrewRole> assignableRoles) {
     this.assignableRoles = assignableRoles;
   }
 
