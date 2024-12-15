@@ -15,15 +15,10 @@ The projects also includes utility scripts for configuring the environment, sett
 To setup the project locally, ensure following are present on your system:
 
 - Bash Shell for running provided scripts. (This project is developed in a GNU/Linux environment which is WSL2 with Ubuntu, but you can install the following to a different OS environment to run the project.)
-
 - [Git](https://git-scm.com/)
-
 - [Node.js](https://nodejs.org/en) (version managed with [NVM](https://github.com/nvm-sh/nvm))
-
 - [pnpm](https://pnpm.io/)
-
 - Java Development Kit (JDK)
-
 - [Maven](https://maven.apache.org/)
 
 ## Setup
@@ -40,11 +35,8 @@ cd scripts/config # from the project root
 This script installs:
 
 - nvm: Node Version Manager (then installs the version of node specified in the script).
-
 - pnpm: Package manager for using in the frontend and the project root.
-
 - JDK/JRE: Java Development Kit and Java Runtime Environment for the backend.
-
 - Maven: Build automation tool for backend.
 
 ### Setting Up the Project
@@ -57,13 +49,9 @@ cd scripts/config # from the project root
 This script does the following:
 
 - Renames the `example.application.yml` in the Spring Boot backend to `application.yml`.
-
 - Renams the `.env.sample` in the React frontend to `.env`.
-
 - Installs the frontend dependencies using `pnpm i`.
-
 - Installs the root dependencies using `pnpm i` (only `concurrently` for running the frontend and backend concurrently).
-
 - Runs the `./mvnw clean install` to build the backend.
 
 ### Setting Up Environment Variables
@@ -77,7 +65,6 @@ Both the frontend and the backend require environment variables to function corr
   ```
 
   This variable should have the backend server url. If you are running the project locally, this would probably be something like `http://localhost:0000` with `0000` replaced with backend port. This port should match the one you put in the backend's config folder.
-
 - **Backend:** The backend have a `application.yml` file (located in `server/src/main/resources`) which have contents like the one shown below:
 
   ```yml
@@ -137,7 +124,6 @@ cd scripts/ # from the project root
 This script executes:
 
 - `pnpm test` for frontend tests.
-
 - `./mvnw test` for backend tests.
 
 ## VSCode Configuration
@@ -149,7 +135,6 @@ A `.vscode` folder is included in the project with recommended extensions and se
 We use GitHub templates to streamline reporting bugs and requesting new features. To contribute:
 
 - **Bug Reports:** Open a new issue and select "Bug Report" template. Provide as much detail as possible to help us reproduce the issue.
-
 - **Feature Request:** Open a new issue and select "Feature Request" template. Describe the new feature and its intended purpose clearly.
 
 ## License
