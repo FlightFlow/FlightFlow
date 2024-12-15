@@ -26,7 +26,7 @@ public class UserController {
   @Autowired
   private UserService userService;
 
-  @PostMapping("/login")
+  @PostMapping("/auth/login")
   @Operation
   public ResponseEntity<ResponseObject<AuthDetailsDTO>> login(
       @RequestBody LoginDetailsDTO loginDetails,
@@ -37,7 +37,7 @@ public class UserController {
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @PostMapping("/register")
+  @PostMapping("/auth/register")
   @Operation
   public ResponseEntity<ResponseObject<Object>> register(@RequestBody RegisterDetailsDTO registerDetails) {
     userService.register(registerDetails);
@@ -45,7 +45,7 @@ public class UserController {
         null);
   }
 
-  @PostMapping("/newRefreshToken")
+  @PostMapping("/auth/newRefreshToken")
   public ResponseEntity<ResponseObject<Object>> newRefreshToken(
       @CookieValue("accessToken") String accessToken,
       @CookieValue("refreshToken") String refreshToken,
