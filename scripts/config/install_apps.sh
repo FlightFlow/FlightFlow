@@ -6,6 +6,7 @@ MAVEN_VERSION="apache-maven-3.9.9"
 # JAVA_SOURCE="https://download.oracle.com/java/23/latest/$JAVA_VERSION.tar.gz"
 MAVEN_SOURCE="https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/$MAVEN_VERSION.tar.gz"
 
+NODE_VERSION="22"
 NVM_SOURCE="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh"
 PNPM_SOURCE="https://get.pnpm.io/install.sh"
 
@@ -18,7 +19,7 @@ sudo apt upgrade
 echo "Info: Installing Node Version Manager..."
 
 curl -o- "$NVM_SOURCE" | bash
-nvm install 22
+nvm install "$NODE_VERSION"
 
 echo "Info: Succesfully installed Node Version Manager."
 
