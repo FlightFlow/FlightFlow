@@ -24,7 +24,7 @@ public class SecurityConfig {
   private UserDetailsService userDetailsService;
 
   @Autowired
-  private JWTFilter jwtFilter;
+  private JWTAuthenticationFilter jwtAuthenticationFilter;
 
   @Autowired
   private LogoutHandler logoutHandler;
@@ -34,15 +34,15 @@ public class SecurityConfig {
     return httpSecurity
         .csrf(customizer -> customizer.disable())
         .authorizeHttpRequests(request -> request
-            .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+            .requestMatchers("/api/**/user/auth/register", "/api/**/user/auth/login").permitAll()
             .anyRequest().authenticated())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .logout(logout -> logout
-            .logoutUrl("/api/auth/logout")
+            .logoutUrl("/api/**/user/auth/logout")
             .addLogoutHandler(logoutHandler)
             .logoutSuccessHandler((request, response, auth) -> SecurityContextHolder.clearContext())
-            .logoutSuccessUrl("/api/auth/login"))
+            .logoutSuccessUrl("/api/**/user/auth/login"))
         .build();
   }
 
