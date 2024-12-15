@@ -30,7 +30,7 @@ public class VehicleController {
   private VehicleService vehicleService;
 
   @GetMapping("/getById/{vehicleId}")
-  @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID")
+  @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
   public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@PathVariable String vehicleId) {
     VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);

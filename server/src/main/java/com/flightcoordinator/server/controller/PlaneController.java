@@ -30,7 +30,7 @@ public class PlaneController {
   private PlaneService planeService;
 
   @GetMapping("/getById/{planeId}")
-  @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID")
+  @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID.")
   public ResponseEntity<ResponseObject<PlaneEntity>> getPlaneById(@PathVariable String planeId) {
     PlaneEntity plane = planeService.getSinglePlaneById(planeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), plane);

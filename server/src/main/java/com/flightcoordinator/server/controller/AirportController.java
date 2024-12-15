@@ -30,7 +30,7 @@ public class AirportController {
   private AirportService airportService;
 
   @GetMapping("/getById/{airportId}")
-  @Operation(summary = "Get a airport by id", description = "Retrieve the details of a spesific airpot using it's ID")
+  @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@PathVariable String airportId) {
     AirportEntity airport = airportService.getSingleAirportById(airportId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);

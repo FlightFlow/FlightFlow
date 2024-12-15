@@ -30,7 +30,7 @@ public class RouteController {
   private RouteService routeService;
 
   @GetMapping("/getById/{routeId}")
-  @Operation(summary = "Get a route by id", description = "Retrieve the details of a spesific route using it's ID")
+  @Operation(summary = "Get a route by id", description = "Retrieve the details of a spesific route using it's ID.")
   public ResponseEntity<ResponseObject<RouteEntity>> getRouteById(@PathVariable String routeId) {
     RouteEntity route = routeService.getSingleRouteById(routeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), route);
