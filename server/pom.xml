@@ -124,6 +124,7 @@
     </dependencies>
 
     <build>
+        <finalName>flightcoordinator-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
