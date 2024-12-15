@@ -52,8 +52,13 @@ public class AlgorithmResultService {
     existingAlgorithmResult.setFlight(updatedAlgorithmResult.getFlight());
     existingAlgorithmResult.setPlane(updatedAlgorithmResult.getPlane());
     existingAlgorithmResult.setCrewMembers(updatedAlgorithmResult.getCrewMembers());
-    existingAlgorithmResult.setRunways(updatedAlgorithmResult.getRunways());
-    existingAlgorithmResult.setGroundVehicles(updatedAlgorithmResult.getGroundVehicles());
+    existingAlgorithmResult.setTakeoffRunway(updatedAlgorithmResult.getTakeoffRunway());
+
+    existingAlgorithmResult.setOriginAirportGroundVehicles(
+        updatedAlgorithmResult.getOriginAirportGroundVehicles());
+
+    existingAlgorithmResult.setDestinationAirportGroundVehicles(
+        updatedAlgorithmResult.getDestinationAirportGroundVehicles());
 
     algorithmResultRepository.save(existingAlgorithmResult);
   }

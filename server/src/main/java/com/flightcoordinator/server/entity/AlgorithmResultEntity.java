@@ -40,27 +40,41 @@ public class AlgorithmResultEntity {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(name = "algorithm_result_runway", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
   @NotBlank(message = "Runways list cannot be blank")
-  private List<RunwayEntity> runways;
+  private RunwayEntity takeoffRunway;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "algorithm_result_runway", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
+  @NotBlank(message = "Runways list cannot be blank")
+  private RunwayEntity landingRunway;
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinTable(name = "algorithm_result_ground_vehicles", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
   @NotBlank(message = "Ground vehicles list cannot be blank")
-  private List<VehicleEntity> groundVehicles;
+  private List<VehicleEntity> originAirportGroundVehicles;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "algorithm_result_ground_vehicles", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
+  @NotBlank(message = "Ground vehicles list cannot be blank")
+  private List<VehicleEntity> destinationAirportGroundVehicles;
 
   public AlgorithmResultEntity() {
   }
 
-  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") FlightEntity flight,
+  public AlgorithmResultEntity(String id, @NotBlank(message = "Flight ID cannot be blank") FlightEntity flight,
       @NotBlank(message = "Plane ID cannot be blank") PlaneEntity plane,
       @NotBlank(message = "Crew members list cannot be blank") List<CrewEntity> crewMembers,
-      @NotBlank(message = "Runways list cannot be blank") List<RunwayEntity> runways,
-      @NotBlank(message = "Ground vehicles list cannot be blank") List<VehicleEntity> groundVehicles) {
+      @NotBlank(message = "Runways list cannot be blank") RunwayEntity takeoffRunway,
+      @NotBlank(message = "Runways list cannot be blank") RunwayEntity landingRunway,
+      @NotBlank(message = "Ground vehicles list cannot be blank") List<VehicleEntity> originAirportGroundVehicles,
+      @NotBlank(message = "Ground vehicles list cannot be blank") List<VehicleEntity> destinationAirportGroundVehicles) {
     this.id = id;
     this.flight = flight;
     this.plane = plane;
     this.crewMembers = crewMembers;
-    this.runways = runways;
-    this.groundVehicles = groundVehicles;
+    this.takeoffRunway = takeoffRunway;
+    this.landingRunway = landingRunway;
+    this.originAirportGroundVehicles = originAirportGroundVehicles;
+    this.destinationAirportGroundVehicles = destinationAirportGroundVehicles;
   }
 
   public String getId() {
@@ -95,19 +109,35 @@ public class AlgorithmResultEntity {
     this.crewMembers = crewMembers;
   }
 
-  public List<RunwayEntity> getRunways() {
-    return runways;
+  public RunwayEntity getTakeoffRunway() {
+    return takeoffRunway;
   }
 
-  public void setRunways(List<RunwayEntity> runways) {
-    this.runways = runways;
+  public void setTakeoffRunway(RunwayEntity takeoffRunway) {
+    this.takeoffRunway = takeoffRunway;
   }
 
-  public List<VehicleEntity> getGroundVehicles() {
-    return groundVehicles;
+  public RunwayEntity getLandingRunway() {
+    return landingRunway;
   }
 
-  public void setGroundVehicles(List<VehicleEntity> groundVehicles) {
-    this.groundVehicles = groundVehicles;
+  public void setLandingRunway(RunwayEntity landingRunway) {
+    this.landingRunway = landingRunway;
+  }
+
+  public List<VehicleEntity> getOriginAirportGroundVehicles() {
+    return originAirportGroundVehicles;
+  }
+
+  public void setOriginAirportGroundVehicles(List<VehicleEntity> originAirportGroundVehicles) {
+    this.originAirportGroundVehicles = originAirportGroundVehicles;
+  }
+
+  public List<VehicleEntity> getDestinationAirportGroundVehicles() {
+    return destinationAirportGroundVehicles;
+  }
+
+  public void setDestinationAirportGroundVehicles(List<VehicleEntity> destinationAirportGroundVehicles) {
+    this.destinationAirportGroundVehicles = destinationAirportGroundVehicles;
   }
 }
