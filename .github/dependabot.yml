@@ -7,7 +7,7 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      "caganseyrek"
+      - "caganseyrek"
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
@@ -15,7 +15,7 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      "caganseyrek"
+      - "caganseyrek"
   - package-ecosystem: "maven"
     directory: "/server"
     schedule:
@@ -23,4 +23,4 @@ updates:
       day: "monday"
       time: "09:00"
     reviewers:
-      "caganseyrek"
+      - "caganseyrek"
