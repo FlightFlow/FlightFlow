@@ -9,3 +9,4 @@ public class FlightCoordinatorServerApplication {
     SpringApplication.run(FlightCoordinatorServerApplication.class, args);
   }
 }
+

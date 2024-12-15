@@ -4,194 +4,192 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "algorithm_runs_table")
+@Table(name = "algorithm_run")
 public class AlgorithmRunEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private String id;
 
-  @NotBlank(message = "Algorithm name cannot be blank")
-  @Column(name = "algorithm_name", nullable = false)
-  private String algorithmName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-  @NotBlank(message = "Start time cannot be blank")
-  @Column(name = "start_time", nullable = false)
-  private Date startTime;
+    @Column(name = "algorithm_name", nullable = false)
+    private String algorithmName;
 
-  @NotBlank(message = "End time cannot be blank")
-  @Column(name = "end_time", nullable = false)
-  private Date endTime;
+    @Column(name = "start_time", nullable = false)
+    private Date startTime;
 
-  @NotBlank(message = "Runtime in ms cannot be blank")
-  @Column(name = "runtime_in_milliseconds", nullable = false)
-  private long runtimeInMilliseconds;
+    @Column(name = "end_time", nullable = false)
+    private Date endTime;
 
-  @NotBlank(message = "Parameters cannot be blank")
-  @Column(name = "runtime_in_milliseconds", nullable = false)
-  private Map<String, Object> parameters;
+    @Column(name = "runtime_in_milliseconds", nullable = false)
+    private long runtimeInMilliseconds;
 
-  @NotBlank(message = "Resources used cannot be blank")
-  @Column(name = "resources_used", nullable = false)
-  private Map<String, Object> resourcesUsed;
+    @Column(name = "parameters_json")
+    private String parametersJson; // Store parameters as JSON string
 
-  @NotBlank(message = "Constraints met cannot be blank")
-  @Column(name = "constraints_met", nullable = false)
-  private Map<String, Boolean> constrainsMet;
+    @Column(name = "resources_json")
+    private String resourcesJson; // Store resources as JSON string
 
-  @Column(name = "logs", nullable = false)
-  private List<String> logs;
+    @ElementCollection
+    @CollectionTable(name = "algorithm_run_constraints", joinColumns = @JoinColumn(name = "algorithm_run_id"))
+    @MapKeyColumn(name = "constraint_name")
+    @Column(name = "constraint_value")
+    private Map<String, Boolean> constraintsMet;
 
-  @Column(name = "is_successful", nullable = false)
-  private boolean isSuccessful;
+    @ElementCollection
+    @CollectionTable(name = "algorithm_run_logs", joinColumns = @JoinColumn(name = "algorithm_run_id"))
+    @Column(name = "log_entry")
+    private List<String> logs;
 
-  @Column(name = "failure_reason", nullable = false)
-  private String failureReason;
+    @Column(name = "is_successful", nullable = false)
+    private boolean isSuccessful;
 
-  @Column(name = "is_results_saved", nullable = false)
-  private boolean isResultsSaved;
+    @Column(name = "failure_reason", nullable = true)
+    private String failureReason; // Optional failure reason
 
-  @OneToOne
-  @JoinColumn(name = "result_id", nullable = false)
-  private AlgorithmResultEntity result;
+    @Column(name = "is_results_saved", nullable = false)
+    private boolean isResultsSaved;
 
-  public AlgorithmRunEntity() {
+    @OneToOne
+    @JoinColumn(name = "result_id", nullable = false)
+    private AlgorithmResultEntity result;
+
+    // Default constructor
+    public AlgorithmRunEntity() {
+    }
+
+    public AlgorithmRunEntity(String id, String algorithmName, Date startTime, Date endTime, long runtimeInMilliseconds,
+        String parametersJson, String resourcesJson, Map<String, Boolean> constraintsMet, List<String> logs,
+        boolean isSuccessful, String failureReason, boolean isResultsSaved, AlgorithmResultEntity result) {
+      this.id = id;
+      this.algorithmName = algorithmName;
+      this.startTime = startTime;
+      this.endTime = endTime;
+      this.runtimeInMilliseconds = runtimeInMilliseconds;
+      this.parametersJson = parametersJson;
+      this.resourcesJson = resourcesJson;
+      this.constraintsMet = constraintsMet;
+      this.logs = logs;
+      this.isSuccessful = isSuccessful;
+      this.failureReason = failureReason;
+      this.isResultsSaved = isResultsSaved;
+      this.result = result;
+    }
+
+    public String getId() {
+      return id;
+    }
+
+    public void setId(String id) {
+      this.id = id;
+    }
+
+    public String getAlgorithmName() {
+      return algorithmName;
+    }
+
+    public void setAlgorithmName(String algorithmName) {
+      this.algorithmName = algorithmName;
+    }
+
+    public Date getStartTime() {
+      return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+      this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+      return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+      this.endTime = endTime;
+    }
+
+    public long getRuntimeInMilliseconds() {
+      return runtimeInMilliseconds;
+    }
+
+    public void setRuntimeInMilliseconds(long runtimeInMilliseconds) {
+      this.runtimeInMilliseconds = runtimeInMilliseconds;
+    }
+
+    public String getParametersJson() {
+      return parametersJson;
+    }
+
+    public void setParametersJson(String parametersJson) {
+      this.parametersJson = parametersJson;
+    }
+
+    public String getResourcesJson() {
+      return resourcesJson;
+    }
+
+    public void setResourcesJson(String resourcesJson) {
+      this.resourcesJson = resourcesJson;
+    }
+
+    public Map<String, Boolean> getConstraintsMet() {
+      return constraintsMet;
+    }
+
+    public void setConstraintsMet(Map<String, Boolean> constraintsMet) {
+      this.constraintsMet = constraintsMet;
+    }
+
+    public List<String> getLogs() {
+      return logs;
+    }
+
+    public void setLogs(List<String> logs) {
+      this.logs = logs;
+    }
+
+    public boolean isSuccessful() {
+      return isSuccessful;
+    }
+
+    public void setSuccessful(boolean isSuccessful) {
+      this.isSuccessful = isSuccessful;
+    }
+
+    public String getFailureReason() {
+      return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+      this.failureReason = failureReason;
+    }
+
+    public boolean isResultsSaved() {
+      return isResultsSaved;
+    }
+
+    public void setResultsSaved(boolean isResultsSaved) {
+      this.isResultsSaved = isResultsSaved;
+    }
+
+    public AlgorithmResultEntity getResult() {
+      return result;
+    }
+
+    public void setResult(AlgorithmResultEntity result) {
+      this.result = result;
+    }
+    
   }
-
-  public AlgorithmRunEntity(String id, @NotBlank(message = "Algorithm name cannot be blank") String algorithmName,
-      @NotBlank(message = "Start time cannot be blank") Date startTime,
-      @NotBlank(message = "End time cannot be blank") Date endTime,
-      @NotBlank(message = "Runtime in ms cannot be blank") long runtimeInMilliseconds,
-      @NotBlank(message = "Parameters cannot be blank") Map<String, Object> parameters,
-      @NotBlank(message = "Resources used cannot be blank") Map<String, Object> resourcesUsed,
-      @NotBlank(message = "Constraints met cannot be blank") Map<String, Boolean> constrainsMet, List<String> logs,
-      boolean isSuccessful, String failureReason, boolean isResultsSaved, AlgorithmResultEntity result) {
-    this.id = id;
-    this.algorithmName = algorithmName;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.runtimeInMilliseconds = runtimeInMilliseconds;
-    this.parameters = parameters;
-    this.resourcesUsed = resourcesUsed;
-    this.constrainsMet = constrainsMet;
-    this.logs = logs;
-    this.isSuccessful = isSuccessful;
-    this.failureReason = failureReason;
-    this.isResultsSaved = isResultsSaved;
-    this.result = result;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getAlgorithmName() {
-    return algorithmName;
-  }
-
-  public void setAlgorithmName(String algorithmName) {
-    this.algorithmName = algorithmName;
-  }
-
-  public Date getStartTime() {
-    return startTime;
-  }
-
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
-  }
-
-  public Date getEndTime() {
-    return endTime;
-  }
-
-  public void setEndTime(Date endTime) {
-    this.endTime = endTime;
-  }
-
-  public long getRuntimeInMilliseconds() {
-    return runtimeInMilliseconds;
-  }
-
-  public void setRuntimeInMilliseconds(long runtimeInMilliseconds) {
-    this.runtimeInMilliseconds = runtimeInMilliseconds;
-  }
-
-  public Map<String, Object> getParameters() {
-    return parameters;
-  }
-
-  public void setParameters(Map<String, Object> parameters) {
-    this.parameters = parameters;
-  }
-
-  public Map<String, Object> getResourcesUsed() {
-    return resourcesUsed;
-  }
-
-  public void setResourcesUsed(Map<String, Object> resourcesUsed) {
-    this.resourcesUsed = resourcesUsed;
-  }
-
-  public Map<String, Boolean> getConstrainsMet() {
-    return constrainsMet;
-  }
-
-  public void setConstrainsMet(Map<String, Boolean> constrainsMet) {
-    this.constrainsMet = constrainsMet;
-  }
-
-  public List<String> getLogs() {
-    return logs;
-  }
-
-  public void setLogs(List<String> logs) {
-    this.logs = logs;
-  }
-
-  public boolean isSuccessful() {
-    return isSuccessful;
-  }
-
-  public void setSuccessful(boolean isSuccessful) {
-    this.isSuccessful = isSuccessful;
-  }
-
-  public String getFailureReason() {
-    return failureReason;
-  }
-
-  public void setFailureReason(String failureReason) {
-    this.failureReason = failureReason;
-  }
-
-  public boolean isResultsSaved() {
-    return isResultsSaved;
-  }
-
-  public void setResultsSaved(boolean isResultsSaved) {
-    this.isResultsSaved = isResultsSaved;
-  }
-
-  public AlgorithmResultEntity getResult() {
-    return result;
-  }
-
-  public void setResult(AlgorithmResultEntity result) {
-    this.result = result;
-  }
-}

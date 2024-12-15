@@ -1,8 +1,9 @@
 package com.flightcoordinator.server.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,140 +17,140 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "user_table")
 public class UserEntity implements UserDetails {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private String id;
 
-  @NotBlank(message = "Full name cannot be blank")
-  @Column(name = "full_name", nullable = false)
-  private String fullName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-  @NotBlank(message = "E-Mail cannot be blank")
-  @Column(name = "email", nullable = false, unique = true)
-  private String email;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
 
-  @NotBlank(message = "Password cannot be blank")
-  @Column(name = "password", nullable = false)
-  private String password;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
-  @NotBlank(message = "Role ID cannot be blank")
-  @ManyToOne
-  @JoinColumn(name = "role_id", nullable = false)
-  private SystemRoleEntity role;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-  @Column(name = "is_active", nullable = false)
-  private Boolean isActive;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private SystemRoleEntity role;
 
-  @Column(name = "is_locked", nullable = false)
-  private Boolean isLocked;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
-  public UserEntity() {
-  }
+    @Column(name = "is_locked", nullable = false)
+    private Boolean isLocked;
 
-  public UserEntity(String id, @NotBlank(message = "Full name cannot be blank") String fullName,
-      @NotBlank(message = "E-Mail cannot be blank") String email,
-      @NotBlank(message = "Password cannot be blank") String password,
-      @NotBlank(message = "Role ID cannot be blank") SystemRoleEntity role, Boolean isActive, Boolean isLocked) {
-    this.id = id;
-    this.fullName = fullName;
-    this.email = email;
-    this.password = password;
-    this.role = role;
-    this.isActive = isActive;
-    this.isLocked = isLocked;
-  }
+    public UserEntity() {}
 
-  public String getId() {
-    return id;
-  }
+    // Implementing getAuthorities from UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        
+        // Assuming role has a collection of permissions (or authorities)
+        for (SystemRoleEntity.SystemPermission permission : role.getPermissionPerResource().values().stream().flatMap(List::stream).toList()) {
+            authorities.add(new SimpleGrantedAuthority(permission.name()));
+        }
+        
+        return authorities;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    @Override
+    public String getUsername() {
+        return email;  // Assuming username is email
+    }
 
-  public String getFullName() {
-    return fullName;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return isActive;
+    }
 
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return !isLocked;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isActive;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    @Override
+    public boolean isEnabled() {
+        return isActive;
+    }
 
-  @Override
-  public String getPassword() {
-    return password;
-  }
+ 
+    public UserEntity(String id, String fullName, String email, String password, SystemRoleEntity role,
+        Boolean isActive, Boolean isLocked) {
+      this.id = id;
+      this.fullName = fullName;
+      this.email = email;
+      this.password = password;
+      this.role = role;
+      this.isActive = isActive;
+      this.isLocked = isLocked;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    @Override
+    public String getPassword() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-  public SystemRoleEntity getRole() {
-    return role;
-  }
+    public String getId() {
+      return id;
+    }
 
-  public void setRole(SystemRoleEntity role) {
-    this.role = role;
-  }
+    public void setId(String id) {
+      this.id = id;
+    }
 
-  public Boolean getIsActive() {
-    return isActive;
-  }
+    public String getFullName() {
+      return fullName;
+    }
 
-  public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
-  }
+    public void setFullName(String fullName) {
+      this.fullName = fullName;
+    }
 
-  public Boolean getIsLocked() {
-    return isLocked;
-  }
+    public String getEmail() {
+      return email;
+    }
 
-  public void setIsLocked(Boolean isLocked) {
-    this.isLocked = isLocked;
-  }
+    public void setEmail(String email) {
+      this.email = email;
+    }
 
-  @Override
-  public String getUsername() {
-    return email; // for authentication only
-  }
+    public void setPassword(String password) {
+      this.password = password;
+    }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<GrantedAuthority> authorities = new ArrayList<>();
-    role.getAllPermissions().forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
-    return authorities;
-  }
+    public SystemRoleEntity getRole() {
+      return role;
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return !isActive;
-  }
+    public void setRole(SystemRoleEntity role) {
+      this.role = role;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return !isLocked;
-  }
+    public Boolean getIsActive() {
+      return isActive;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return UserDetails.super.isCredentialsNonExpired();
-  }
+    public void setIsActive(Boolean isActive) {
+      this.isActive = isActive;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return !isActive;
-  }
+    public Boolean getIsLocked() {
+      return isLocked;
+    }
+
+    public void setIsLocked(Boolean isLocked) {
+      this.isLocked = isLocked;
+    }
 }

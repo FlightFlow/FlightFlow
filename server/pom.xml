@@ -149,6 +149,11 @@
                         <artifactId>spring-restdocs-asciidoctor</artifactId>
                         <version>${spring-restdocs.version}</version>
                     </dependency>
+                    <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.5.1</version> <!-- Use the latest version -->
+</dependency>
                 </dependencies>
             </plugin>
             <plugin>
