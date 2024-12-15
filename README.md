@@ -160,6 +160,10 @@ We use GitHub templates to streamline reporting bugs and requesting new features
 - **Bug Reports:** Open a new issue and select "Bug Report" template. Provide as much detail as possible to help us reproduce the issue.
 - **Feature Request:** Open a new issue and select "Feature Request" template. Describe the new feature and its intended purpose clearly.
 
+## Documentation
+
+For detailed documentation, please see the [project documentation](https://github.com/FlightCoordinator/Documentation).
+
 ## License
 
 This project is open-source and licensed under [MIT License](https://github.com/FlightCoordinator/FlightCoordinator/blob/main/LICENSE).
