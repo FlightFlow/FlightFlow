@@ -23,7 +23,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JWTService {
-  private long ONE_HOUR = 60 * 60 * 60;
+  private long ONE_HOUR = 3600000; // in ms
   private long accessTokenExpiration = ONE_HOUR / 4; // 15 minutes
   private long refreshTokenExpiration = ONE_HOUR * 4; // 4 hours
 
@@ -35,7 +35,8 @@ public class JWTService {
       SecretKey secretKey = keyGenerator.generateKey();
       JWT_KEY = Base64.getEncoder().encodeToString(secretKey.getEncoded());
     } catch (NoSuchAlgorithmException e) {
-      throw new AppError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+      throw new AppError(
+          HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
   }
 
@@ -54,7 +55,7 @@ public class JWTService {
         .claims().add(claims)
         .subject(username)
         .issuedAt(new Date(System.currentTimeMillis()))
-        .expiration(new Date(System.currentTimeMillis() * expiration))
+        .expiration(new Date(System.currentTimeMillis() + expiration))
         .and()
         .signWith(getKey())
         .compact();
