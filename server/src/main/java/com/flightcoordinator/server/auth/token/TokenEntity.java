@@ -1,4 +1,4 @@
-package com.flightcoordinator.server.token;
+package com.flightcoordinator.server.auth.token;
 
 import com.flightcoordinator.server.entity.UserEntity;
 
