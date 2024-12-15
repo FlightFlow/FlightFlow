@@ -27,6 +27,7 @@ public class SystemRoleEntity {
     ALGO_RUN,
     CERT,
     CREW,
+    FLIGHT,
     PLANE,
     ROUTE,
     RUNWAY,
