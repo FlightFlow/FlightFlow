@@ -14,7 +14,7 @@ The projects also includes utility scripts for configuring the environment, sett
 
 To setup the project locally, ensure following are present on your system:
 
-- Bash Shell for running provided scripts. (This project is developed in a GNU/Linux environment which is WSL2 with Ubuntu, but you can install the following to a different OS environment to run the project.)
+- Bash Shell for running provided scripts (This project is developed in a GNU/Linux environment using WSL2 with Ubuntu. However, you can set up and run it on other operating systems by installing the required tools.)
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en) (version managed with [NVM](https://github.com/nvm-sh/nvm))
 - [pnpm](https://pnpm.io/)
@@ -49,9 +49,9 @@ cd scripts/config # from the project root
 This script does the following:
 
 - Renames the `example.application.yml` in the Spring Boot backend to `application.yml`.
-- Renams the `.env.sample` in the React frontend to `.env`.
+- Renames the `.env.sample` in the React frontend to `.env`.
 - Installs the frontend dependencies using `pnpm i`.
-- Installs the root dependencies using `pnpm i` (only `concurrently` for running the frontend and backend concurrently).
+- Installs the root dependencies using `pnpm i` (only `concurrently` for running the frontend and backend at the same time).
 - Runs the `./mvnw clean install` to build the backend.
 
 ### Setting Up Environment Variables
@@ -103,7 +103,7 @@ Ensure these config files contain valid values before running the application.
 
 ## Running the Project
 
-To starth both backend and frontend at the same time, you can use the `run_app.sh` script:
+To starth both backend and frontend concurrently, you can use the `run_app.sh` script:
 
 ```bash
 cd scripts/ # from the project root
