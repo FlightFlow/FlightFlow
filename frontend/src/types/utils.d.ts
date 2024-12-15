@@ -5,17 +5,21 @@ namespace UtilTypes {
 
     type EndpointRoutes =
       | "airport"
-      | "algorithm"
+      | "algorithm/run"
+      | "algorithm/result"
       | "certification"
       | "crew"
+      | "flight"
       | "plane"
       | "route"
       | "runway"
+      | "systemRole"
+      | "user"
       | "vehicle";
 
-    type AlgorithmActions = "TBD"; // TODO
+    type AlgorithmActions = ""; // TODO
     type EndpointActions = "getById" | "getAll" | "create" | "update" | "delete";
-    type AuthActions = "login" | "register" | "logout" | "resetpassword";
+    type AuthActions = "auth/login" | "auth/register" | "auth/logout" | "auth/newRefreshToken";
 
     interface EndpointProps {
       controller: EndpointRoutes;
@@ -28,7 +32,6 @@ namespace UtilTypes {
       endpoint: EndpointProps;
       method: RequestMethods;
       headers?: RawAxiosRequestHeaders;
-      accessToken?: string;
       includeCookies?: boolean;
       query?: Record<string, string>;
       payload: object;

@@ -1,10 +1,10 @@
 namespace Enums {
-  export enum AirportTypes {
+  export enum AirportType {
     INTERNATIONAL = "International",
     REGIONAL = "Regional",
     DOMESTIC = "Domestic",
   }
-  export enum CertificationIssuers {
+  export enum CertificationIssuer {
     FAA = "Federal Aviation Administration",
     EASA = "European Union Aviation Safety Agency",
     CAA = "Civil Aviation Authority",
@@ -45,7 +45,7 @@ namespace Enums {
     ON_LEAVE = "On-Leave",
     UNAVAILABLE = "Unavailable",
   }
-  export enum CrewRoles {
+  export enum CrewRole {
     CAPTAIN = "Captain",
     FIRST_OFFICER = "First Officer",
     SECOND_OFFICER = "Seconds Officer",
@@ -64,7 +64,7 @@ namespace Enums {
     IS_USE = "In-Use",
     RETIRED = "Retired",
   }
-  export enum RunwaySurfaceTypes {
+  export enum RunwaySurfaceType {
     ASPHALT = "Asphalt",
     CONCRETE = "Concrete",
     GRASS = "Grass",
@@ -78,7 +78,7 @@ namespace Enums {
     UNDER_MAINTENANCE = "Under-Maintenance",
     OUT_OF_SERVICE = "Out-Of-Service",
   }
-  export enum GroundVehicleTypes {
+  export enum GroundVehicleType {
     TUG = "Tug",
     REFUELER = "Refueler",
     LOADER = "Loader",
@@ -86,6 +86,26 @@ namespace Enums {
     DE_ICER = "De-Icer",
     PUSHBACK = "Pushback",
     BUS = "Bus",
+  }
+  export enum SystemPermission {
+    CREATE,
+    READ,
+    UPDATE,
+    DELETE,
+  }
+  export enum SystemResource {
+    AIRPORT,
+    ALGO_RESULT,
+    ALGO_RUN,
+    CERT,
+    CREW,
+    FLIGHT,
+    PLANE,
+    ROUTE,
+    RUNWAY,
+    SYS_ROLE,
+    USER,
+    VEHICLE,
   }
 }
 export default Enums;

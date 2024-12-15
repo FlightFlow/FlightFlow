@@ -9,15 +9,17 @@ namespace EntityTypes {
     iataCode: string;
     icaoCode: string;
     countryCode: string;
-    type: Enums.AirportTypes;
-    runways: string[];
+    type: Enums.AirportType;
+    runways: List<RunwayEntity>;
   }
   export interface AlgorithmResultEntity extends BaseEntity {
-    routeId: string;
-    planeId: string;
-    crewMemberIds: string[];
-    runwayId: string;
-    groundVehicleIds: string[];
+    flight: FlightEntity;
+    plane: PlaneEntity;
+    crewMembers: List<CrewEntity>;
+    takeoffRunway: RunwayEntity;
+    landingRunway: RunwayEntity;
+    originAirportGroundVehicles: List<VehicleEntity>;
+    destinationAirportGroundVehicles: List<VehicleEntity>;
   }
   export interface AlgorithmRunEntity extends BaseEntity {
     algorithmName: string;
@@ -31,15 +33,15 @@ namespace EntityTypes {
     isSuccessful: boolean;
     failureReason: string;
     isResultsSaved: boolean;
-    resultId: string;
+    resultId: AlgorithmResultEntity;
   }
   export interface CertificationEntity extends BaseEntity {
     name: string;
-    issuer: Enums.CertificationIssuers;
+    issuer: Enums.CertificationIssuer;
     issuingCountry: Enums.CertificationIssuingCountry;
     expirationDate: Date;
     validityPeriod: number;
-    assignableRole: string[];
+    assignableRole: Enums.CrewRoles[];
     description: string;
   }
   export interface CrewEntity extends BaseEntity {
@@ -47,10 +49,14 @@ namespace EntityTypes {
     email: string;
     phoneNumber: number;
     role: Enums.CrewRoles;
-    certifications: string[];
+    certifications: List<CertificationEntity>;
     totalFlightHours: number;
-    baseAirport: string;
+    baseAirport: AirportEntity;
     availability: CrewAvailability;
+  }
+  export interface FlightEntity extends BaseEntity {
+    passengerCount: number;
+    flightRoute: RouteEntity;
   }
   export interface PlaneEntity extends BaseEntity {
     model: string;
@@ -64,24 +70,35 @@ namespace EntityTypes {
     shortestRunwayLengthRequired: number;
     shortestRunwayWidthRequired: number;
     planeStatus: Enums.PlaneAvailability;
-    currentLocation: string;
+    currentLocation: AirportEntity;
     aircraftOperator: string;
   }
   export interface RouteEntity extends BaseEntity {
-    originAirportId: string;
-    destinationAirportId: string;
+    originAirportId: AirportEntity;
+    destinationAirportId: AirportEntity;
     distance: number;
     estimatedTime: number;
   }
   export interface RunwayEntity extends BaseEntity {
     length: number;
     width: number;
-    surfaceType: Enums.RunwaySurfaceTypes;
+    surfaceType: Enums.RunwaySurfaceType;
     maxWeightCapacity: number;
     orientation: string;
   }
+  export interface SystemRoleEntity extends BaseEntity {
+    roleName: string;
+    permissionPerResource: Map<Enums.SystemResource, List<Enums.SystemPermission>>;
+  }
+  export interface UserEntity extends BaseEntity {
+    fullName: string;
+    email: string;
+    role: SystemRoleEntity;
+    isActive: boolean;
+    isLocked: boolean;
+  }
   export interface VehicleEntity extends BaseEntity {
-    type: Enums.GroundVehicleTypes;
+    type: Enums.GroundVehicleType;
     vehicleCode: string;
     capacity: number;
     availability: Enums.GroundVehicleAvailability;

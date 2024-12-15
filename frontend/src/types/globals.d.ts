@@ -1,12 +1,9 @@
 namespace GlobalTypes {
-  export interface BaseRequestParams {
-    userId: string;
-    accessToken: string;
-  }
+  export interface BaseRequestParams {} // For future uses
   export interface ServerResponseParams<TResponseData = null> {
     isSuccess: boolean;
-    message: string;
-    data?: TResponseData;
+    responseMessage: string;
+    responseData?: TResponseData;
   }
 }
 export default GlobalTypes;
