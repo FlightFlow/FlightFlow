@@ -122,7 +122,7 @@ cd scripts/ # from the project root
 ./run_app.sh
 ```
 
-This script uses a npm package named `concurrently` to run the backend and the frontend in parallel, in the same terminal.
+This script uses a npm package named [concurrently](https://www.npmjs.com/package/concurrently) to run the backend and the frontend in parallel, in the same terminal.
 
 ## Running the Tests
 
