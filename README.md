@@ -62,9 +62,20 @@ Both the frontend and the backend require environment variables to function corr
 
   ```bash
   VITE_APP_SERVER_URL=""
+  VITE_APP_SERVER_PORT=""
+  VITE_APP_SERVER_API_VERSION=""
   ```
 
-  This variable should have the backend server url. If you are running the project locally, this would probably be something like `http://localhost:0000` with `0000` replaced with backend port. This port should match the one you put in the backend's config folder.
+  `VITE_APP_SERVER_URL` variable should have the backend server url. If you are running the project locally, this would just be `localhost`. This variable should NOT include the http/https at the beginning, and a slash at the end.
+
+  `VITE_APP_SERVER_PORT` should match the port value you put in the backend's config file (application.yml).
+
+  `VITE_AP_SERVER_API_VERSION` should match the api version in th backend's config file (application.yml).
+
+  The backend request urls, by default, looks like `http://localhost:0000/api/v1/plane/create`. In this url, localhost is the base url for the backend, `0000` is the `VITE_APP_SERVER_PORT` value, `v1` is the `VITE_APP_SERVER_API_vERSION`, `plane` is the controller, and `create` is the action.
+
+  The frontend constructs the request urls for the backend in the requester utility using the environment variables, and some values like `/api/` is added in the requester utility so if you decide to update the backend, do not forget to also update this utility.
+
 - **Backend:** The backend have a `application.yml` file (located in `server/src/main/resources`) which have contents like the one shown below:
 
   ```yml
