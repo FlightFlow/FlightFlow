@@ -49,7 +49,7 @@ public class AlgorithmResultService {
 
     // TODO: add validations
 
-    existingAlgorithmResult.setRoute(updatedAlgorithmResult.getRoute());
+    existingAlgorithmResult.setFlight(updatedAlgorithmResult.getFlight());
     existingAlgorithmResult.setPlane(updatedAlgorithmResult.getPlane());
     existingAlgorithmResult.setCrewMembers(updatedAlgorithmResult.getCrewMembers());
     existingAlgorithmResult.setRunways(updatedAlgorithmResult.getRunways());

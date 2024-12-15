@@ -23,9 +23,9 @@ public class AlgorithmResultEntity {
   private String id;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "route_id", nullable = false)
-  @NotBlank(message = "Route ID cannot be blank")
-  private RouteEntity route;
+  @JoinColumn(name = "flight_id", nullable = false)
+  @NotBlank(message = "Flight ID cannot be blank")
+  private FlightEntity flight;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "plane_id", nullable = false)
@@ -50,13 +50,13 @@ public class AlgorithmResultEntity {
   public AlgorithmResultEntity() {
   }
 
-  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") RouteEntity route,
+  public AlgorithmResultEntity(String id, @NotBlank(message = "Route ID cannot be blank") FlightEntity flight,
       @NotBlank(message = "Plane ID cannot be blank") PlaneEntity plane,
       @NotBlank(message = "Crew members list cannot be blank") List<CrewEntity> crewMembers,
       @NotBlank(message = "Runways list cannot be blank") List<RunwayEntity> runways,
       @NotBlank(message = "Ground vehicles list cannot be blank") List<VehicleEntity> groundVehicles) {
     this.id = id;
-    this.route = route;
+    this.flight = flight;
     this.plane = plane;
     this.crewMembers = crewMembers;
     this.runways = runways;
@@ -71,12 +71,12 @@ public class AlgorithmResultEntity {
     this.id = id;
   }
 
-  public RouteEntity getRoute() {
-    return route;
+  public FlightEntity getFlight() {
+    return flight;
   }
 
-  public void setRoute(RouteEntity route) {
-    this.route = route;
+  public void setFlight(FlightEntity flight) {
+    this.flight = flight;
   }
 
   public PlaneEntity getPlane() {
