@@ -44,25 +44,6 @@ public class AlgorithmResultService {
     algorithmResultRepository.save(newAlgorithmResult);
   }
 
-  public void updateAlgorithmResult(String algorithmResultId, AlgorithmResultEntity updatedAlgorithmResult) {
-    AlgorithmResultEntity existingAlgorithmResult = getSingleAlgorithmResultById(algorithmResultId);
-
-    // TODO: add validations
-
-    existingAlgorithmResult.setFlight(updatedAlgorithmResult.getFlight());
-    existingAlgorithmResult.setPlane(updatedAlgorithmResult.getPlane());
-    existingAlgorithmResult.setCrewMembers(updatedAlgorithmResult.getCrewMembers());
-    existingAlgorithmResult.setTakeoffRunway(updatedAlgorithmResult.getTakeoffRunway());
-
-    existingAlgorithmResult.setOriginAirportGroundVehicles(
-        updatedAlgorithmResult.getOriginAirportGroundVehicles());
-
-    existingAlgorithmResult.setDestinationAirportGroundVehicles(
-        updatedAlgorithmResult.getDestinationAirportGroundVehicles());
-
-    algorithmResultRepository.save(existingAlgorithmResult);
-  }
-
   public void deleteAlgorithmResult(String algorithmResultId) {
     AlgorithmResultEntity existingAlgorithmResult = getSingleAlgorithmResultById(algorithmResultId);
     algorithmResultRepository.delete(existingAlgorithmResult);

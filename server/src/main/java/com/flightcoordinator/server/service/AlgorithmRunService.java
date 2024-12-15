@@ -44,25 +44,6 @@ public class AlgorithmRunService {
     algorithmRunRepository.save(newAlgorithmRun);
   }
 
-  public void updateAlgorithmRun(String algorithmRunId, AlgorithmRunEntity updatedAlgorithmRun) {
-    AlgorithmRunEntity existingAlgorithmRun = getSingleAlgorithmRunById(algorithmRunId);
-
-    existingAlgorithmRun.setAlgorithmName(updatedAlgorithmRun.getAlgorithmName());
-    existingAlgorithmRun.setStartTime(updatedAlgorithmRun.getStartTime());
-    existingAlgorithmRun.setEndTime(updatedAlgorithmRun.getEndTime());
-    existingAlgorithmRun.setRuntimeInMilliseconds(updatedAlgorithmRun.getRuntimeInMilliseconds());
-    existingAlgorithmRun.setParameters(updatedAlgorithmRun.getParameters());
-    existingAlgorithmRun.setResourcesUsed(updatedAlgorithmRun.getResourcesUsed());
-    existingAlgorithmRun.setConstrainsMet(updatedAlgorithmRun.getConstrainsMet());
-    existingAlgorithmRun.setLogs(updatedAlgorithmRun.getLogs());
-    existingAlgorithmRun.setSuccessful(updatedAlgorithmRun.isSuccessful());
-    existingAlgorithmRun.setFailureReason(updatedAlgorithmRun.getFailureReason());
-    existingAlgorithmRun.setResultsSaved(updatedAlgorithmRun.isResultsSaved());
-    existingAlgorithmRun.setResult(updatedAlgorithmRun.getResult());
-
-    algorithmRunRepository.save(existingAlgorithmRun);
-  }
-
   public void deleteAlgorithmRun(String algorithmRunId) {
     AlgorithmRunEntity existingAlgorithmRun = getSingleAlgorithmRunById(algorithmRunId);
     algorithmRunRepository.delete(existingAlgorithmRun);
