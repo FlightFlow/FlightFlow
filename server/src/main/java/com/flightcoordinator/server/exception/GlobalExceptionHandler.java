@@ -10,6 +10,10 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
   @ExceptionHandler(AppError.class)
@@ -46,6 +50,33 @@ public class GlobalExceptionHandler {
       OptimisticLockingFailureException exception) {
     return ResponseHelper.generateResponse(
         HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        false,
+        exception.getMessage(),
+        null);
+  }
+
+  @ExceptionHandler(JwtException.class)
+  public ResponseEntity<ResponseObject<Object>> handleJwtException(JwtException exception) {
+    return ResponseHelper.generateResponse(
+        HttpStatus.UNAUTHORIZED.value(),
+        false,
+        exception.getMessage(),
+        null);
+  }
+
+  @ExceptionHandler(MalformedJwtException.class)
+  public ResponseEntity<ResponseObject<Object>> handleMalformedJwtException(MalformedJwtException exception) {
+    return ResponseHelper.generateResponse(
+        HttpStatus.UNAUTHORIZED.value(),
+        false,
+        exception.getMessage(),
+        null);
+  }
+
+  @ExceptionHandler(ExpiredJwtException.class)
+  public ResponseEntity<ResponseObject<Object>> handleExpiredJwtException(ExpiredJwtException exception) {
+    return ResponseHelper.generateResponse(
+        HttpStatus.UNAUTHORIZED.value(),
         false,
         exception.getMessage(),
         null);
