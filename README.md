@@ -48,7 +48,7 @@ cd scripts/config # from the project root
 
 This script does the following:
 
-- Sets up a custom `pre-commit` hook (located in `.githook/`) for git.
+- Sets up a custom `pre-commit` hook (located in `.githooks/`) for git.
 - Renames the `example.application.yml` in the Spring Boot backend to `application.yml`.
 - Renames the `.env.sample` in the React frontend to `.env`.
 - Installs the frontend dependencies using `pnpm i`.
