@@ -6,9 +6,9 @@
 
 ## Overview
 
-This project is an automated flight manager app for final year computer engineering project. The project is a full-stack application consisting of a Spring Boot backend, a React frontend with TypeScript, and a Python scripts for automation related algorithms.
+This project is an automated flight manager app for final year computer engineering project. The project is a full-stack application consisting of a Spring Boot backend, a React frontend with TypeScript, and Python scripts for automation related algorithms.
 
-The projects also includes utility scripts for configuring the environment, setting up the project, running the application (both frontend and backend at once), and executing tests (for both frontend and backend in order).
+The project also includes utility scripts for configuring the environment, setting up the project, running the application (both frontend and backend simultaneously), executing tests (for both frontend and backend in sequence), and building the frontend, backend, or the entire application.
 
 ## Prerequisites
 
