@@ -6,10 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+import com.flightcoordinator.server.auth.token.TokenService;
 import com.flightcoordinator.server.entity.UserEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.UserRepository;
-import com.flightcoordinator.server.token.TokenService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,9 +22,6 @@ public class CustomLogoutHandler implements LogoutHandler {
   @Autowired
   private UserRepository userRepository;
 
-  @Autowired
-  private JWTService jwtService;
-
   @Override
   public void logout(
       HttpServletRequest request,
@@ -35,12 +32,11 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       authToken = authHeader.substring(7);
-      String userEmailAsUsername = jwtService.extractUsername(authToken);
+      String userEmailAsUsername = tokenService.getEmailAsUsernameFromToken(authToken);
       UserEntity user = userRepository.findByEmail(userEmailAsUsername).orElse(null);
 
       if (user != null) {
-        tokenService.revokeSingleToken(authToken);
-        tokenService.revokeAllTokensForUser(user);
+        tokenService.revokeAllRefreshTokensForUser(user);
 
         SecurityContextHolder.clearContext();
       } else {

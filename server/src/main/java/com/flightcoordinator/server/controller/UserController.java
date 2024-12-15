@@ -45,12 +45,12 @@ public class UserController {
         null);
   }
 
-  @PostMapping("/refresh-token")
+  @PostMapping("/newRefreshToken")
   public ResponseEntity<ResponseObject<Object>> newRefreshToken(
       @CookieValue("accessToken") String accessToken,
       @CookieValue("refreshToken") String refreshToken,
       HttpServletResponse response) {
-    Cookie newAccessToken = userService.getNewAccessToken(accessToken, refreshToken);
+    Cookie newAccessToken = userService.getNewAccessTokenAsCookie(accessToken, refreshToken);
     response.addCookie(newAccessToken);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.flightcoordinator.server.auth.JWTService;
+import com.flightcoordinator.server.auth.token.TokenService;
 import com.flightcoordinator.server.dto.AuthDetailsDTO;
 import com.flightcoordinator.server.dto.LoginDetailsDTO;
 import com.flightcoordinator.server.dto.RegisterDetailsDTO;
@@ -29,7 +29,7 @@ public class UserService {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  private JWTService jwtService;
+  private TokenService tokenService;
 
   @Autowired
   private BCryptPasswordEncoder encoder;
@@ -68,45 +68,19 @@ public class UserService {
             HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
             HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
-    AuthDetailsDTO authDetails = new AuthDetailsDTO();
-
-    Cookie accessTokenCookie = new Cookie("accessToken", jwtService.generateAccessToken(user.getEmail()));
-    accessTokenCookie.setHttpOnly(true);
-    accessTokenCookie.setSecure(true);
-    accessTokenCookie.setPath("/");
-
-    authDetails.setAccessTokenCookie(accessTokenCookie);
-
-    Cookie refreshTokenCookie = new Cookie("refreshToken", jwtService.generateRefreshToken(user.getEmail()));
-    refreshTokenCookie.setHttpOnly(true);
-    refreshTokenCookie.setSecure(true);
-    refreshTokenCookie.setPath("/api/v1/auth/refresh-token");
-
-    authDetails.setRefreshTokenCookie(refreshTokenCookie);
-
-    return authDetails;
+    AuthDetailsDTO newAuthDetails = tokenService.generateAuthDetails(user);
+    return newAuthDetails;
   }
 
-  public Cookie getNewAccessToken(String accessToken, String refreshToken) {
-    UserEntity user = userRepository.findByEmail(jwtService.extractUsername(refreshToken)).orElse(null);
+  public Cookie getNewAccessTokenAsCookie(String accessToken, String refreshToken) {
+    String userEmail = tokenService.getEmailAsUsernameFromToken(refreshToken);
+    UserEntity user = userRepository.findByEmail(userEmail).orElse(null);
     if (user == null) {
       throw new AppError(
           HttpStatus.UNAUTHORIZED.getReasonPhrase(),
           HttpStatus.UNAUTHORIZED.value());
     }
 
-    Boolean isTokenValid = jwtService.validateToken(accessToken, user);
-    if (!isTokenValid) {
-      throw new AppError(
-          HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-          HttpStatus.UNAUTHORIZED.value());
-    }
-
-    Cookie accessTokenCookie = new Cookie("accessToken", jwtService.generateAccessToken(user.getEmail()));
-    accessTokenCookie.setHttpOnly(true);
-    accessTokenCookie.setSecure(true);
-    accessTokenCookie.setPath("/");
-
-    return accessTokenCookie;
+    return tokenService.getNewAccessTokenAsCookie(user, accessToken, refreshToken);
   }
 }
