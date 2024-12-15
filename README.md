@@ -126,6 +126,17 @@ This script executes:
 - `pnpm test` for frontend tests.
 - `./mvnw test` for backend tests.
 
+## Building the Project
+
+To build the project (frontend, backend, or both) you can use the `build.sh` script:
+
+```bash
+cd scripts/ # from the project root
+./build.sh <frontend|server|full_app>
+```
+
+You can specify which part of the application to build (frontend or backend) by passing `frontend` or `server` as parameter to the script or you can pass `full_app` as parameter to build both.
+
 ## VSCode Configuration
 
 A `.vscode` folder is included in the project with recommended extensions and settings for a consistent development experience. You can install these recommended extensions for better development experience if you decide to work on the project.
