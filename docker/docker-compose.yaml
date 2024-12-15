@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  flight-coordinator-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    env_file:
+      - ./server/src/main/resources/application.yml
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./server:/app
+    networks:
+      - fc-network
+
+  flight-coordinator-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - flight-coordinator-server
+    networks:
+      - fc-network
+
+networks:
+  fc-network:
+    driver: bridge

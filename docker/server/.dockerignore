@@ -1,0 +1,14 @@
+target/
+.m2/
+application.yml**
+example.application.yml**
+
+*.log
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+*.swp
+
