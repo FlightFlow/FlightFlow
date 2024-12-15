@@ -37,7 +37,7 @@ public class CrewEntity {
 
   @NotBlank(message = "Phone number cannot be blank")
   @Column(name = "phone_number", nullable = false)
-  private Float phoneNumber;
+  private Integer phoneNumber;
 
   @NotBlank(message = "Role cannot be blank")
   @Enumerated(EnumType.STRING)
@@ -67,7 +67,7 @@ public class CrewEntity {
 
   public CrewEntity(String id, @NotBlank(message = "Full name cannot be blank") String fullName,
       @Email(message = "E-Mail is invalid") String email,
-      @NotBlank(message = "Phone number cannot be blank") Float phoneNumber,
+      @NotBlank(message = "Phone number cannot be blank") Integer phoneNumber,
       @NotBlank(message = "Role cannot be blank") CrewRole role, List<CertificationEntity> certifications,
       @NotBlank(message = "Total flight hours cannot be blank") int totalFlightHours,
       @NotBlank(message = "Certification cannot be blank") AirportEntity baseAirport,
@@ -107,11 +107,11 @@ public class CrewEntity {
     this.email = email;
   }
 
-  public Float getPhoneNumber() {
+  public Integer getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(Float phoneNumber) {
+  public void setPhoneNumber(Integer phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 

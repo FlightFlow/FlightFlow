@@ -103,7 +103,7 @@ public class CrewService {
     crewRepository.delete(existingCrewMember);
   }
 
-  private Boolean isPhoneNumberValid(Float phoneNumber) {
+  private Boolean isPhoneNumberValid(Integer phoneNumber) {
     return phoneNumber.toString().length() == 11;
   }
 
