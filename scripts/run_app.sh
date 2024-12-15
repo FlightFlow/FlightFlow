@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
-ROOT_DIR="$SCRIPT_DIR/../.."
+ROOT_DIR="$SCRIPT_DIR/.."
 
 FRONTEND_PATH="$ROOT_DIR/frontend"
 BACKEND_PATH="$ROOT_DIR/Server"
