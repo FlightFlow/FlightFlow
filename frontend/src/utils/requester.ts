@@ -10,7 +10,9 @@ import i18next from "i18next";
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const BACKEND_PORT = import.meta.env.VITE_APP_BACKEND_PORT;
-const BACKEND_API_VERSION = "v1";
+const BACKEND_API_VERSION = import.meta.env.VITE_APP_SERVER_API_VERSION;
+
+const BACKEND_API_PREFIX = `/api/${BACKEND_API_VERSION}`;
 
 const POSSIBLE_STATUS_CODES = [200, 201, 400, 401, 404, 409, 500]; // FIXME
 
@@ -51,14 +53,14 @@ class Requester {
   }
 
   private generateURL(): string {
-    const urlString: string = `${this.protocol}://${this.baseURL}:${this.port}/api/${BACKEND_API_VERSION}`;
+    const urlString: string = `${this.protocol}://${this.baseURL}:${this.port}${BACKEND_API_PREFIX}`;
     const endpointString: string = this.generateEndpoint();
     const queryString: string = `?${this.query ? new URLSearchParams(this.query).toString() : ""}`;
     return `${urlString}${endpointString}${queryString}`;
   }
 
   private generateBaseURL(): string {
-    return `${this.protocol}://${this.baseURL}:${this.port}/api/${BACKEND_API_VERSION}`;
+    return `${this.protocol}://${this.baseURL}:${this.port}${BACKEND_API_PREFIX}`;
   }
 
   private async getNewAccessToken(): Promise<boolean> {
