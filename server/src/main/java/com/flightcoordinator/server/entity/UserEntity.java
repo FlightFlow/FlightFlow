@@ -99,7 +99,7 @@ public class UserEntity implements UserDetails {
 
   @Override
   public String getPassword() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return password;
   }
 
   public String getId() {
