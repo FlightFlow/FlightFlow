@@ -1,9 +1,8 @@
 package com.flightcoordinator.server.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,17 +46,10 @@ public class UserEntity implements UserDetails {
   public UserEntity() {
   }
 
-  // Implementing getAuthorities from UserDetails
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    Set<GrantedAuthority> authorities = new HashSet<>();
-
-    // Assuming role has a collection of permissions (or authorities)
-    for (SystemRoleEntity.SystemPermission permission : role.getPermissionPerResource().values().stream()
-        .flatMap(List::stream).toList()) {
-      authorities.add(new SimpleGrantedAuthority(permission.name()));
-    }
-
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    role.getAllPermissions().forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
     return authorities;
   }
 

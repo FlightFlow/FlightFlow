@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,17 +60,17 @@ public class SystemRoleEntity {
 
   // One-to-many relationship with UserEntity
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<UserEntity> users;
+  private Set<UserEntity> assignedUsers;
 
   public SystemRoleEntity() {
   }
 
   public SystemRoleEntity(String id, String roleName, Map<SystemResource, List<SystemPermission>> permissionPerResource,
-      Set<UserEntity> users) {
+      Set<UserEntity> assignedUsers) {
     this.id = id;
     this.roleName = roleName;
     this.permissionPerResource = permissionPerResource;
-    this.users = users;
+    this.assignedUsers = assignedUsers;
   }
 
   // Getters and Setters
@@ -97,11 +98,25 @@ public class SystemRoleEntity {
     this.permissionPerResource = permissionPerResource;
   }
 
-  public Set<UserEntity> getUsers() {
-    return users;
+  public Set<UserEntity> getAssignedUsers() {
+    return assignedUsers;
   }
 
-  public void setUsers(Set<UserEntity> users) {
-    this.users = users;
+  public void setAssignedUsers(Set<UserEntity> assignedUsers) {
+    this.assignedUsers = assignedUsers;
+  }
+
+  public List<String> getAllPermissions() {
+    List<String> allPermissionsAsList = new ArrayList<>();
+
+    for (Map.Entry<SystemResource, List<SystemPermission>> entry : permissionPerResource.entrySet()) {
+      SystemResource resource = entry.getKey();
+      List<SystemPermission> permissions = entry.getValue();
+
+      for (SystemPermission permission : permissions) {
+        allPermissionsAsList.add(resource.name() + "_" + permission.name());
+      }
+    }
+    return allPermissionsAsList;
   }
 }
