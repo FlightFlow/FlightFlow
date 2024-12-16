@@ -17,7 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "algorithm_run")
+@Table(name = "algorithm_run_table")
 public class AlgorithmRunEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
