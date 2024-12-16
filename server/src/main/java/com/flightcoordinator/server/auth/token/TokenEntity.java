@@ -3,12 +3,18 @@ package com.flightcoordinator.server.auth.token;
 import com.flightcoordinator.server.entity.UserEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "token_table")
 public class TokenEntity {
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
+
   private String token;
   private UserEntity associatedUser;
   private boolean isExpired;
@@ -64,4 +70,14 @@ public class TokenEntity {
   public void setRevoked(boolean isRevoked) {
     this.isRevoked = isRevoked;
   }
+
+  @Override
+  public String toString() {
+    return "TokenEntity [id=" + id + ", token=" + token + ", associatedUser=" + associatedUser + ", isExpired="
+        + isExpired + ", isRevoked=" + isRevoked + ", getId()=" + getId() + ", getToken()=" + getToken()
+        + ", getAssociatedUser()=" + getAssociatedUser() + ", isExpired()=" + isExpired() + ", isRevoked()="
+        + isRevoked() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+        + "]";
+  }
+
 }

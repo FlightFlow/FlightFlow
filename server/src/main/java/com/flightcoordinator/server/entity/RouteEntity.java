@@ -2,66 +2,54 @@ package com.flightcoordinator.server.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "route_table")
 public class RouteEntity {
   @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Origin airport id cannot be blank")
-  @ManyToOne
+  @NotNull(message = "Origin airport id cannot be null")
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "origin_airport_id", nullable = false)
   private AirportEntity originAirport;
 
-  @NotBlank(message = "Destination airport id cannot be blank")
-  @ManyToOne
+  @NotNull(message = "Destination airport id cannot be null")
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "destination_airport_id", nullable = false)
-  private AirportEntity destinationAirport;
+  private AirportEntity destinationAirport; // This field corresponds to the 'destination' in AirportEntity
 
-  @NotBlank(message = "Distance cannot be blank")
+  @NotNull(message = "Distance cannot be null")
   @Min(value = 1, message = "Distance should be greater than '1'")
   @Column(name = "distance", nullable = false)
   private Float distance;
 
-  @NotBlank(message = "Estimated time cannot be blank")
+  @NotNull(message = "Estimated time cannot be null")
   @Column(name = "estimated_time", nullable = false)
   private Float estimatedTime;
 
   public RouteEntity() {
   }
 
-  public RouteEntity(String id, @NotBlank(message = "Origin airport id cannot be blank") AirportEntity originAirport,
-      @NotBlank(message = "Destination airport id cannot be blank") AirportEntity destinationAirport,
-      @NotBlank(message = "Distance cannot be blank") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
-      @NotBlank(message = "Estimated time cannot be blank") Float estimatedTime) {
+  public RouteEntity(String id, @NotNull(message = "Origin airport id cannot be null") AirportEntity originAirport,
+      @NotNull(message = "Destination airport id cannot be null") AirportEntity destinationAirport,
+      @NotNull(message = "Distance cannot be null") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
+      @NotNull(message = "Estimated time cannot be null") Float estimatedTime) {
     this.id = id;
     this.originAirport = originAirport;
     this.destinationAirport = destinationAirport;
     this.distance = distance;
     this.estimatedTime = estimatedTime;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public AirportEntity getOriginAirport() {
-    return originAirport;
-  }
-
-  public void setOriginAirport(AirportEntity originAirport) {
-    this.originAirport = originAirport;
   }
 
   public AirportEntity getDestinationAirport() {
@@ -70,6 +58,14 @@ public class RouteEntity {
 
   public void setDestinationAirport(AirportEntity destinationAirport) {
     this.destinationAirport = destinationAirport;
+  }
+
+  public AirportEntity getOriginAirport() {
+    return originAirport;
+  }
+
+  public void setOriginAirport(AirportEntity originAirport) {
+    this.originAirport = originAirport;
   }
 
   public Float getDistance() {
@@ -88,4 +84,11 @@ public class RouteEntity {
     this.estimatedTime = estimatedTime;
   }
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 }

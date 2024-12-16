@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -45,6 +47,10 @@ public class VehicleEntity {
   @NotBlank(message = "Capacity cannot be blank")
   private Date maintenanceDue;
 
+  @ManyToOne
+  @JoinColumn(name = "airport_id", nullable = false)
+  private AirportEntity airport;
+
   public VehicleEntity() {
   }
 
@@ -67,6 +73,10 @@ public class VehicleEntity {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public AirportEntity getAirport() {
+    return airport;
   }
 
   public GroundVehicleType getType() {
@@ -107,5 +117,9 @@ public class VehicleEntity {
 
   public void setMaintenanceDue(Date maintenanceDue) {
     this.maintenanceDue = maintenanceDue;
+  }
+
+  public void setAirport(AirportEntity airport) {
+    this.airport = airport;
   }
 }

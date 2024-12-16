@@ -33,28 +33,24 @@ public class CertificationEntity {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @NotBlank(message = "Issuer cannot be blank")
   @Enumerated(EnumType.STRING)
   @Column(name = "issuer", nullable = false)
   private CertificationIssuer issuer;
 
-  @NotBlank(message = "Issuing country cannot be blank")
   @Enumerated(EnumType.STRING)
-  @Column(name = "issusing_country", nullable = false)
+  @Column(name = "issuing_country", nullable = false)
   private CertificationIssuingCountry issuingCountry;
 
-  @NotBlank(message = "Expiration date cannot be blank")
   @Column(name = "expiration_date", nullable = false)
   private Date expirationDate;
 
-  @NotBlank(message = "Validity period cannot be blank")
   @Min(value = 1, message = "Validity period should be greater than '1'")
   @Column(name = "validity_period", nullable = false)
   private int validityPeriod;
 
   @ElementCollection(targetClass = CrewRole.class)
   @Enumerated(EnumType.STRING)
-  @CollectionTable(name = "assignale_roles_list", joinColumns = @JoinColumn(name = "certification_id"))
+  @CollectionTable(name = "assignable_roles_list", joinColumns = @JoinColumn(name = "certification_id"))
   @Column(name = "assignable_roles", nullable = false)
   private List<CrewRole> assignableRoles = new ArrayList<>();
 
@@ -66,10 +62,8 @@ public class CertificationEntity {
   }
 
   public CertificationEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
-      @NotBlank(message = "Issuer cannot be blank") CertificationIssuer issuer,
-      @NotBlank(message = "Issuing country cannot be blank") CertificationIssuingCountry issuingCountry,
-      @NotBlank(message = "Expiration date cannot be blank") Date expirationDate,
-      @NotBlank(message = "Validity period cannot be blank") @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
+      CertificationIssuer issuer, CertificationIssuingCountry issuingCountry, Date expirationDate,
+      @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
       List<CrewRole> assignableRoles, @NotBlank(message = "Description cannot be blank") String description) {
     this.id = id;
     this.name = name;

@@ -2,6 +2,7 @@ package com.flightcoordinator.server.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.flightcoordinator.server.enums.AirportType;
 
@@ -14,11 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "airport_table")
@@ -28,37 +26,52 @@ public class AirportEntity {
   private String id;
 
   @Column(name = "name", nullable = false)
-  @NotBlank(message = "Name cannot be blank")
   private String name;
 
   @Column(name = "iata_code", nullable = false, unique = true)
-  @NotBlank(message = "IATA Code cannot be blank")
   private String iataCode;
 
   @Column(name = "icao_code", nullable = false, unique = true)
-  @NotBlank(message = "ICAO Code cannot be blank")
   private String icaoCode;
 
-  @Column(name = "country_code", nullable = false, unique = true)
-  @NotBlank(message = "Country code cannot be blank")
+  @Column(name = "country_code", nullable = false)
   private String countryCode;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "type", nullable = false)
   private AirportType type;
 
-  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  @JoinTable(name = "airport_runways", joinColumns = @JoinColumn(name = "airport_id"), inverseJoinColumns = @JoinColumn(name = "runway_id"))
+  // A list of runways for the airport
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RunwayEntity> runways = new ArrayList<>();
+
+  // One-to-many relationship with VehicleEntity
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<VehicleEntity> vehiclesPresent;
+
+  // A list of planes currently located at the airport
+  @OneToMany(mappedBy = "currentLocation", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PlaneEntity> planesPresent = new ArrayList<>();
+
+  // Routes where the airport is the origin
+  @OneToMany(mappedBy = "originAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<RouteEntity> routesOriginatingFromAirport = new ArrayList<>();
+
+  // Routes where the airport is the destination
+  @OneToMany(mappedBy = "destinationAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<RouteEntity> routesDestinedForAirport = new ArrayList<>();
+
+  // Crew members assigned to this airport
+  @OneToMany(mappedBy = "baseAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<CrewEntity> crewMembersPresent = new ArrayList<>();
 
   public AirportEntity() {
   }
 
-  public AirportEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
-      @NotBlank(message = "IATA Code cannot be blank") String iataCode,
-      @NotBlank(message = "ICAO Code cannot be blank") String icaoCode,
-      @NotBlank(message = "Country code cannot be blank") String countryCode, AirportType type,
-      List<RunwayEntity> runways) {
+  public AirportEntity(String id, String name, String iataCode, String icaoCode, String countryCode, AirportType type,
+      List<RunwayEntity> runways, Set<VehicleEntity> vehiclesPresent, List<PlaneEntity> planesPresent,
+      List<RouteEntity> routesOriginatingFromAirport, List<RouteEntity> routesDestinedForAirport,
+      List<CrewEntity> crewMembersPresent) {
     this.id = id;
     this.name = name;
     this.iataCode = iataCode;
@@ -66,6 +79,11 @@ public class AirportEntity {
     this.countryCode = countryCode;
     this.type = type;
     this.runways = runways;
+    this.vehiclesPresent = vehiclesPresent;
+    this.planesPresent = planesPresent;
+    this.routesOriginatingFromAirport = routesOriginatingFromAirport;
+    this.routesDestinedForAirport = routesDestinedForAirport;
+    this.crewMembersPresent = crewMembersPresent;
   }
 
   public String getId() {
@@ -123,4 +141,45 @@ public class AirportEntity {
   public void setRunways(List<RunwayEntity> runways) {
     this.runways = runways;
   }
+
+  public Set<VehicleEntity> getVehiclesPresent() {
+    return vehiclesPresent;
+  }
+
+  public void setVehiclesPresent(Set<VehicleEntity> vehiclesPresent) {
+    this.vehiclesPresent = vehiclesPresent;
+  }
+
+  public List<PlaneEntity> getPlanesPresent() {
+    return planesPresent;
+  }
+
+  public void setPlanesPresent(List<PlaneEntity> planesPresent) {
+    this.planesPresent = planesPresent;
+  }
+
+  public List<RouteEntity> getRoutesOriginatingFromAirport() {
+    return routesOriginatingFromAirport;
+  }
+
+  public void setRoutesOriginatingFromAirport(List<RouteEntity> routesOriginatingFromAirport) {
+    this.routesOriginatingFromAirport = routesOriginatingFromAirport;
+  }
+
+  public List<RouteEntity> getRoutesDestinedForAirport() {
+    return routesDestinedForAirport;
+  }
+
+  public void setRoutesDestinedForAirport(List<RouteEntity> routesDestinedForAirport) {
+    this.routesDestinedForAirport = routesDestinedForAirport;
+  }
+
+  public List<CrewEntity> getCrewMembersPresent() {
+    return crewMembersPresent;
+  }
+
+  public void setCrewMembersPresent(List<CrewEntity> crewMembersPresent) {
+    this.crewMembersPresent = crewMembersPresent;
+  }
+
 }

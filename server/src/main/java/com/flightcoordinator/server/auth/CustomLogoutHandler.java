@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class CustomLogoutHandler implements LogoutHandler {
-
   @Autowired
   private TokenService tokenService;
 

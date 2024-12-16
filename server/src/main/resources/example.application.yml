@@ -1,20 +1,23 @@
 spring:
-  application:
-    name: FlightCoordinator Backend Server
   datasource:
-    url: REQUIRED
-    username: REQUIRED
-    password: REQUIRED
+    url: jdbc:postgresql://localhost:5432/flightc_db
+    username: flight_user
+    password: local
     driver-class-name: org.postgresql.Driver
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    hikari:
+      maximum-pool-size: 10
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     show-sql: false
     properties:
       hibernate:
         format-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    
+
 
 springdoc:
   swagger-ui:

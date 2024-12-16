@@ -1,16 +1,20 @@
 package com.flightcoordinator.server.entity;
 
-import org.springframework.data.annotation.Id;
-
 import com.flightcoordinator.server.enums.RunwaySurfaceType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+@Entity
 @Table(name = "runway_table")
 public class RunwayEntity {
   @Id
@@ -29,7 +33,7 @@ public class RunwayEntity {
   @Column(name = "surface_type", nullable = false)
   private RunwaySurfaceType surfaceType;
 
-  @NotBlank(message = "Max weigth capacity cannot be blank")
+  @NotBlank(message = "Max weight capacity cannot be blank")
   @Min(value = 1, message = "Max weight capacity should be greater than '1'")
   @Column(name = "max_weight_capacity", nullable = false)
   private Float maxWeightCapacity;
@@ -38,20 +42,26 @@ public class RunwayEntity {
   @NotBlank(message = "Orientation cannot be blank")
   private String orientation;
 
+  // The 'airport' field matches the mappedBy in AirportEntity
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "airport_id", nullable = false)
+  private AirportEntity airport;
+
   public RunwayEntity() {
   }
 
   public RunwayEntity(String id, @NotBlank(message = "Length cannot be blank") Float length,
       @NotBlank(message = "Width cannot be blank") Float width,
       @NotBlank(message = "Surface type cannot be blank") RunwaySurfaceType surfaceType,
-      @NotBlank(message = "Max weigth capacity cannot be blank") @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
-      @NotBlank(message = "Orientation cannot be blank") String orientation) {
+      @NotBlank(message = "Max weight capacity cannot be blank") @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
+      @NotBlank(message = "Orientation cannot be blank") String orientation, AirportEntity airport) {
     this.id = id;
     this.length = length;
     this.width = width;
     this.surfaceType = surfaceType;
     this.maxWeightCapacity = maxWeightCapacity;
     this.orientation = orientation;
+    this.airport = airport;
   }
 
   public String getId() {
@@ -100,5 +110,13 @@ public class RunwayEntity {
 
   public void setOrientation(String orientation) {
     this.orientation = orientation;
+  }
+
+  public AirportEntity getAirport() {
+    return airport;
+  }
+
+  public void setAirport(AirportEntity airport) {
+    this.airport = airport;
   }
 }

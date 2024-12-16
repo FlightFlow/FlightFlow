@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,56 +33,46 @@ public class PlaneEntity {
   @Column(name = "registration_number", nullable = false)
   private String registrationNumber;
 
-  @NotBlank(message = "Passenger capacity cannot be blank")
   @Min(value = 1, message = "Passenger capacity should be greater than '1'")
   @Column(name = "passenger_capacity", nullable = false)
   private int passengerCapacity;
 
-  @NotBlank(message = "Fuel efficiency cannot be blank")
   @Min(value = 1, message = "Fuel efficiency should be greater than '1'")
   @Column(name = "fuel_efficiency", nullable = false)
   private Float fuelEfficiency;
 
-  @NotBlank(message = "Max flight range cannot be blank")
   @Min(value = 1, message = "Max flight range should be greater than '1'")
   @Column(name = "max_flight_range", nullable = false)
   private Float maxFlightRange;
 
-  @NotBlank(message = "Last maintenance cannot be blank")
   @Column(name = "last_maintenance", nullable = false)
   private Date lastMaintenance;
 
-  @NotBlank(message = "Total flight hours cannot be blank")
   @Min(value = 0, message = "Total flight hours should be equal or greater than '0'")
   @Column(name = "total_flight_hours", nullable = false)
   private Float totalFlightHours;
 
-  @NotBlank(message = "Max takeoff weight cannot be blank")
   @Min(value = 1, message = "Max takeoff weight should be greater than '1'")
   @Column(name = "max_takeoff_weight", nullable = false)
   private Float maxTakeoffWeight;
 
-  @NotBlank(message = "Shortest runway length required cannot be blank")
   @Min(value = 1, message = "Shortest runway length required should be greater than '1'")
   @Column(name = "shortest_runway_length_required", nullable = false)
   private Float shortestRunwayLengthRequired;
 
-  @NotBlank(message = "Shortest runway width required cannot be blank")
   @Min(value = 1, message = "Shortest runway width required should be greater than '1'")
   @Column(name = "shortest_runway_width_required", nullable = false)
   private Float shortestRunwayWidthRequired;
 
-  @NotBlank(message = "Plane status cannot be blank")
   @Enumerated(EnumType.STRING)
   @Column(name = "plane_status", nullable = false)
   private PlaneAvailability planeStatus = PlaneAvailability.AVAILABLE;
 
-  @NotBlank(message = "Current location status cannot be blank")
-  @ManyToOne
-  @JoinColumn(name = "current_location", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "current_location_id", nullable = false)
   private AirportEntity currentLocation;
 
-  @NotBlank(message = "Aircratf operator cannot be blank")
+  @NotBlank(message = "Aircraft operator cannot be blank")
   @Column(name = "aircraft_operator", nullable = false)
   private String aircraftOperator;
 
@@ -90,17 +81,16 @@ public class PlaneEntity {
 
   public PlaneEntity(String id, @NotBlank(message = "Model cannot be blank") String model,
       @NotBlank(message = "Registration number cannot be blank") String registrationNumber,
-      @NotBlank(message = "Passenger capacity cannot be blank") @Min(value = 1, message = "Passenger capacity should be greater than '1'") int passengerCapacity,
-      @NotBlank(message = "Fuel efficiency cannot be blank") @Min(value = 1, message = "Fuel efficiency should be greater than '1'") Float fuelEfficiency,
-      @NotBlank(message = "Max flight range cannot be blank") @Min(value = 1, message = "Max flight range should be greater than '1'") Float maxFlightRange,
-      @NotBlank(message = "Last maintenance cannot be blank") Date lastMaintenance,
-      @NotBlank(message = "Total flight hours cannot be blank") @Min(value = 0, message = "Total flight hours should be equal or greater than '0'") Float totalFlightHours,
-      @NotBlank(message = "Max takeoff weight cannot be blank") @Min(value = 1, message = "Max takeoff weight should be greater than '1'") Float maxTakeoffWeight,
-      @NotBlank(message = "Shortest runway length required cannot be blank") @Min(value = 1, message = "Shortest runway length required should be greater than '1'") Float shortestRunwayLengthRequired,
-      @NotBlank(message = "Shortest runway width required cannot be blank") @Min(value = 1, message = "Shortest runway width required should be greater than '1'") Float shortestRunwayWidthRequired,
-      @NotBlank(message = "Plane status cannot be blank") PlaneAvailability planeStatus,
-      @NotBlank(message = "Current location status cannot be blank") AirportEntity currentLocation,
-      @NotBlank(message = "Aircratf operator cannot be blank") String aircraftOperator) {
+      @Min(value = 1, message = "Passenger capacity should be greater than '1'") int passengerCapacity,
+      @Min(value = 1, message = "Fuel efficiency should be greater than '1'") Float fuelEfficiency,
+      @Min(value = 1, message = "Max flight range should be greater than '1'") Float maxFlightRange,
+      Date lastMaintenance,
+      @Min(value = 0, message = "Total flight hours should be equal or greater than '0'") Float totalFlightHours,
+      @Min(value = 1, message = "Max takeoff weight should be greater than '1'") Float maxTakeoffWeight,
+      @Min(value = 1, message = "Shortest runway length required should be greater than '1'") Float shortestRunwayLengthRequired,
+      @Min(value = 1, message = "Shortest runway width required should be greater than '1'") Float shortestRunwayWidthRequired,
+      PlaneAvailability planeStatus, AirportEntity currentLocation,
+      @NotBlank(message = "Aircraft operator cannot be blank") String aircraftOperator) {
     this.id = id;
     this.model = model;
     this.registrationNumber = registrationNumber;

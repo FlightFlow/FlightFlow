@@ -15,9 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -48,12 +49,11 @@ public class CrewEntity {
   @JoinTable(name = "certifications", joinColumns = @JoinColumn(name = "crew_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
   private List<CertificationEntity> certifications;
 
-  @NotBlank(message = "Total flight hours cannot be blank")
+  @Min(value = 0, message = "Total flight hours cannot be negative")
   @Column(name = "total_flight_hours", nullable = false)
   private int totalFlightHours = 0;
 
-  @NotBlank(message = "Certification cannot be blank")
-  @OneToMany
+  @ManyToOne
   @JoinColumn(name = "base_airport", nullable = false)
   private AirportEntity baseAirport;
 
@@ -69,9 +69,8 @@ public class CrewEntity {
       @Email(message = "E-Mail is invalid") String email,
       @NotBlank(message = "Phone number cannot be blank") Integer phoneNumber,
       @NotBlank(message = "Role cannot be blank") CrewRole role, List<CertificationEntity> certifications,
-      @NotBlank(message = "Total flight hours cannot be blank") int totalFlightHours,
-      @NotBlank(message = "Certification cannot be blank") AirportEntity baseAirport,
-      @NotBlank(message = "Availability cannot be blank") CrewAvailability availability) {
+      @Min(value = 0, message = "Total flight hours cannot be negative") int totalFlightHours,
+      AirportEntity baseAirport, @NotBlank(message = "Availability cannot be blank") CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
     this.email = email;
