@@ -155,68 +155,6 @@ public class CrewEntity {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
-    result = prime * result + ((email == null) ? 0 : email.hashCode());
-    result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-    result = prime * result + ((role == null) ? 0 : role.hashCode());
-    result = prime * result + ((certifications == null) ? 0 : certifications.hashCode());
-    result = prime * result + totalFlightHours;
-    result = prime * result + ((baseAirport == null) ? 0 : baseAirport.hashCode());
-    result = prime * result + ((availability == null) ? 0 : availability.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    CrewEntity other = (CrewEntity) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (fullName == null) {
-      if (other.fullName != null)
-        return false;
-    } else if (!fullName.equals(other.fullName))
-      return false;
-    if (email == null) {
-      if (other.email != null)
-        return false;
-    } else if (!email.equals(other.email))
-      return false;
-    if (phoneNumber == null) {
-      if (other.phoneNumber != null)
-        return false;
-    } else if (!phoneNumber.equals(other.phoneNumber))
-      return false;
-    if (role != other.role)
-      return false;
-    if (certifications == null) {
-      if (other.certifications != null)
-        return false;
-    } else if (!certifications.equals(other.certifications))
-      return false;
-    if (totalFlightHours != other.totalFlightHours)
-      return false;
-    if (baseAirport == null) {
-      if (other.baseAirport != null)
-        return false;
-    } else if (!baseAirport.equals(other.baseAirport))
-      return false;
-    return availability == other.availability;
-  }
-
-  @Override
   public String toString() {
     return "CrewEntity [id=" + id + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber
         + ", role=" + role + ", certifications=" + certifications + ", totalFlightHours=" + totalFlightHours

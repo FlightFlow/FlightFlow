@@ -82,55 +82,6 @@ public class RouteEntity {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((originAirport == null) ? 0 : originAirport.hashCode());
-    result = prime * result + ((destinationAirport == null) ? 0 : destinationAirport.hashCode());
-    result = prime * result + ((distance == null) ? 0 : distance.hashCode());
-    result = prime * result + ((estimatedTime == null) ? 0 : estimatedTime.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    RouteEntity other = (RouteEntity) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (originAirport == null) {
-      if (other.originAirport != null)
-        return false;
-    } else if (!originAirport.equals(other.originAirport))
-      return false;
-    if (destinationAirport == null) {
-      if (other.destinationAirport != null)
-        return false;
-    } else if (!destinationAirport.equals(other.destinationAirport))
-      return false;
-    if (distance == null) {
-      if (other.distance != null)
-        return false;
-    } else if (!distance.equals(other.distance))
-      return false;
-    if (estimatedTime == null) {
-      if (other.estimatedTime != null)
-        return false;
-    } else if (!estimatedTime.equals(other.estimatedTime))
-      return false;
-    return true;
-  }
-
-  @Override
   public String toString() {
     return "RouteEntity [id=" + id + ", originAirport=" + originAirport + ", destinationAirport=" + destinationAirport
         + ", distance=" + distance + ", estimatedTime=" + estimatedTime + ", getId()=" + getId()

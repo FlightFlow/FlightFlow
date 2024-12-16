@@ -19,7 +19,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "algorithm_result_table")
 public class AlgorithmResultEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
@@ -145,74 +144,6 @@ public class AlgorithmResultEntity {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((flight == null) ? 0 : flight.hashCode());
-    result = prime * result + ((plane == null) ? 0 : plane.hashCode());
-    result = prime * result + ((crewMembers == null) ? 0 : crewMembers.hashCode());
-    result = prime * result + ((takeoffRunway == null) ? 0 : takeoffRunway.hashCode());
-    result = prime * result + ((landingRunway == null) ? 0 : landingRunway.hashCode());
-    result = prime * result + ((originAirportGroundVehicles == null) ? 0 : originAirportGroundVehicles.hashCode());
-    result = prime * result
-        + ((destinationAirportGroundVehicles == null) ? 0 : destinationAirportGroundVehicles.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    AlgorithmResultEntity other = (AlgorithmResultEntity) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (flight == null) {
-      if (other.flight != null)
-        return false;
-    } else if (!flight.equals(other.flight))
-      return false;
-    if (plane == null) {
-      if (other.plane != null)
-        return false;
-    } else if (!plane.equals(other.plane))
-      return false;
-    if (crewMembers == null) {
-      if (other.crewMembers != null)
-        return false;
-    } else if (!crewMembers.equals(other.crewMembers))
-      return false;
-    if (takeoffRunway == null) {
-      if (other.takeoffRunway != null)
-        return false;
-    } else if (!takeoffRunway.equals(other.takeoffRunway))
-      return false;
-    if (landingRunway == null) {
-      if (other.landingRunway != null)
-        return false;
-    } else if (!landingRunway.equals(other.landingRunway))
-      return false;
-    if (originAirportGroundVehicles == null) {
-      if (other.originAirportGroundVehicles != null)
-        return false;
-    } else if (!originAirportGroundVehicles.equals(other.originAirportGroundVehicles))
-      return false;
-    if (destinationAirportGroundVehicles == null) {
-      if (other.destinationAirportGroundVehicles != null)
-        return false;
-    } else if (!destinationAirportGroundVehicles.equals(other.destinationAirportGroundVehicles))
-      return false;
-    return true;
-  }
-
-  @Override
   public String toString() {
     return "AlgorithmResultEntity [id=" + id + ", flight=" + flight + ", plane=" + plane + ", crewMembers="
         + crewMembers + ", takeoffRunway=" + takeoffRunway + ", landingRunway=" + landingRunway
@@ -224,5 +155,4 @@ public class AlgorithmResultEntity {
         + getDestinationAirportGroundVehicles() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
         + ", toString()=" + super.toString() + "]";
   }
-
 }

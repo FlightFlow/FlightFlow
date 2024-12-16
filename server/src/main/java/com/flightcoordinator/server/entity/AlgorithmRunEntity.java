@@ -190,5 +190,4 @@ public class AlgorithmRunEntity {
   public void setResult(AlgorithmResultEntity result) {
     this.result = result;
   }
-
 }

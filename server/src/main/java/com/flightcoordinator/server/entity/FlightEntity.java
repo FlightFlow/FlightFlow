@@ -61,43 +61,6 @@ public class FlightEntity {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((passengerCount == null) ? 0 : passengerCount.hashCode());
-    result = prime * result + ((flightRoute == null) ? 0 : flightRoute.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    FlightEntity other = (FlightEntity) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (passengerCount == null) {
-      if (other.passengerCount != null)
-        return false;
-    } else if (!passengerCount.equals(other.passengerCount))
-      return false;
-    if (flightRoute == null) {
-      if (other.flightRoute != null)
-        return false;
-    } else if (!flightRoute.equals(other.flightRoute))
-      return false;
-    return true;
-  }
-
-  @Override
   public String toString() {
     return "FlightEntity [id=" + id + ", passengerCount=" + passengerCount + ", flightRoute=" + flightRoute
         + ", getId()=" + getId() + ", getPassengerCount()=" + getPassengerCount() + ", getFlightRoute()="

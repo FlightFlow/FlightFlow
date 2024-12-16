@@ -121,64 +121,6 @@ public class RunwayEntity {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((id == null) ? 0 : id.hashCode());
-    result = prime * result + ((length == null) ? 0 : length.hashCode());
-    result = prime * result + ((width == null) ? 0 : width.hashCode());
-    result = prime * result + ((surfaceType == null) ? 0 : surfaceType.hashCode());
-    result = prime * result + ((maxWeightCapacity == null) ? 0 : maxWeightCapacity.hashCode());
-    result = prime * result + ((orientation == null) ? 0 : orientation.hashCode());
-    result = prime * result + ((airport == null) ? 0 : airport.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    RunwayEntity other = (RunwayEntity) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (length == null) {
-      if (other.length != null)
-        return false;
-    } else if (!length.equals(other.length))
-      return false;
-    if (width == null) {
-      if (other.width != null)
-        return false;
-    } else if (!width.equals(other.width))
-      return false;
-    if (surfaceType != other.surfaceType)
-      return false;
-    if (maxWeightCapacity == null) {
-      if (other.maxWeightCapacity != null)
-        return false;
-    } else if (!maxWeightCapacity.equals(other.maxWeightCapacity))
-      return false;
-    if (orientation == null) {
-      if (other.orientation != null)
-        return false;
-    } else if (!orientation.equals(other.orientation))
-      return false;
-    if (airport == null) {
-      if (other.airport != null)
-        return false;
-    } else if (!airport.equals(other.airport))
-      return false;
-    return true;
-  }
-
-  @Override
   public String toString() {
     return "RunwayEntity [id=" + id + ", length=" + length + ", width=" + width + ", surfaceType=" + surfaceType
         + ", maxWeightCapacity=" + maxWeightCapacity + ", orientation=" + orientation + ", airport=" + airport
