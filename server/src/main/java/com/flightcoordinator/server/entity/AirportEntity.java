@@ -21,7 +21,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "airport_table")
 public class AirportEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
@@ -46,9 +45,9 @@ public class AirportEntity {
   @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RunwayEntity> runways = new ArrayList<>();
 
-// One-to-many relationship with VehicleEntity
-    @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<VehicleEntity> vehicles;
+  // One-to-many relationship with VehicleEntity
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<VehicleEntity> vehicles;
 
   // A list of planes currently located at the airport
   @OneToMany(mappedBy = "currentLocation", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -282,5 +281,4 @@ public class AirportEntity {
         + getDestinationRoutes() + ", getCrewMembers()=" + getCrewMembers() + ", hashCode()=" + hashCode()
         + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
   }
-
 }

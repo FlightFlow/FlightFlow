@@ -49,10 +49,7 @@ public class VehicleEntity {
 
   @ManyToOne
   @JoinColumn(name = "airport_id", nullable = false)
-  private AirportEntity airport;  
-  
-
-
+  private AirportEntity airport;
 
   public VehicleEntity() {
   }
@@ -81,6 +78,7 @@ public class VehicleEntity {
   public AirportEntity getAirport() {
     return airport;
   }
+
   public GroundVehicleType getType() {
     return type;
   }
@@ -120,8 +118,8 @@ public class VehicleEntity {
   public void setMaintenanceDue(Date maintenanceDue) {
     this.maintenanceDue = maintenanceDue;
   }
+
   public void setAirport(AirportEntity airport) {
     this.airport = airport;
   }
-
 }

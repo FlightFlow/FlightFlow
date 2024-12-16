@@ -213,9 +213,7 @@ public class CrewEntity {
         return false;
     } else if (!baseAirport.equals(other.baseAirport))
       return false;
-    if (availability != other.availability)
-      return false;
-    return true;
+    return availability == other.availability;
   }
 
   @Override
@@ -228,7 +226,4 @@ public class CrewEntity {
         + getTotalFlightHours() + ", getBaseAirport()=" + getBaseAirport() + ", getAvailability()=" + getAvailability()
         + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
   }
-  
 }
-  
-

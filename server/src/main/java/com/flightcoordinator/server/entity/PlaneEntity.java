@@ -334,8 +334,4 @@ public class PlaneEntity {
         + getAircraftOperator() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
         + super.toString() + "]";
   }
-
-  
 }
-
-

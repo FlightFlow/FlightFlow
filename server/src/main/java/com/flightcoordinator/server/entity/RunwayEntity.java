@@ -1,6 +1,5 @@
 package com.flightcoordinator.server.entity;
 
-
 import com.flightcoordinator.server.enums.RunwaySurfaceType;
 
 import jakarta.persistence.Column;
@@ -14,178 +13,178 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
 @Entity
 @Table(name = "runway_table")
 public class RunwayEntity {
- @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
-    @NotBlank(message = "Length cannot be blank")
-    @Column(name = "length", nullable = false)
-    private Float length;
+  @NotBlank(message = "Length cannot be blank")
+  @Column(name = "length", nullable = false)
+  private Float length;
 
-    @NotBlank(message = "Width cannot be blank")
-    @Column(name = "width", nullable = false)
-    private Float width;
+  @NotBlank(message = "Width cannot be blank")
+  @Column(name = "width", nullable = false)
+  private Float width;
 
-    @NotBlank(message = "Surface type cannot be blank")
-    @Column(name = "surface_type", nullable = false)
-    private RunwaySurfaceType surfaceType;
+  @NotBlank(message = "Surface type cannot be blank")
+  @Column(name = "surface_type", nullable = false)
+  private RunwaySurfaceType surfaceType;
 
-    @NotBlank(message = "Max weight capacity cannot be blank")
-    @Min(value = 1, message = "Max weight capacity should be greater than '1'")
-    @Column(name = "max_weight_capacity", nullable = false)
-    private Float maxWeightCapacity;
+  @NotBlank(message = "Max weight capacity cannot be blank")
+  @Min(value = 1, message = "Max weight capacity should be greater than '1'")
+  @Column(name = "max_weight_capacity", nullable = false)
+  private Float maxWeightCapacity;
 
-    @Column(name = "orientation", nullable = false)
-    @NotBlank(message = "Orientation cannot be blank")
-    private String orientation;
+  @Column(name = "orientation", nullable = false)
+  @NotBlank(message = "Orientation cannot be blank")
+  private String orientation;
 
-    // The 'airport' field matches the mappedBy in AirportEntity
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "airport_id", nullable = false)
-    private AirportEntity airport;
+  // The 'airport' field matches the mappedBy in AirportEntity
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "airport_id", nullable = false)
+  private AirportEntity airport;
 
-    public RunwayEntity() {
-    }
+  public RunwayEntity() {
+  }
 
-    public RunwayEntity(String id, @NotBlank(message = "Length cannot be blank") Float length,
-        @NotBlank(message = "Width cannot be blank") Float width,
-        @NotBlank(message = "Surface type cannot be blank") RunwaySurfaceType surfaceType,
-        @NotBlank(message = "Max weight capacity cannot be blank") @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
-        @NotBlank(message = "Orientation cannot be blank") String orientation, AirportEntity airport) {
-      this.id = id;
-      this.length = length;
-      this.width = width;
-      this.surfaceType = surfaceType;
-      this.maxWeightCapacity = maxWeightCapacity;
-      this.orientation = orientation;
-      this.airport = airport;
-    }
+  public RunwayEntity(String id, @NotBlank(message = "Length cannot be blank") Float length,
+      @NotBlank(message = "Width cannot be blank") Float width,
+      @NotBlank(message = "Surface type cannot be blank") RunwaySurfaceType surfaceType,
+      @NotBlank(message = "Max weight capacity cannot be blank") @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
+      @NotBlank(message = "Orientation cannot be blank") String orientation, AirportEntity airport) {
+    this.id = id;
+    this.length = length;
+    this.width = width;
+    this.surfaceType = surfaceType;
+    this.maxWeightCapacity = maxWeightCapacity;
+    this.orientation = orientation;
+    this.airport = airport;
+  }
 
-    public String getId() {
-      return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-      this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public Float getLength() {
-      return length;
-    }
+  public Float getLength() {
+    return length;
+  }
 
-    public void setLength(Float length) {
-      this.length = length;
-    }
+  public void setLength(Float length) {
+    this.length = length;
+  }
 
-    public Float getWidth() {
-      return width;
-    }
+  public Float getWidth() {
+    return width;
+  }
 
-    public void setWidth(Float width) {
-      this.width = width;
-    }
+  public void setWidth(Float width) {
+    this.width = width;
+  }
 
-    public RunwaySurfaceType getSurfaceType() {
-      return surfaceType;
-    }
+  public RunwaySurfaceType getSurfaceType() {
+    return surfaceType;
+  }
 
-    public void setSurfaceType(RunwaySurfaceType surfaceType) {
-      this.surfaceType = surfaceType;
-    }
+  public void setSurfaceType(RunwaySurfaceType surfaceType) {
+    this.surfaceType = surfaceType;
+  }
 
-    public Float getMaxWeightCapacity() {
-      return maxWeightCapacity;
-    }
+  public Float getMaxWeightCapacity() {
+    return maxWeightCapacity;
+  }
 
-    public void setMaxWeightCapacity(Float maxWeightCapacity) {
-      this.maxWeightCapacity = maxWeightCapacity;
-    }
+  public void setMaxWeightCapacity(Float maxWeightCapacity) {
+    this.maxWeightCapacity = maxWeightCapacity;
+  }
 
-    public String getOrientation() {
-      return orientation;
-    }
+  public String getOrientation() {
+    return orientation;
+  }
 
-    public void setOrientation(String orientation) {
-      this.orientation = orientation;
-    }
+  public void setOrientation(String orientation) {
+    this.orientation = orientation;
+  }
 
-    public AirportEntity getAirport() {
-      return airport;
-    }
+  public AirportEntity getAirport() {
+    return airport;
+  }
 
-    public void setAirport(AirportEntity airport) {
-      this.airport = airport;
-    }
+  public void setAirport(AirportEntity airport) {
+    this.airport = airport;
+  }
 
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((id == null) ? 0 : id.hashCode());
-      result = prime * result + ((length == null) ? 0 : length.hashCode());
-      result = prime * result + ((width == null) ? 0 : width.hashCode());
-      result = prime * result + ((surfaceType == null) ? 0 : surfaceType.hashCode());
-      result = prime * result + ((maxWeightCapacity == null) ? 0 : maxWeightCapacity.hashCode());
-      result = prime * result + ((orientation == null) ? 0 : orientation.hashCode());
-      result = prime * result + ((airport == null) ? 0 : airport.hashCode());
-      return result;
-    }
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    result = prime * result + ((length == null) ? 0 : length.hashCode());
+    result = prime * result + ((width == null) ? 0 : width.hashCode());
+    result = prime * result + ((surfaceType == null) ? 0 : surfaceType.hashCode());
+    result = prime * result + ((maxWeightCapacity == null) ? 0 : maxWeightCapacity.hashCode());
+    result = prime * result + ((orientation == null) ? 0 : orientation.hashCode());
+    result = prime * result + ((airport == null) ? 0 : airport.hashCode());
+    return result;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      RunwayEntity other = (RunwayEntity) obj;
-      if (id == null) {
-        if (other.id != null)
-          return false;
-      } else if (!id.equals(other.id))
-        return false;
-      if (length == null) {
-        if (other.length != null)
-          return false;
-      } else if (!length.equals(other.length))
-        return false;
-      if (width == null) {
-        if (other.width != null)
-          return false;
-      } else if (!width.equals(other.width))
-        return false;
-      if (surfaceType != other.surfaceType)
-        return false;
-      if (maxWeightCapacity == null) {
-        if (other.maxWeightCapacity != null)
-          return false;
-      } else if (!maxWeightCapacity.equals(other.maxWeightCapacity))
-        return false;
-      if (orientation == null) {
-        if (other.orientation != null)
-          return false;
-      } else if (!orientation.equals(other.orientation))
-        return false;
-      if (airport == null) {
-        if (other.airport != null)
-          return false;
-      } else if (!airport.equals(other.airport))
-        return false;
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
       return true;
-    }
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    RunwayEntity other = (RunwayEntity) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    if (length == null) {
+      if (other.length != null)
+        return false;
+    } else if (!length.equals(other.length))
+      return false;
+    if (width == null) {
+      if (other.width != null)
+        return false;
+    } else if (!width.equals(other.width))
+      return false;
+    if (surfaceType != other.surfaceType)
+      return false;
+    if (maxWeightCapacity == null) {
+      if (other.maxWeightCapacity != null)
+        return false;
+    } else if (!maxWeightCapacity.equals(other.maxWeightCapacity))
+      return false;
+    if (orientation == null) {
+      if (other.orientation != null)
+        return false;
+    } else if (!orientation.equals(other.orientation))
+      return false;
+    if (airport == null) {
+      if (other.airport != null)
+        return false;
+    } else if (!airport.equals(other.airport))
+      return false;
+    return true;
+  }
 
-    @Override
-    public String toString() {
-      return "RunwayEntity [id=" + id + ", length=" + length + ", width=" + width + ", surfaceType=" + surfaceType
-          + ", maxWeightCapacity=" + maxWeightCapacity + ", orientation=" + orientation + ", airport=" + airport
-          + ", getId()=" + getId() + ", getLength()=" + getLength() + ", getWidth()=" + getWidth()
-          + ", getSurfaceType()=" + getSurfaceType() + ", getMaxWeightCapacity()=" + getMaxWeightCapacity()
-          + ", getOrientation()=" + getOrientation() + ", getAirport()=" + getAirport() + ", hashCode()=" + hashCode()
-          + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-    }
-
+  @Override
+  public String toString() {
+    return "RunwayEntity [id=" + id + ", length=" + length + ", width=" + width + ", surfaceType=" + surfaceType
+        + ", maxWeightCapacity=" + maxWeightCapacity + ", orientation=" + orientation + ", airport=" + airport
+        + ", getId()=" + getId() + ", getLength()=" + getLength() + ", getWidth()=" + getWidth()
+        + ", getSurfaceType()=" + getSurfaceType() + ", getMaxWeightCapacity()=" + getMaxWeightCapacity()
+        + ", getOrientation()=" + getOrientation() + ", getAirport()=" + getAirport() + ", hashCode()=" + hashCode()
+        + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
+  }
 }
