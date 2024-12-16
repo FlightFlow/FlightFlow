@@ -38,6 +38,9 @@ public class RouteEntity {
   @Column(name = "estimated_time", nullable = false)
   private Float estimatedTime;
 
+  public RouteEntity() {
+  }
+
   public RouteEntity(String id, @NotNull(message = "Origin airport id cannot be null") AirportEntity originAirport,
       @NotNull(message = "Destination airport id cannot be null") AirportEntity destinationAirport,
       @NotNull(message = "Distance cannot be null") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
@@ -47,9 +50,6 @@ public class RouteEntity {
     this.destinationAirport = destinationAirport;
     this.distance = distance;
     this.estimatedTime = estimatedTime;
-  }
-
-  public RouteEntity() {
   }
 
   public AirportEntity getDestinationAirport() {

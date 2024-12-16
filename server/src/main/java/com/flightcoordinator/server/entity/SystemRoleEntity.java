@@ -61,15 +61,15 @@ public class SystemRoleEntity {
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private Set<UserEntity> users;
 
+  public SystemRoleEntity() {
+  }
+
   public SystemRoleEntity(String id, String roleName, Map<SystemResource, List<SystemPermission>> permissionPerResource,
       Set<UserEntity> users) {
     this.id = id;
     this.roleName = roleName;
     this.permissionPerResource = permissionPerResource;
     this.users = users;
-  }
-
-  public SystemRoleEntity() {
   }
 
   // Getters and Setters
