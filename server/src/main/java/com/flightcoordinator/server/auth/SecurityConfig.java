@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +26,7 @@ public class SecurityConfig {
   private JWTAuthenticationFilter jwtAuthenticationFilter;
 
   @Autowired
-  private LogoutHandler logoutHandler;
+  private CustomLogoutHandler customLogoutHandler;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -41,7 +39,7 @@ public class SecurityConfig {
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .logout(logout -> logout
             .logoutUrl("/api/**/user/auth/logout")
-            .addLogoutHandler(logoutHandler)
+            .addLogoutHandler(customLogoutHandler)
             .logoutSuccessHandler((request, response, auth) -> SecurityContextHolder.clearContext())
             .logoutSuccessUrl("/api/**/user/auth/login"))
         .build();
@@ -59,8 +57,4 @@ public class SecurityConfig {
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
-   @Bean
-    public LogoutHandler logoutHandler() {
-        return (LogoutHandler) new SimpleUrlLogoutSuccessHandler(); // or your custom LogoutHandler
-    }
 }
