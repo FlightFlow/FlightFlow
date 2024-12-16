@@ -142,17 +142,4 @@ public class AlgorithmResultEntity {
   public void setDestinationAirportGroundVehicles(List<VehicleEntity> destinationAirportGroundVehicles) {
     this.destinationAirportGroundVehicles = destinationAirportGroundVehicles;
   }
-
-  @Override
-  public String toString() {
-    return "AlgorithmResultEntity [id=" + id + ", flight=" + flight + ", plane=" + plane + ", crewMembers="
-        + crewMembers + ", takeoffRunway=" + takeoffRunway + ", landingRunway=" + landingRunway
-        + ", originAirportGroundVehicles=" + originAirportGroundVehicles + ", destinationAirportGroundVehicles="
-        + destinationAirportGroundVehicles + ", getId()=" + getId() + ", getFlight()=" + getFlight() + ", getPlane()="
-        + getPlane() + ", getCrewMembers()=" + getCrewMembers() + ", getTakeoffRunway()=" + getTakeoffRunway()
-        + ", getLandingRunway()=" + getLandingRunway() + ", getOriginAirportGroundVehicles()="
-        + getOriginAirportGroundVehicles() + ", getDestinationAirportGroundVehicles()="
-        + getDestinationAirportGroundVehicles() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-        + ", toString()=" + super.toString() + "]";
-  }
 }

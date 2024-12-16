@@ -91,13 +91,4 @@ public class RouteEntity {
   public void setId(String id) {
     this.id = id;
   }
-
-  @Override
-  public String toString() {
-    return "RouteEntity [id=" + id + ", originAirport=" + originAirport + ", destinationAirport=" + destinationAirport
-        + ", distance=" + distance + ", estimatedTime=" + estimatedTime + ", getId()=" + getId()
-        + ", getOriginAirport()=" + getOriginAirport() + ", getDestinationAirport()=" + getDestinationAirport()
-        + ", getDistance()=" + getDistance() + ", getEstimatedTime()=" + getEstimatedTime() + ", hashCode()="
-        + hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-  }
 }

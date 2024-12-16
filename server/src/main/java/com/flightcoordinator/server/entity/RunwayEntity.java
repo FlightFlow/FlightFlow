@@ -119,14 +119,4 @@ public class RunwayEntity {
   public void setAirport(AirportEntity airport) {
     this.airport = airport;
   }
-
-  @Override
-  public String toString() {
-    return "RunwayEntity [id=" + id + ", length=" + length + ", width=" + width + ", surfaceType=" + surfaceType
-        + ", maxWeightCapacity=" + maxWeightCapacity + ", orientation=" + orientation + ", airport=" + airport
-        + ", getId()=" + getId() + ", getLength()=" + getLength() + ", getWidth()=" + getWidth()
-        + ", getSurfaceType()=" + getSurfaceType() + ", getMaxWeightCapacity()=" + getMaxWeightCapacity()
-        + ", getOrientation()=" + getOrientation() + ", getAirport()=" + getAirport() + ", hashCode()=" + hashCode()
-        + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-  }
 }

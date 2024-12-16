@@ -153,15 +153,4 @@ public class CrewEntity {
   public void setAvailability(CrewAvailability availability) {
     this.availability = availability;
   }
-
-  @Override
-  public String toString() {
-    return "CrewEntity [id=" + id + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber
-        + ", role=" + role + ", certifications=" + certifications + ", totalFlightHours=" + totalFlightHours
-        + ", baseAirport=" + baseAirport + ", availability=" + availability + ", getId()=" + getId()
-        + ", getFullName()=" + getFullName() + ", getEmail()=" + getEmail() + ", getPhoneNumber()=" + getPhoneNumber()
-        + ", getRole()=" + getRole() + ", getCertifications()=" + getCertifications() + ", getTotalFlightHours()="
-        + getTotalFlightHours() + ", getBaseAirport()=" + getBaseAirport() + ", getAvailability()=" + getAvailability()
-        + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-  }
 }

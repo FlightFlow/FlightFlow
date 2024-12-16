@@ -138,15 +138,4 @@ public class CertificationEntity {
   public void setDescription(String description) {
     this.description = description;
   }
-
-  @Override
-  public String toString() {
-    return "CertificationEntity [id=" + id + ", name=" + name + ", issuer=" + issuer + ", issuingCountry="
-        + issuingCountry + ", expirationDate=" + expirationDate + ", validityPeriod=" + validityPeriod
-        + ", assignableRoles=" + assignableRoles + ", description=" + description + ", getId()=" + getId()
-        + ", getName()=" + getName() + ", getIssuer()=" + getIssuer() + ", getIssuingCountry()=" + getIssuingCountry()
-        + ", getExpirationDate()=" + getExpirationDate() + ", getValidityPeriod()=" + getValidityPeriod()
-        + ", getAssignableRoles()=" + getAssignableRoles() + ", getDescription()=" + getDescription()
-        + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-  }
 }

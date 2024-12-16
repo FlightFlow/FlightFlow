@@ -218,23 +218,4 @@ public class PlaneEntity {
   public void setAircraftOperator(String aircraftOperator) {
     this.aircraftOperator = aircraftOperator;
   }
-
-  @Override
-  public String toString() {
-    return "PlaneEntity [id=" + id + ", model=" + model + ", registrationNumber=" + registrationNumber
-        + ", passengerCapacity=" + passengerCapacity + ", fuelEfficiency=" + fuelEfficiency + ", maxFlightRange="
-        + maxFlightRange + ", lastMaintenance=" + lastMaintenance + ", totalFlightHours=" + totalFlightHours
-        + ", maxTakeoffWeight=" + maxTakeoffWeight + ", shortestRunwayLengthRequired=" + shortestRunwayLengthRequired
-        + ", shortestRunwayWidthRequired=" + shortestRunwayWidthRequired + ", planeStatus=" + planeStatus
-        + ", currentLocation=" + currentLocation + ", aircraftOperator=" + aircraftOperator + ", getId()=" + getId()
-        + ", getModel()=" + getModel() + ", getRegistrationNumber()=" + getRegistrationNumber()
-        + ", getPassengerCapacity()=" + getPassengerCapacity() + ", getFuelEfficiency()=" + getFuelEfficiency()
-        + ", getMaxFlightRange()=" + getMaxFlightRange() + ", getLastMaintenance()=" + getLastMaintenance()
-        + ", getTotalFlightHours()=" + getTotalFlightHours() + ", getMaxTakeoffWeight()=" + getMaxTakeoffWeight()
-        + ", getShortestRunwayLengthRequired()=" + getShortestRunwayLengthRequired()
-        + ", getShortestRunwayWidthRequired()=" + getShortestRunwayWidthRequired() + ", getPlaneStatus()="
-        + getPlaneStatus() + ", getCurrentLocation()=" + getCurrentLocation() + ", getAircraftOperator()="
-        + getAircraftOperator() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
-        + super.toString() + "]";
-  }
 }

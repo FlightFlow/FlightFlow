@@ -180,17 +180,4 @@ public class AirportEntity {
   public void setCrewMembers(List<CrewEntity> crewMembers) {
     this.crewMembers = crewMembers;
   }
-
-  @Override
-  public String toString() {
-    return "AirportEntity [id=" + id + ", name=" + name + ", iataCode=" + iataCode + ", icaoCode=" + icaoCode
-        + ", countryCode=" + countryCode + ", type=" + type + ", runways=" + runways + ", vehicles=" + vehicles
-        + ", planes=" + planes + ", originRoutes=" + originRoutes + ", destinationRoutes=" + destinationRoutes
-        + ", crewMembers=" + crewMembers + ", getId()=" + getId() + ", getName()=" + getName() + ", getIataCode()="
-        + getIataCode() + ", getIcaoCode()=" + getIcaoCode() + ", getCountryCode()=" + getCountryCode() + ", getType()="
-        + getType() + ", getRunways()=" + getRunways() + ", getVehicles()=" + getVehicles() + ", getPlanes()="
-        + getPlanes() + ", getOriginRoutes()=" + getOriginRoutes() + ", getDestinationRoutes()="
-        + getDestinationRoutes() + ", getCrewMembers()=" + getCrewMembers() + ", hashCode()=" + hashCode()
-        + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
-  }
 }

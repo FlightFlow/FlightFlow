@@ -59,13 +59,4 @@ public class FlightEntity {
   public void setFlightRoute(RouteEntity flightRoute) {
     this.flightRoute = flightRoute;
   }
-
-  @Override
-  public String toString() {
-    return "FlightEntity [id=" + id + ", passengerCount=" + passengerCount + ", flightRoute=" + flightRoute
-        + ", getId()=" + getId() + ", getPassengerCount()=" + getPassengerCount() + ", getFlightRoute()="
-        + getFlightRoute() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
-        + super.toString() + "]";
-  }
-
 }
