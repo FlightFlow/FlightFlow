@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
   @Autowired
   private UserDetailsService userDetailsService;
@@ -32,23 +34,25 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity
         .csrf(customizer -> customizer.disable())
+        .headers(headers -> headers.contentTypeOptions(contentTypeOptions -> contentTypeOptions.disable()))
         .authorizeHttpRequests(request -> request
-            .requestMatchers("/api/**/user/auth/register", "/api/**/user/auth/login").permitAll()
+            .requestMatchers("/api/*/user/auth/register", "/api/*/user/auth/login").permitAll()
+            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .logout(logout -> logout
-            .logoutUrl("/api/**/user/auth/logout")
+            .logoutUrl("/api/*/user/auth/logout")
             .addLogoutHandler(customLogoutHandler)
             .logoutSuccessHandler((request, response, auth) -> SecurityContextHolder.clearContext())
-            .logoutSuccessUrl("/api/**/user/auth/login"))
+            .logoutSuccessUrl("/api/*/user/auth/login"))
         .build();
   }
 
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+    provider.setPasswordEncoder(passwordEncoder());
     provider.setUserDetailsService(userDetailsService);
     return provider;
   }
@@ -56,5 +60,10 @@ public class SecurityConfig {
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
+  }
+
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(12);
   }
 }
