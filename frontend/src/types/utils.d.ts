@@ -34,7 +34,7 @@ namespace UtilTypes {
       headers?: RawAxiosRequestHeaders;
       includeCookies?: boolean;
       query?: Record<string, string>;
-      payload: object;
+      payload?: object;
     }
   }
 }

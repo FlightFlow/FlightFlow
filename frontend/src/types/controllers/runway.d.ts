@@ -3,15 +3,13 @@ import GlobalTypes from "../globals";
 
 namespace RunwayTypes {
   export namespace Mutations {
-    export type CreateMutationParams = GlobalTypes.BaseRequestParams &
-      Omit<EntityTypes.RunwayEntity, "id">;
-    export type UpdateMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.RunwayEntity;
-    export type DeleteMutationParams = GlobalTypes.BaseRequestParams & EntityTypes.BaseEntity;
+    export type CreateMutationParams = {} & Omit<EntityTypes.RunwayEntity, "id">;
+    export type UpdateMutationParams = {} & EntityTypes.RunwayEntity;
+    export type DeleteMutationParams = {} & EntityTypes.BaseEntity;
   }
   export namespace Queries {
-    export type RunwayQueryRequestParams = GlobalTypes.BaseRequestParams;
+    export type RunwayQueryRequestParams = {};
     export type RunwayQueryResponseParams = EntityTypes.RunwayEntity[];
   }
 }
 export default RunwayTypes;
-

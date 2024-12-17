@@ -11,6 +11,11 @@ namespace EntityTypes {
     countryCode: string;
     type: Enums.AirportType;
     runways: List<RunwayEntity>;
+    vehiclesPresent: List<VehicleEntity>;
+    planesPresent: List<PlaneEntity>;
+    routesOriginatingFromAirport: List<RouteEntity>;
+    routesDestinedForAirport: List<RouteEntity>;
+    crewMembersPresent: List<CrewEntity>;
   }
   export interface AlgorithmResultEntity extends BaseEntity {
     flight: FlightEntity;
@@ -26,8 +31,8 @@ namespace EntityTypes {
     startTime: Date;
     endTime: Date;
     runtimeInMilliseconds: number;
-    parameters: Map<string, object>;
-    resourcesUsed: Map<string, object>;
+    parametersJson: string;
+    resourcesJson: string;
     constrainsMet: Map<string, boolean>;
     logs: string[];
     isSuccessful: boolean;
@@ -74,8 +79,8 @@ namespace EntityTypes {
     aircraftOperator: string;
   }
   export interface RouteEntity extends BaseEntity {
-    originAirportId: AirportEntity;
-    destinationAirportId: AirportEntity;
+    originAirport: AirportEntity;
+    destinationAirport: AirportEntity;
     distance: number;
     estimatedTime: number;
   }
@@ -85,14 +90,17 @@ namespace EntityTypes {
     surfaceType: Enums.RunwaySurfaceType;
     maxWeightCapacity: number;
     orientation: string;
+    airport: AirportEntity;
   }
   export interface SystemRoleEntity extends BaseEntity {
     roleName: string;
     permissionPerResource: Map<Enums.SystemResource, List<Enums.SystemPermission>>;
+    assignedUsers: Set<UserEntity>;
   }
   export interface UserEntity extends BaseEntity {
     fullName: string;
     email: string;
+    password: string;
     role: SystemRoleEntity;
     isActive: boolean;
     isLocked: boolean;

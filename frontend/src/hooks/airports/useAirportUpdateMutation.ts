@@ -9,12 +9,12 @@ const useAirportUpdateMutation = () => {
   const updateAirport = useMutation({
     mutationKey: ["updateAirportMutation"],
     mutationFn: async (useAirportUpdateData: AirportTypes.Mutations.UpdateMutationParams) => {
-      const { accessToken, ...requestData } = useAirportUpdateData;
+      const { id, ...requestData } = useAirportUpdateData;
       const response = await new Requester({
         method: "PATCH",
         endpoint: { controller: "airport", action: "update" },
-        accessToken: accessToken,
         payload: requestData,
+        query: { airportId: id },
       }).sendRequest();
 
       return response;

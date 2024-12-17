@@ -11,7 +11,6 @@ import i18next from "i18next";
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const BACKEND_PORT = import.meta.env.VITE_APP_BACKEND_PORT;
 const BACKEND_API_VERSION = import.meta.env.VITE_APP_SERVER_API_VERSION;
-
 const BACKEND_API_PREFIX = `/api/${BACKEND_API_VERSION}`;
 
 const POSSIBLE_STATUS_CODES = [200, 201, 400, 401, 404, 409, 500]; // FIXME
@@ -26,7 +25,7 @@ class Requester {
   private headers: RawAxiosRequestHeaders;
   private includeCookies: boolean = true;
   private query?: Record<string, string>;
-  private payload: object;
+  private payload?: object;
   private responseLanguage: string = i18next.language;
 
   constructor(requesterConfig: UtilTypes.RequesterBaseTypes.RequesterConfigParams) {
@@ -112,14 +111,14 @@ class Requester {
 
     const responseData = response.data as GlobalTypes.ServerResponseParams<TResponseData>;
 
-    if (!responseData.isSuccess && responseData.responseMessage == "Expired token") {
+    if (!responseData.isSuccess && responseData.message == "Expired token") {
       const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
 
       if (!tryGetNewAccessToken) {
         return {
           isSuccess: false,
-          responseMessage: "Your session is expired. Please login again.",
-          responseData: undefined,
+          message: "Your session is expired. Please login again.",
+          data: undefined,
         } satisfies GlobalTypes.ServerResponseParams;
       }
     }
