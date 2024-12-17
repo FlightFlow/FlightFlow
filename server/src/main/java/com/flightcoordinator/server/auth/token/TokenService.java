@@ -58,7 +58,7 @@ public class TokenService {
   }
 
   public void revokeAllRefreshTokensForUser(UserEntity user) {
-    List<TokenEntity> userTokens = tokenRepository.findByAssociatedUser(user.getId());
+    List<TokenEntity> userTokens = tokenRepository.findByAssociatedUser(user);
 
     if (!userTokens.isEmpty()) {
       userTokens.forEach(token -> {
