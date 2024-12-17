@@ -32,7 +32,7 @@ public class UserService {
   private TokenService tokenService;
 
   @Autowired
-  private BCryptPasswordEncoder encoder;
+  private BCryptPasswordEncoder passwordEncoder;
 
   public void register(RegisterDetailsDTO registerDetails) {
     Optional<UserEntity> existingUser = userRepository.findByEmail(registerDetails.getEmail());
@@ -48,7 +48,7 @@ public class UserService {
     UserEntity newUser = new UserEntity();
     newUser.setFullName(registerDetails.getFullName());
     newUser.setEmail(registerDetails.getEmail());
-    newUser.setPassword(encoder.encode(registerDetails.getPassword()));
+    newUser.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 
     userRepository.save(newUser);
   }
