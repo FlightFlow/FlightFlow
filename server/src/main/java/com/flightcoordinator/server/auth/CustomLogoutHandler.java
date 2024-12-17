@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.auth.token.TokenService;
 import com.flightcoordinator.server.entity.UserEntity;
@@ -14,6 +16,7 @@ import com.flightcoordinator.server.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Service
 public class CustomLogoutHandler implements LogoutHandler {
   @Autowired
   private TokenService tokenService;
@@ -36,6 +39,9 @@ public class CustomLogoutHandler implements LogoutHandler {
 
       if (user != null) {
         tokenService.revokeAllRefreshTokensForUser(user);
+
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        securityContextLogoutHandler.logout(request, response, authentication);
 
         SecurityContextHolder.clearContext();
       } else {
