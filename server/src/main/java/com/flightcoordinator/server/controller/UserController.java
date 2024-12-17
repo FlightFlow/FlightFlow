@@ -17,17 +17,19 @@ import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/${api.version}/user")
+@Tag(name = "User Controller", description = "Endpoints for managing system users.")
 public class UserController {
   @Autowired
   private UserService userService;
 
   @PostMapping("/auth/login")
-  @Operation
+  @Operation(summary = "Login to the system", description = "Login to system by using an email and password.")
   public ResponseEntity<ResponseObject<AuthDetailsDTO>> login(
       @RequestBody LoginDetailsDTO loginDetails,
       HttpServletResponse response) {
@@ -38,15 +40,16 @@ public class UserController {
   }
 
   @PostMapping("/auth/register")
-  @Operation
+  @Operation(summary = "Register to the system", description = "Register to the system.")
   public ResponseEntity<ResponseObject<Object>> register(@RequestBody RegisterDetailsDTO registerDetails) {
     userService.register(registerDetails);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
         null);
   }
 
-  @PostMapping("/auth/newRefreshToken")
-  public ResponseEntity<ResponseObject<Object>> newRefreshToken(
+  @PostMapping("/auth/newAccessToken")
+  @Operation(summary = "Get a new access token", description = "Get a new access token using a refresh token.")
+  public ResponseEntity<ResponseObject<Object>> newAccessToken(
       @CookieValue("accessToken") String accessToken,
       @CookieValue("refreshToken") String refreshToken,
       HttpServletResponse response) {

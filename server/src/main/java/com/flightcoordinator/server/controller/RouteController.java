@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ public class RouteController {
   private RouteService routeService;
 
   @GetMapping("/getById/{routeId}")
+  @PreAuthorize("hasAuthority('ROUTE_READ')")
   @Operation(summary = "Get a route by id", description = "Retrieve the details of a spesific route using it's ID.")
   public ResponseEntity<ResponseObject<RouteEntity>> getRouteById(@PathVariable String routeId) {
     RouteEntity route = routeService.getSingleRouteById(routeId);
@@ -37,6 +39,7 @@ public class RouteController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('ROUTE_READ')")
   @Operation(summary = "Get all the routes", description = "Retrieve the details of all routes.")
   public ResponseEntity<ResponseObject<List<RouteEntity>>> getAllRoutes() {
     List<RouteEntity> routes = routeService.getAllRoutes();
@@ -44,6 +47,7 @@ public class RouteController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('ROUTE_CREATE')")
   @Operation(summary = "Create a new route", description = "Create a new route.")
   public ResponseEntity<ResponseObject<Object>> createRoute(@RequestBody RouteEntity newRoute) {
     routeService.createRoute(newRoute);
@@ -52,6 +56,7 @@ public class RouteController {
   }
 
   @PatchMapping("/update/{routeId}")
+  @PreAuthorize("hasAuthority('ROUTE_UPDATE')")
   @Operation(summary = "Update an route", description = "Update an existing route.")
   public ResponseEntity<ResponseObject<Object>> updateRoute(@PathVariable String routeId,
       @RequestBody RouteEntity updatedRoute) {
@@ -60,6 +65,7 @@ public class RouteController {
   }
 
   @DeleteMapping("/delete/{routeId}")
+  @PreAuthorize("hasAuthority('ROUTE_DELETE')")
   @Operation(summary = "Delete an route", description = "Delete an existing route.")
   public ResponseEntity<ResponseObject<Object>> deleteRoute(@PathVariable String routeId) {
     routeService.deleteRoute(routeId);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class AlgorithmRunController {
   private AlgorithmRunService algorithmRunService;
 
   @GetMapping("/getById/{algorithmRunId}")
+  @PreAuthorize("hasAuthority('ALGO_RUN_READ')")
   @Operation(summary = "Get an algorithm run by id", description = "Retrieve the details of a spesific algorithm run using it's ID.")
   public ResponseEntity<ResponseObject<AlgorithmRunEntity>> getAlgorithmRunById(@PathVariable String algorithmRunId) {
     AlgorithmRunEntity algorithmRun = algorithmRunService.getSingleAlgorithmRunById(algorithmRunId);
@@ -35,6 +37,7 @@ public class AlgorithmRunController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('ALGO_RUN_READ')")
   @Operation(summary = "Get all the algorithm runs", description = "Retrieve the details of all a spesific algorithm runs.")
   public ResponseEntity<ResponseObject<List<AlgorithmRunEntity>>> getAllAlgorithms() {
     List<AlgorithmRunEntity> algorithmRuns = algorithmRunService.getAllAlgorithmRuns();
@@ -42,6 +45,7 @@ public class AlgorithmRunController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('ALGO_RUN_CREATE')")
   @Operation(summary = "Create a new algorithm run", description = "Create a new algorithm run. (Not intended for manual use)")
   public ResponseEntity<ResponseObject<Object>> createAlgorithmRun(
       @RequestBody AlgorithmRunEntity newAlgorithmRun) {
@@ -51,6 +55,7 @@ public class AlgorithmRunController {
   }
 
   @PostMapping("/delete/{algorithmRunId}")
+  @PreAuthorize("hasAuthority('ALGO_RUN_DELETE')")
   @Operation(summary = "Delete an algorithm run", description = "Delete an algorithm run.")
   public ResponseEntity<ResponseObject<Object>> deleteAlgorithmRun(@PathVariable String algorithmRunId) {
     algorithmRunService.deleteAlgorithmRun(algorithmRunId);

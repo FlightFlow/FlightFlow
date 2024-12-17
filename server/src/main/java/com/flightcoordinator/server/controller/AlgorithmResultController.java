@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class AlgorithmResultController {
   private AlgorithmResultService algorithmResultService;
 
   @GetMapping("/getById/{algorithmResultId}")
+  @PreAuthorize("hasAuthority('ALGO_RESULT_READ')")
   @Operation(summary = "Get an algorithm result by id", description = "Retrieve the details of a spesific algorithm result using it's ID.")
   public ResponseEntity<ResponseObject<AlgorithmResultEntity>> getAlgorithmResultById(
       @PathVariable String algorithmResultId) {
@@ -37,6 +39,7 @@ public class AlgorithmResultController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('ALGO_RESULT_READ')")
   @Operation(summary = "Get all the algorithm results", description = "Retrieve the details of all a spesific algorithm results.")
   public ResponseEntity<ResponseObject<List<AlgorithmResultEntity>>> getAllAlgorithms() {
     List<AlgorithmResultEntity> algorithmResults = algorithmResultService.getAllAlgorithmResults();
@@ -45,6 +48,7 @@ public class AlgorithmResultController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('ALGO_RESULT_CREATE')")
   @Operation(summary = "Create a new algorithm result", description = "Create a new algorithm result. (Not intended for manual use)")
   public ResponseEntity<ResponseObject<Object>> createAlgorithmResult(
       @RequestBody AlgorithmResultEntity newAlgorithmResult) {
@@ -54,6 +58,7 @@ public class AlgorithmResultController {
   }
 
   @PostMapping("/delete/{algorithmResultId}")
+  @PreAuthorize("hasAuthority('ALGO_RESULT_DELETE')")
   @Operation(summary = "Delete an algorithm result", description = "Delete an algorithm result.")
   public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@PathVariable String algorithmResultId) {
     algorithmResultService.deleteAlgorithmResult(algorithmResultId);

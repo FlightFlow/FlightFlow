@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ public class VehicleController {
   private VehicleService vehicleService;
 
   @GetMapping("/getById/{vehicleId}")
+  @PreAuthorize("hasAuthority('VEHICLE_READ')")
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
   public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@PathVariable String vehicleId) {
     VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
@@ -37,6 +39,7 @@ public class VehicleController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('VEHICLE_READ')")
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
   public ResponseEntity<ResponseObject<List<VehicleEntity>>> getAllVehicles() {
     List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
@@ -44,6 +47,7 @@ public class VehicleController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('VEHICLE_CREATE')")
   @Operation(summary = "Create a new vehicle", description = "Create a new vehicle.")
   public ResponseEntity<ResponseObject<Object>> createVehicle(@RequestBody VehicleEntity newVehicle) {
     vehicleService.createVehicle(newVehicle);
@@ -52,6 +56,7 @@ public class VehicleController {
   }
 
   @PatchMapping("/update/{vehicleId}")
+  @PreAuthorize("hasAuthority('VEHICLE_UPDATE')")
   @Operation(summary = "Update an vehicle", description = "Update an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> updateVehicle(@PathVariable String vehicleId,
       @RequestBody VehicleEntity updatedVehicle) {
@@ -60,6 +65,7 @@ public class VehicleController {
   }
 
   @DeleteMapping("/delete/{vehicleId}")
+  @PreAuthorize("hasAuthority('VEHICLE_DELETE')")
   @Operation(summary = "Delete an vehicle", description = "Delete an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> deleteVehicle(@PathVariable String vehicleId) {
     vehicleService.deleteVehicle(vehicleId);

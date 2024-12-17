@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ public class CrewController {
   private CrewService crewService;
 
   @GetMapping("/getById/{crewMemberId}")
+  @PreAuthorize("hasAuthority('CREW_READ')")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@PathVariable String crewMemberId) {
     CrewEntity crewMember = crewService.getSingleCrewMemberById(crewMemberId);
@@ -37,6 +39,7 @@ public class CrewController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('CREW_READ')")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<List<CrewEntity>>> getAllCrewMembers() {
     List<CrewEntity> crewMembers = crewService.getAllCrewMembers();
@@ -44,6 +47,7 @@ public class CrewController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('CREW_CREATE')")
   @Operation(summary = "Create a new crew member", description = "Create a new crew member.")
   public ResponseEntity<ResponseObject<Object>> createCrewMember(@RequestBody CrewEntity newCrewMember) {
     crewService.createCrewMember(newCrewMember);
@@ -52,6 +56,7 @@ public class CrewController {
   }
 
   @PatchMapping("/update/{crewMemberId}")
+  @PreAuthorize("hasAuthority('CREW_UPDATE')")
   @Operation(summary = "Update an existing crew member", description = "Update an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> updateCrewMember(@PathVariable String crewMemberId,
       @RequestBody CrewEntity updatedCrewMember) {
@@ -60,6 +65,7 @@ public class CrewController {
   }
 
   @DeleteMapping("/delete/{crewMemberId}")
+  @PreAuthorize("hasAuthority('CREW_DELETE')")
   @Operation(summary = "Delete an existing crew member", description = "Delete an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> deleteCrewMember(@PathVariable String crewMemberId) {
     crewService.deleteCrewMember(crewMemberId);

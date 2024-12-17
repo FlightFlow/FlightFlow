@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ public class FlightController {
   private FlightService flightService;
 
   @GetMapping("/getById/{flightId}")
+  @PreAuthorize("hasAuthority('FLIGHT_READ')")
   @Operation(summary = "Get a flight by id", description = "Retrieve the details of a spesific flight using it's ID.")
   public ResponseEntity<ResponseObject<FlightEntity>> getFlightById(@PathVariable String flightId) {
     FlightEntity flight = flightService.getSingleFlightById(flightId);
@@ -37,6 +39,7 @@ public class FlightController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('FLIGHT_READ')")
   @Operation(summary = "Get all the flights", description = "Retrieve the details of all flights.")
   public ResponseEntity<ResponseObject<List<FlightEntity>>> getAllFlights() {
     List<FlightEntity> flights = flightService.getAllFlights();
@@ -44,6 +47,7 @@ public class FlightController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('FLIGHT_CREATE')")
   @Operation(summary = "Create a new flight", description = "Create a new flight.")
   public ResponseEntity<ResponseObject<Object>> createFlight(@RequestBody FlightEntity flight) {
     flightService.createFlight(flight);
@@ -52,6 +56,7 @@ public class FlightController {
   }
 
   @PatchMapping("/update/{flightId}")
+  @PreAuthorize("hasAuthority('FLIGHT_UPDATE')")
   @Operation(summary = "Update a flight", description = "Update an existing flight.")
   public ResponseEntity<ResponseObject<Object>> updateFlight(@PathVariable String flightId,
       @RequestBody FlightEntity flight) {
@@ -60,6 +65,7 @@ public class FlightController {
   }
 
   @DeleteMapping("/delete/{flightId}")
+  @PreAuthorize("hasAuthority('FLIGHT_DELETE')")
   @Operation(summary = "Delete a flight", description = "Delete an existing flight.")
   public ResponseEntity<ResponseObject<Object>> deleteFlight(@PathVariable String flightId) {
     flightService.deleteFlight(flightId);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,14 +31,17 @@ public class CertificationController {
   private CertificationService certificationService;
 
   @GetMapping("/getById/{certificationId}")
+  @PreAuthorize("hasAuthority('CERT_READ')")
   @Operation(summary = "Get a certification by id", description = "Retrieve the details of a spesific certification using it's ID.")
-  public ResponseEntity<ResponseObject<CertificationEntity>> getCertificationById(@PathVariable String certificationId) {
+  public ResponseEntity<ResponseObject<CertificationEntity>> getCertificationById(
+      @PathVariable String certificationId) {
     CertificationEntity certification = certificationService.getSingleCertificationById(certificationId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
         certification);
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('CERT_READ')")
   @Operation(summary = "Get all the certifications", description = "Retrieve the details of all certifications.")
   public ResponseEntity<ResponseObject<List<CertificationEntity>>> getAllCertification() {
     List<CertificationEntity> certifications = certificationService.getAllCertifications();
@@ -46,6 +50,7 @@ public class CertificationController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('CERT_CREATE')")
   @Operation(summary = "Create a new certification", description = "Create a new certification.")
   public ResponseEntity<ResponseObject<Object>> createCertification(
       @RequestBody CertificationEntity newCertification) {
@@ -54,6 +59,7 @@ public class CertificationController {
   }
 
   @PatchMapping("/update/{certificationId}")
+  @PreAuthorize("hasAuthority('CERT_UPDATE')")
   @Operation(summary = "Update a certification", description = "Update an existing certification.")
   public ResponseEntity<ResponseObject<Object>> updateCertification(@PathVariable String certificationId,
       @RequestBody CertificationEntity updatedCertification) {
@@ -62,6 +68,7 @@ public class CertificationController {
   }
 
   @DeleteMapping("delete/{certificationId}")
+  @PreAuthorize("hasAuthority('CERT_DELETE')")
   @Operation(summary = "Delete a certification", description = "Delete an existing certification.")
   public ResponseEntity<ResponseObject<Object>> deleteCertification(@PathVariable String certificationId) {
     certificationService.deleteCertification(certificationId);

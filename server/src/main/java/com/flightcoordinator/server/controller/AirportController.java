@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ public class AirportController {
   private AirportService airportService;
 
   @GetMapping("/getById/{airportId}")
+  @PreAuthorize("hasAuthority('AIRPORT_READ')")
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@PathVariable String airportId) {
     AirportEntity airport = airportService.getSingleAirportById(airportId);
@@ -37,6 +39,7 @@ public class AirportController {
   }
 
   @GetMapping("/getAll")
+  @PreAuthorize("hasAuthority('AIRPORT_READ')")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportEntity>>> getAllAirports() {
     List<AirportEntity> airports = airportService.getAllAirports();
@@ -44,6 +47,7 @@ public class AirportController {
   }
 
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('AIRPORT_CREATE')")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
   public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportEntity newAirport) {
     airportService.createAirport(newAirport);
@@ -52,6 +56,7 @@ public class AirportController {
   };
 
   @PatchMapping("/update/{airportId}")
+  @PreAuthorize("hasAuthority('AIRPORT_UPDATE')")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
   public ResponseEntity<ResponseObject<Object>> updateAirport(@PathVariable String airportId,
       @RequestBody AirportEntity updatedAirport) {
@@ -60,6 +65,7 @@ public class AirportController {
   }
 
   @DeleteMapping("/delete/{airportId}")
+  @PreAuthorize("hasAuthority('AIRPORT_DELETE')")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
   public ResponseEntity<ResponseObject<Object>> deleteAirport(@PathVariable String airportId) {
     airportService.deleteAirport(airportId);
