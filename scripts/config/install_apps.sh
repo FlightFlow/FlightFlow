@@ -56,3 +56,10 @@ if ! grep -q 'export PATH=$MAVEN_HOME/bin:$PATH' ~/.bashrc; then
 else
   echo "Info: Maven environment variables found in ~./bashrc. Skipping..."
 fi
+
+# POSTGRESQL
+echo "Info: Installing PostgreSQL..."
+
+sudo apt install postgresql postgresql-contrib
+
+echo "Info: Successfully installed PostgreSQL."
