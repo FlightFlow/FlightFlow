@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 
+import { AirportType } from "@/constants/EnumsAsList";
 import AirportTypes from "@/types/controllers/airport";
 import EntityTypes from "@/types/entity";
 import Enums from "@/types/enums";
@@ -82,6 +83,32 @@ const AirportsPage = () => {
       field: "icaoCode",
       type: "string",
       headerName: t("airport.dataGrid.columns.icaoCode"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "countryCode",
+      type: "string",
+      headerName: t("airport.dataGrid.columns.countryCode"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "type",
+      type: "singleSelect",
+      headerName: t("airport.dataGrid.columns.type"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+      valueOptions: AirportType.map((type) => ({ label: t(`airport.types.${type}`), value: type })),
+    },
+    {
+      field: "runways",
     },
   ];
 
