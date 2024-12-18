@@ -122,13 +122,13 @@ const DataGrid = <TNew, TUpdate, TDelete>({
       const response = await newDataFunction({ ...row } as TNew);
       if (!response.isSuccess) {
         return setDataState(() => ({
-          snackbarState: { isOpen: true, message: response.responseMessage },
+          snackbarState: { isOpen: true, message: response.message },
           isLoading: false,
           isSuccess: response.isSuccess,
         }));
       }
       setDataState(() => ({
-        snackbarState: { isOpen: true, message: response.responseMessage },
+        snackbarState: { isOpen: true, message: response.message },
         isLoading: false,
         isSuccess: true,
       }));
@@ -136,13 +136,13 @@ const DataGrid = <TNew, TUpdate, TDelete>({
       const response = await updateDataFunction({ ...row } as TUpdate);
       if (!response.isSuccess) {
         return setDataState(() => ({
-          snackbarState: { isOpen: true, message: response.responseMessage },
+          snackbarState: { isOpen: true, message: response.message },
           isLoading: false,
           isSuccess: response.isSuccess,
         }));
       }
       setDataState(() => ({
-        snackbarState: { isOpen: true, message: response.responseMessage },
+        snackbarState: { isOpen: true, message: response.message },
         isLoading: false,
         isSuccess: true,
       }));
@@ -170,7 +170,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
     } as TDelete);
 
     return setDataState(() => ({
-      snackbarState: { isOpen: true, message: response.responseMessage },
+      snackbarState: { isOpen: true, message: response.message },
       isLoading: false,
       isSuccess: true,
     }));
