@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +58,7 @@ public class AlgorithmResultController {
         null);
   }
 
-  @PostMapping("/delete/{algorithmResultId}")
+  @DeleteMapping("/delete/{algorithmResultId}")
   @PreAuthorize("hasAuthority('ALGO_RESULT_DELETE')")
   @Operation(summary = "Delete an algorithm result", description = "Delete an algorithm result.")
   public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@PathVariable String algorithmResultId) {
