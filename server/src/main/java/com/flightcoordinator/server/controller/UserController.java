@@ -1,9 +1,14 @@
 package com.flightcoordinator.server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flightcoordinator.server.dto.AuthDetailsDTO;
 import com.flightcoordinator.server.dto.LoginDetailsDTO;
 import com.flightcoordinator.server.dto.RegisterDetailsDTO;
+import com.flightcoordinator.server.entity.UserEntity;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.UserService;
@@ -55,6 +61,32 @@ public class UserController {
       HttpServletResponse response) {
     Cookie newAccessToken = userService.getNewAccessTokenAsCookie(accessToken, refreshToken);
     response.addCookie(newAccessToken);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+  }
+
+  @GetMapping("/getAllUsers")
+  @PreAuthorize("hasAuthority('USER_SELF_READ')")
+  @Operation(summary = "Get current system user's details.", description = "Get current system user's details.")
+  public ResponseEntity<ResponseObject<Object>> getCurrentUserDetails(@CookieValue("accessToken") String accessToken) {
+    UserEntity user = userService.getCurrentUserDetails(accessToken);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), user);
+  }
+
+  @GetMapping("/getAllUsers")
+  @PreAuthorize("hasAuthority('USER_ALL_READ')")
+  @Operation(summary = "List existing system users.", description = "Lists available system users.")
+  public ResponseEntity<ResponseObject<Object>> getAllUsers() {
+    List<UserEntity> users = userService.getAllUsers();
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), users);
+  }
+
+  @DeleteMapping("/auth/manage/deleteUser")
+  @Operation(summary = "Delete an existing user", description = "Deletes an existing user. (Only for admin and automatic system uses.)")
+  public ResponseEntity<ResponseObject<Object>> deleteUser(
+      @CookieValue("accessToken") String accessToken,
+      @CookieValue("refreshToken") String refreshToken,
+      HttpServletResponse response) {
+    userService.deleteUser(accessToken, refreshToken);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 }

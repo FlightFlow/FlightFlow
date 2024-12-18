@@ -1,5 +1,6 @@
 package com.flightcoordinator.server.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,30 @@ public class UserService {
     }
 
     return tokenService.getNewAccessTokenAsCookie(user, accessToken, refreshToken);
+  }
+
+  public UserEntity getCurrentUserDetails(String accessToken) {
+    String userEmail = tokenService.getEmailAsUsernameFromToken(accessToken);
+    UserEntity currentUser = userRepository.findByEmail(userEmail).orElse(null);
+    if (currentUser == null) {
+      throw new AppError(
+          HttpStatus.NOT_FOUND.getReasonPhrase(),
+          HttpStatus.NOT_FOUND.value());
+    }
+    return currentUser;
+  }
+
+  public List<UserEntity> getAllUsers() {
+    List<UserEntity> users = userRepository.findAll();
+    if (users.isEmpty()) {
+      throw new AppError(
+          HttpStatus.NOT_FOUND.getReasonPhrase(),
+          HttpStatus.NOT_FOUND.value());
+    }
+    return users;
+  }
+
+  public void deleteUser(String accessToken, String refreshToken) {
+
   }
 }

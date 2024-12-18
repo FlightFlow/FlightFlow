@@ -41,7 +41,8 @@ public class SystemRoleEntity {
     ROUTE,
     RUNWAY,
     SYS_ROLE,
-    USER,
+    USER_ALL,
+    USER_SELF,
     VEHICLE;
   }
 
