@@ -28,6 +28,7 @@
     "vscjava.vscode-java-dependency",
     "vscjava.vscode-java-test",
     "ms-ossdata.vscode-postgresql",
-    "cweijan.vscode-postgresql-client2"
+    "cweijan.vscode-postgresql-client2",
+    "vmware.vscode-boot-dev-pack"
   ]
 }
