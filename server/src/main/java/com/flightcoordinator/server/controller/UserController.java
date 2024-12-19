@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +63,7 @@ public class UserController {
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @GetMapping("/getAllUsers")
+  @PostMapping("/getUserDetails")
   @PreAuthorize("hasAuthority('USER_SELF_READ')")
   @Operation(summary = "Get current system user's details.", description = "Get current system user's details.")
   public ResponseEntity<ResponseObject<Object>> getCurrentUserDetails(@CookieValue("accessToken") String accessToken) {
@@ -72,7 +71,7 @@ public class UserController {
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), user);
   }
 
-  @GetMapping("/getAllUsers")
+  @PostMapping("/getAllUsers")
   @PreAuthorize("hasAuthority('USER_ALL_READ')")
   @Operation(summary = "List existing system users.", description = "Lists available system users.")
   public ResponseEntity<ResponseObject<Object>> getAllUsers() {

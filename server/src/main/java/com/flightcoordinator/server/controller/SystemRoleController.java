@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class SystemRoleController {
   @Autowired
   private SystemRoleService systemRoleService;
 
-  @GetMapping("/getById/{systemRoleId}")
-  @PreAuthorize("hasAuthority('SYS_ROLE_READ')")
-  @Operation(summary = "Get a systemRole by id", description = "Retrieve the details of a spesific systemRole using it's ID.")
-  public ResponseEntity<ResponseObject<SystemRoleEntity>> getSystemRoleById(@PathVariable String systemRoleId) {
-    SystemRoleEntity systemRole = systemRoleService.getSingleSystemRoleById(systemRoleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), systemRole);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('SYS_ROLE_READ')")
   @Operation(summary = "Get all the systemRoles", description = "Retrieve the details of all systemRoles.")
   public ResponseEntity<ResponseObject<List<SystemRoleEntity>>> getAllSystemRoles() {
     List<SystemRoleEntity> systemRoles = systemRoleService.getAllSystemRoles();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), systemRoles);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('SYS_ROLE_READ')")
+  @Operation(summary = "Get a systemRole by id", description = "Retrieve the details of a spesific systemRole using it's ID.")
+  public ResponseEntity<ResponseObject<SystemRoleEntity>> getSystemRoleById(@RequestBody String systemRoleId) {
+    SystemRoleEntity systemRole = systemRoleService.getSingleSystemRoleById(systemRoleId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), systemRole);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class SystemRoleController {
         null);
   }
 
-  @PatchMapping("/update/{systemRoleId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('SYS_ROLE_UPDATE')")
   @Operation(summary = "Update a systemRole", description = "Update an existing systemRole.")
-  public ResponseEntity<ResponseObject<Object>> updateSystemRole(@PathVariable String systemRoleId,
+  public ResponseEntity<ResponseObject<Object>> updateSystemRole(@RequestBody String systemRoleId,
       @RequestBody SystemRoleEntity systemRole) {
     systemRoleService.updateSystemRole(systemRoleId, systemRole);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{systemRoleId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('SYS_ROLE_DELETE')")
   @Operation(summary = "Delete a systemRole", description = "Delete an existing systemRole.")
-  public ResponseEntity<ResponseObject<Object>> deleteSystemRole(@PathVariable String systemRoleId) {
+  public ResponseEntity<ResponseObject<Object>> deleteSystemRole(@RequestBody String systemRoleId) {
     systemRoleService.deleteSystemRole(systemRoleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

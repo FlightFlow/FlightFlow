@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class AirportController {
   @Autowired
   private AirportService airportService;
 
-  @GetMapping("/getById/{airportId}")
-  @PreAuthorize("hasAuthority('AIRPORT_READ')")
-  @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
-  public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@PathVariable String airportId) {
-    AirportEntity airport = airportService.getSingleAirportById(airportId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('AIRPORT_READ')")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportEntity>>> getAllAirports() {
     List<AirportEntity> airports = airportService.getAllAirports();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airports);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('AIRPORT_READ')")
+  @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
+  public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@RequestBody String airportId) {
+    AirportEntity airport = airportService.getSingleAirportById(airportId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class AirportController {
         null);
   };
 
-  @PatchMapping("/update/{airportId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('AIRPORT_UPDATE')")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
-  public ResponseEntity<ResponseObject<Object>> updateAirport(@PathVariable String airportId,
+  public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody String airportId,
       @RequestBody AirportEntity updatedAirport) {
     airportService.updateAirport(airportId, updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{airportId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('AIRPORT_DELETE')")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
-  public ResponseEntity<ResponseObject<Object>> deleteAirport(@PathVariable String airportId) {
+  public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody String airportId) {
     airportService.deleteAirport(airportId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

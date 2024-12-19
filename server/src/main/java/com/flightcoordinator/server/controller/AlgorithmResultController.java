@@ -7,9 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +18,6 @@ import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.AlgorithmResultService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -29,23 +27,23 @@ public class AlgorithmResultController {
   @Autowired
   private AlgorithmResultService algorithmResultService;
 
-  @GetMapping("/getById/{algorithmResultId}")
-  @PreAuthorize("hasAuthority('ALGO_RESULT_READ')")
-  @Operation(summary = "Get an algorithm result by id", description = "Retrieve the details of a spesific algorithm result using it's ID.")
-  public ResponseEntity<ResponseObject<AlgorithmResultEntity>> getAlgorithmResultById(
-      @PathVariable String algorithmResultId) {
-    AlgorithmResultEntity algorithmResult = algorithmResultService.getSingleAlgorithmResultById(algorithmResultId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
-        algorithmResult);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('ALGO_RESULT_READ')")
   @Operation(summary = "Get all the algorithm results", description = "Retrieve the details of all a spesific algorithm results.")
   public ResponseEntity<ResponseObject<List<AlgorithmResultEntity>>> getAllAlgorithms() {
     List<AlgorithmResultEntity> algorithmResults = algorithmResultService.getAllAlgorithmResults();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
         algorithmResults);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('ALGO_RESULT_READ')")
+  @Operation(summary = "Get an algorithm result by id", description = "Retrieve the details of a spesific algorithm result using it's ID.")
+  public ResponseEntity<ResponseObject<AlgorithmResultEntity>> getAlgorithmResultById(
+      @RequestBody String algorithmResultId) {
+    AlgorithmResultEntity algorithmResult = algorithmResultService.getSingleAlgorithmResultById(algorithmResultId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
+        algorithmResult);
   }
 
   @PostMapping("/create")
@@ -58,10 +56,10 @@ public class AlgorithmResultController {
         null);
   }
 
-  @DeleteMapping("/delete/{algorithmResultId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('ALGO_RESULT_DELETE')")
   @Operation(summary = "Delete an algorithm result", description = "Delete an algorithm result.")
-  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@PathVariable String algorithmResultId) {
+  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@RequestBody String algorithmResultId) {
     algorithmResultService.deleteAlgorithmResult(algorithmResultId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class RunwayController {
   @Autowired
   private RunwayService runwayService;
 
-  @GetMapping("/getById/{runwayId}")
-  @PreAuthorize("hasAuthority('RUNWAY_READ')")
-  @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
-  public ResponseEntity<ResponseObject<RunwayEntity>> getRunwayById(@PathVariable String runwayId) {
-    RunwayEntity runway = runwayService.getSingleRunwayById(runwayId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runway);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('RUNWAY_READ')")
   @Operation(summary = "Get all the runways", description = "Retrieve the details of all runways.")
   public ResponseEntity<ResponseObject<List<RunwayEntity>>> getAllRunways() {
     List<RunwayEntity> runways = runwayService.getAllRunways();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runways);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('RUNWAY_READ')")
+  @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
+  public ResponseEntity<ResponseObject<RunwayEntity>> getRunwayById(@RequestBody String runwayId) {
+    RunwayEntity runway = runwayService.getSingleRunwayById(runwayId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runway);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class RunwayController {
         null);
   }
 
-  @PatchMapping("/update/{runwayId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('RUNWAY_UPDATE')")
   @Operation(summary = "Update a runway", description = "Update an existing runway.")
-  public ResponseEntity<ResponseObject<Object>> updateRunway(@PathVariable String runwayId,
+  public ResponseEntity<ResponseObject<Object>> updateRunway(@RequestBody String runwayId,
       @RequestBody RunwayEntity runway) {
     runwayService.updateRunway(runwayId, runway);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{runwayId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('RUNWAY_DELETE')")
   @Operation(summary = "Delete a runway", description = "Delete an existing runway.")
-  public ResponseEntity<ResponseObject<Object>> deleteRunway(@PathVariable String runwayId) {
+  public ResponseEntity<ResponseObject<Object>> deleteRunway(@RequestBody String runwayId) {
     runwayService.deleteRunway(runwayId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

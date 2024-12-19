@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class VehicleController {
   @Autowired
   private VehicleService vehicleService;
 
-  @GetMapping("/getById/{vehicleId}")
-  @PreAuthorize("hasAuthority('VEHICLE_READ')")
-  @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
-  public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@PathVariable String vehicleId) {
-    VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('VEHICLE_READ')")
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
   public ResponseEntity<ResponseObject<List<VehicleEntity>>> getAllVehicles() {
     List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicles);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('VEHICLE_READ')")
+  @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
+  public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@RequestBody String vehicleId) {
+    VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class VehicleController {
         null);
   }
 
-  @PatchMapping("/update/{vehicleId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('VEHICLE_UPDATE')")
   @Operation(summary = "Update an vehicle", description = "Update an existing vehicle.")
-  public ResponseEntity<ResponseObject<Object>> updateVehicle(@PathVariable String vehicleId,
+  public ResponseEntity<ResponseObject<Object>> updateVehicle(@RequestBody String vehicleId,
       @RequestBody VehicleEntity updatedVehicle) {
     vehicleService.updateVehicle(vehicleId, updatedVehicle);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{vehicleId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('VEHICLE_DELETE')")
   @Operation(summary = "Delete an vehicle", description = "Delete an existing vehicle.")
-  public ResponseEntity<ResponseObject<Object>> deleteVehicle(@PathVariable String vehicleId) {
+  public ResponseEntity<ResponseObject<Object>> deleteVehicle(@RequestBody String vehicleId) {
     vehicleService.deleteVehicle(vehicleId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

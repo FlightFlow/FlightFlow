@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class CrewController {
   @Autowired
   private CrewService crewService;
 
-  @GetMapping("/getById/{crewMemberId}")
-  @PreAuthorize("hasAuthority('CREW_READ')")
-  @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
-  public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@PathVariable String crewMemberId) {
-    CrewEntity crewMember = crewService.getSingleCrewMemberById(crewMemberId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMember);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('CREW_READ')")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<List<CrewEntity>>> getAllCrewMembers() {
     List<CrewEntity> crewMembers = crewService.getAllCrewMembers();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMembers);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('CREW_READ')")
+  @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
+  public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@RequestBody String crewMemberId) {
+    CrewEntity crewMember = crewService.getSingleCrewMemberById(crewMemberId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMember);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class CrewController {
         null);
   }
 
-  @PatchMapping("/update/{crewMemberId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('CREW_UPDATE')")
   @Operation(summary = "Update an existing crew member", description = "Update an existing crew member.")
-  public ResponseEntity<ResponseObject<Object>> updateCrewMember(@PathVariable String crewMemberId,
+  public ResponseEntity<ResponseObject<Object>> updateCrewMember(@RequestBody String crewMemberId,
       @RequestBody CrewEntity updatedCrewMember) {
     crewService.updateCrewMember(crewMemberId, updatedCrewMember);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{crewMemberId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('CREW_DELETE')")
   @Operation(summary = "Delete an existing crew member", description = "Delete an existing crew member.")
-  public ResponseEntity<ResponseObject<Object>> deleteCrewMember(@PathVariable String crewMemberId) {
+  public ResponseEntity<ResponseObject<Object>> deleteCrewMember(@RequestBody String crewMemberId) {
     crewService.deleteCrewMember(crewMemberId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }

@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,20 +28,20 @@ public class PlaneController {
   @Autowired
   private PlaneService planeService;
 
-  @GetMapping("/getById/{planeId}")
-  @PreAuthorize("hasAuthority('PLANE_READ')")
-  @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID.")
-  public ResponseEntity<ResponseObject<PlaneEntity>> getPlaneById(@PathVariable String planeId) {
-    PlaneEntity plane = planeService.getSinglePlaneById(planeId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), plane);
-  }
-
-  @GetMapping("/getAll")
+  @PostMapping("/getAll")
   @PreAuthorize("hasAuthority('FLIGHT_READ')")
   @Operation(summary = "Get all the planes", description = "Retrieve the details of all planes.")
   public ResponseEntity<ResponseObject<List<PlaneEntity>>> getAllPlanes() {
     List<PlaneEntity> planes = planeService.getAllPlanes();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), planes);
+  }
+
+  @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('PLANE_READ')")
+  @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID.")
+  public ResponseEntity<ResponseObject<PlaneEntity>> getPlaneById(@RequestBody String planeId) {
+    PlaneEntity plane = planeService.getSinglePlaneById(planeId);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), plane);
   }
 
   @PostMapping("/create")
@@ -55,19 +53,19 @@ public class PlaneController {
         null);
   }
 
-  @PatchMapping("/update/{planeId}")
+  @PatchMapping("/update")
   @PreAuthorize("hasAuthority('FLIGHT_UPDATE')")
   @Operation(summary = "Update an plane", description = "Update an existing plane.")
-  public ResponseEntity<ResponseObject<Object>> updatePlane(@PathVariable String planeId,
+  public ResponseEntity<ResponseObject<Object>> updatePlane(@RequestBody String planeId,
       @RequestBody PlaneEntity updatedPlane) {
     planeService.updatePlane(planeId, updatedPlane);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
 
-  @DeleteMapping("/delete/{planeId}")
+  @DeleteMapping("/delete")
   @PreAuthorize("hasAuthority('FLIGHT_DELETE')")
   @Operation(summary = "Delete an plane", description = "Delete an existing plane.")
-  public ResponseEntity<ResponseObject<Object>> deletePlane(@PathVariable String planeId) {
+  public ResponseEntity<ResponseObject<Object>> deletePlane(@RequestBody String planeId) {
     planeService.deletePlane(planeId);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
   }
