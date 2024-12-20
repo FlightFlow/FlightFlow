@@ -1,0 +1,48 @@
+{
+  "genericMessages": {
+    "internalServerError": "",
+    "badRequest": ""
+  },
+  "controllers": {
+    "getResponse": "",
+    "createResponse": "",
+    "updateResponse": "",
+    "deleteResponse": ""
+  },
+  "auth": {
+    "loginSuccess": "",
+    "registerSuccess": "",
+    "newTokenSuccess": "",
+    "validationSuccess": "",
+    "deleteSuccess": "",
+    "getCurrentUserDetails": "",
+    "getAllUserDetails": ""
+  },
+  "authException": {
+    "userExists": "",
+    "passwordsDoNotMatch": "",
+    "cannotAuthenticate": "",
+    "cannotFindUser": "",
+    "invalidToken": "",
+    "expiredToken": ""
+  },
+  "notfound": {
+    "airport": "",
+    "algorithmResult": "",
+    "algorithmRun": "",
+    "certification": "",
+    "crew": "",
+    "flight": "",
+    "plane": "",
+    "route": "",
+    "runway": "",
+    "systemRole": "",
+    "vehicle": ""
+  },
+  "exceptions": {
+    "enumValidationError": "",
+    "illegalArgumentException": "",
+    "optimisticLockingFailureException": "",
+    "jwtException": ""
+  }
+}

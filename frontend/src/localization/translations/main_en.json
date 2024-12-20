@@ -1,0 +1,73 @@
+{
+  "columns": {
+    "airport": {
+      "columns": {}
+    },
+    "algorithm_result": {
+      "columns": {}
+    },
+    "algorithm_run": {
+      "columns": {}
+    },
+    "certification": {
+      "columns": {}
+    },
+    "crew": {
+      "columns": {}
+    },
+    "flight": {
+      "columns": {}
+    },
+    "plane": {
+      "columns": {}
+    },
+    "route": {
+      "columns": {}
+    },
+    "runway": {
+      "columns": {}
+    },
+    "system_role": {
+      "columns": {}
+    },
+    "user": {
+      "columns": {}
+    },
+    "vehicle": {
+      "columns": {}
+    }
+  },
+  "forms": {
+    "titles": {
+      "loginTitle": "Welcome Back 👋",
+      "registerTitle": "Nice to Meet You!"
+    },
+    "subtitles": {
+      "loginSubtitle": "Login to continue",
+      "registerSubtitle": "Register to continue"
+    },
+    "labels": {
+      "fullName": "Full Name",
+      "username": "Username",
+      "email": "E-Mail",
+      "password": "Password",
+      "passwordAgain": "Password Again"
+    },
+    "buttons": {
+      "loginButton": "Login to Your Account",
+      "registerButton": "Create Your Account"
+    },
+    "bottomTexts": {
+      "loginBottomText": "Don't have an account? Register now!",
+      "registerBottomText": "Already have an account? Login now!"
+    }
+  },
+  "schemas": {
+    "requiredError": "This field is required.",
+    "invalidEmailError": "Please enter a valid e-mail."
+  },
+  "requesterError": {
+    "unknownError": "",
+    "expiredToken": ""
+  }
+}

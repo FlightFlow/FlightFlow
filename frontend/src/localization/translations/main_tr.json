@@ -1,0 +1,73 @@
+{
+  "columns": {
+    "airport": {
+      "columns": {}
+    },
+    "algorithm_result": {
+      "columns": {}
+    },
+    "algorithm_run": {
+      "columns": {}
+    },
+    "certification": {
+      "columns": {}
+    },
+    "crew": {
+      "columns": {}
+    },
+    "flight": {
+      "columns": {}
+    },
+    "plane": {
+      "columns": {}
+    },
+    "route": {
+      "columns": {}
+    },
+    "runway": {
+      "columns": {}
+    },
+    "system_role": {
+      "columns": {}
+    },
+    "user": {
+      "columns": {}
+    },
+    "vehicle": {
+      "columns": {}
+    }
+  },
+  "forms": {
+    "titles": {
+      "loginTitle": "Tekrar Hoşgeldin 👋",
+      "registerTitle": "Tanıştığımıza Sevindim!"
+    },
+    "subtitles": {
+      "loginSubtitle": "Devam etmek için giriş yap",
+      "registerSubtitle": "Devam etmek için kayıt ol"
+    },
+    "labels": {
+      "fullName": "Ad ve Soyad",
+      "username": "Kullanıcı Adı",
+      "email": "E-Posta",
+      "password": "Şifre",
+      "passwordAgain": "Şifre Tekrar"
+    },
+    "buttons": {
+      "loginButton": "Hesabına Giriş Yap",
+      "registerButton": "Yeni Hesap Oluştur"
+    },
+    "bottomTexts": {
+      "loginBottomText": "Don't have an account? Register now!",
+      "registerBottomText": "Already have an account? Login now!"
+    }
+  },
+  "schemas": {
+    "requiredError": "This field is required.",
+    "invalidEmailError": "Please enter a valid e-mail."
+  },
+  "requesterError": {
+    "unknownError": "",
+    "expiredToken": ""
+  }
+}
