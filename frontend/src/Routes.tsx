@@ -10,7 +10,7 @@ const Routes = () => {
       <BrowserRoutes>
         {/* Protected Routes */}
         <Route path="/app" element={<ResourcePageLayout />}>
-          <Route path="sairport" element={<AirportPage />} />
+          <Route path="airport" element={<AirportPage />} />
         </Route>
 
         {/* Public Routes */}
