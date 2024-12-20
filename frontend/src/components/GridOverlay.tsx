@@ -25,7 +25,9 @@ const GridOverlay: FC<ComponentTypes.GridOverlayProps> = ({ type, message }) => 
   return (
     <Box sx={GridOverlayStyles}>
       {type === "loading" ? <CircularProgress size={30} /> : <ErrorOutline sx={IconStyles} />}
-      <Typography>{type === "loading" ? t("loadingMessage") : t("errorMessage")}</Typography>
+      <Typography>
+        {type === "loading" ? t("overlay.loadingMessage") : t("overlay.errorMessage")}
+      </Typography>
       <Typography>{type === "error" && message}</Typography>
     </Box>
   );
