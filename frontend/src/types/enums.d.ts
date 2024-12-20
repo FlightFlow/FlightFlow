@@ -61,7 +61,7 @@ namespace Enums {
   export enum PlaneAvailability {
     AVAILABLE = "Available",
     UNDER_MAINTENANCE = "Under-Maintenance",
-    IS_USE = "In-Use",
+    IN_USE = "In-Use",
     RETIRED = "Retired",
   }
   export enum RunwaySurfaceType {

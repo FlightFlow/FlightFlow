@@ -1,9 +1,9 @@
-import { Dispatch, MouseEventHandler, ReactNode, SetStateAction } from "react";
+import type { Dispatch, MouseEventHandler, ReactNode, SetStateAction } from "react";
 
-import GlobalTypes from "@/types/globals";
-import { AlertColor } from "@mui/material";
-import { GridColDef, GridPaginationModel, GridRowsProp } from "@mui/x-data-grid";
-import { UseMutateAsyncFunction } from "@tanstack/react-query";
+import type GlobalTypes from "@/types/globals";
+import type { AlertColor } from "@mui/material";
+import type { GridColDef, GridPaginationModel, GridRowsProp } from "@mui/x-data-grid";
+import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 
 namespace ComponentTypes {
   export interface BaseDataGridRowParams {
@@ -43,6 +43,18 @@ namespace ComponentTypes {
     snackbarState: DataStateProps;
     setSnackbarState: Dispatch<SetStateAction<DataStateProps>>;
     severity: AlertColor;
+  }
+  export interface SubmitButtonProps {
+    label: string;
+    isLoading: boolean;
+    isSuccess: boolean;
+  }
+  export interface AuthCheckProps {
+    children: ReactNode;
+  }
+  export interface FormHeaderProps {
+    title: string;
+    subtitle: string;
   }
 }
 export default ComponentTypes;

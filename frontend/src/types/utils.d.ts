@@ -19,7 +19,12 @@ namespace UtilTypes {
 
     type AlgorithmActions = ""; // TODO
     type EndpointActions = "getById" | "getAll" | "create" | "update" | "delete";
-    type AuthActions = "auth/login" | "auth/register" | "auth/logout" | "auth/newRefreshToken";
+    type AuthActions =
+      | "auth/login"
+      | "auth/register"
+      | "auth/logout"
+      | "auth/newRefreshToken"
+      | "auth/validate";
 
     interface EndpointProps {
       controller: EndpointRoutes;

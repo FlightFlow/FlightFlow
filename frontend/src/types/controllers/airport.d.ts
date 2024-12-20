@@ -1,16 +1,19 @@
-import ComponentTypes from "../components";
+import type ComponentTypes from "../components";
 
-import EntityTypes from "../entity";
-import GlobalTypes from "../globals";
+import type EntityTypes from "../entity";
+import type GlobalTypes from "../globals";
 
 namespace AirportTypes {
   export namespace Mutations {
     export type CreateMutationParams = Omit<EntityTypes.AirportEntity, "id">;
-    export type UpdateMutationParams = EntityTypes.AirportEntity;
-    export type DeleteMutationParams = EntityTypes.BaseEntity;
+    export type UpdateMutationParams = { airportId: string } & Omit<
+      EntityTypes.AirportEntity,
+      "id"
+    >;
+    export type DeleteMutationParams = { airportId: string };
   }
   export namespace Queries {
-    export type AirportQueryRequestParams = Pick<EntityTypes.BaseEntity, "id">;
+    export type AirportByIdQueryRequestParams = { airportId: string };
     export type AirportQueryResponseParams = EntityTypes.AirportEntity[];
   }
   export type AirportPageRowParams = ComponentTypes.BaseDataGridRowParams &
