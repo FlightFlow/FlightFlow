@@ -5,7 +5,6 @@ import Requester from "@/utils/requester";
 
 const useAirportCreateMutation = () => {
   const queryClient = useQueryClient();
-
   const createAirport = useMutation({
     mutationKey: ["createAirportMutation"],
     mutationFn: async (airportCreateData: AirportTypes.Mutations.CreateMutationParams) => {

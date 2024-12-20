@@ -5,16 +5,14 @@ import Requester from "@/utils/requester";
 
 const useAirportUpdateMutation = () => {
   const queryClient = useQueryClient();
-
   const updateAirport = useMutation({
     mutationKey: ["updateAirportMutation"],
     mutationFn: async (useAirportUpdateData: AirportTypes.Mutations.UpdateMutationParams) => {
-      const { id, ...requestData } = useAirportUpdateData;
+      const { airportId, ...requestData } = useAirportUpdateData;
       const response = await new Requester({
         method: "PATCH",
         endpoint: { controller: "airport", action: "update" },
-        payload: requestData,
-        query: { airportId: id },
+        query: { airportId: airportId, ...requestData },
       }).sendRequest();
 
       return response;

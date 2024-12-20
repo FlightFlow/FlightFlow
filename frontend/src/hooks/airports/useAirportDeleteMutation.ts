@@ -5,16 +5,13 @@ import Requester from "@/utils/requester";
 
 const useAirportDeleteMutation = () => {
   const queryClient = useQueryClient();
-
   const deleteAirport = useMutation({
     mutationKey: ["deleteAirportMutation"],
     mutationFn: async (airportDeleteData: AirportTypes.Mutations.DeleteMutationParams) => {
-      const { id, ...requestData } = airportDeleteData;
       const response = await new Requester({
         method: "DELETE",
         endpoint: { controller: "airport", action: "delete" },
-        payload: requestData,
-        query: { airportId: id },
+        payload: airportDeleteData,
       }).sendRequest();
       return response;
     },

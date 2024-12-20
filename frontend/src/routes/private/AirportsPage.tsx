@@ -3,15 +3,14 @@ import { useTranslation } from "react-i18next";
 import { AirportType } from "@/constants/EnumsAsList";
 import AirportTypes from "@/types/controllers/airport";
 import EntityTypes from "@/types/entity";
-import Enums from "@/types/enums";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";
 
+import useAirportQuery from "@/hooks/airports/useAirportAllQuery";
 import useAirportCreateMutation from "@/hooks/airports/useAirportCreateMutation";
 import useAirportDeleteMutation from "@/hooks/airports/useAirportDeleteMutation";
-import useAirportQuery from "@/hooks/airports/useAirportQuery";
 import useAirportUpdateMutation from "@/hooks/airports/useAirportUpdateMutation";
 
 const AirportsPage = () => {
@@ -117,7 +116,7 @@ const AirportsPage = () => {
     iataCode: "",
     icaoCode: "",
     countryCode: "",
-    type: Enums.AirportType.INTERNATIONAL,
+    type: AirportType,
     runways: [],
     vehiclesPresent: [],
     planesPresent: [],
