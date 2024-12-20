@@ -8,13 +8,14 @@ const useAirportDeleteMutation = () => {
   const deleteAirport = useMutation({
     mutationKey: ["deleteAirportMutation"],
     mutationFn: async (airportDeleteData: AirportTypes.Mutations.DeleteMutationParams) => {
-      return await new Requester()
+      const response = await new Requester()
         .setConfig({
           method: "DELETE",
           endpoint: { controller: "airport", action: "delete" },
           payload: airportDeleteData,
         })
         .sendRequest();
+      return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["airportQuery"] }),
   });
