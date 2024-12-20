@@ -33,7 +33,7 @@ public class AirportController {
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportEntity>>> getAllAirports() {
     List<AirportEntity> airports = airportService.getAllAirports();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airports);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airports);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class AirportController {
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportEntity>> getAirportById(@RequestBody String airportId) {
     AirportEntity airport = airportService.getSingleAirportById(airportId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), airport);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airport);
   }
 
   @PostMapping("/create")
@@ -49,7 +49,7 @@ public class AirportController {
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
   public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportEntity newAirport) {
     airportService.createAirport(newAirport);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse",
         null);
   };
 
@@ -59,7 +59,7 @@ public class AirportController {
   public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody String airportId,
       @RequestBody AirportEntity updatedAirport) {
     airportService.updateAirport(airportId, updatedAirport);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +67,6 @@ public class AirportController {
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
   public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody String airportId) {
     airportService.deleteAirport(airportId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

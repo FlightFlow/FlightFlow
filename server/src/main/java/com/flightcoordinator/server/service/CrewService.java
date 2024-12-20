@@ -17,23 +17,15 @@ public class CrewService {
   @Autowired
   private CrewRepository crewRepository;
 
-  @Autowired
-  private CertificationService certificationService;
-
-  @Autowired
-  private AirportService airportService;
-
   public CrewEntity getSingleCrewMemberById(String crewMemberId) {
     Optional<CrewEntity> crewMember = crewRepository.findById(crewMemberId);
-    return crewMember.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return crewMember.orElseThrow(() -> new AppError("notFound.crew", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<CrewEntity> getMultipleCrewMemberById(List<String> crewMemberIds) {
     List<CrewEntity> crewMembers = crewRepository.findAllById(crewMemberIds);
     if (crewMembers.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.crew", HttpStatus.NOT_FOUND.value());
     }
     return crewMembers;
   }
@@ -41,47 +33,19 @@ public class CrewService {
   public List<CrewEntity> getAllCrewMembers() {
     List<CrewEntity> crewMembers = crewRepository.findAll();
     if (crewMembers.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.crew", HttpStatus.NOT_FOUND.value());
     }
     return crewMembers;
   }
 
   public void createCrewMember(CrewEntity newCrewMember) {
-    Boolean doesCertificationsExist = certificationService
-        .doesMultipleCertificationsExist(newCrewMember.getCertifications());
-
-    Boolean doesBaseAirportExist = airportService.doesSingleAirportExist(newCrewMember.getBaseAirport());
-
-    if (!doesCertificationsExist || !doesBaseAirportExist) {
-      throw new AppError(
-          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base crew",
-          HttpStatus.BAD_REQUEST.value());
-    }
-
-    Boolean doesPhoneNumberValid;
-    doesPhoneNumberValid = isPhoneNumberValid(newCrewMember.getPhoneNumber());
-    if (doesPhoneNumberValid) {
-      throw new AppError("Cannot validate phone number", HttpStatus.BAD_REQUEST.value());
-    }
-
     crewRepository.save(newCrewMember);
   }
 
   public void updateCrewMember(String crewMemberId, CrewEntity updatedCrewMember) {
-    Boolean doesCertificationsExist = certificationService
-        .doesMultipleCertificationsExist(updatedCrewMember.getCertifications());
-
-    Boolean doesBaseAirportExist = airportService.doesSingleAirportExist(updatedCrewMember.getBaseAirport());
-
-    if (!doesCertificationsExist || !doesBaseAirportExist) {
-      throw new AppError(
-          doesCertificationsExist ? "Cannot validate certifications" : "Cannot validate base crew",
-          HttpStatus.BAD_REQUEST.value());
-    }
-
     Boolean doesPhoneNumberValid = isPhoneNumberValid(updatedCrewMember.getPhoneNumber());
     if (doesPhoneNumberValid) {
-      throw new AppError("Cannot validate phone number", HttpStatus.BAD_REQUEST.value());
+      throw new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value());
     }
 
     CrewEntity existingCrewMember = getSingleCrewMemberById(crewMemberId);

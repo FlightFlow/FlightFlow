@@ -17,20 +17,15 @@ public class AirportService {
   @Autowired
   private AirportRepository airportRepository;
 
-  @Autowired
-  private RunwayService runwayService;
-
   public AirportEntity getSingleAirportById(String airportId) {
     Optional<AirportEntity> airport = airportRepository.findById(airportId);
-    return airport.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return airport.orElseThrow(() -> new AppError("notFound.airport", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<AirportEntity> getMultipleAirportsById(List<String> airportIds) {
     List<AirportEntity> airports = airportRepository.findAllById(airportIds);
     if (airports.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.airport", HttpStatus.NOT_FOUND.value());
     }
     return airports;
   }
@@ -38,25 +33,16 @@ public class AirportService {
   public List<AirportEntity> getAllAirports() {
     List<AirportEntity> airports = airportRepository.findAll();
     if (airports.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.airport", HttpStatus.NOT_FOUND.value());
     }
     return airports;
   }
 
   public void createAirport(AirportEntity newAirport) {
-    Boolean doesRunwaysExist = runwayService.doesMultipleRunwaysExist(newAirport.getRunways());
-    if (!doesRunwaysExist) {
-      throw new AppError("Cannot validate runways", HttpStatus.BAD_REQUEST.value());
-    }
     airportRepository.save(newAirport);
   }
 
   public void updateAirport(String airportId, AirportEntity updatedAirport) {
-    Boolean doesRunwaysExist = runwayService.doesMultipleRunwaysExist(updatedAirport.getRunways());
-    if (!doesRunwaysExist) {
-      throw new AppError("Cannot validate runways", HttpStatus.BAD_REQUEST.value());
-    }
-
     AirportEntity existingAirport = getSingleAirportById(airportId);
 
     existingAirport.setName(updatedAirport.getName());

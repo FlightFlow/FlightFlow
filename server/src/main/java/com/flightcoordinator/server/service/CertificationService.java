@@ -19,15 +19,13 @@ public class CertificationService {
 
   public CertificationEntity getSingleCertificationById(String certificationId) {
     Optional<CertificationEntity> certification = certificationRepository.findById(certificationId);
-    return certification.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return certification.orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<CertificationEntity> getMultipleCertificationsById(List<String> certificationIds) {
     List<CertificationEntity> certifications = certificationRepository.findAllById(certificationIds);
     if (certifications.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.certification", HttpStatus.NOT_FOUND.value());
     }
     return certifications;
   }
@@ -35,7 +33,7 @@ public class CertificationService {
   public List<CertificationEntity> getAllCertifications() {
     List<CertificationEntity> certifications = certificationRepository.findAll();
     if (certifications.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.certification", HttpStatus.NOT_FOUND.value());
     }
     return certifications;
   }

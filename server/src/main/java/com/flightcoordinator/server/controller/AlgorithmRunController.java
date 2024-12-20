@@ -32,7 +32,7 @@ public class AlgorithmRunController {
   @Operation(summary = "Get all the algorithm runs", description = "Retrieve the details of all a spesific algorithm runs.")
   public ResponseEntity<ResponseObject<List<AlgorithmRunEntity>>> getAllAlgorithms() {
     List<AlgorithmRunEntity> algorithmRuns = algorithmRunService.getAllAlgorithmRuns();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), algorithmRuns);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmRuns);
   }
 
   @PostMapping("/getById")
@@ -40,7 +40,7 @@ public class AlgorithmRunController {
   @Operation(summary = "Get an algorithm run by id", description = "Retrieve the details of a spesific algorithm run using it's ID.")
   public ResponseEntity<ResponseObject<AlgorithmRunEntity>> getAlgorithmRunById(@RequestBody String algorithmRunId) {
     AlgorithmRunEntity algorithmRun = algorithmRunService.getSingleAlgorithmRunById(algorithmRunId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), algorithmRun);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmRun);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class AlgorithmRunController {
   public ResponseEntity<ResponseObject<Object>> createAlgorithmRun(
       @RequestBody AlgorithmRunEntity newAlgorithmRun) {
     algorithmRunService.createAlgorithmRun(newAlgorithmRun);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -58,6 +57,6 @@ public class AlgorithmRunController {
   @Operation(summary = "Delete an algorithm run", description = "Delete an algorithm run.")
   public ResponseEntity<ResponseObject<Object>> deleteAlgorithmRun(@RequestBody String algorithmRunId) {
     algorithmRunService.deleteAlgorithmRun(algorithmRunId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

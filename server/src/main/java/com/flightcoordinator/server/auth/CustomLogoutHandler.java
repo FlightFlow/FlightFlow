@@ -34,8 +34,8 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       authToken = authHeader.substring(7);
-      String userEmailAsUsername = tokenService.getEmailAsUsernameFromToken(authToken);
-      UserEntity user = userRepository.findByEmail(userEmailAsUsername).orElse(null);
+      String userUsername = tokenService.getUsernameFromToken(authToken);
+      UserEntity user = userRepository.findByUsername(userUsername).orElse(null);
 
       if (user != null) {
         tokenService.revokeAllRefreshTokensForUser(user);
@@ -46,7 +46,7 @@ public class CustomLogoutHandler implements LogoutHandler {
         SecurityContextHolder.clearContext();
       } else {
         throw new AppError(
-            HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+            "authException.cannotAuthenticate",
             HttpStatus.INTERNAL_SERVER_ERROR.value());
       }
     }

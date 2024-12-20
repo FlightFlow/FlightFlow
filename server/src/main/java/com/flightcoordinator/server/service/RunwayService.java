@@ -19,15 +19,13 @@ public class RunwayService {
 
   public RunwayEntity getSingleRunwayById(String runwayId) {
     Optional<RunwayEntity> runway = runwayRepository.findById(runwayId);
-    return runway.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return runway.orElseThrow(() -> new AppError("notFound.runway", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<RunwayEntity> getMultipleRunwaysById(List<String> runwayIds) {
     List<RunwayEntity> runways = runwayRepository.findAllById(runwayIds);
     if (runways.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.runway", HttpStatus.NOT_FOUND.value());
     }
     return runways;
   }
@@ -35,7 +33,7 @@ public class RunwayService {
   public List<RunwayEntity> getAllRunways() {
     List<RunwayEntity> runways = runwayRepository.findAll();
     if (runways.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.runway", HttpStatus.NOT_FOUND.value());
     }
     return runways;
   }

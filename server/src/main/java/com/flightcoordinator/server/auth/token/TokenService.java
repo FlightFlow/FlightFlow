@@ -23,24 +23,28 @@ public class TokenService {
   private TokenRepository tokenRepository;
 
   public AuthDetailsDTO generateAuthDetails(UserEntity user) {
-    String accessToken = jwtService.generateAccessToken(user.getEmail());
-    String refreshToken = jwtService.generateRefreshToken(user.getEmail());
+    String accessToken = jwtService.generateAccessToken(user.getUsername());
+    String refreshToken = jwtService.generateRefreshToken(user.getUsername());
 
     AuthDetailsDTO authDetails = new AuthDetailsDTO();
 
     Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-    accessTokenCookie.setHttpOnly(true);
-    accessTokenCookie.setSecure(true);
+    // accessTokenCookie.setHttpOnly(true);
+    // accessTokenCookie.setSecure(true);
+    accessTokenCookie.setDomain("localhost");
     accessTokenCookie.setPath("/");
 
     authDetails.setAccessTokenCookie(accessTokenCookie);
 
     Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
-    refreshTokenCookie.setHttpOnly(true);
-    refreshTokenCookie.setSecure(true);
-    refreshTokenCookie.setPath("/api/v1/auth/refresh-token");
+    // refreshTokenCookie.setHttpOnly(true);
+    // refreshTokenCookie.setSecure(true);
+    refreshTokenCookie.setDomain("localhost");
+    refreshTokenCookie.setPath("/api/v1/auth/newRefreshToken");
 
     authDetails.setRefreshTokenCookie(refreshTokenCookie);
+
+    saveRefreshToken(user, refreshToken);
 
     return authDetails;
   }
@@ -73,10 +77,10 @@ public class TokenService {
   public void saveRefreshToken(UserEntity associatedUser, String token) {
     TokenEntity newToken = new TokenEntity();
 
+    newToken.setToken(token);
     newToken.setAssociatedUser(associatedUser);
     newToken.setExpired(false);
     newToken.setRevoked(false);
-    newToken.setToken(token);
 
     tokenRepository.save(newToken);
   }
@@ -85,27 +89,27 @@ public class TokenService {
     Boolean isRefreshTokenValid = jwtService.validateToken(refreshToken, user);
     if (!isRefreshTokenValid) {
       throw new AppError(
-          HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+          "authException.invalidToken",
           HttpStatus.UNAUTHORIZED.value());
     }
 
-    String emailFromAccessToken = jwtService.extractUsername(accessToken);
-    if (!emailFromAccessToken.equals(user.getEmail())) {
+    String usernameFromAccessToken = jwtService.extractUsername(accessToken);
+    if (!usernameFromAccessToken.equals(user.getUsername())) {
       throw new AppError(
-          HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+          "authException.invalidToken",
           HttpStatus.UNAUTHORIZED.value());
     }
 
     Boolean isAccessTokenExpired = jwtService.isTokenExpired(accessToken);
     if (!isAccessTokenExpired) {
       throw new AppError(
-          HttpStatus.CONFLICT.getReasonPhrase(),
+          "authException.expiredToken",
           HttpStatus.CONFLICT.value());
     }
 
     revokeAllRefreshTokensForUser(user);
 
-    String newAccessToken = jwtService.generateAccessToken(user.getEmail());
+    String newAccessToken = jwtService.generateAccessToken(user.getUsername());
     saveRefreshToken(user, newAccessToken);
 
     Cookie accessTokenAsCookie = new Cookie("accessToken", newAccessToken);
@@ -116,7 +120,7 @@ public class TokenService {
     return accessTokenAsCookie;
   }
 
-  public String getEmailAsUsernameFromToken(String token) {
+  public String getUsernameFromToken(String token) {
     return jwtService.extractUsername(token);
   }
 }

@@ -36,7 +36,8 @@ public class JWTService {
       JWT_KEY = Base64.getEncoder().encodeToString(secretKey.getEncoded());
     } catch (NoSuchAlgorithmException e) {
       throw new AppError(
-          HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+          "genericMessages.internalServerError",
+          HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
   }
 

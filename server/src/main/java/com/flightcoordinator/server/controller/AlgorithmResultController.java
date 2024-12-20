@@ -32,8 +32,7 @@ public class AlgorithmResultController {
   @Operation(summary = "Get all the algorithm results", description = "Retrieve the details of all a spesific algorithm results.")
   public ResponseEntity<ResponseObject<List<AlgorithmResultEntity>>> getAllAlgorithms() {
     List<AlgorithmResultEntity> algorithmResults = algorithmResultService.getAllAlgorithmResults();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
-        algorithmResults);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmResults);
   }
 
   @PostMapping("/getById")
@@ -42,8 +41,7 @@ public class AlgorithmResultController {
   public ResponseEntity<ResponseObject<AlgorithmResultEntity>> getAlgorithmResultById(
       @RequestBody String algorithmResultId) {
     AlgorithmResultEntity algorithmResult = algorithmResultService.getSingleAlgorithmResultById(algorithmResultId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
-        algorithmResult);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmResult);
   }
 
   @PostMapping("/create")
@@ -52,8 +50,7 @@ public class AlgorithmResultController {
   public ResponseEntity<ResponseObject<Object>> createAlgorithmResult(
       @RequestBody AlgorithmResultEntity newAlgorithmResult) {
     algorithmResultService.createAlgorithmResult(newAlgorithmResult);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -61,6 +58,6 @@ public class AlgorithmResultController {
   @Operation(summary = "Delete an algorithm result", description = "Delete an algorithm result.")
   public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@RequestBody String algorithmResultId) {
     algorithmResultService.deleteAlgorithmResult(algorithmResultId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

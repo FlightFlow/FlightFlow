@@ -33,7 +33,7 @@ public class VehicleController {
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
   public ResponseEntity<ResponseObject<List<VehicleEntity>>> getAllVehicles() {
     List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicles);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", vehicles);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class VehicleController {
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
   public ResponseEntity<ResponseObject<VehicleEntity>> getVehicleById(@RequestBody String vehicleId) {
     VehicleEntity vehicle = vehicleService.getSingleVehicleById(vehicleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), vehicle);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", vehicle);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class VehicleController {
   @Operation(summary = "Create a new vehicle", description = "Create a new vehicle.")
   public ResponseEntity<ResponseObject<Object>> createVehicle(@RequestBody VehicleEntity newVehicle) {
     vehicleService.createVehicle(newVehicle);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class VehicleController {
   public ResponseEntity<ResponseObject<Object>> updateVehicle(@RequestBody String vehicleId,
       @RequestBody VehicleEntity updatedVehicle) {
     vehicleService.updateVehicle(vehicleId, updatedVehicle);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class VehicleController {
   @Operation(summary = "Delete an vehicle", description = "Delete an existing vehicle.")
   public ResponseEntity<ResponseObject<Object>> deleteVehicle(@RequestBody String vehicleId) {
     vehicleService.deleteVehicle(vehicleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

@@ -41,15 +41,14 @@ public class UserController {
     AuthDetailsDTO authDetails = userService.login(loginDetails);
     response.addCookie(authDetails.getAccessTokenCookie());
     response.addCookie(authDetails.getRefreshTokenCookie());
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.loginSuccess", null);
   }
 
   @PostMapping("/auth/register")
   @Operation(summary = "Register to the system", description = "Register to the system.")
   public ResponseEntity<ResponseObject<Object>> register(@RequestBody RegisterDetailsDTO registerDetails) {
     userService.register(registerDetails);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "auth.registerSuccess", null);
   }
 
   @PostMapping("/auth/newAccessToken")
@@ -60,7 +59,17 @@ public class UserController {
       HttpServletResponse response) {
     Cookie newAccessToken = userService.getNewAccessTokenAsCookie(accessToken, refreshToken);
     response.addCookie(newAccessToken);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.newTokenSuccess", null);
+  }
+
+  @PostMapping("/auth/validate")
+  @Operation(summary = "Validate the user authentication", description = "Validate the current user's authentication.")
+  public ResponseEntity<ResponseObject<Object>> validate(
+      @CookieValue("accessToken") String accessToken,
+      @CookieValue("refreshToken") String refreshToken,
+      HttpServletResponse response) {
+    userService.validate(accessToken, refreshToken);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.validationSuccess", null);
   }
 
   @PostMapping("/getUserDetails")
@@ -68,7 +77,7 @@ public class UserController {
   @Operation(summary = "Get current system user's details.", description = "Get current system user's details.")
   public ResponseEntity<ResponseObject<Object>> getCurrentUserDetails(@CookieValue("accessToken") String accessToken) {
     UserEntity user = userService.getCurrentUserDetails(accessToken);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), user);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.getCurrentUserDetails", user);
   }
 
   @PostMapping("/getAllUsers")
@@ -76,7 +85,7 @@ public class UserController {
   @Operation(summary = "List existing system users.", description = "Lists available system users.")
   public ResponseEntity<ResponseObject<Object>> getAllUsers() {
     List<UserEntity> users = userService.getAllUsers();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), users);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.getAllUserDetails", users);
   }
 
   @DeleteMapping("/auth/manage/deleteUser")
@@ -86,6 +95,6 @@ public class UserController {
       @CookieValue("refreshToken") String refreshToken,
       HttpServletResponse response) {
     userService.deleteUser(accessToken, refreshToken);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "auth.deleteSuccess", null);
   }
 }

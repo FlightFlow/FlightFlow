@@ -1,5 +1,7 @@
 package com.flightcoordinator.server.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,11 @@ import com.flightcoordinator.server.auth.token.TokenService;
 import com.flightcoordinator.server.dto.AuthDetailsDTO;
 import com.flightcoordinator.server.dto.LoginDetailsDTO;
 import com.flightcoordinator.server.dto.RegisterDetailsDTO;
+import com.flightcoordinator.server.entity.SystemRoleEntity;
 import com.flightcoordinator.server.entity.UserEntity;
+import com.flightcoordinator.server.enums.PermissionsPerResource;
 import com.flightcoordinator.server.exception.AppError;
+import com.flightcoordinator.server.repository.SystemRoleRepository;
 import com.flightcoordinator.server.repository.UserRepository;
 
 import jakarta.servlet.http.Cookie;
@@ -25,6 +30,9 @@ import jakarta.servlet.http.Cookie;
 public class UserService {
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private SystemRoleRepository systemRoleRepository;
 
   @Autowired
   AuthenticationManager authenticationManager;
@@ -36,20 +44,35 @@ public class UserService {
   private BCryptPasswordEncoder passwordEncoder;
 
   public void register(RegisterDetailsDTO registerDetails) {
-    Optional<UserEntity> existingUser = userRepository.findByEmail(registerDetails.getEmail());
+    Optional<UserEntity> existingUser = userRepository.findByUsername(registerDetails.getUsername());
 
-    if (existingUser != null) {
-      throw new AppError("This e-mail is already registered.", HttpStatus.CONFLICT.value());
+    if (existingUser.isPresent()) {
+      throw new AppError("auth.exception.userExists", HttpStatus.CONFLICT.value());
     }
 
     if (!registerDetails.getPassword().equals(registerDetails.getPasswordAgain())) {
-      throw new AppError(HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+      throw new AppError("auth.exception.passwordsDoNotMatch", HttpStatus.BAD_REQUEST.value());
     }
+
+    // TEMP START
+    List<PermissionsPerResource> resourcePermissions = new ArrayList<>();
+    resourcePermissions.addAll(Arrays.asList(PermissionsPerResource.values()));
+
+    SystemRoleEntity devRole = new SystemRoleEntity();
+    devRole.setRoleName("Developer");
+    devRole.setPermissionPerResource(resourcePermissions);
+
+    systemRoleRepository.save(devRole);
+    // TEMP END
 
     UserEntity newUser = new UserEntity();
     newUser.setFullName(registerDetails.getFullName());
+    newUser.setUsername(registerDetails.getUsername());
     newUser.setEmail(registerDetails.getEmail());
     newUser.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
+    newUser.setRole(devRole);
+    newUser.setIsActive(true);
+    newUser.setIsLocked(false);
 
     userRepository.save(newUser);
   }
@@ -61,47 +84,46 @@ public class UserService {
             loginRequestDetails.getPassword()));
 
     if (!authentication.isAuthenticated()) {
-      throw new AppError(HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
+      throw new AppError("auth.exception.cannotAuthenticate", HttpStatus.BAD_REQUEST.value());
     }
 
-    UserEntity user = userRepository.findByEmail(loginRequestDetails.getEmail())
-        .orElseThrow(() -> new AppError(
-            HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-            HttpStatus.INTERNAL_SERVER_ERROR.value()));
+    UserEntity user = userRepository.findByUsername(loginRequestDetails.getUsername())
+        .orElseThrow(() -> new AppError("auth.exception.cannotFindUser", HttpStatus.NOT_FOUND.value()));
 
     AuthDetailsDTO newAuthDetails = tokenService.generateAuthDetails(user);
     return newAuthDetails;
   }
 
   public Cookie getNewAccessTokenAsCookie(String accessToken, String refreshToken) {
-    String userEmail = tokenService.getEmailAsUsernameFromToken(refreshToken);
-    UserEntity user = userRepository.findByEmail(userEmail).orElse(null);
-    if (user == null) {
-      throw new AppError(
-          HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-          HttpStatus.UNAUTHORIZED.value());
-    }
+    String username = tokenService.getUsernameFromToken(refreshToken);
+    UserEntity user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new AppError("auth.exception.invalidToken", HttpStatus.UNAUTHORIZED.value()));
 
     return tokenService.getNewAccessTokenAsCookie(user, accessToken, refreshToken);
   }
 
+  public void validate(String accessToken, String refreshToken) {
+    String usernameFromRefreshToken = tokenService.getUsernameFromToken(refreshToken);
+    userRepository.findByUsername(usernameFromRefreshToken)
+        .orElseThrow(() -> new AppError("auth.exception.invalidToken", HttpStatus.UNAUTHORIZED.value()));
+
+    String usernameFromAccessToken = tokenService.getUsernameFromToken(refreshToken);
+    userRepository.findByUsername(usernameFromAccessToken)
+        .orElseThrow(() -> new AppError("auth.exception.invalidToken", HttpStatus.UNAUTHORIZED.value()));
+  }
+
   public UserEntity getCurrentUserDetails(String accessToken) {
-    String userEmail = tokenService.getEmailAsUsernameFromToken(accessToken);
-    UserEntity currentUser = userRepository.findByEmail(userEmail).orElse(null);
-    if (currentUser == null) {
-      throw new AppError(
-          HttpStatus.NOT_FOUND.getReasonPhrase(),
-          HttpStatus.NOT_FOUND.value());
-    }
+    String username = tokenService.getUsernameFromToken(accessToken);
+    UserEntity currentUser = userRepository.findByUsername(username)
+        .orElseThrow(() -> new AppError("auth.exception.invalidToken", HttpStatus.NOT_FOUND.value()));
+
     return currentUser;
   }
 
   public List<UserEntity> getAllUsers() {
     List<UserEntity> users = userRepository.findAll();
     if (users.isEmpty()) {
-      throw new AppError(
-          HttpStatus.NOT_FOUND.getReasonPhrase(),
-          HttpStatus.NOT_FOUND.value());
+      throw new AppError("auth.exception.cannotFindUser", HttpStatus.NOT_FOUND.value());
     }
     return users;
   }

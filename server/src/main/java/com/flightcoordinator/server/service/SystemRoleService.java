@@ -19,15 +19,13 @@ public class SystemRoleService {
 
   public SystemRoleEntity getSingleSystemRoleById(String systemRoleId) {
     Optional<SystemRoleEntity> systemRole = systemRoleRepository.findById(systemRoleId);
-    return systemRole.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return systemRole.orElseThrow(() -> new AppError("notFound.systemRole", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<SystemRoleEntity> getMultipleSystemRolesById(List<String> systemRoleIds) {
     List<SystemRoleEntity> roles = systemRoleRepository.findAllById(systemRoleIds);
     if (roles.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.systemRole", HttpStatus.NOT_FOUND.value());
     }
     return roles;
   }
@@ -35,7 +33,7 @@ public class SystemRoleService {
   public List<SystemRoleEntity> getAllSystemRoles() {
     List<SystemRoleEntity> roles = systemRoleRepository.findAll();
     if (roles.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.systemRole", HttpStatus.NOT_FOUND.value());
     }
     return roles;
   }

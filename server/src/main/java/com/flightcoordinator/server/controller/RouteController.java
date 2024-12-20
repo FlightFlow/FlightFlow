@@ -33,7 +33,7 @@ public class RouteController {
   @Operation(summary = "Get all the routes", description = "Retrieve the details of all routes.")
   public ResponseEntity<ResponseObject<List<RouteEntity>>> getAllRoutes() {
     List<RouteEntity> routes = routeService.getAllRoutes();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), routes);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", routes);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class RouteController {
   @Operation(summary = "Get a route by id", description = "Retrieve the details of a spesific route using it's ID.")
   public ResponseEntity<ResponseObject<RouteEntity>> getRouteById(@RequestBody String routeId) {
     RouteEntity route = routeService.getSingleRouteById(routeId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), route);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", route);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class RouteController {
   @Operation(summary = "Create a new route", description = "Create a new route.")
   public ResponseEntity<ResponseObject<Object>> createRoute(@RequestBody RouteEntity newRoute) {
     routeService.createRoute(newRoute);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class RouteController {
   public ResponseEntity<ResponseObject<Object>> updateRoute(@RequestBody String routeId,
       @RequestBody RouteEntity updatedRoute) {
     routeService.updateRoute(routeId, updatedRoute);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class RouteController {
   @Operation(summary = "Delete an route", description = "Delete an existing route.")
   public ResponseEntity<ResponseObject<Object>> deleteRoute(@RequestBody String routeId) {
     routeService.deleteRoute(routeId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

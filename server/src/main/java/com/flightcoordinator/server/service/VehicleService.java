@@ -19,15 +19,13 @@ public class VehicleService {
 
   public VehicleEntity getSingleVehicleById(String vehicleId) {
     Optional<VehicleEntity> vehicle = vehicleRepository.findById(vehicleId);
-    return vehicle.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return vehicle.orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<VehicleEntity> getMultipleVehicleById(List<String> vehicleIds) {
     List<VehicleEntity> vehicles = vehicleRepository.findAllById(vehicleIds);
     if (vehicles.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value());
     }
     return vehicles;
   }
@@ -35,7 +33,7 @@ public class VehicleService {
   public List<VehicleEntity> getAllVehicles() {
     List<VehicleEntity> vehicles = vehicleRepository.findAll();
     if (vehicles.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value());
     }
     return vehicles;
   }

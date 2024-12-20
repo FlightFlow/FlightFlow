@@ -33,7 +33,7 @@ public class CrewController {
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<List<CrewEntity>>> getAllCrewMembers() {
     List<CrewEntity> crewMembers = crewService.getAllCrewMembers();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMembers);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", crewMembers);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class CrewController {
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<CrewEntity>> getCrewMemberById(@RequestBody String crewMemberId) {
     CrewEntity crewMember = crewService.getSingleCrewMemberById(crewMemberId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), crewMember);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", crewMember);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class CrewController {
   @Operation(summary = "Create a new crew member", description = "Create a new crew member.")
   public ResponseEntity<ResponseObject<Object>> createCrewMember(@RequestBody CrewEntity newCrewMember) {
     crewService.createCrewMember(newCrewMember);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class CrewController {
   public ResponseEntity<ResponseObject<Object>> updateCrewMember(@RequestBody String crewMemberId,
       @RequestBody CrewEntity updatedCrewMember) {
     crewService.updateCrewMember(crewMemberId, updatedCrewMember);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class CrewController {
   @Operation(summary = "Delete an existing crew member", description = "Delete an existing crew member.")
   public ResponseEntity<ResponseObject<Object>> deleteCrewMember(@RequestBody String crewMemberId) {
     crewService.deleteCrewMember(crewMemberId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

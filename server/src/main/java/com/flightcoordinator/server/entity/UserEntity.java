@@ -27,6 +27,9 @@ public class UserEntity implements UserDetails {
   @Column(name = "full_name", nullable = false)
   private String fullName;
 
+  @Column(name = "username", nullable = false, unique = true)
+  private String username;
+
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 
@@ -46,36 +49,15 @@ public class UserEntity implements UserDetails {
   public UserEntity() {
   }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<GrantedAuthority> authorities = new ArrayList<>();
-    role.getAllPermissions().forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
-    return authorities;
-  }
-
-  @Override
-  public String getUsername() {
-    return email; // Assuming username is email
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return isActive;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return !isLocked;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return isActive;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return isActive;
+  public UserEntity(UserEntity userEntity) {
+    this.id = userEntity.getId();
+    this.fullName = userEntity.getFullName();
+    this.username = userEntity.getUsername();
+    this.email = userEntity.getEmail();
+    this.password = userEntity.getPassword();
+    this.role = userEntity.getRole();
+    this.isActive = userEntity.getIsActive();
+    this.isLocked = userEntity.getIsLocked();
   }
 
   public UserEntity(String id, String fullName, String email, String password, SystemRoleEntity role,
@@ -90,8 +72,11 @@ public class UserEntity implements UserDetails {
   }
 
   @Override
-  public String getPassword() {
-    return password;
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    role.getPermissionPerResource()
+        .forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.toString())));
+    return authorities;
   }
 
   public String getId() {
@@ -110,12 +95,26 @@ public class UserEntity implements UserDetails {
     this.fullName = fullName;
   }
 
+  @Override
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
   public String getEmail() {
     return email;
   }
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  @Override
+  public String getPassword() {
+    return password;
   }
 
   public void setPassword(String password) {
@@ -145,4 +144,20 @@ public class UserEntity implements UserDetails {
   public void setIsLocked(Boolean isLocked) {
     this.isLocked = isLocked;
   }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return isActive;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return !isLocked;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return isActive;
+  }
+
 }

@@ -19,15 +19,13 @@ public class AlgorithmRunService {
 
   public AlgorithmRunEntity getSingleAlgorithmRunById(String algorithmRunId) {
     Optional<AlgorithmRunEntity> algorithmRun = algorithmRunRepository.findById(algorithmRunId);
-    return algorithmRun.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return algorithmRun.orElseThrow(() -> new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<AlgorithmRunEntity> getMultipleAlgorithmRunsById(List<String> algorithmRunIds) {
     List<AlgorithmRunEntity> algorithmRuns = algorithmRunRepository.findAllById(algorithmRunIds);
     if (algorithmRuns.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value());
     }
     return algorithmRuns;
   }
@@ -35,7 +33,7 @@ public class AlgorithmRunService {
   public List<AlgorithmRunEntity> getAllAlgorithmRuns() {
     List<AlgorithmRunEntity> algorithmRuns = algorithmRunRepository.findAll();
     if (algorithmRuns.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value());
     }
     return algorithmRuns;
   }

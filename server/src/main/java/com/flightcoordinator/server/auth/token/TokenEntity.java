@@ -2,10 +2,12 @@ package com.flightcoordinator.server.auth.token;
 
 import com.flightcoordinator.server.entity.UserEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,9 +17,16 @@ public class TokenEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
+  @Column(name = "token", nullable = false)
   private String token;
+
+  @JoinColumn(name = "associated_user", nullable = false)
   private UserEntity associatedUser;
+
+  @Column(name = "is_expired", nullable = false)
   private boolean isExpired;
+
+  @Column(name = "is_revoked", nullable = false)
   private boolean isRevoked;
 
   public TokenEntity() {
@@ -79,5 +88,4 @@ public class TokenEntity {
         + isRevoked() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
         + "]";
   }
-
 }

@@ -17,20 +17,15 @@ public class FlightService {
   @Autowired
   private FlightRepository flightRepository;
 
-  @Autowired
-  private RouteService routeService;
-
   public FlightEntity getSingleFlightById(String flightId) {
     Optional<FlightEntity> flight = flightRepository.findById(flightId);
-    return flight.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return flight.orElseThrow(() -> new AppError("notFound.flight", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<FlightEntity> getMultipleFlightsById(List<String> flightIds) {
     List<FlightEntity> flights = flightRepository.findAllById(flightIds);
     if (flights.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.flight", HttpStatus.NOT_FOUND.value());
     }
     return flights;
   }
@@ -38,27 +33,17 @@ public class FlightService {
   public List<FlightEntity> getAllFlights() {
     List<FlightEntity> flights = flightRepository.findAll();
     if (flights.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.flight", HttpStatus.NOT_FOUND.value());
     }
     return flights;
   }
 
   public void createFlight(FlightEntity newFlight) {
-    Boolean doesRouteExist = routeService.doesSingleRouteExist(newFlight.getFlightRoute());
-    if (!doesRouteExist) {
-      throw new AppError(HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
-    }
-
     flightRepository.save(newFlight);
   }
 
   public void updateFlight(String flightId, FlightEntity updatedFlight) {
     FlightEntity existingFlight = getSingleFlightById(flightId);
-
-    Boolean doesRouteExist = routeService.doesSingleRouteExist(existingFlight.getFlightRoute());
-    if (!doesRouteExist) {
-      throw new AppError(HttpStatus.BAD_REQUEST.getReasonPhrase(), HttpStatus.BAD_REQUEST.value());
-    }
 
     existingFlight.setPassengerCount(updatedFlight.getPassengerCount());
     existingFlight.setFlightRoute(updatedFlight.getFlightRoute());

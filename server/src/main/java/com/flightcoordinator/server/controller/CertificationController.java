@@ -33,8 +33,7 @@ public class CertificationController {
   @Operation(summary = "Get all the certifications", description = "Retrieve the details of all certifications.")
   public ResponseEntity<ResponseObject<List<CertificationEntity>>> getAllCertification() {
     List<CertificationEntity> certifications = certificationService.getAllCertifications();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
-        certifications);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", certifications);
   }
 
   @PostMapping("/getById")
@@ -43,8 +42,7 @@ public class CertificationController {
   public ResponseEntity<ResponseObject<CertificationEntity>> getCertificationById(
       @io.swagger.v3.oas.annotations.parameters.RequestBody String certificationId) {
     CertificationEntity certification = certificationService.getSingleCertificationById(certificationId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(),
-        certification);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", certification);
   }
 
   @PostMapping("/create")
@@ -53,7 +51,7 @@ public class CertificationController {
   public ResponseEntity<ResponseObject<Object>> createCertification(
       @RequestBody CertificationEntity newCertification) {
     certificationService.createCertification(newCertification);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -62,7 +60,7 @@ public class CertificationController {
   public ResponseEntity<ResponseObject<Object>> updateCertification(@RequestBody String certificationId,
       @RequestBody CertificationEntity updatedCertification) {
     certificationService.updateCertification(certificationId, updatedCertification);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("delete")
@@ -70,6 +68,6 @@ public class CertificationController {
   @Operation(summary = "Delete a certification", description = "Delete an existing certification.")
   public ResponseEntity<ResponseObject<Object>> deleteCertification(@RequestBody String certificationId) {
     certificationService.deleteCertification(certificationId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

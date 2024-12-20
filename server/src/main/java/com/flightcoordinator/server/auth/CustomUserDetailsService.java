@@ -13,15 +13,15 @@ import com.flightcoordinator.server.repository.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
   @Autowired
-  private UserRepository repository;
+  private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String email) {
-    UserEntity user = repository.findByEmail(email).orElse(null);
-
-    if (user == null) {
-      throw new AppError(HttpStatus.UNAUTHORIZED.getReasonPhrase(), HttpStatus.UNAUTHORIZED.value());
-    }
+  public UserDetails loadUserByUsername(String username) {
+    UserEntity user = userRepository
+        .findByUsername(username)
+        .orElseThrow(() -> new AppError(
+            "authException.cannotFindUser",
+            HttpStatus.NOT_FOUND.value()));
 
     return user;
   }

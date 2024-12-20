@@ -19,15 +19,13 @@ public class AlgorithmResultService {
 
   public AlgorithmResultEntity getSingleAlgorithmResultById(String algorithmResultId) {
     Optional<AlgorithmResultEntity> algorithmResult = algorithmResultRepository.findById(algorithmResultId);
-    return algorithmResult.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return algorithmResult.orElseThrow(() -> new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<AlgorithmResultEntity> getMultipleAlgorithmResultsById(List<String> algorithmResultIds) {
     List<AlgorithmResultEntity> algorithmResults = algorithmResultRepository.findAllById(algorithmResultIds);
     if (algorithmResults.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value());
     }
     return algorithmResults;
   }
@@ -35,7 +33,7 @@ public class AlgorithmResultService {
   public List<AlgorithmResultEntity> getAllAlgorithmResults() {
     List<AlgorithmResultEntity> algorithmResults = algorithmResultRepository.findAll();
     if (algorithmResults.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value());
     }
     return algorithmResults;
   }

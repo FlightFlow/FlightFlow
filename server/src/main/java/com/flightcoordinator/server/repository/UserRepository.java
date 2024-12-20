@@ -9,5 +9,5 @@ import com.flightcoordinator.server.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-  Optional<UserEntity> findByEmail(String email);
+  Optional<UserEntity> findByUsername(String username);
 }

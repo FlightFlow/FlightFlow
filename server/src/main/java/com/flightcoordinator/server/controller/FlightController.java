@@ -33,7 +33,7 @@ public class FlightController {
   @Operation(summary = "Get all the flights", description = "Retrieve the details of all flights.")
   public ResponseEntity<ResponseObject<List<FlightEntity>>> getAllFlights() {
     List<FlightEntity> flights = flightService.getAllFlights();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), flights);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", flights);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class FlightController {
   @Operation(summary = "Get a flight by id", description = "Retrieve the details of a spesific flight using it's ID.")
   public ResponseEntity<ResponseObject<FlightEntity>> getFlightById(@RequestBody String flightId) {
     FlightEntity flight = flightService.getSingleFlightById(flightId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), flight);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", flight);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class FlightController {
   @Operation(summary = "Create a new flight", description = "Create a new flight.")
   public ResponseEntity<ResponseObject<Object>> createFlight(@RequestBody FlightEntity flight) {
     flightService.createFlight(flight);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class FlightController {
   public ResponseEntity<ResponseObject<Object>> updateFlight(@RequestBody String flightId,
       @RequestBody FlightEntity flight) {
     flightService.updateFlight(flightId, flight);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class FlightController {
   @Operation(summary = "Delete a flight", description = "Delete an existing flight.")
   public ResponseEntity<ResponseObject<Object>> deleteFlight(@RequestBody String flightId) {
     flightService.deleteFlight(flightId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

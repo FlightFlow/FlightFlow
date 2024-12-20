@@ -1,9 +1,10 @@
 package com.flightcoordinator.server.entity;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
+import com.flightcoordinator.server.enums.PermissionsPerResource;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
@@ -11,6 +12,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,30 +24,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "system_role_table")
-public class SystemRoleEntity {
-  public enum SystemPermission {
-    CREATE,
-    READ,
-    UPDATE,
-    DELETE;
-  }
-
-  public enum SystemResource {
-    AIRPORT,
-    ALGO_RESULT,
-    ALGO_RUN,
-    CERT,
-    CREW,
-    FLIGHT,
-    PLANE,
-    ROUTE,
-    RUNWAY,
-    SYS_ROLE,
-    USER_ALL,
-    USER_SELF,
-    VEHICLE;
-  }
-
+public class SystemRoleEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
@@ -57,7 +36,8 @@ public class SystemRoleEntity {
   @CollectionTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"))
   @MapKeyEnumerated(EnumType.STRING)
   @Column(name = "permission")
-  private Map<SystemResource, List<SystemPermission>> permissionPerResource;
+  @Enumerated(EnumType.STRING)
+  private List<PermissionsPerResource> permissionPerResource;
 
   // One-to-many relationship with UserEntity
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -66,7 +46,7 @@ public class SystemRoleEntity {
   public SystemRoleEntity() {
   }
 
-  public SystemRoleEntity(String id, String roleName, Map<SystemResource, List<SystemPermission>> permissionPerResource,
+  public SystemRoleEntity(String id, String roleName, List<PermissionsPerResource> permissionPerResource,
       Set<UserEntity> assignedUsers) {
     this.id = id;
     this.roleName = roleName;
@@ -91,11 +71,11 @@ public class SystemRoleEntity {
     this.roleName = roleName;
   }
 
-  public Map<SystemResource, List<SystemPermission>> getPermissionPerResource() {
+  public List<PermissionsPerResource> getPermissionPerResource() {
     return permissionPerResource;
   }
 
-  public void setPermissionPerResource(Map<SystemResource, List<SystemPermission>> permissionPerResource) {
+  public void setPermissionPerResource(List<PermissionsPerResource> permissionPerResource) {
     this.permissionPerResource = permissionPerResource;
   }
 
@@ -105,19 +85,5 @@ public class SystemRoleEntity {
 
   public void setAssignedUsers(Set<UserEntity> assignedUsers) {
     this.assignedUsers = assignedUsers;
-  }
-
-  public List<String> getAllPermissions() {
-    List<String> allPermissionsAsList = new ArrayList<>();
-
-    for (Map.Entry<SystemResource, List<SystemPermission>> entry : permissionPerResource.entrySet()) {
-      SystemResource resource = entry.getKey();
-      List<SystemPermission> permissions = entry.getValue();
-
-      for (SystemPermission permission : permissions) {
-        allPermissionsAsList.add(resource.name() + "_" + permission.name());
-      }
-    }
-    return allPermissionsAsList;
   }
 }

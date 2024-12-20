@@ -17,20 +17,15 @@ public class RouteService {
   @Autowired
   private RouteRepository routeRepository;
 
-  @Autowired
-  private AirportService airportService;
-
   public RouteEntity getSingleRouteById(String routeId) {
     Optional<RouteEntity> route = routeRepository.findById(routeId);
-    return route.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return route.orElseThrow(() -> new AppError("notFound.route", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<RouteEntity> getMultipleRouteById(List<String> routeIds) {
     List<RouteEntity> routes = routeRepository.findAllById(routeIds);
     if (routes.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.route", HttpStatus.NOT_FOUND.value());
     }
     return routes;
   }
@@ -38,31 +33,16 @@ public class RouteService {
   public List<RouteEntity> getAllRoutes() {
     List<RouteEntity> routes = routeRepository.findAll();
     if (routes.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.route", HttpStatus.NOT_FOUND.value());
     }
     return routes;
   }
 
   public void createRoute(RouteEntity newRoute) {
-    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirport());
-    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirport());
-    if (!doesOriginAirportExist || !doesDestinationAirportExist) {
-      throw new AppError(
-          doesOriginAirportExist ? "Cannot validate origin airport" : "Cannot validate destination airport",
-          HttpStatus.BAD_REQUEST.value());
-    }
     routeRepository.save(newRoute);
   }
 
   public void updateRoute(String routeId, RouteEntity newRoute) {
-    Boolean doesOriginAirportExist = airportService.doesSingleAirportExist(newRoute.getOriginAirport());
-    Boolean doesDestinationAirportExist = airportService.doesSingleAirportExist(newRoute.getDestinationAirport());
-    if (!doesOriginAirportExist || !doesDestinationAirportExist) {
-      throw new AppError(
-          doesOriginAirportExist ? "Cannot validate origin airport" : "Cannot validate destination airport",
-          HttpStatus.BAD_REQUEST.value());
-    }
-
     RouteEntity existingRoute = getSingleRouteById(routeId);
 
     existingRoute.setOriginAirport(newRoute.getOriginAirport());

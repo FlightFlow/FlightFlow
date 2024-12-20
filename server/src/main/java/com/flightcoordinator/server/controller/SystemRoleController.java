@@ -33,7 +33,7 @@ public class SystemRoleController {
   @Operation(summary = "Get all the systemRoles", description = "Retrieve the details of all systemRoles.")
   public ResponseEntity<ResponseObject<List<SystemRoleEntity>>> getAllSystemRoles() {
     List<SystemRoleEntity> systemRoles = systemRoleService.getAllSystemRoles();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), systemRoles);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", systemRoles);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class SystemRoleController {
   @Operation(summary = "Get a systemRole by id", description = "Retrieve the details of a spesific systemRole using it's ID.")
   public ResponseEntity<ResponseObject<SystemRoleEntity>> getSystemRoleById(@RequestBody String systemRoleId) {
     SystemRoleEntity systemRole = systemRoleService.getSingleSystemRoleById(systemRoleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), systemRole);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", systemRole);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class SystemRoleController {
   @Operation(summary = "Create a new systemRole", description = "Create a new systemRole.")
   public ResponseEntity<ResponseObject<Object>> createSystemRole(@RequestBody SystemRoleEntity systemRole) {
     systemRoleService.createSystemRole(systemRole);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class SystemRoleController {
   public ResponseEntity<ResponseObject<Object>> updateSystemRole(@RequestBody String systemRoleId,
       @RequestBody SystemRoleEntity systemRole) {
     systemRoleService.updateSystemRole(systemRoleId, systemRole);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class SystemRoleController {
   @Operation(summary = "Delete a systemRole", description = "Delete an existing systemRole.")
   public ResponseEntity<ResponseObject<Object>> deleteSystemRole(@RequestBody String systemRoleId) {
     systemRoleService.deleteSystemRole(systemRoleId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

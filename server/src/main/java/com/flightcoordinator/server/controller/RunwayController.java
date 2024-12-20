@@ -33,7 +33,7 @@ public class RunwayController {
   @Operation(summary = "Get all the runways", description = "Retrieve the details of all runways.")
   public ResponseEntity<ResponseObject<List<RunwayEntity>>> getAllRunways() {
     List<RunwayEntity> runways = runwayService.getAllRunways();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runways);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", runways);
   }
 
   @PostMapping("/getById")
@@ -41,7 +41,7 @@ public class RunwayController {
   @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
   public ResponseEntity<ResponseObject<RunwayEntity>> getRunwayById(@RequestBody String runwayId) {
     RunwayEntity runway = runwayService.getSingleRunwayById(runwayId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), runway);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", runway);
   }
 
   @PostMapping("/create")
@@ -49,8 +49,7 @@ public class RunwayController {
   @Operation(summary = "Create a new runway", description = "Create a new runway.")
   public ResponseEntity<ResponseObject<Object>> createRunway(@RequestBody RunwayEntity runway) {
     runwayService.createRunway(runway);
-    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, HttpStatus.CREATED.getReasonPhrase(),
-        null);
+    return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
@@ -59,7 +58,7 @@ public class RunwayController {
   public ResponseEntity<ResponseObject<Object>> updateRunway(@RequestBody String runwayId,
       @RequestBody RunwayEntity runway) {
     runwayService.updateRunway(runwayId, runway);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
@@ -67,6 +66,6 @@ public class RunwayController {
   @Operation(summary = "Delete a runway", description = "Delete an existing runway.")
   public ResponseEntity<ResponseObject<Object>> deleteRunway(@RequestBody String runwayId) {
     runwayService.deleteRunway(runwayId);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, HttpStatus.OK.getReasonPhrase(), null);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

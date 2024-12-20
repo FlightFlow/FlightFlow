@@ -17,20 +17,15 @@ public class PlaneService {
   @Autowired
   private PlaneRepository planeRepository;
 
-  @Autowired
-  private AirportService airportService;
-
   public PlaneEntity getSinglePlaneById(String planeId) {
     Optional<PlaneEntity> plane = planeRepository.findById(planeId);
-    return plane.orElseThrow(() -> new AppError(
-        HttpStatus.NOT_FOUND.getReasonPhrase(),
-        HttpStatus.NOT_FOUND.value()));
+    return plane.orElseThrow(() -> new AppError("notFound.plane", HttpStatus.NOT_FOUND.value()));
   }
 
   public List<PlaneEntity> getMultiplePlaneById(List<String> planeIds) {
     List<PlaneEntity> planes = planeRepository.findAllById(planeIds);
     if (planes.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.plane", HttpStatus.NOT_FOUND.value());
     }
     return planes;
   }
@@ -38,29 +33,16 @@ public class PlaneService {
   public List<PlaneEntity> getAllPlanes() {
     List<PlaneEntity> planes = planeRepository.findAll();
     if (planes.isEmpty()) {
-      throw new AppError(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND.value());
+      throw new AppError("notFound.plane", HttpStatus.NOT_FOUND.value());
     }
     return planes;
   }
 
   public void createPlane(PlaneEntity newPlane) {
-    if (newPlane.getCurrentLocation() == null) {
-      Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(newPlane.getCurrentLocation());
-      if (!doesSingleAirportExist) {
-        throw new AppError("Cannot validate current location plane", HttpStatus.BAD_REQUEST.value());
-      }
-    }
     planeRepository.save(newPlane);
   }
 
   public void updatePlane(String planeId, PlaneEntity updatedPlane) {
-    if (updatedPlane.getCurrentLocation() == null) {
-      Boolean doesSingleAirportExist = airportService.doesSingleAirportExist(updatedPlane.getCurrentLocation());
-      if (!doesSingleAirportExist) {
-        throw new AppError("Cannot validate current location plane", HttpStatus.BAD_REQUEST.value());
-      }
-    }
-
     PlaneEntity existingPlane = getSinglePlaneById(planeId);
 
     existingPlane.setModel(updatedPlane.getModel());
