@@ -10,6 +10,7 @@ import axios, {
 import i18next from "i18next";
 
 import Logger from "./logger";
+import ServerTranslator from "./serverTranslator";
 
 const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
 const SERVER_PORT = import.meta.env.VITE_APP_SERVER_PORT;
@@ -86,10 +87,8 @@ class Requester {
     try {
       const response: AxiosResponse<GlobalTypes.ServerResponseParams, AxiosResponse> =
         await this.axiosInstance.request(axiosConfig);
-
       if (response.data.isSuccess) {
         Logger.debug(`Received a new access token.`);
-
         return true;
       }
       Logger.debug(`Couldn't received a new access token.`);
@@ -128,30 +127,39 @@ class Requester {
         return POSSIBLE_STATUS_CODES.includes(status);
       },
     };
-    const response: AxiosResponse<TResponseData, TRequestPayload> =
-      await this.axiosInstance.request<
-        GlobalTypes.ServerResponseParams<TResponseData>,
-        AxiosResponse<TResponseData, TRequestPayload>
-      >(axiosConfig);
+    try {
+      const response: AxiosResponse<TResponseData, TRequestPayload> =
+        await this.axiosInstance.request<
+          GlobalTypes.ServerResponseParams<TResponseData>,
+          AxiosResponse<TResponseData, TRequestPayload>
+        >(axiosConfig);
 
-    const responseData = response.data as GlobalTypes.ServerResponseParams<TResponseData>;
+      const responseData = response.data as GlobalTypes.ServerResponseParams<TResponseData>;
 
-    if (!responseData.isSuccess && responseData.message == "Expired token") {
-      Logger.debug(`Access token is expired. Trying to get a new access token.`);
-      const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
+      if (!responseData.isSuccess && responseData.message == "Expired token") {
+        Logger.debug(`Access token is expired. Trying to get a new access token.`);
+        const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
 
-      if (!tryGetNewAccessToken) {
-        return {
-          isSuccess: false,
-          message: "Your session is expired. Please login again.",
-          data: undefined,
-        } satisfies GlobalTypes.ServerResponseParams;
+        if (!tryGetNewAccessToken) {
+          return {
+            isSuccess: false,
+            message: i18next.t("requesterError.expiredToken"),
+            data: undefined,
+          } satisfies GlobalTypes.ServerResponseParams;
+        }
+
+        Logger.debug(`Re-sending the previous failed request.`);
+        this.sendRequest<TResponseData, TRequestPayload>();
       }
-
-      Logger.debug(`Re-sending the previous failed request.`);
-      this.sendRequest<TResponseData, TRequestPayload>();
+      return ServerTranslator.translate(responseData);
+    } catch (error) {
+      Logger.error(`An error occurred on the request process: ${error}`);
+      return {
+        isSuccess: false,
+        message: i18next.t("requesterError.unknownError"),
+        data: undefined,
+      } satisfies GlobalTypes.ServerResponseParams;
     }
-    return responseData;
   }
 }
 

@@ -1,17 +1,18 @@
 import { useTranslation } from "react-i18next";
 
-import { AirportType } from "@/constants/EnumsAsList";
+import { AirportType } from "@/constants/EnumsList";
 import AirportTypes from "@/types/controllers/airport";
 import EntityTypes from "@/types/entity";
+import Enums from "@/types/enums";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";
 
-import useAirportQuery from "@/hooks/airports/useAirportAllQuery";
-import useAirportCreateMutation from "@/hooks/airports/useAirportCreateMutation";
-import useAirportDeleteMutation from "@/hooks/airports/useAirportDeleteMutation";
-import useAirportUpdateMutation from "@/hooks/airports/useAirportUpdateMutation";
+import useAirportQuery from "@/hooks/airport/useAirportAllQuery";
+import useAirportCreateMutation from "@/hooks/airport/useAirportCreateMutation";
+import useAirportDeleteMutation from "@/hooks/airport/useAirportDeleteMutation";
+import useAirportUpdateMutation from "@/hooks/airport/useAirportUpdateMutation";
 
 const AirportsPage = () => {
   const { t } = useTranslation();
@@ -116,7 +117,7 @@ const AirportsPage = () => {
     iataCode: "",
     icaoCode: "",
     countryCode: "",
-    type: AirportType,
+    type: Enums.AirportType.INTERNATIONAL,
     runways: [],
     vehiclesPresent: [],
     planesPresent: [],
