@@ -9,11 +9,13 @@ const useAirportUpdateMutation = () => {
     mutationKey: ["updateAirportMutation"],
     mutationFn: async (useAirportUpdateData: AirportTypes.Mutations.UpdateMutationParams) => {
       const { airportId, ...requestData } = useAirportUpdateData;
-      return await new Requester({
-        method: "PATCH",
-        endpoint: { controller: "airport", action: "update" },
-        query: { airportId: airportId, ...requestData },
-      }).sendRequest();
+      return await new Requester()
+        .setConfig({
+          method: "PATCH",
+          endpoint: { controller: "airport", action: "update" },
+          query: { airportId: airportId, ...requestData },
+        })
+        .sendRequest();
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["airportQuery"] }),
   });

@@ -7,10 +7,12 @@ const useAirportAllQuery = () => {
   const airports = useQuery({
     queryKey: ["airportQuery"],
     queryFn: async () => {
-      return await new Requester({
-        method: "POST",
-        endpoint: { controller: "airport", action: "getAll" },
-      }).sendRequest<AirportTypes.Queries.AirportQueryResponseParams>();
+      return await new Requester()
+        .setConfig({
+          method: "POST",
+          endpoint: { controller: "airport", action: "getAll" },
+        })
+        .sendRequest<AirportTypes.Queries.AirportQueryResponseParams>();
     },
   });
   return airports;

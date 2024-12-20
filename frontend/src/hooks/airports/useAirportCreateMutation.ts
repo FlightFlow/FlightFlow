@@ -8,11 +8,13 @@ const useAirportCreateMutation = () => {
   const createAirport = useMutation({
     mutationKey: ["createAirportMutation"],
     mutationFn: async (airportCreateData: AirportTypes.Mutations.CreateMutationParams) => {
-      return await new Requester({
-        method: "POST",
-        endpoint: { controller: "airport", action: "create" },
-        payload: airportCreateData,
-      }).sendRequest();
+      return await new Requester()
+        .setConfig({
+          method: "POST",
+          endpoint: { controller: "airport", action: "create" },
+          payload: airportCreateData,
+        })
+        .sendRequest();
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["airportQuery"] }),
   });
