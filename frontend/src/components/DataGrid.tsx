@@ -25,6 +25,8 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import lodash from "lodash";
 
+import dataGridLocalization from "@/localization/dataGridLocalization";
+
 import Snackbar from "./Snackbar";
 
 const DataGrid = <TNew, TUpdate, TDelete>({
@@ -257,6 +259,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         onProcessRowUpdateError={(error) => console.error(error)}
         initialState={{ pagination: { paginationModel } }}
         slots={{ toolbar: CustomToolbar as GridSlots["toolbar"] }}
+        localeText={dataGridLocalization}
       />
     </>
   );
