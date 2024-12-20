@@ -48,7 +48,7 @@ export const CrewRole = [
   "FLIGHT_MEDIC",
   "LOADMASTER",
 ];
-export const PlaneAvailability = ["AVAILABLE", "UNDER_MAINTENANCE", "IS_USE", "RETIRED"];
+export const PlaneAvailability = ["AVAILABLE", "UNDER_MAINTENANCE", "IN_USE", "RETIRED"];
 export const RunwaySurfaceType = [
   "ASPHALT",
   "CONCRETE",
