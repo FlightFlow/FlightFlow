@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "api.version",
+      "type": "java.lang.String",
+      "description": "Current version of the FlightCoordinator API."
+    }
+  ]
+}
