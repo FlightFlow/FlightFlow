@@ -4,7 +4,7 @@ SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 ROOT_DIR="$SCRIPT_DIR/.."
 
 FRONTEND_PATH="$ROOT_DIR/frontend"
-BACKEND_PATH="$ROOT_DIR/Server"
+BACKEND_PATH="$ROOT_DIR/server"
 
 pnpm concurrently -k \
   -n "frontend,server" \
