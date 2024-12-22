@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "route_table")
@@ -19,32 +18,26 @@ public class RouteEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotNull(message = "Origin airport id cannot be null")
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "origin_airport_id", nullable = false)
   private AirportEntity originAirport;
 
-  @NotNull(message = "Destination airport id cannot be null")
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "destination_airport_id", nullable = false)
   private AirportEntity destinationAirport; // This field corresponds to the 'destination' in AirportEntity
 
-  @NotNull(message = "Distance cannot be null")
   @Min(value = 1, message = "Distance should be greater than '1'")
   @Column(name = "distance", nullable = false)
   private Float distance;
 
-  @NotNull(message = "Estimated time cannot be null")
   @Column(name = "estimated_time", nullable = false)
   private Float estimatedTime;
 
   public RouteEntity() {
   }
 
-  public RouteEntity(String id, @NotNull(message = "Origin airport id cannot be null") AirportEntity originAirport,
-      @NotNull(message = "Destination airport id cannot be null") AirportEntity destinationAirport,
-      @NotNull(message = "Distance cannot be null") @Min(value = 1, message = "Distance should be greater than '1'") Float distance,
-      @NotNull(message = "Estimated time cannot be null") Float estimatedTime) {
+  public RouteEntity(String id, AirportEntity originAirport, AirportEntity destinationAirport,
+      @Min(value = 1, message = "Distance should be greater than '1'") Float distance, Float estimatedTime) {
     this.id = id;
     this.originAirport = originAirport;
     this.destinationAirport = destinationAirport;

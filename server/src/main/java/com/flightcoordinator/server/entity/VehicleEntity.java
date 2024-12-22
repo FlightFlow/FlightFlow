@@ -16,7 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "vehicle_table")
@@ -25,26 +24,21 @@ public class VehicleEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Capacity cannot be blank")
   @Column(name = "type", nullable = false)
   private GroundVehicleType type;
 
-  @NotBlank(message = "Capacity cannot be blank")
   @Column(name = "vehicle_code", nullable = false)
   private String vehicleCode;
 
-  @NotBlank(message = "Capacity cannot be blank")
   @Min(value = 1, message = "Capacity should be greater than '1'")
   @Column(name = "capacity", nullable = false)
   private Float capacity;
 
-  @NotBlank(message = "Capacity cannot be blank")
   @Enumerated(EnumType.STRING)
   @Column(name = "availability", nullable = false)
   private GroundVehicleAvailability availability = GroundVehicleAvailability.AVAILABLE;
 
   @Column(name = "maintenance_due", nullable = false)
-  @NotBlank(message = "Capacity cannot be blank")
   private Date maintenanceDue;
 
   @ManyToOne
@@ -54,11 +48,9 @@ public class VehicleEntity {
   public VehicleEntity() {
   }
 
-  public VehicleEntity(String id, @NotBlank(message = "Capacity cannot be blank") GroundVehicleType type,
-      @NotBlank(message = "Capacity cannot be blank") String vehicleCode,
-      @NotBlank(message = "Capacity cannot be blank") @Min(value = 1, message = "Capacity should be greater than '1'") Float capacity,
-      @NotBlank(message = "Capacity cannot be blank") GroundVehicleAvailability availability,
-      @NotBlank(message = "Capacity cannot be blank") Date maintenanceDue) {
+  public VehicleEntity(String id, GroundVehicleType type, String vehicleCode,
+      @Min(value = 1, message = "Capacity should be greater than '1'") Float capacity,
+      GroundVehicleAvailability availability, Date maintenanceDue) {
     this.id = id;
     this.type = type;
     this.vehicleCode = vehicleCode;

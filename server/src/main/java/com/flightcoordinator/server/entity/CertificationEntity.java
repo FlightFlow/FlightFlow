@@ -20,7 +20,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "certification_table")
@@ -29,7 +28,6 @@ public class CertificationEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Name cannot be blank")
   @Column(name = "name", nullable = false)
   private String name;
 
@@ -54,17 +52,16 @@ public class CertificationEntity {
   @Column(name = "assignable_roles", nullable = false)
   private List<CrewRole> assignableRoles = new ArrayList<>();
 
-  @NotBlank(message = "Description cannot be blank")
   @Column(name = "description", nullable = false)
   private String description;
 
   public CertificationEntity() {
   }
 
-  public CertificationEntity(String id, @NotBlank(message = "Name cannot be blank") String name,
-      CertificationIssuer issuer, CertificationIssuingCountry issuingCountry, Date expirationDate,
+  public CertificationEntity(String id, String name, CertificationIssuer issuer,
+      CertificationIssuingCountry issuingCountry, Date expirationDate,
       @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
-      List<CrewRole> assignableRoles, @NotBlank(message = "Description cannot be blank") String description) {
+      List<CrewRole> assignableRoles, String description) {
     this.id = id;
     this.name = name;
     this.issuer = issuer;

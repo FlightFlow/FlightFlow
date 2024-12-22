@@ -1,32 +1,30 @@
 package com.flightcoordinator.server.dto;
 
-import jakarta.servlet.http.Cookie;
-
 public class AuthDetailsDTO {
-  private Cookie accessTokenCookie;
-  private Cookie refreshTokenCookie;
+  private String accessToken;
+  private String refreshToken;
 
   public AuthDetailsDTO() {
   }
 
-  public AuthDetailsDTO(Cookie accessTokenCookie, Cookie refreshTokenCookie) {
-    this.accessTokenCookie = accessTokenCookie;
-    this.refreshTokenCookie = refreshTokenCookie;
+  public AuthDetailsDTO(String accessToken, String refreshToken) {
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
   }
 
-  public Cookie getAccessTokenCookie() {
-    return accessTokenCookie;
+  public String getAccessToken() {
+    return accessToken;
   }
 
-  public void setAccessTokenCookie(Cookie accessTokenCookie) {
-    this.accessTokenCookie = accessTokenCookie;
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
   }
 
-  public Cookie getRefreshTokenCookie() {
-    return refreshTokenCookie;
+  public String getRefreshToken() {
+    return refreshToken;
   }
 
-  public void setRefreshTokenCookie(Cookie refreshTokenCookie) {
-    this.refreshTokenCookie = refreshTokenCookie;
+  public void setRefreshToken(String refreshToken) {
+    this.refreshToken = refreshToken;
   }
 }

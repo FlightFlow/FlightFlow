@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "flight_table")
@@ -18,7 +17,6 @@ public class FlightEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotNull(message = "Passenger count cannot be null")
   @Column(name = "passenger_count", nullable = false)
   private Integer passengerCount;
 
@@ -29,8 +27,7 @@ public class FlightEntity {
   public FlightEntity() {
   }
 
-  public FlightEntity(String id, @NotNull(message = "Passenger count cannot be null") Integer passengerCount,
-      RouteEntity flightRoute) {
+  public FlightEntity(String id, Integer passengerCount, RouteEntity flightRoute) {
     this.id = id;
     this.passengerCount = passengerCount;
     this.flightRoute = flightRoute;

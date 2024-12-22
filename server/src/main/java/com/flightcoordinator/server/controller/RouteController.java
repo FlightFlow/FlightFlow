@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/${api.version}/route")
+@RequestMapping("/api/${server.api-version}/route")
 @Tag(name = "Route Controller", description = "Endpoints for managing routes.")
 public class RouteController {
   @Autowired

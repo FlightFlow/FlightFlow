@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/${api.version}/algorithm/result")
+@RequestMapping("/api/${server.api-version}/algorithm/result")
 @Tag(name = "Algorithm Result Controller", description = "Endpoints for managing algorithm results.")
 public class AlgorithmResultController {
   @Autowired

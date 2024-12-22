@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/${api.version}/crew")
+@RequestMapping("/api/${server.api-version}/crew")
 @Tag(name = "Crew Controller", description = "Endpoints for managing crew members.")
 public class CrewController {
   @Autowired

@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/${api.version}/certification")
+@RequestMapping("/api/${server.api-version}/certification")
 @Tag(name = "Certifications Controller", description = "Endpoints for managing crew members' certifications.")
 public class CertificationController {
   @Autowired

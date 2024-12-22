@@ -19,7 +19,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "crew_table")
@@ -28,7 +27,6 @@ public class CrewEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Full name cannot be blank")
   @Column(name = "full_name", nullable = false)
   private String fullName;
 
@@ -36,11 +34,9 @@ public class CrewEntity {
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 
-  @NotBlank(message = "Phone number cannot be blank")
   @Column(name = "phone_number", nullable = false)
   private Integer phoneNumber;
 
-  @NotBlank(message = "Role cannot be blank")
   @Enumerated(EnumType.STRING)
   @Column(name = "role", nullable = false)
   private CrewRole role;
@@ -57,7 +53,6 @@ public class CrewEntity {
   @JoinColumn(name = "base_airport", nullable = false)
   private AirportEntity baseAirport;
 
-  @NotBlank(message = "Availability cannot be blank")
   @Enumerated(EnumType.STRING)
   @Column(name = "availability", nullable = false)
   private CrewAvailability availability = CrewAvailability.AVAILABLE;
@@ -65,12 +60,10 @@ public class CrewEntity {
   public CrewEntity() {
   }
 
-  public CrewEntity(String id, @NotBlank(message = "Full name cannot be blank") String fullName,
-      @Email(message = "E-Mail is invalid") String email,
-      @NotBlank(message = "Phone number cannot be blank") Integer phoneNumber,
-      @NotBlank(message = "Role cannot be blank") CrewRole role, List<CertificationEntity> certifications,
+  public CrewEntity(String id, String fullName, @Email(message = "E-Mail is invalid") String email, Integer phoneNumber,
+      CrewRole role, List<CertificationEntity> certifications,
       @Min(value = 0, message = "Total flight hours cannot be negative") int totalFlightHours,
-      AirportEntity baseAirport, @NotBlank(message = "Availability cannot be blank") CrewAvailability availability) {
+      AirportEntity baseAirport, CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
     this.email = email;

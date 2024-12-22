@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "runway_table")
@@ -21,25 +20,20 @@ public class RunwayEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Length cannot be blank")
   @Column(name = "length", nullable = false)
   private Float length;
 
-  @NotBlank(message = "Width cannot be blank")
   @Column(name = "width", nullable = false)
   private Float width;
 
-  @NotBlank(message = "Surface type cannot be blank")
   @Column(name = "surface_type", nullable = false)
   private RunwaySurfaceType surfaceType;
 
-  @NotBlank(message = "Max weight capacity cannot be blank")
   @Min(value = 1, message = "Max weight capacity should be greater than '1'")
   @Column(name = "max_weight_capacity", nullable = false)
   private Float maxWeightCapacity;
 
   @Column(name = "orientation", nullable = false)
-  @NotBlank(message = "Orientation cannot be blank")
   private String orientation;
 
   // The 'airport' field matches the mappedBy in AirportEntity
@@ -50,11 +44,9 @@ public class RunwayEntity {
   public RunwayEntity() {
   }
 
-  public RunwayEntity(String id, @NotBlank(message = "Length cannot be blank") Float length,
-      @NotBlank(message = "Width cannot be blank") Float width,
-      @NotBlank(message = "Surface type cannot be blank") RunwaySurfaceType surfaceType,
-      @NotBlank(message = "Max weight capacity cannot be blank") @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
-      @NotBlank(message = "Orientation cannot be blank") String orientation, AirportEntity airport) {
+  public RunwayEntity(String id, Float length, Float width, RunwaySurfaceType surfaceType,
+      @Min(value = 1, message = "Max weight capacity should be greater than '1'") Float maxWeightCapacity,
+      String orientation, AirportEntity airport) {
     this.id = id;
     this.length = length;
     this.width = width;

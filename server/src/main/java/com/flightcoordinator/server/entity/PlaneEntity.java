@@ -16,7 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "plane_table")
@@ -25,11 +24,9 @@ public class PlaneEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotBlank(message = "Model cannot be blank")
   @Column(name = "model", nullable = false)
   private String model;
 
-  @NotBlank(message = "Registration number cannot be blank")
   @Column(name = "registration_number", nullable = false)
   private String registrationNumber;
 
@@ -72,15 +69,13 @@ public class PlaneEntity {
   @JoinColumn(name = "current_location_id", nullable = false)
   private AirportEntity currentLocation;
 
-  @NotBlank(message = "Aircraft operator cannot be blank")
   @Column(name = "aircraft_operator", nullable = false)
   private String aircraftOperator;
 
   public PlaneEntity() {
   }
 
-  public PlaneEntity(String id, @NotBlank(message = "Model cannot be blank") String model,
-      @NotBlank(message = "Registration number cannot be blank") String registrationNumber,
+  public PlaneEntity(String id, String model, String registrationNumber,
       @Min(value = 1, message = "Passenger capacity should be greater than '1'") int passengerCapacity,
       @Min(value = 1, message = "Fuel efficiency should be greater than '1'") Float fuelEfficiency,
       @Min(value = 1, message = "Max flight range should be greater than '1'") Float maxFlightRange,
@@ -89,8 +84,7 @@ public class PlaneEntity {
       @Min(value = 1, message = "Max takeoff weight should be greater than '1'") Float maxTakeoffWeight,
       @Min(value = 1, message = "Shortest runway length required should be greater than '1'") Float shortestRunwayLengthRequired,
       @Min(value = 1, message = "Shortest runway width required should be greater than '1'") Float shortestRunwayWidthRequired,
-      PlaneAvailability planeStatus, AirportEntity currentLocation,
-      @NotBlank(message = "Aircraft operator cannot be blank") String aircraftOperator) {
+      PlaneAvailability planeStatus, AirportEntity currentLocation, String aircraftOperator) {
     this.id = id;
     this.model = model;
     this.registrationNumber = registrationNumber;
