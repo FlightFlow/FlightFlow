@@ -1,7 +1,3 @@
-// Public Routes
-export { default as LoginPage } from "./public/LoginPage";
-export { default as RegisterPage } from "./public/RegisterPage";
-
 // Private Routes
 export { default as AirportPage } from "./private/AirportsPage";
 

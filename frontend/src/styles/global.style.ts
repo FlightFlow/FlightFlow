@@ -1,9 +1,10 @@
 import { CSSProperties } from "react";
 
-export const MAIN_COLOR: string = "#2C3D55";
+export const PRIMARY_COLOR: string = "#2C3D55";
+export const LIGHT_COLOR: string = "#EEEEEE";
 
 export const linkStyles: CSSProperties = {
   textDecoration: "none",
-  color: MAIN_COLOR,
+  color: PRIMARY_COLOR,
   textAlign: "center",
 };

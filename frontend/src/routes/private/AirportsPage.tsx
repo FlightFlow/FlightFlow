@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 
-import { AirportType } from "@/constants/EnumsList";
-import AirportTypes from "@/types/controllers/airport";
+import Enums from "@/constants/enums";
+import { AirportType } from "@/constants/enumsAsLists";
+import AirportTypes from "@/types/resource";
 import EntityTypes from "@/types/entity";
-import Enums from "@/types/enums";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
@@ -55,7 +55,7 @@ const AirportsPage = () => {
   const airportColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("airport.dataGrid.columns.id"),
+      headerName: t("columns.airport.id"),
       width: 100,
       editable: false,
       headerAlign: "left",
@@ -64,7 +64,7 @@ const AirportsPage = () => {
     {
       field: "uniqueId",
       type: "string",
-      headerName: t("airport.dataGrid.columns.uniqueId"),
+      headerName: t("columns.airport.uniqueId"),
       flex: 1,
       editable: false,
       headerAlign: "left",
@@ -73,7 +73,7 @@ const AirportsPage = () => {
     {
       field: "iataCode",
       type: "string",
-      headerName: t("airport.dataGrid.columns.iataCode"),
+      headerName: t("columns.airport.iataCode"),
       flex: 1,
       editable: true,
       headerAlign: "left",
@@ -82,7 +82,7 @@ const AirportsPage = () => {
     {
       field: "icaoCode",
       type: "string",
-      headerName: t("airport.dataGrid.columns.icaoCode"),
+      headerName: t("columns.airport.icaoCode"),
       flex: 1,
       editable: true,
       headerAlign: "left",
@@ -91,7 +91,7 @@ const AirportsPage = () => {
     {
       field: "countryCode",
       type: "string",
-      headerName: t("airport.dataGrid.columns.countryCode"),
+      headerName: t("columns.airport.countryCode"),
       flex: 1,
       editable: true,
       headerAlign: "left",
@@ -100,7 +100,7 @@ const AirportsPage = () => {
     {
       field: "type",
       type: "singleSelect",
-      headerName: t("airport.dataGrid.columns.type"),
+      headerName: t("columns.airport.type"),
       flex: 1,
       editable: true,
       headerAlign: "left",

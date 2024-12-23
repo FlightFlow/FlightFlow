@@ -1,10 +1,15 @@
+import { BrowserRouter } from "react-router";
+
+import { Auth0Provider } from "@auth0/auth0-react";
 import { Theme } from "@emotion/react";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { MAIN_COLOR } from "./styles/global.style";
+import appConfig from "./utils/appConfig";
+
+import { LIGHT_COLOR, PRIMARY_COLOR } from "./styles/global.style";
 
 import Routes from "./Routes";
 
@@ -30,21 +35,28 @@ const App = () => {
   const lightTheme: Theme = createTheme({
     palette: {
       mode: "light",
-      primary: { main: MAIN_COLOR },
+      primary: { main: PRIMARY_COLOR },
       secondary: { main: "#ee6c4d" },
-      background: { default: "#eeeeee" },
+      background: { default: LIGHT_COLOR },
     },
     typography,
   });
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <CssBaseline />
-      <QueryClientProvider client={queryClient}>
-        <Routes />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Auth0Provider
+        domain={appConfig.VITE_APP_AUTH0_DOMAIN}
+        clientId={appConfig.VITE_APP_AUTH0_CLIENT_ID}
+        authorizationParams={{ redirect_uri: window.location.origin }}>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <QueryClientProvider client={queryClient}>
+            <Routes />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ThemeProvider>
+      </Auth0Provider>
+    </BrowserRouter>
   );
 };
 

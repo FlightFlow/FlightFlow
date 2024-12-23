@@ -9,12 +9,13 @@ import axios, {
 } from "axios";
 import i18next from "i18next";
 
+import appConfig from "./appConfig";
 import Logger from "./logger";
 import ServerTranslator from "./serverTranslator";
 
-const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
-const SERVER_PORT = import.meta.env.VITE_APP_SERVER_PORT;
-const SERVER_API_VERSION = import.meta.env.VITE_APP_SERVER_API_VERSION;
+const SERVER_URL = appConfig.VITE_APP_SERVER_URL;
+const SERVER_PORT = appConfig.VITE_APP_SERVER_PORT;
+const SERVER_API_VERSION = appConfig.VITE_APP_SERVER_API_VERSION;
 const SERVER_API_PREFIX = `/api/${SERVER_API_VERSION}`;
 
 const POSSIBLE_STATUS_CODES = [200, 201, 400, 401, 404, 409, 500]; // TODO
@@ -35,6 +36,9 @@ class Requester {
   private payload?: object;
   private responseLanguage: string = i18next.language;
 
+  private accessToken?: string;
+  private refreshToken?: string;
+
   private axiosInstance: AxiosInstance;
 
   constructor() {
@@ -45,13 +49,18 @@ class Requester {
     this.endpoint = requesterConfig.endpoint;
     this.method = requesterConfig.method;
     this.includeCookies = requesterConfig.includeCookies ?? false;
+    this.accessToken = requesterConfig.accessToken;
+    this.refreshToken = requesterConfig.refreshToken;
     this.headers = {
       ...requesterConfig.headers,
       "Content-Type": this.contentType,
       "Accept-Language": this.responseLanguage,
+      ...(this.accessToken && { Authorization: `Bearer ${this.accessToken}` }),
+      ...(this.endpoint.action === "auth/validate" && { Refresh: `Bearer ${this.refreshToken}` }),
     };
     this.payload = requesterConfig.payload;
     this.query = requesterConfig.query;
+    Logger.info(`received access token: ${this.accessToken}`);
     return this;
   }
 
@@ -68,36 +77,40 @@ class Requester {
   private generateURL(): string {
     const urlString: string = `${this.protocol}://${this.baseURL}:${this.port}${SERVER_API_PREFIX}`;
     const endpointString: string = this.generateEndpoint();
-    const queryString: string = `?${this.query ? new URLSearchParams(this.query).toString() : ""}`;
+    const queryString: string = `${this.query ? `?${new URLSearchParams(this.query).toString()}` : ""}`;
     return `${urlString}${endpointString}${queryString}`;
   }
 
-  private generateBaseURL(): string {
-    return `${this.protocol}://${this.baseURL}:${this.port}${SERVER_API_PREFIX}`;
-  }
-
-  private async getNewAccessToken(): Promise<boolean> {
-    const tokenEndpoint: string = `${this.generateBaseURL()}/user/auth/newAccessToken`;
-    const axiosConfig: AxiosRequestConfig = {
-      baseURL: tokenEndpoint,
-      url: tokenEndpoint,
-      method: "POST",
-      withCredentials: true,
-    };
-    try {
-      const response: AxiosResponse<GlobalTypes.ServerResponseParams, AxiosResponse> =
-        await this.axiosInstance.request(axiosConfig);
-      if (response.data.isSuccess) {
-        Logger.debug(`Received a new access token.`);
-        return true;
-      }
-      Logger.debug(`Couldn't received a new access token.`);
-      return false;
-    } catch (error) {
-      Logger.debug(`An error ocurred while receiving a new access token: ${error}`);
-      return false;
-    }
-  }
+  // private generateBaseURL(): string {
+  //   return `${this.protocol}://${this.baseURL}:${this.port}${SERVER_API_PREFIX}`;
+  // }
+  //
+  // private async getNewAccessToken(): Promise<boolean> {
+  //   const tokenEndpoint: string = `${this.generateBaseURL()}/user/auth/newAccessToken`;
+  //   const axiosConfig: AxiosRequestConfig = {
+  //     baseURL: tokenEndpoint,
+  //     url: tokenEndpoint,
+  //     headers: {
+  //       ...this.headers,
+  //       ...(this.refreshToken && { Refresh: `Bearer ${this.refreshToken}` }),
+  //     },
+  //     method: "POST",
+  //     withCredentials: true,
+  //   };
+  //   try {
+  //     const response: AxiosResponse<GlobalTypes.ServerResponseParams, AxiosResponse> =
+  //       await this.axiosInstance.request(axiosConfig);
+  //     if (response.data.isSuccess) {
+  //       Logger.debug(`Received a new access token.`);
+  //       return true;
+  //     }
+  //     Logger.debug(`Couldn't received a new access token.`);
+  //     return false;
+  //   } catch (error) {
+  //     Logger.debug(`An error ocurred while receiving a new access token: ${error}`);
+  //     return false;
+  //   }
+  // }
 
   async sendRequest<TResponseData = null, TRequestPayload = null>(): Promise<
     GlobalTypes.ServerResponseParams<TResponseData>
@@ -136,21 +149,21 @@ class Requester {
 
       const responseData = response.data as GlobalTypes.ServerResponseParams<TResponseData>;
 
-      if (!responseData.isSuccess && responseData.message == "Expired token") {
-        Logger.debug(`Access token is expired. Trying to get a new access token.`);
-        const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
-
-        if (!tryGetNewAccessToken) {
-          return {
-            isSuccess: false,
-            message: i18next.t("requesterError.expiredToken"),
-            data: undefined,
-          } satisfies GlobalTypes.ServerResponseParams;
-        }
-
-        Logger.debug(`Re-sending the previous failed request.`);
-        this.sendRequest<TResponseData, TRequestPayload>();
-      }
+      // if (!responseData.isSuccess && responseData.message == "Expired token") {
+      //   Logger.debug(`Access token is expired. Trying to get a new access token.`);
+      //   const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
+      //
+      //   if (!tryGetNewAccessToken) {
+      //     return {
+      //       isSuccess: false,
+      //       message: i18next.t("requesterError.expiredToken"),
+      //       data: undefined,
+      //     } satisfies GlobalTypes.ServerResponseParams;
+      //   }
+      //
+      //   Logger.debug(`Re-sending the previous failed request.`);
+      //   this.sendRequest<TResponseData, TRequestPayload>();
+      // }
       return ServerTranslator.translate(responseData);
     } catch (error) {
       Logger.error(`An error occurred on the request process: ${error}`);

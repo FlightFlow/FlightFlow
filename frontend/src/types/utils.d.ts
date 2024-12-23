@@ -40,6 +40,8 @@ namespace UtilTypes {
       includeCookies?: boolean;
       query?: Record<string, string>;
       payload?: object;
+      accessToken?: string;
+      refreshToken?: string;
     }
   }
 }

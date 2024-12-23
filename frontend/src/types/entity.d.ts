@@ -1,4 +1,4 @@
-import type Enums from "./enums";
+import type Enums from "../constants/enums";
 
 namespace EntityTypes {
   export interface BaseEntity {

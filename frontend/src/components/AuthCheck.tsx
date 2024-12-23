@@ -1,42 +1,33 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import ComponentTypes from "@/types/components";
-import { Box, CircularProgress } from "@mui/material";
-
-import useAuthValidationQuery from "@/hooks/auth/useAuthValidationQuery";
-
-import { authCheckLoadingOverlayStyles } from "@/styles/components.style";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AuthCheck = ({ children }: ComponentTypes.AuthCheckProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { isError, isLoading, data: queryResponse } = useAuthValidationQuery();
+  const { isAuthenticated } = useAuth0();
 
   const isAtRoot: boolean = pathname === "/";
 
-  if (isLoading) {
-    return (
-      <Box sx={authCheckLoadingOverlayStyles}>
-        <CircularProgress size={30} />
-      </Box>
-    );
-  }
-
-  if (isError) {
-    navigate("/error");
-    return null;
-  }
-
-  if (queryResponse?.isSuccess) {
-    if (isAtRoot) {
-      navigate("/app/airport");
-      return null;
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (isAtRoot) {
+        navigate("/app/airport");
+        return;
+      }
+    } else {
+      navigate("/");
+      return;
     }
+  }, [isAuthenticated, isAtRoot, navigate]);
+
+  if (isAuthenticated && !isAtRoot) {
     return children;
-  } else {
-    navigate("/unauthorized");
-    return null;
   }
+
+  return null;
 };
 
 export default AuthCheck;

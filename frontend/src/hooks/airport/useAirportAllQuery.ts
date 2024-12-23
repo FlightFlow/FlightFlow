@@ -1,9 +1,12 @@
-import AirportTypes from "@/types/controllers/airport";
+import ResourceTypes from "@/types/resource";
 import { useQuery } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
 
+import useAccessToken from "../useAccessToken";
+
 const useAirportAllQuery = () => {
+  const accessToken = useAccessToken();
   const airports = useQuery({
     queryKey: ["airportQuery"],
     queryFn: async () => {
@@ -11,8 +14,9 @@ const useAirportAllQuery = () => {
         .setConfig({
           method: "POST",
           endpoint: { controller: "airport", action: "getAll" },
+          accessToken: accessToken,
         })
-        .sendRequest<AirportTypes.Queries.AirportQueryResponseParams>();
+        .sendRequest<ResourceTypes.Airport.Queries.QueryResponseParams>();
       return response;
     },
   });
