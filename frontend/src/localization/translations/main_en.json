@@ -58,7 +58,8 @@
   "sidebar": {
     "sectionTitles": {
       "resources": "Resources",
-      "algorithm": "Algorithm"
+      "algorithm": "Algorithm",
+      "external": "External Links"
     },
     "linkTexts": {
       "plane": "Plane",
@@ -70,7 +71,9 @@
       "airport": "Airport",
       "runway": "Runway",
       "algorithmRun": "Algorithm Run",
-      "algorithmResult": "Algorithm Result"
+      "algorithmResult": "Algorithm Result",
+      "documentation": "See Documentation",
+      "repository": "See GitHub repository"
     }
   }
 }

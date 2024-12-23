@@ -1,33 +1,32 @@
 import { Routes as BrowserRoutes, Route } from "react-router";
 
-import { AirportPage, NotFoundPage } from "./routes";
+import * as AppRoutes from "./routes";
 import ResourcePageLayout from "./routes/private/layout/ResourcePageLayout";
-import IntroPage from "./routes/public/IntroPage";
 
 const Routes = () => {
   return (
     <BrowserRoutes>
       {/* Protected Routes */}
       <Route path="/app" element={<ResourcePageLayout />}>
-        <Route path="plane" element={<></>} />
-        <Route path="vehicle" element={<></>} />
-        <Route path="flight" element={<></>} />
-        <Route path="route" element={<></>} />
-        <Route path="crew" element={<></>} />
-        <Route path="certification" element={<></>} />
-        <Route path="airport" element={<AirportPage />} />
-        <Route path="runway" element={<></>} />
+        <Route path="plane" element={<AppRoutes.PlanePage />} />
+        <Route path="vehicle" element={<AppRoutes.VehiclePage />} />
+        <Route path="flight" element={<AppRoutes.FlightPage />} />
+        <Route path="route" element={<AppRoutes.RoutePage />} />
+        <Route path="crew" element={<AppRoutes.CrewPage />} />
+        <Route path="certification" element={<AppRoutes.CertificationPage />} />
+        <Route path="airport" element={<AppRoutes.AirportPage />} />
+        <Route path="runway" element={<AppRoutes.RunwayPage />} />
         <Route path="algorithm">
-          <Route path="run" element={<></>} />
-          <Route path="result" element={<></>} />
+          <Route path="run" element={<AppRoutes.AlgorithmRunPage />} />
+          <Route path="result" element={<AppRoutes.AlgorithmResultPage />} />
         </Route>
       </Route>
 
       {/* Public Routes */}
-      <Route path="/" element={<IntroPage />} />
+      <Route path="/" element={<AppRoutes.LandingPage />} />
 
       {/* Not Found Page */}
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<AppRoutes.NotFoundPage />} />
     </BrowserRoutes>
   );
 };

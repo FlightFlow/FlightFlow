@@ -18,7 +18,7 @@ const SERVER_PORT = appConfig.VITE_APP_SERVER_PORT;
 const SERVER_API_VERSION = appConfig.VITE_APP_SERVER_API_VERSION;
 const SERVER_API_PREFIX = `/api/${SERVER_API_VERSION}`;
 
-const POSSIBLE_STATUS_CODES = [200, 201, 400, 401, 404, 409, 500]; // TODO
+const POSSIBLE_STATUS_CODES = [200, 201, 400, 401, 403, 404, 409, 500];
 
 class Requester {
   private protocol: UtilTypes.RequesterBaseTypes.RequestProtocols = "http";
@@ -66,7 +66,6 @@ class Requester {
 
   private generateEndpoint(): string {
     let endpoint: string = "";
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(this.endpoint).forEach(([_key, value]) => {
       const sanitizedValue = value.replace(/^\/|\/$/g, "");
       endpoint += `/${sanitizedValue}`;
@@ -80,37 +79,6 @@ class Requester {
     const queryString: string = `${this.query ? `?${new URLSearchParams(this.query).toString()}` : ""}`;
     return `${urlString}${endpointString}${queryString}`;
   }
-
-  // private generateBaseURL(): string {
-  //   return `${this.protocol}://${this.baseURL}:${this.port}${SERVER_API_PREFIX}`;
-  // }
-  //
-  // private async getNewAccessToken(): Promise<boolean> {
-  //   const tokenEndpoint: string = `${this.generateBaseURL()}/user/auth/newAccessToken`;
-  //   const axiosConfig: AxiosRequestConfig = {
-  //     baseURL: tokenEndpoint,
-  //     url: tokenEndpoint,
-  //     headers: {
-  //       ...this.headers,
-  //       ...(this.refreshToken && { Refresh: `Bearer ${this.refreshToken}` }),
-  //     },
-  //     method: "POST",
-  //     withCredentials: true,
-  //   };
-  //   try {
-  //     const response: AxiosResponse<GlobalTypes.ServerResponseParams, AxiosResponse> =
-  //       await this.axiosInstance.request(axiosConfig);
-  //     if (response.data.isSuccess) {
-  //       Logger.debug(`Received a new access token.`);
-  //       return true;
-  //     }
-  //     Logger.debug(`Couldn't received a new access token.`);
-  //     return false;
-  //   } catch (error) {
-  //     Logger.debug(`An error ocurred while receiving a new access token: ${error}`);
-  //     return false;
-  //   }
-  // }
 
   async sendRequest<TResponseData = null, TRequestPayload = null>(): Promise<
     GlobalTypes.ServerResponseParams<TResponseData>
@@ -147,24 +115,9 @@ class Requester {
           AxiosResponse<TResponseData, TRequestPayload>
         >(axiosConfig);
 
-      const responseData = response.data as GlobalTypes.ServerResponseParams<TResponseData>;
-
-      // if (!responseData.isSuccess && responseData.message == "Expired token") {
-      //   Logger.debug(`Access token is expired. Trying to get a new access token.`);
-      //   const tryGetNewAccessToken: boolean = await this.getNewAccessToken();
-      //
-      //   if (!tryGetNewAccessToken) {
-      //     return {
-      //       isSuccess: false,
-      //       message: i18next.t("requesterError.expiredToken"),
-      //       data: undefined,
-      //     } satisfies GlobalTypes.ServerResponseParams;
-      //   }
-      //
-      //   Logger.debug(`Re-sending the previous failed request.`);
-      //   this.sendRequest<TResponseData, TRequestPayload>();
-      // }
-      return ServerTranslator.translate(responseData);
+      return ServerTranslator.translate(
+        response.data as GlobalTypes.ServerResponseParams<TResponseData>,
+      );
     } catch (error) {
       Logger.error(`An error occurred on the request process: ${error}`);
       return {

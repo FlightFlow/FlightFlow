@@ -6,11 +6,11 @@ import type { GridColDef, GridPaginationModel, GridRowsProp } from "@mui/x-data-
 import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 
 namespace ComponentTypes {
-  export interface BaseDataGridRowParams {
+  interface BaseDataGridRowParams {
     id: number;
     uniqueId: string;
   }
-  export interface DataGridProps<TNew, TUpdate, TDelete> {
+  interface DataGridProps<TNew, TUpdate, TDelete> {
     rowsProp: GridRowsProp;
     columnsProp: GridColDef[];
     paginationModel?: GridPaginationModel;
@@ -30,31 +30,50 @@ namespace ComponentTypes {
       unknown
     >;
   }
-  export interface GridOverlayProps {
+  interface GridOverlayProps {
     type: "loading" | "error";
     message?: string;
   }
-  export interface DataStateProps {
+  interface DataStateProps {
     snackbarState?: { isOpen: boolean; message: string };
     isLoading: boolean;
     isSuccess: boolean;
   }
-  export interface SnackbarProps {
+  interface SnackbarProps {
     snackbarState: DataStateProps;
     setSnackbarState: Dispatch<SetStateAction<DataStateProps>>;
     severity: AlertColor;
   }
-  export interface SubmitButtonProps {
+  interface SubmitButtonProps {
     label: string;
     isLoading: boolean;
     isSuccess: boolean;
   }
-  export interface AuthCheckProps {
+  interface AuthCheckProps {
     children: ReactNode;
   }
-  export interface FormHeaderProps {
+  interface FormHeaderProps {
     title: string;
     subtitle: string;
+  }
+  interface TranslatePopoverProps {
+    anchor: HTMLButtonElement | null;
+    setAnchor: (anchor: HTMLButtonElement | null) => void;
+  }
+  interface IconButtonProps {
+    icon: ReactNode;
+    tooltipText?: string;
+    onclick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  }
+  interface ThemeContextProps {
+    isLightMode: boolean;
+    setIsLightMode: (isLightMode: boolean) => void;
+  }
+  interface ThemeProviderProps {
+    children: ReactNode;
+  }
+  interface SidebarLinksProps {
+    section: "resource" | "algorithm" | "external";
   }
 }
 export default ComponentTypes;

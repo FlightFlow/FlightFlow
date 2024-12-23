@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
 import { AirportType } from "@/constants/enumsAsLists";
-import AirportTypes from "@/types/resource";
 import EntityTypes from "@/types/entity";
+import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
@@ -36,21 +36,23 @@ const AirportsPage = () => {
     return <GridOverlay type="error" message={airportQueryData.message} />;
   }
 
-  const parsedAirportData: AirportTypes.AirportPageRowParams[] = airports.map((airport, index) => ({
-    id: index + 1,
-    uniqueId: airport.id,
-    name: airport.name,
-    iataCode: airport.iataCode,
-    icaoCode: airport.icaoCode,
-    countryCode: airport.countryCode,
-    type: airport.type,
-    runways: airport.runways,
-    vehiclesPresent: airport.vehiclesPresent,
-    planesPresent: airport.planesPresent,
-    routesOriginatingFromAirport: airport.routesOriginatingFromAirport,
-    routesDestinedForAirport: airport.routesDestinedForAirport,
-    crewMembersPresent: airport.crewMembersPresent,
-  }));
+  const parsedAirportData: ResourceTypes.Airport.Page.RowParams[] = airports.map(
+    (airport, index) => ({
+      id: index + 1,
+      uniqueId: airport.id,
+      name: airport.name,
+      iataCode: airport.iataCode,
+      icaoCode: airport.icaoCode,
+      countryCode: airport.countryCode,
+      type: airport.type,
+      runways: airport.runways,
+      vehiclesPresent: airport.vehiclesPresent,
+      planesPresent: airport.planesPresent,
+      routesOriginatingFromAirport: airport.routesOriginatingFromAirport,
+      routesDestinedForAirport: airport.routesDestinedForAirport,
+      crewMembersPresent: airport.crewMembersPresent,
+    }),
+  );
 
   const airportColumns: GridColDef[] = [
     {
@@ -128,9 +130,9 @@ const AirportsPage = () => {
 
   return (
     <DataGrid<
-      AirportTypes.Mutations.CreateMutationParams,
-      AirportTypes.Mutations.UpdateMutationParams,
-      AirportTypes.Mutations.DeleteMutationParams
+      ResourceTypes.Airport.Mutations.CreateMutationParams,
+      ResourceTypes.Airport.Mutations.UpdateMutationParams,
+      ResourceTypes.Airport.Mutations.DeleteMutationParams
     >
       key={JSON.stringify(parsedAirportData)}
       rowsProp={parsedAirportData}
