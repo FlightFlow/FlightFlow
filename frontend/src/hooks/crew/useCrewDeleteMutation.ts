@@ -1,22 +1,24 @@
-
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
-import CrewTypes from "@/types/controllers/crew";
+
+import useAccessToken from "../useAccessToken";
 
 const useCrewDeleteMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const deleteCrew = useMutation({
     mutationKey: ["deleteCrewMutation"],
-    mutationFn: async (crewDeleteData: CrewTypes.Mutations.DeleteMutationParams) => {
-      const { accessToken, ...requestData } = crewDeleteData;
-      const response = await new Requester({
-        method: "DELETE",
-        endpoint: { controller: "crew", action: "delete" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
+    mutationFn: async (crewDeleteData: ResourceTypes.Crew.Mutations.DeleteMutationParams) => {
+      const response = await new Requester()
+        .setConfig({
+          method: "DELETE",
+          endpoint: { controller: "crew", action: "delete" },
+          payload: crewDeleteData,
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["crewQuery"] }),

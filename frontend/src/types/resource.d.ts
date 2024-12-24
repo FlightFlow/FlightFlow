@@ -88,8 +88,8 @@ namespace ResourceTypes {
       type DeleteMutationParams = RunwayId;
     }
     namespace Queries {
-      type RunwayQueryRequestParams = RunwayId;
-      type RunwayQueryResponseParams = EntityTypes.RunwayEntity[];
+      type QueryByIdRequestParams = RunwayId;
+      type QueryResponseParams = EntityTypes.RunwayEntity[];
     }
     namespace Page {
       type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<EntityTypes.RunwayEntity, "id">;
@@ -103,8 +103,8 @@ namespace ResourceTypes {
       type DeleteMutationParams = VehicleId;
     }
     namespace Queries {
-      type VehicleQueryRequestParams = VehicleId;
-      type VehicleQueryResponseParams = EntityTypes.VehicleEntity[];
+      type QueryByIdRequestParams = VehicleId;
+      type QueryResponseParams = EntityTypes.VehicleEntity[];
     }
     namespace Page {
       type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<EntityTypes.VehicleEntity, "id">;

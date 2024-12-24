@@ -1,21 +1,24 @@
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
-import CertificationTypes from "@/types/controllers/crew";
+
+import useAccessToken from "../useAccessToken";
 
 const useCertificationCreateMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const createCertification = useMutation({
     mutationKey: ["createCertificationMutation"],
-    mutationFn: async (certificationCreateData: CertificationTypes.Mutations.CreateMutationParams) => {
-      const { accessToken, ...requestData } = certificationCreateData;
-      const response = await new Requester({
-        method: "POST",
-        endpoint: { controller: "certification", action: "create" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
+    mutationFn: async (certificationCreateData: ResourceTypes.Certification.Mutations.CreateMutationParams) => {
+      const response = await new Requester()
+        .setConfig({
+          method: "POST",
+          endpoint: { controller: "certification", action: "create" },
+          payload: certificationCreateData,
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["certificationQuery"] }),

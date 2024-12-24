@@ -1,23 +1,27 @@
-
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
-import CrewTypes from "@/types/controllers/crew";
+
+import useAccessToken from "../useAccessToken";
 
 const useCrewUpdateMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const updateCrew = useMutation({
     mutationKey: ["updateCrewMutation"],
-    mutationFn: async (useCrewUpdateData: CrewTypes.Mutations.UpdateMutationParams) => {
-      const { accessToken, ...requestData } = useCrewUpdateData;
-      const response = await new Requester({
-        method: "PATCH",
-        endpoint: { controller: "crew", action: "update" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
-
+    mutationFn: async (
+      useCrewUpdateData: ResourceTypes.Crew.Mutations.UpdateMutationParams,
+    ) => {
+      const { crewMemberId, ...requestData } = useCrewUpdateData;
+      const response = await new Requester()
+        .setConfig({
+          method: "PATCH",
+          endpoint: { controller: "crew", action: "update" },
+          payload: { crewMemberId: crewMemberId, ...requestData },
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["crewQuery"] }),
@@ -26,3 +30,6 @@ const useCrewUpdateMutation = () => {
 };
 
 export default useCrewUpdateMutation;
+
+
+

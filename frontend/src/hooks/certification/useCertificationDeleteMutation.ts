@@ -1,23 +1,24 @@
-
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
-import CertificationTypes from "@/types/controllers/certification";
 
+import useAccessToken from "../useAccessToken";
 
 const useCertificationDeleteMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const deleteCertification = useMutation({
     mutationKey: ["deleteCertificationMutation"],
-    mutationFn: async (certificationDeleteData: CertificationTypes.Mutations.DeleteMutationParams) => {
-      const { accessToken, ...requestData } = certificationDeleteData;
-      const response = await new Requester({
-        method: "DELETE",
-        endpoint: { controller: "certification", action: "delete" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
+    mutationFn: async (certificationDeleteData: ResourceTypes.Certification.Mutations.DeleteMutationParams) => {
+      const response = await new Requester()
+        .setConfig({
+          method: "DELETE",
+          endpoint: { controller: "certification", action: "delete" },
+          payload: certificationDeleteData,
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["certificationQuery"] }),
