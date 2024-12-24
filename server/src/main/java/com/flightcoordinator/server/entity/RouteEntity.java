@@ -24,7 +24,7 @@ public class RouteEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "destination_airport_id", nullable = false)
-  private AirportEntity destinationAirport; // This field corresponds to the 'destination' in AirportEntity
+  private AirportEntity destinationAirport;
 
   @Min(value = 1, message = "Distance should be greater than '1'")
   @Column(name = "distance", nullable = false)

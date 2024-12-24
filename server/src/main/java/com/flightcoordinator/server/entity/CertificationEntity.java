@@ -1,6 +1,5 @@
 package com.flightcoordinator.server.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +43,13 @@ public class CertificationEntity {
 
   @Min(value = 1, message = "Validity period should be greater than '1'")
   @Column(name = "validity_period", nullable = false)
-  private int validityPeriod;
+  private Integer validityPeriod;
 
   @ElementCollection(targetClass = CrewRole.class)
   @Enumerated(EnumType.STRING)
   @CollectionTable(name = "assignable_roles_list", joinColumns = @JoinColumn(name = "certification_id"))
   @Column(name = "assignable_roles", nullable = false)
-  private List<CrewRole> assignableRoles = new ArrayList<>();
+  private List<CrewRole> assignableRoles;
 
   @Column(name = "description", nullable = false)
   private String description;
@@ -60,7 +59,7 @@ public class CertificationEntity {
 
   public CertificationEntity(String id, String name, CertificationIssuer issuer,
       CertificationIssuingCountry issuingCountry, Date expirationDate,
-      @Min(value = 1, message = "Validity period should be greater than '1'") int validityPeriod,
+      @Min(value = 1, message = "Validity period should be greater than '1'") Integer validityPeriod,
       List<CrewRole> assignableRoles, String description) {
     this.id = id;
     this.name = name;
@@ -112,11 +111,11 @@ public class CertificationEntity {
     this.expirationDate = expirationDate;
   }
 
-  public int getValidityPeriod() {
+  public Integer getValidityPeriod() {
     return validityPeriod;
   }
 
-  public void setValidityPeriod(int validityPeriod) {
+  public void setValidityPeriod(Integer validityPeriod) {
     this.validityPeriod = validityPeriod;
   }
 

@@ -36,7 +36,7 @@ public class VehicleEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "availability", nullable = false)
-  private GroundVehicleAvailability availability = GroundVehicleAvailability.AVAILABLE;
+  private GroundVehicleAvailability availability;
 
   @Column(name = "maintenance_due", nullable = false)
   private Date maintenanceDue;

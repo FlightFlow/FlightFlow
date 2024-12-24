@@ -1,8 +1,6 @@
 package com.flightcoordinator.server.entity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.flightcoordinator.server.enums.AirportType;
 
@@ -41,35 +39,29 @@ public class AirportEntity {
   @Column(name = "type", nullable = false)
   private AirportType type;
 
-  // A list of runways for the airport
   @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RunwayEntity> runways = new ArrayList<>();
+  private List<RunwayEntity> runways;
 
-  // One-to-many relationship with VehicleEntity
   @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<VehicleEntity> vehiclesPresent;
+  private List<VehicleEntity> vehiclesPresent;
 
-  // A list of planes currently located at the airport
   @OneToMany(mappedBy = "currentLocation", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PlaneEntity> planesPresent = new ArrayList<>();
+  private List<PlaneEntity> planesPresent;
 
-  // Routes where the airport is the origin
   @OneToMany(mappedBy = "originAirport", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RouteEntity> routesOriginatingFromAirport = new ArrayList<>();
+  private List<RouteEntity> routesOriginatingFromAirport;
 
-  // Routes where the airport is the destination
   @OneToMany(mappedBy = "destinationAirport", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RouteEntity> routesDestinedForAirport = new ArrayList<>();
+  private List<RouteEntity> routesDestinedForAirport;
 
-  // Crew members assigned to this airport
   @OneToMany(mappedBy = "baseAirport", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<CrewEntity> crewMembersPresent = new ArrayList<>();
+  private List<CrewEntity> crewMembersPresent;
 
   public AirportEntity() {
   }
 
   public AirportEntity(String id, String name, String iataCode, String icaoCode, String countryCode, AirportType type,
-      List<RunwayEntity> runways, Set<VehicleEntity> vehiclesPresent, List<PlaneEntity> planesPresent,
+      List<RunwayEntity> runways, List<VehicleEntity> vehiclesPresent, List<PlaneEntity> planesPresent,
       List<RouteEntity> routesOriginatingFromAirport, List<RouteEntity> routesDestinedForAirport,
       List<CrewEntity> crewMembersPresent) {
     this.id = id;
@@ -142,11 +134,11 @@ public class AirportEntity {
     this.runways = runways;
   }
 
-  public Set<VehicleEntity> getVehiclesPresent() {
+  public List<VehicleEntity> getVehiclesPresent() {
     return vehiclesPresent;
   }
 
-  public void setVehiclesPresent(Set<VehicleEntity> vehiclesPresent) {
+  public void setVehiclesPresent(List<VehicleEntity> vehiclesPresent) {
     this.vehiclesPresent = vehiclesPresent;
   }
 
@@ -181,5 +173,4 @@ public class AirportEntity {
   public void setCrewMembersPresent(List<CrewEntity> crewMembersPresent) {
     this.crewMembersPresent = crewMembersPresent;
   }
-
 }

@@ -33,13 +33,13 @@ public class AlgorithmRunEntity {
   private Date endTime;
 
   @Column(name = "runtime_in_milliseconds", nullable = false)
-  private long runtimeInMilliseconds;
+  private Long runtimeInMilliseconds;
 
   @Column(name = "parameters_json")
-  private String parametersJson; // Store parameters as JSON string
+  private String parametersJson;
 
   @Column(name = "resources_json")
-  private String resourcesJson; // Store resources as JSON string
+  private String resourcesJson;
 
   @ElementCollection
   @CollectionTable(name = "algorithm_run_constraints", joinColumns = @JoinColumn(name = "algorithm_run_id"))
@@ -53,25 +53,24 @@ public class AlgorithmRunEntity {
   private List<String> logs;
 
   @Column(name = "is_successful", nullable = false)
-  private boolean isSuccessful;
+  private Boolean isSuccessful;
 
   @Column(name = "failure_reason", nullable = true)
-  private String failureReason; // Optional failure reason
+  private String failureReason;
 
   @Column(name = "is_results_saved", nullable = false)
-  private boolean isResultsSaved;
+  private Boolean isResultsSaved;
 
   @OneToOne
   @JoinColumn(name = "result_id", nullable = false)
   private AlgorithmResultEntity result;
 
-  // Default constructor
   public AlgorithmRunEntity() {
   }
 
-  public AlgorithmRunEntity(String id, String algorithmName, Date startTime, Date endTime, long runtimeInMilliseconds,
+  public AlgorithmRunEntity(String id, String algorithmName, Date startTime, Date endTime, Long runtimeInMilliseconds,
       String parametersJson, String resourcesJson, Map<String, Boolean> constraintsMet, List<String> logs,
-      boolean isSuccessful, String failureReason, boolean isResultsSaved, AlgorithmResultEntity result) {
+      Boolean isSuccessful, String failureReason, Boolean isResultsSaved, AlgorithmResultEntity result) {
     this.id = id;
     this.algorithmName = algorithmName;
     this.startTime = startTime;
@@ -119,11 +118,11 @@ public class AlgorithmRunEntity {
     this.endTime = endTime;
   }
 
-  public long getRuntimeInMilliseconds() {
+  public Long getRuntimeInMilliseconds() {
     return runtimeInMilliseconds;
   }
 
-  public void setRuntimeInMilliseconds(long runtimeInMilliseconds) {
+  public void setRuntimeInMilliseconds(Long runtimeInMilliseconds) {
     this.runtimeInMilliseconds = runtimeInMilliseconds;
   }
 
@@ -159,11 +158,11 @@ public class AlgorithmRunEntity {
     this.logs = logs;
   }
 
-  public boolean isSuccessful() {
+  public Boolean isSuccessful() {
     return isSuccessful;
   }
 
-  public void setSuccessful(boolean isSuccessful) {
+  public void setSuccessful(Boolean isSuccessful) {
     this.isSuccessful = isSuccessful;
   }
 
@@ -175,11 +174,11 @@ public class AlgorithmRunEntity {
     this.failureReason = failureReason;
   }
 
-  public boolean isResultsSaved() {
+  public Boolean isResultsSaved() {
     return isResultsSaved;
   }
 
-  public void setResultsSaved(boolean isResultsSaved) {
+  public void setResultsSaved(Boolean isResultsSaved) {
     this.isResultsSaved = isResultsSaved;
   }
 

@@ -36,7 +36,6 @@ public class RunwayEntity {
   @Column(name = "orientation", nullable = false)
   private String orientation;
 
-  // The 'airport' field matches the mappedBy in AirportEntity
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "airport_id", nullable = false)
   private AirportEntity airport;
