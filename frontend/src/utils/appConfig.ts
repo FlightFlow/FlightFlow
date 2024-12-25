@@ -4,6 +4,7 @@ import { z, ZodSchema } from "zod";
 import Logger from "./logger";
 
 const envSchema: ZodSchema = z.object({
+  VITE_APP_ENVIRONMENT: z.enum(["DEV", "TEST", "PROD"]).default("DEV"),
   VITE_APP_SERVER_URL: z.string().default("localhost"),
   VITE_APP_SERVER_PORT: z
     .string()
