@@ -1,7 +1,5 @@
 package com.flightcoordinator.server.enums;
 
-// TODO turn into an endpoint
-
 public enum CertificationIssuingCountry {
   US("United States"),
   EU("European Union"),

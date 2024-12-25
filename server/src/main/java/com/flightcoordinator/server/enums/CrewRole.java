@@ -1,7 +1,5 @@
 package com.flightcoordinator.server.enums;
 
-// TODO turn into an endpoint
-
 public enum CrewRole {
   CAPTAIN("Captain"),
   FIRST_OFFICER("First Officer"),

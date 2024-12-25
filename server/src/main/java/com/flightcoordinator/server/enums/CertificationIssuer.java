@@ -1,7 +1,5 @@
 package com.flightcoordinator.server.enums;
 
-// TODO turn into an endpoint
-
 public enum CertificationIssuer {
   FAA("Federal Aviation Administration"),
   EASA("European Union Aviation Safety Agency"),
