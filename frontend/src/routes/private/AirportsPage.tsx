@@ -15,7 +15,7 @@ import useAirportDeleteMutation from "@/hooks/airport/useAirportDeleteMutation";
 import useAirportUpdateMutation from "@/hooks/airport/useAirportUpdateMutation";
 
 const AirportsPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["data_grid"]);
 
   const { mutateAsync: airportCreateMutation } = useAirportCreateMutation();
   const { mutateAsync: airportUpdateMutation } = useAirportUpdateMutation();

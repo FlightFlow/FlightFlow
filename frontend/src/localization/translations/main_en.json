@@ -1,58 +1,4 @@
 {
-  "columns": {
-    "airport": {
-      "id": "Table ID",
-      "uniqueId": "Database ID",
-      "name": "Airport Name",
-      "iataCode": "IATA Code",
-      "icaoCode": "ICAO Code",
-      "countryCode": "CountryCode",
-      "type": "Type",
-      "runways": "Runways IDs",
-      "vehiclesPresent": "IDs of Present Vehicles",
-      "planesPresent": "IDs of Present Planes",
-      "routesOriginatingFromAirport": "Routes Originating From Airport",
-      "routesDestinedForAirport": "Routes Destined For Airport",
-      "crewMembersPresent": "IDs of Crew Members Planes"
-    },
-    "algorithm_result": {
-      "": ""
-    },
-    "algorithm_run": {
-      "": ""
-    },
-    "certification": {
-      "": ""
-    },
-    "crew": {
-      "": ""
-    },
-    "flight": {
-      "": ""
-    },
-    "plane": {
-      "": ""
-    },
-    "route": {
-      "": ""
-    },
-    "runway": {
-      "": ""
-    },
-    "system_role": {
-      "": ""
-    },
-    "user": {
-      "": ""
-    },
-    "vehicle": {
-      "": ""
-    }
-  },
-  "introPage": {
-    "pageTitle": "Welcome to FC",
-    "authButton": "Continue to Authentication"
-  },
   "requesterError": {
     "unknownError": "An unknown error occurred"
   },
@@ -63,16 +9,16 @@
       "external": "External Links"
     },
     "linkTexts": {
-      "plane": "Plane",
-      "vehicle": "Vehicle",
-      "flight": "Flight",
-      "route": "Route",
+      "plane": "Planes",
+      "vehicle": "Vehicles",
+      "flight": "Flights",
+      "route": "Routes",
       "crew": "Crew",
-      "certification": "Certification",
-      "airport": "Airport",
-      "runway": "Runway",
-      "algorithmRun": "Algorithm Run",
-      "algorithmResult": "Algorithm Result",
+      "certification": "Certifications",
+      "airport": "Airports",
+      "runway": "Runways",
+      "algorithmRun": "Algorithm Runs",
+      "algorithmResult": "Algorithm Results",
       "documentation": "See Documentation",
       "repository": "See GitHub repository"
     },
@@ -86,7 +32,17 @@
       "lightTheme": "Light"
     },
     "language": {
-      "title": "Language"
+      "title": "Language",
+      "english": "English",
+      "turkish": "Turkish"
+    },
+    "account": {
+      "title": "Account",
+      "logout": "Logout"
     }
+  },
+  "introPage": {
+    "pageTitle": "Welcome to FC",
+    "authButton": "Continue to Authentication"
   }
 }

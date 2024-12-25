@@ -9,23 +9,6 @@
     "updateResponse": "Successfully updated resource.",
     "deleteResponse": "Successfully deleted resource."
   },
-  "auth": {
-    "loginSuccess": "Successfully logged in. Redirecting...",
-    "registerSuccess": "Successfully created new account. Now you can log in.",
-    "newTokenSuccess": "New Token Received",
-    "validationSuccess": "User validated.",
-    "deleteSuccess": "Successfully deleted user.",
-    "getCurrentUserDetails": "",
-    "getAllUserDetails": ""
-  },
-  "authException": {
-    "userExists": "You cannot use this username or e-mail.",
-    "passwordsDoNotMatch": "Passwords do not match.",
-    "cannotAuthenticate": "Failed to authenticate user.",
-    "cannotFindUser": "Cannot find user details.",
-    "invalidToken": "Your session is expired. Please re-login.",
-    "expiredToken": "Your session is expired. Please re-login."
-  },
   "notfound": {
     "airport": "",
     "algorithmResult": "",
@@ -42,7 +25,6 @@
   "exceptions": {
     "enumValidationError": "",
     "illegalArgumentException": "",
-    "optimisticLockingFailureException": "",
-    "jwtException": ""
+    "optimisticLockingFailureException": ""
   }
 }

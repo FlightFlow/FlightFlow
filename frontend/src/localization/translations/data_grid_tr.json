@@ -1,4 +1,51 @@
 {
+  "columns": {
+    "airport": {
+      "id": "Tablo ID",
+      "uniqueId": "Veritabanı ID",
+      "name": "Adı",
+      "iataCode": "IATA Kodu",
+      "icaoCode": "ICAO Kodu",
+      "countryCode": "Ülke Kodu",
+      "type": "Tipi",
+      "runways": "Pist ID'leri",
+      "vehiclesPresent": "Mevcut Araçların ID'leri",
+      "planesPresent": "Mevcut Uçakların ID'leri",
+      "routesOriginatingFromAirport": "Havaalanı'ndan başlayan rotalar",
+      "routesDestinedForAirport": "Havaalanı'na sonlanan rotalar",
+      "crewMembersPresent": "Mevcut Mürettebatın ID'leri"
+    },
+    "algorithm_result": {
+      "": ""
+    },
+    "algorithm_run": {
+      "": ""
+    },
+    "certification": {
+      "": ""
+    },
+    "crew": {
+      "": ""
+    },
+    "flight": {
+      "": ""
+    },
+    "plane": {
+      "": ""
+    },
+    "route": {
+      "": ""
+    },
+    "runway": {
+      "": ""
+    },
+    "vehicle": {
+      "": ""
+    }
+  },
+  "buttons": {
+    "addNewAirportButton": "Yeni Havaalanı ekle"
+  },
   "overlay": {
     "loadingMessage": "Veriler yükleniyor...",
     "errorMessage": "Bir hata oluştu. Yeniden giriş yapmayı deneyin."

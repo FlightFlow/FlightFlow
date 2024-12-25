@@ -1,73 +1,48 @@
 {
-  "columns": {
-    "airport": {
-      "columns": {}
-    },
-    "algorithm_result": {
-      "columns": {}
-    },
-    "algorithm_run": {
-      "columns": {}
-    },
-    "certification": {
-      "columns": {}
-    },
-    "crew": {
-      "columns": {}
-    },
-    "flight": {
-      "columns": {}
-    },
-    "plane": {
-      "columns": {}
-    },
-    "route": {
-      "columns": {}
-    },
-    "runway": {
-      "columns": {}
-    },
-    "system_role": {
-      "columns": {}
-    },
-    "user": {
-      "columns": {}
-    },
-    "vehicle": {
-      "columns": {}
-    }
-  },
-  "forms": {
-    "titles": {
-      "loginTitle": "Tekrar Hoşgeldin 👋",
-      "registerTitle": "Tanıştığımıza Sevindim!"
-    },
-    "subtitles": {
-      "loginSubtitle": "Devam etmek için giriş yap",
-      "registerSubtitle": "Devam etmek için kayıt ol"
-    },
-    "labels": {
-      "fullName": "Ad ve Soyad",
-      "username": "Kullanıcı Adı",
-      "email": "E-Posta",
-      "password": "Şifre",
-      "passwordAgain": "Şifre Tekrar"
-    },
-    "buttons": {
-      "loginButton": "Hesabına Giriş Yap",
-      "registerButton": "Yeni Hesap Oluştur"
-    },
-    "bottomTexts": {
-      "loginBottomText": "Don't have an account? Register now!",
-      "registerBottomText": "Already have an account? Login now!"
-    }
-  },
-  "schemas": {
-    "requiredError": "This field is required.",
-    "invalidEmailError": "Please enter a valid e-mail."
-  },
   "requesterError": {
-    "unknownError": "",
-    "expiredToken": ""
+    "unknownError": "Bilinmeyen bir hata oluştu"
+  },
+  "sidebar": {
+    "sectionTitles": {
+      "resources": "Kaynaklar",
+      "algorithm": "Algoritma",
+      "external": "Harici Linkler"
+    },
+    "linkTexts": {
+      "plane": "Uçaklar",
+      "vehicle": "Araçlar",
+      "flight": "Uçuşlar",
+      "route": "Rotalar",
+      "crew": "Mürettebat",
+      "certification": "Sertifikalar",
+      "airport": "Havaalanları",
+      "runway": "Pistler",
+      "algorithmRun": "Algoritma Döngüleri",
+      "algorithmResult": "Algoritma Sonuçları",
+      "documentation": "Dökümantasyona git",
+      "repository": "GitHub repo'suna git"
+    },
+    "relogin": "Lütfen tekrar giriş yapın"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Tema",
+      "darkTheme": "Karanlık",
+      "lightTheme": "Aydınlık"
+    },
+    "language": {
+      "title": "Dil",
+      "english": "İngilizce",
+      "turkish": "Türkçe"
+    },
+    "account": {
+      "title": "Hesap",
+      "logout": "Çıkış Yap"
+    }
+  },
+  "introPage": {
+    "pageTitle": "Welcome to FC",
+    "authButton": "Continue to Authentication"
   }
 }

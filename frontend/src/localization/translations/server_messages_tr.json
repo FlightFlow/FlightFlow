@@ -9,23 +9,6 @@
     "updateResponse": "",
     "deleteResponse": ""
   },
-  "auth": {
-    "loginSuccess": "",
-    "registerSuccess": "",
-    "newTokenSuccess": "",
-    "validationSuccess": "",
-    "deleteSuccess": "",
-    "getCurrentUserDetails": "",
-    "getAllUserDetails": ""
-  },
-  "authException": {
-    "userExists": "",
-    "passwordsDoNotMatch": "",
-    "cannotAuthenticate": "",
-    "cannotFindUser": "",
-    "invalidToken": "",
-    "expiredToken": ""
-  },
   "notfound": {
     "airport": "",
     "algorithmResult": "",
@@ -42,7 +25,6 @@
   "exceptions": {
     "enumValidationError": "",
     "illegalArgumentException": "",
-    "optimisticLockingFailureException": "",
-    "jwtException": ""
+    "optimisticLockingFailureException": ""
   }
 }

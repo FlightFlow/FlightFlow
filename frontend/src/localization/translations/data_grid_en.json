@@ -1,4 +1,48 @@
 {
+  "columns": {
+    "airport": {
+      "id": "Table ID",
+      "uniqueId": "Database ID",
+      "name": "Name",
+      "iataCode": "IATA Code",
+      "icaoCode": "ICAO Code",
+      "countryCode": "Country Code",
+      "type": "Type",
+      "runways": "Runways IDs",
+      "vehiclesPresent": "IDs of Present Vehicles",
+      "planesPresent": "IDs of Present Planes",
+      "routesOriginatingFromAirport": "Routes Originating From Airport",
+      "routesDestinedForAirport": "Routes Destined For Airport",
+      "crewMembersPresent": "IDs of Crew Members Present"
+    },
+    "algorithm_result": {
+      "": ""
+    },
+    "algorithm_run": {
+      "": ""
+    },
+    "certification": {
+      "": ""
+    },
+    "crew": {
+      "": ""
+    },
+    "flight": {
+      "": ""
+    },
+    "plane": {
+      "": ""
+    },
+    "route": {
+      "": ""
+    },
+    "runway": {
+      "": ""
+    },
+    "vehicle": {
+      "": ""
+    }
+  },
   "buttons": {
     "addNewAirportButton": "Add New Airport"
   },
