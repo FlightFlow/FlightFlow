@@ -15,7 +15,7 @@ class ServerTranslator {
   }
 
   private static translateResponse(translationKey: string): string {
-    if (i18next.exists(translationKey)) {
+    if (!i18next.exists(translationKey)) {
       Logger.error(`Translation key not found: ${translationKey}`);
       return translationKey;
     }
