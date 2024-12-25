@@ -1,22 +1,27 @@
-import VehicleTypes from "@/types/controllers/vehicle";
-import Requester from "@/utils/requester";
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import Requester from "@/utils/requester";
+
+import useAccessToken from "../useAccessToken";
 
 const useVehicleUpdateMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const updateVehicle = useMutation({
     mutationKey: ["updateVehicleMutation"],
-    mutationFn: async (useVehicleUpdateData: VehicleTypes.Mutations.UpdateMutationParams) => {
-      const { accessToken, ...requestData } = useVehicleUpdateData;
-      const response = await new Requester({
-        method: "PATCH",
-        endpoint: { controller: "vehicle", action: "update" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
-
+    mutationFn: async (
+      useVehicleUpdateData: ResourceTypes.Vehicle.Mutations.UpdateMutationParams,
+    ) => {
+      const { vehicleId, ...requestData } = useVehicleUpdateData;
+      const response = await new Requester()
+        .setConfig({
+          method: "PATCH",
+          endpoint: { controller: "vehicle", action: "update" },
+          payload: { vehicleId: vehicleId, ...requestData },
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["vehicleQuery"] }),

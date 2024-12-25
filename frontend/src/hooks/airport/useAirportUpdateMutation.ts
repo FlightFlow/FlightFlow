@@ -18,7 +18,7 @@ const useAirportUpdateMutation = () => {
         .setConfig({
           method: "PATCH",
           endpoint: { controller: "airport", action: "update" },
-          query: { airportId: airportId, ...requestData },
+          payload: { airportId: airportId, ...requestData },
           accessToken: accessToken,
         })
         .sendRequest();

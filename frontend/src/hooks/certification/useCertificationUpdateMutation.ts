@@ -1,24 +1,27 @@
-
+import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
-import CertificationTypes from "@/types/controllers/certification";
 
+import useAccessToken from "../useAccessToken";
 
 const useCertificationUpdateMutation = () => {
   const queryClient = useQueryClient();
-
+  const accessToken = useAccessToken();
   const updateCertification = useMutation({
     mutationKey: ["updateCertificationMutation"],
-    mutationFn: async (useCertificationUpdateData: CertificationTypes.Mutations.UpdateMutationParams) => {
-      const { accessToken, ...requestData } = useCertificationUpdateData;
-      const response = await new Requester({
-        method: "PATCH",
-        endpoint: { controller: "certification", action: "update" },
-        accessToken: accessToken,
-        payload: requestData,
-      }).sendRequest();
-
+    mutationFn: async (
+      useCertificationUpdateData: ResourceTypes.Certification.Mutations.UpdateMutationParams,
+    ) => {
+      const { certificationId, ...requestData } = useCertificationUpdateData;
+      const response = await new Requester()
+        .setConfig({
+          method: "PATCH",
+          endpoint: { controller: "certification", action: "update" },
+          payload: { certificationId: certificationId, ...requestData },
+          accessToken: accessToken,
+        })
+        .sendRequest();
       return response;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["certificationQuery"] }),
@@ -27,3 +30,6 @@ const useCertificationUpdateMutation = () => {
 };
 
 export default useCertificationUpdateMutation;
+
+
+
