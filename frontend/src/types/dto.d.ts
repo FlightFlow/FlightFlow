@@ -1,5 +1,8 @@
 namespace DataTransfer {
-  export interface AirportDTO {
+  interface BaseDTO {
+    id: string;
+  }
+  interface AirportDTO extends BaseDTO {
     name: string;
     iataCode: string;
     icaoCode: string;
@@ -12,7 +15,7 @@ namespace DataTransfer {
     routesDestinedForAirportIds: List<string>;
     crewMembersPresentIds: List<string>;
   }
-  export interface AlgorithmResultDTO {
+  interface AlgorithmResultDTO extends BaseDTO {
     flightId: string;
     planeId: string;
     crewMemberIds: List<string>;
@@ -21,7 +24,7 @@ namespace DataTransfer {
     originAirportGroundVehicleIds: List<string>;
     destinationAirportGroundVehicleIds: List<string>;
   }
-  export interface AlgorithmRunDTO {
+  interface AlgorithmRunDTO extends BaseDTO {
     algorithmName: string;
     startTime: Date;
     endTime: Date;
@@ -35,7 +38,7 @@ namespace DataTransfer {
     isResultsSaved: boolean;
     resultId: string;
   }
-  export interface CertificationDTO {
+  interface CertificationDTO extends BaseDTO {
     name: string;
     issuer: Enums.CertificationIssuer;
     issuingCountry: Enums.CertificationIssuingCountry;
@@ -44,7 +47,7 @@ namespace DataTransfer {
     assignableRole: Enums.CrewRoles[];
     description: string;
   }
-  export interface CrewDTO {
+  interface CrewDTO extends BaseDTO {
     fullName: string;
     email: string;
     phoneNumber: number;
@@ -54,11 +57,11 @@ namespace DataTransfer {
     baseAirportId: string;
     availability: CrewAvailability;
   }
-  export interface FlightDTO {
+  interface FlightDTO extends BaseDTO {
     passengerCount: number;
     flightRouteId: string;
   }
-  export interface PlaneDTO {
+  interface PlaneDTO extends BaseDTO {
     model: string;
     registrationNumber: string;
     passengerCapacity: number;
@@ -73,13 +76,13 @@ namespace DataTransfer {
     currentLocationId: string;
     aircraftOperator: string;
   }
-  export interface RouteDTO {
+  interface RouteDTO extends BaseDTO {
     originAirportId: string;
     destinationAirportId: string;
     distance: number;
     estimatedTime: number;
   }
-  export interface RunwayDTO {
+  interface RunwayDTO extends BaseDTO {
     length: number;
     width: number;
     surfaceType: Enums.RunwaySurfaceType;
@@ -87,7 +90,7 @@ namespace DataTransfer {
     orientation: string;
     airportId: string;
   }
-  export interface VehicleDTO {
+  interface VehicleDTO extends BaseDTO {
     type: Enums.GroundVehicleType;
     vehicleCode: string;
     capacity: number;

@@ -16,7 +16,7 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.AirportDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.AirportDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.AirportDTO, "id">;
     }
   }
   namespace Certification {
@@ -31,7 +31,8 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.CertificationDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.CertificationDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams &
+        Omit<DataTransfer.CertificationDTO, "id">;
     }
   }
   namespace Crew {
@@ -46,7 +47,7 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.CrewDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.CrewDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.CrewDTO, "id">;
     }
   }
   namespace Plane {
@@ -61,7 +62,7 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.PlaneDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.PlaneDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.PlaneDTO, "id">;
     }
   }
   namespace Route {
@@ -76,7 +77,7 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.RouteDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.RouteDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.RouteDTO, "id">;
     }
   }
   namespace Runway {
@@ -91,7 +92,7 @@ namespace ResourceTypes {
       type RunwayQueryResponseParams = DataTransfer.RunwayDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.RunwayDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.RunwayDTO, "id">;
     }
   }
   namespace Vehicle {
@@ -106,7 +107,7 @@ namespace ResourceTypes {
       type VehicleQueryResponseParams = DataTransfer.VehicleDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & DataTransfer.VehicleDTO;
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.VehicleDTO, "id">;
     }
   }
 }
