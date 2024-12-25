@@ -92,19 +92,6 @@ namespace EntityTypes {
     orientation: string;
     airport: AirportEntity;
   }
-  export interface SystemRoleEntity extends BaseEntity {
-    roleName: string;
-    permissionPerResource: Map<Enums.SystemResource, List<Enums.SystemPermission>>;
-    assignedUsers: Set<UserEntity>;
-  }
-  export interface UserEntity extends BaseEntity {
-    fullName: string;
-    email: string;
-    password: string;
-    role: SystemRoleEntity;
-    isActive: boolean;
-    isLocked: boolean;
-  }
   export interface VehicleEntity extends BaseEntity {
     type: Enums.GroundVehicleType;
     vehicleCode: string;

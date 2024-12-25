@@ -1,4 +1,4 @@
-import GlobalTypes from "@/types/globals";
+import UtilTypes from "@/types/utils";
 import { z, ZodSchema } from "zod";
 
 import Logger from "./logger";
@@ -21,4 +21,4 @@ if (!parsedEnvSchema.success) {
   Logger.error(`Cannot parse .env: ${parsedEnvSchema.error}`);
 }
 
-export default parsedEnvSchema.data as GlobalTypes.EnvProps;
+export default parsedEnvSchema.data as UtilTypes.AppConfigTypes.EnvProps;
