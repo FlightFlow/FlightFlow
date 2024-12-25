@@ -1,15 +1,21 @@
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-import { SECONDARY_COLOR } from "@/shared/global.style";
+import { BORDER, LIGHT_COLOR, LIGHT_ICON_STYLES } from "@/shared/global.style";
 import ComponentTypes from "@/types/components";
-import { DarkModeRounded, LightModeRounded } from "@mui/icons-material";
+import {
+  CloseRounded,
+  DarkModeRounded,
+  LightModeRounded,
+  LogoutRounded,
+} from "@mui/icons-material";
 import {
   Button,
   ButtonGroup,
   Card,
   Divider,
   Grid2 as Grid,
+  IconButton,
   Modal,
   SxProps,
   Typography,
@@ -29,13 +35,21 @@ const SETTINGS_CONTAINER_STYLES: SxProps = {
   flexDirection: "column",
   justifyContent: "start",
   alignItems: "start",
-  rowGap: 2,
+  rowGap: 1,
+};
+
+const SETTINGS_HEADER_STYLES: SxProps = {
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "space-between",
 };
 
 const SETTINGS_ROW_STYLES: SxProps = {
+  width: "100%",
   flexDirection: "columns",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "start",
+  rowGap: 0.5,
 };
 
 const BUTTON_GROUP_STYLES: SxProps = {
@@ -45,14 +59,22 @@ const BUTTON_GROUP_STYLES: SxProps = {
 const SETTINGS_BUTTON_STYLES: SxProps = {
   paddingLeft: 3,
   paddingRight: 3,
-  paddingTop: 1.5,
-  paddingBottom: 1.5,
-  bgcolor: "ButtonFace",
+  paddingTop: 1.25,
+  paddingBottom: 1.25,
+  bgcolor: LIGHT_COLOR,
 };
 
 const SETTINGS_ACTIVE_BUTTON_STYLES: SxProps = {
   ...SETTINGS_BUTTON_STYLES,
-  bgcolor: SECONDARY_COLOR,
+  bgcolor: BORDER,
+};
+
+const LOGOUT_BUTTON_STYLES: SxProps = {
+  width: "100%",
+  paddingLeft: 3,
+  paddingRight: 3,
+  paddingTop: 1.25,
+  paddingBottom: 1.25,
 };
 
 const SettingsModal = ({
@@ -65,10 +87,19 @@ const SettingsModal = ({
   return (
     <Modal open={isSettingsToggled} onClose={setIsSettingsToggled}>
       <Card sx={SETTINGS_CONTAINER_STYLES}>
-        <Typography>{t("settings.title")}</Typography>
+        <Grid container sx={SETTINGS_HEADER_STYLES}>
+          <Typography variant="h3" fontWeight={650}>
+            {t("settings.title")}
+          </Typography>
+          <IconButton onClick={() => setIsSettingsToggled(false)}>
+            <CloseRounded />
+          </IconButton>
+        </Grid>
         <Divider flexItem />
         <Grid container sx={SETTINGS_ROW_STYLES}>
-          <Typography textAlign={"center"}>{t("settings.theme.title")}</Typography>
+          <Typography textAlign={"center"} fontWeight={650}>
+            {t("settings.theme.title")}
+          </Typography>
           <ButtonGroup fullWidth sx={BUTTON_GROUP_STYLES}>
             <Button
               startIcon={<DarkModeRounded />}
@@ -86,19 +117,33 @@ const SettingsModal = ({
         </Grid>
         <Divider flexItem />
         <Grid container sx={SETTINGS_ROW_STYLES}>
-          <Typography textAlign={"center"}>{t("settings.language.title")}</Typography>
+          <Typography textAlign={"center"} fontWeight={650}>
+            {t("settings.language.title")}
+          </Typography>
           <ButtonGroup fullWidth sx={BUTTON_GROUP_STYLES}>
             <Button
               sx={i18n.language === "en" ? SETTINGS_ACTIVE_BUTTON_STYLES : SETTINGS_BUTTON_STYLES}
               onClick={() => i18n.changeLanguage("en")}>
-              English
+              {t("settings.language.english")}
             </Button>
             <Button
               sx={i18n.language === "tr" ? SETTINGS_ACTIVE_BUTTON_STYLES : SETTINGS_BUTTON_STYLES}
               onClick={() => i18n.changeLanguage("tr")}>
-              Türkçe
+              {t("settings.language.turkish")}
             </Button>
           </ButtonGroup>
+        </Grid>
+        <Divider flexItem />
+        <Grid container sx={SETTINGS_ROW_STYLES}>
+          <Typography textAlign={"center"} fontWeight={650}>
+            {t("settings.account.title")}
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<LogoutRounded sx={LIGHT_ICON_STYLES} />}
+            sx={LOGOUT_BUTTON_STYLES}>
+            {t("settings.account.logout")}
+          </Button>
         </Grid>
       </Card>
     </Modal>

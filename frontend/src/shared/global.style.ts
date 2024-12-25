@@ -12,12 +12,12 @@ export const DARK_COLOR: string = "#0E131B";
 export const BACKGROUND: string = "#E0E1DD";
 export const BORDER: string = "#C4C5BE";
 
-export const linkStyles: CSSProperties = {
+export const LINK_STYLES: CSSProperties = {
   textDecoration: "none",
   color: PRIMARY_COLOR,
   textAlign: "center",
 };
 
-export const lightIconStyles: SxProps = {
+export const LIGHT_ICON_STYLES: SxProps = {
   color: LIGHT_COLOR,
 };
