@@ -6,15 +6,6 @@ ROOT_DIR="$SCRIPT_DIR/../.."
 FRONTEND_PATH="$ROOT_DOR/frontend"
 BACKEND_PATH="$ROOT_DIR/server"
 
-# PRE-COMMIT HOOKS
-echo "Info: Setting up pre-commit hook..."
-
-ln -sf "$ROOT_DIR/.githooks/pre-commit" "$ROOT_DIR/.git/hooks/pre-commit"
-
-echo "Info: Pre-commit hook setup completed."
-
-echo "---"
-
 # .ENV FILE IN FRONTEND
 rename_frontend_config_file() {
   local frontend_path="$1"
