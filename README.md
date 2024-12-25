@@ -114,7 +114,7 @@ Both the frontend and the backend require environment variables to function corr
     api-version: v1 # Current backend version
   ```
 
-Port value here should be same as the one in the URL that you wrote at the frontend config file.
+  Port value here should be same as the one in the URL that you wrote at the frontend config file.
 
 Ensure these config files contain valid values before running the application.
 
