@@ -10,7 +10,7 @@ spring:
       maximum-pool-size: 10
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: false
     properties:
       hibernate:
@@ -24,6 +24,4 @@ springdoc:
 
 server:
   port: 8081
-
-api:
-  version: v1
+  api-version: v1
