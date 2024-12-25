@@ -48,7 +48,6 @@ cd scripts/config # from the project root
 
 This script does the following:
 
-- Sets up a custom `pre-commit` hook (located in `.githooks/`) for git.
 - Renames the `example.application.yml` in the Spring Boot backend to `application.yml`.
 - Renames the `.env.sample` in the React frontend to `.env`.
 - Installs the frontend dependencies using `pnpm i`.
@@ -65,6 +64,10 @@ Both the frontend and the backend require environment variables to function corr
   VITE_APP_SERVER_URL=""
   VITE_APP_SERVER_PORT=""
   VITE_APP_SERVER_API_VERSION=""
+
+  VITE_APP_AUTH0_DOMAIN=""
+  VITE_APP_AUTH0_CLIENT_ID=""
+  VITE_APP_AUTH0_CALLBACK_URL=""
   ```
 
   `VITE_APP_SERVER_URL` variable should have the backend server url. If you are running the project locally, this would just be `localhost`. This variable should NOT include the http/https at the beginning, and a slash at the end.
@@ -77,39 +80,41 @@ Both the frontend and the backend require environment variables to function corr
 
   The frontend constructs the request urls for the backend in the requester utility using the environment variables, and some values like `/api/` is added in the requester utility so if you decide to update the backend, do not forget to also update this utility.
 
+  The project uses Auth0 for authentication and authorization, and the last three variables are related to it. You can see [Auth0 React SDK docs](https://auth0.com/docs/libraries/auth0-react) for more information about this variables.
+
 - **Backend:** The backend have a `application.yml` file (located in `server/src/main/resources`) which have contents like the one shown below:
 
   ```yml
   spring:
-    application:
-      name: FlightCoordinator Backend Server
-    datasource:
-      url: REQUIRED # Database URI
-      username: REQUIRED # Username for database connection
-      password: REQUIRED # Password for database connection
-      driver-class-name: org.postgresql.Driver
-    jpa:
+  application:
+    name: FlightCoordinator Backend Server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flightcoordinator_db # Database URI
+    username: local # Database Connection Username
+    password: local # Database Connection Password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
       hibernate:
-        ddl-auto: validate
-      show-sql: false
-      properties:
-        hibernate:
-          format-sql: true
-      database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
+        format-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   springdoc:
     swagger-ui:
       path: /swagger.html # The url that will contain the OpenAPI docs
 
   server:
-    port: 8081 # The port that backend will be on
-
-  api:
-    version: v1 # Current backend version
+    port: 8081 # The port backend server will be listening
+    api-version: v1 # Current backend version
   ```
 
-  Port value here should be same as the one in the URL that you wrote at the frontend config file.
+Port value here should be same as the one in the URL that you wrote at the frontend config file.
 
 Ensure these config files contain valid values before running the application.
 
