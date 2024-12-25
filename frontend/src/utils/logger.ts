@@ -1,7 +1,5 @@
-import appConfig from "./appConfig";
-
 class Logger {
-  private static DEV_MODE: boolean = appConfig.VITE_APP_ENVIRONMENT === "DEV";
+  private static DEV_MODE: boolean = true;
 
   private static GENERAL_PREFIX: string = "FlightCoordinator Client";
   private static SPESIFIC_PREFIX = {
