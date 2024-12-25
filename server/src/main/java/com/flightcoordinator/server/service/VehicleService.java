@@ -3,59 +3,88 @@ package com.flightcoordinator.server.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.VehicleDTO;
+import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.entity.VehicleEntity;
 import com.flightcoordinator.server.exception.AppError;
+import com.flightcoordinator.server.repository.AirportRepository;
 import com.flightcoordinator.server.repository.VehicleRepository;
+import com.flightcoordinator.server.utils.ObjectMapper;
 
 @Service
 public class VehicleService {
   @Autowired
   private VehicleRepository vehicleRepository;
 
-  public VehicleEntity getSingleVehicleById(String vehicleId) {
-    Optional<VehicleEntity> vehicle = vehicleRepository.findById(vehicleId);
-    return vehicle.orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
+  @Autowired
+  private AirportRepository airportRepository;
+
+  public VehicleDTO getSingleVehicleById(String vehicleId) {
+    VehicleEntity vehicle = vehicleRepository.findById(vehicleId)
+        .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
+    VehicleDTO vehicleDTO = ObjectMapper.toVehicleDTO(vehicle);
+    return vehicleDTO;
   }
 
-  public List<VehicleEntity> getMultipleVehicleById(List<String> vehicleIds) {
+  public List<VehicleDTO> getMultipleVehicleById(List<String> vehicleIds) {
     List<VehicleEntity> vehicles = vehicleRepository.findAllById(vehicleIds);
     if (vehicles.isEmpty()) {
       throw new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value());
     }
-    return vehicles;
+    List<VehicleDTO> vehicleDTOs = vehicles.stream().map(ObjectMapper::toVehicleDTO).collect(Collectors.toList());
+    return vehicleDTOs;
   }
 
-  public List<VehicleEntity> getAllVehicles() {
+  public List<VehicleDTO> getAllVehicles() {
     List<VehicleEntity> vehicles = vehicleRepository.findAll();
     if (vehicles.isEmpty()) {
       throw new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value());
     }
-    return vehicles;
+    List<VehicleDTO> vehicleDTOs = vehicles.stream().map(ObjectMapper::toVehicleDTO).collect(Collectors.toList());
+    return vehicleDTOs;
   }
 
-  public void createVehicle(VehicleEntity newVehicle) {
-    vehicleRepository.save(newVehicle);
+  public void createVehicle(VehicleDTO newVehicleDTO) {
+    AirportEntity newAirportEntity = airportRepository.findById(newVehicleDTO.getAirportId())
+        .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
+
+    VehicleEntity newVehicleEntity = new VehicleEntity();
+    newVehicleEntity.setType(newVehicleDTO.getType());
+    newVehicleEntity.setVehicleCode(newVehicleDTO.getVehicleCode());
+    newVehicleEntity.setCapacity(newVehicleDTO.getCapacity());
+    newVehicleEntity.setAvailability(newVehicleDTO.getAvailability());
+    newVehicleEntity.setMaintenanceDue(newVehicleDTO.getMaintenanceDue());
+    newVehicleEntity.setAirport(newAirportEntity);
+
+    vehicleRepository.save(newVehicleEntity);
   }
 
-  public void updateVehicle(String vehicleId, VehicleEntity updatedVehicle) {
-    VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
+  public void updateVehicle(String vehicleId, VehicleDTO updatedVehicleDTO) {
+    AirportEntity newAirportEntity = airportRepository.findById(updatedVehicleDTO.getAirportId())
+        .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
-    existingVehicle.setType(updatedVehicle.getType());
-    existingVehicle.setVehicleCode(updatedVehicle.getVehicleCode());
-    existingVehicle.setCapacity(updatedVehicle.getCapacity());
-    existingVehicle.setAvailability(updatedVehicle.getAvailability());
-    existingVehicle.setMaintenanceDue(updatedVehicle.getMaintenanceDue());
+    VehicleEntity existingVehicle = vehicleRepository.findById(vehicleId)
+        .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
+
+    existingVehicle.setType(updatedVehicleDTO.getType());
+    existingVehicle.setVehicleCode(updatedVehicleDTO.getVehicleCode());
+    existingVehicle.setCapacity(updatedVehicleDTO.getCapacity());
+    existingVehicle.setAvailability(updatedVehicleDTO.getAvailability());
+    existingVehicle.setMaintenanceDue(updatedVehicleDTO.getMaintenanceDue());
+    existingVehicle.setAirport(newAirportEntity);
 
     vehicleRepository.save(existingVehicle);
   }
 
   public void deleteVehicle(String vehicleId) {
-    VehicleEntity existingVehicle = getSingleVehicleById(vehicleId);
+    VehicleEntity existingVehicle = vehicleRepository.findById(vehicleId)
+        .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
     vehicleRepository.delete(existingVehicle);
   }
 

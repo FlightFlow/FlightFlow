@@ -1,31 +1,15 @@
 import { CSSProperties, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router";
 
-import { BACKGROUND, BORDER, DARK_GRAY_COLOR, LIGHT_COLOR } from "@/shared/global.style";
+import { BACKGROUND, BORDER, DARK_GRAY_COLOR } from "@/shared/global.style";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  AutoMode,
-  DarkModeRounded,
-  LightModeRounded,
-  LogoutRounded,
-  SettingsBrightness,
-  SettingsBrightnessRounded,
-  SettingsRounded,
-} from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  Divider,
-  Grid2 as Grid,
-  Modal,
-  SxProps,
-  Typography,
-} from "@mui/material";
+import { SettingsRounded } from "@mui/icons-material";
+import { Box, Divider, Grid2 as Grid, SxProps, Typography } from "@mui/material";
 
 import AuthCheck from "@/components/AuthCheck";
 import IconButton from "@/components/IconButton";
+import SettingsModal from "@/components/SettingsModal";
 import SidebarLinks from "@/components/SidebarLinks";
 
 const MAIN_STYLES: CSSProperties = {
@@ -98,96 +82,46 @@ const CONTENT_STYLES: SxProps = {
   boxSizing: "border-box",
 };
 
+const SIDEBAR_LOGO_CONTAINER_STYLES: SxProps = {
+  width: "100%",
+  padding: 2,
+  boxSizing: "border-box",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "start",
+  columnGap: 1.25,
+};
+
+const SIDEBAR_LOGO_IMAGE_STYLES: CSSProperties = {
+  width: "60px",
+  height: "60px",
+};
+
 const SIDEBAR_PADDING: SxProps = {
   width: "100%",
   padding: 1,
   boxSizing: "border-box",
 };
 
-const SETTIGS_BUTTON_STYLES: SxProps = {
-  paddingLeft: 3,
-  paddingRight: 3,
-  paddingTop: 1.5,
-  paddingBottom: 1.5,
-};
-
 const ResourcePageLayout = () => {
-  const { isAuthenticated, user, logout } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
+  const { t } = useTranslation();
   const [isSettingsToggled, setIsSettingsToggled] = useState<boolean>(false);
 
   return (
     <AuthCheck>
-      <Modal
-        open={isSettingsToggled}
-        onClose={() => setIsSettingsToggled((settingsState) => !settingsState)}>
-        <Card
-          sx={{
-            width: "400px",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-            alignItems: "start",
-            rowGap: 1,
-          }}>
-          <Typography variant="h3">Settings</Typography>
-          <Divider flexItem />
-          <Grid container>
-            <Typography>Theme</Typography>
-            <ButtonGroup>
-              <Button startIcon={<DarkModeRounded />} sx={SETTIGS_BUTTON_STYLES}>
-                Dark
-              </Button>
-              <Button startIcon={<SettingsBrightnessRounded />} sx={SETTIGS_BUTTON_STYLES}>
-                System
-              </Button>
-              <Button startIcon={<LightModeRounded />} sx={SETTIGS_BUTTON_STYLES}>
-                Light
-              </Button>
-            </ButtonGroup>
-          </Grid>
-          <Grid container>
-            <Typography>Language</Typography>
-            <ButtonGroup>
-              <Button sx={SETTIGS_BUTTON_STYLES}>English</Button>
-              <Button sx={SETTIGS_BUTTON_STYLES}>Türkçe</Button>
-            </ButtonGroup>
-          </Grid>
-          {/* logout */}
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => logout()}
-            startIcon={<LogoutRounded sx={{ color: LIGHT_COLOR }} />}>
-            Logout
-          </Button>
-        </Card>
-      </Modal>
+      <SettingsModal
+        isSettingsToggled={isSettingsToggled}
+        setIsSettingsToggled={() => setIsSettingsToggled((settingsState) => !settingsState)}
+      />
       <main style={MAIN_STYLES}>
         <Grid container sx={SIDEBAR_WRAPPER_STYLES}>
           <Grid container sx={SIDEBAR_MENU_STYLES}>
-            <Grid
-              container
-              sx={{
-                width: "100%",
-                padding: 2,
-                boxSizing: "border-box",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "start",
-                columnGap: 1.25,
-              }}>
+            <Grid container sx={SIDEBAR_LOGO_CONTAINER_STYLES}>
               <img
                 src="../../../public/assets/logo.png"
                 alt="FlightCoordinator Logo"
-                style={{
-                  width: "60px",
-                  height: "60px",
-                }}
+                style={SIDEBAR_LOGO_IMAGE_STYLES}
               />
               <Typography variant="h3" height={60} fontWeight={700}>
                 Flight
@@ -219,14 +153,10 @@ const ResourcePageLayout = () => {
                 {user?.nickname}
               </Typography>
               <Typography noWrap={true} sx={SIDEBAR_USER_EMAIL_STYLES}>
-                {isAuthenticated ? user?.email : "Please re-login."}
+                {isAuthenticated ? user?.email : t("sidebar.relogin")}
               </Typography>
             </Box>
-            <IconButton
-              icon={<SettingsRounded />}
-              tooltipText="Settings"
-              onclick={() => setIsSettingsToggled(true)}
-            />
+            <IconButton icon={<SettingsRounded />} onclick={() => setIsSettingsToggled(true)} />
           </Grid>
         </Grid>
         <Grid container sx={CONTENT_STYLES}>

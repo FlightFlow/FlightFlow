@@ -3,61 +3,81 @@ package com.flightcoordinator.server.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.CertificationDTO;
 import com.flightcoordinator.server.entity.CertificationEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.CertificationRepository;
+import com.flightcoordinator.server.utils.ObjectMapper;
 
 @Service
 public class CertificationService {
   @Autowired
   private CertificationRepository certificationRepository;
 
-  public CertificationEntity getSingleCertificationById(String certificationId) {
-    Optional<CertificationEntity> certification = certificationRepository.findById(certificationId);
-    return certification.orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
+  public CertificationDTO getSingleCertificationById(String certificationId) {
+    CertificationEntity certification = certificationRepository.findById(certificationId)
+        .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
+    CertificationDTO certificationDTO = ObjectMapper.toCertificationDTO(certification);
+    return certificationDTO;
   }
 
-  public List<CertificationEntity> getMultipleCertificationsById(List<String> certificationIds) {
+  public List<CertificationDTO> getMultipleCertificationsById(List<String> certificationIds) {
     List<CertificationEntity> certifications = certificationRepository.findAllById(certificationIds);
     if (certifications.isEmpty()) {
       throw new AppError("notFound.certification", HttpStatus.NOT_FOUND.value());
     }
-    return certifications;
+    List<CertificationDTO> certificationDTOs = certifications.stream().map(ObjectMapper::toCertificationDTO)
+        .collect(Collectors.toList());
+    return certificationDTOs;
   }
 
-  public List<CertificationEntity> getAllCertifications() {
+  public List<CertificationDTO> getAllCertifications() {
     List<CertificationEntity> certifications = certificationRepository.findAll();
     if (certifications.isEmpty()) {
       throw new AppError("notFound.certification", HttpStatus.NOT_FOUND.value());
     }
-    return certifications;
+    List<CertificationDTO> certificationDTOs = certifications.stream().map(ObjectMapper::toCertificationDTO)
+        .collect(Collectors.toList());
+    return certificationDTOs;
   }
 
-  public void createCertification(CertificationEntity newCertification) {
-    certificationRepository.save(newCertification);
+  public void createCertification(CertificationDTO newCertificationDTO) {
+    CertificationEntity certificationEntity = new CertificationEntity();
+    certificationEntity.setName(newCertificationDTO.getName());
+    certificationEntity.setIssuer(newCertificationDTO.getIssuer());
+    certificationEntity.setIssuingCountry(newCertificationDTO.getIssuingCountry());
+    certificationEntity.setExpirationDate(newCertificationDTO.getExpirationDate());
+    certificationEntity.setValidityPeriod(newCertificationDTO.getValidityPeriod());
+    certificationEntity.setAssignableRoles(newCertificationDTO.getAssignableRoles());
+    certificationEntity.setDescription(newCertificationDTO.getDescription());
+
+    certificationRepository.save(certificationEntity);
   }
 
-  public void updateCertification(String certificationId, CertificationEntity updatedCertification) {
-    CertificationEntity existingCertification = getSingleCertificationById(certificationId);
+  public void updateCertification(String certificationId, CertificationDTO updatedCertificationDTO) {
+    CertificationEntity existingCertification = certificationRepository.findById(certificationId)
+        .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
 
-    existingCertification.setName(updatedCertification.getName());
-    existingCertification.setIssuer(updatedCertification.getIssuer());
-    existingCertification.setIssuingCountry(updatedCertification.getIssuingCountry());
-    existingCertification.setExpirationDate(updatedCertification.getExpirationDate());
-    existingCertification.setValidityPeriod(updatedCertification.getValidityPeriod());
-    existingCertification.setAssignableRoles(updatedCertification.getAssignableRoles());
-    existingCertification.setDescription(updatedCertification.getDescription());
+    existingCertification.setName(updatedCertificationDTO.getName());
+    existingCertification.setIssuer(updatedCertificationDTO.getIssuer());
+    existingCertification.setIssuingCountry(updatedCertificationDTO.getIssuingCountry());
+    existingCertification.setExpirationDate(updatedCertificationDTO.getExpirationDate());
+    existingCertification.setValidityPeriod(updatedCertificationDTO.getValidityPeriod());
+    existingCertification.setAssignableRoles(updatedCertificationDTO.getAssignableRoles());
+    existingCertification.setDescription(updatedCertificationDTO.getDescription());
 
     certificationRepository.save(existingCertification);
   }
 
   public void deleteCertification(String certificationId) {
-    CertificationEntity existingCertification = getSingleCertificationById(certificationId);
+    CertificationEntity existingCertification = certificationRepository.findById(certificationId)
+        .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
     certificationRepository.delete(existingCertification);
   }
 

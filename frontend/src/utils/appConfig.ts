@@ -1,9 +1,10 @@
-import GlobalTypes from "@/types/globals";
+import UtilTypes from "@/types/utils";
 import { z, ZodSchema } from "zod";
 
 import Logger from "./logger";
 
 const envSchema: ZodSchema = z.object({
+  VITE_APP_ENVIRONMENT: z.enum(["DEV", "TEST", "PROD"]).default("DEV"),
   VITE_APP_SERVER_URL: z.string().default("localhost"),
   VITE_APP_SERVER_PORT: z
     .string()
@@ -21,4 +22,4 @@ if (!parsedEnvSchema.success) {
   Logger.error(`Cannot parse .env: ${parsedEnvSchema.error}`);
 }
 
-export default parsedEnvSchema.data as GlobalTypes.EnvProps;
+export default parsedEnvSchema.data as UtilTypes.AppConfigTypes.EnvProps;

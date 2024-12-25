@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
-import { AirportType } from "@/constants/enumsAsLists";
-import EntityTypes from "@/types/entity";
+import EnumValues from "@/constants/enumValues";
+import DataTransfer from "@/types/dto";
 import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 
@@ -44,13 +44,13 @@ const AirportsPage = () => {
       iataCode: airport.iataCode,
       icaoCode: airport.icaoCode,
       countryCode: airport.countryCode,
-      type: airport.type,
-      runways: airport.runways,
-      vehiclesPresent: airport.vehiclesPresent,
-      planesPresent: airport.planesPresent,
-      routesOriginatingFromAirport: airport.routesOriginatingFromAirport,
-      routesDestinedForAirport: airport.routesDestinedForAirport,
-      crewMembersPresent: airport.crewMembersPresent,
+      type: Enums.AirportType[airport.type as keyof typeof Enums.AirportType],
+      runwayIds: airport.runwayIds.join(", "),
+      vehiclesPresentIds: airport.vehiclesPresentIds.join(", "),
+      planesPresentIds: airport.planesPresentIds.join(", "),
+      routesOriginatingFromAirportIds: airport.routesOriginatingFromAirportIds.join(", ") as string,
+      routesDestinedForAirportIds: airport.routesDestinedForAirportIds.join(", "),
+      crewMembersPresentIds: airport.crewMembersPresentIds.join(", "),
     }),
   );
 
@@ -69,6 +69,15 @@ const AirportsPage = () => {
       headerName: t("columns.airport.uniqueId"),
       flex: 1,
       editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "name",
+      type: "string",
+      headerName: t("columns.airport.name"),
+      flex: 1,
+      editable: true,
       headerAlign: "left",
       align: "left",
     },
@@ -107,25 +116,80 @@ const AirportsPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: AirportType.map((type) => ({ label: t(`airport.types.${type}`), value: type })),
+      valueOptions: [
+        EnumValues.AirportType.INTERNATIONAL,
+        EnumValues.AirportType.DOMESTIC,
+        EnumValues.AirportType.REGIONAL,
+      ],
     },
     {
-      field: "runways",
+      field: "runwayIds",
+      type: "string",
+      headerName: t("columns.airport.runways"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "vehiclesPresentIds",
+      type: "string",
+      headerName: t("columns.airport.vehiclesPresent"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "planesPresentIds",
+      type: "string",
+      headerName: t("columns.airport.planesPresent"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "routesOriginatingFromAirportIds",
+      type: "string",
+      headerName: t("columns.airport.routesOriginatingFromAirport"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "routesDestinedForAirportIds",
+      type: "string",
+      headerName: t("columns.airport.routesDestinedForAirport"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "crewMembersPresentIds",
+      type: "string",
+      headerName: t("columns.airport.crewMembersPresent"),
+      flex: 1,
+      editable: false,
+      headerAlign: "left",
+      align: "left",
     },
   ];
 
-  const airportNewDataObject: Omit<EntityTypes.AirportEntity, "id"> = {
+  const airportNewDataObject: Omit<DataTransfer.AirportDTO, "id"> = {
     name: "",
     iataCode: "",
     icaoCode: "",
     countryCode: "",
     type: Enums.AirportType.INTERNATIONAL,
-    runways: [],
-    vehiclesPresent: [],
-    planesPresent: [],
-    routesOriginatingFromAirport: [],
-    routesDestinedForAirport: [],
-    crewMembersPresent: [],
+    runwayIds: [],
+    vehiclesPresentIds: [],
+    planesPresentIds: [],
+    routesOriginatingFromAirportIds: [],
+    routesDestinedForAirportIds: [],
+    crewMembersPresentIds: [],
   };
 
   return (

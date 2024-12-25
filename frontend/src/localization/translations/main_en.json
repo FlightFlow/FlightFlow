@@ -3,6 +3,7 @@
     "airport": {
       "id": "Table ID",
       "uniqueId": "Database ID",
+      "name": "Airport Name",
       "iataCode": "IATA Code",
       "icaoCode": "ICAO Code",
       "countryCode": "CountryCode",
@@ -74,6 +75,18 @@
       "algorithmResult": "Algorithm Result",
       "documentation": "See Documentation",
       "repository": "See GitHub repository"
+    },
+    "relogin": "Please re-login"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "darkTheme": "Dark",
+      "lightTheme": "Light"
+    },
+    "language": {
+      "title": "Language"
     }
   }
 }

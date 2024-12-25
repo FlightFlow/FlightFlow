@@ -74,7 +74,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
           <GridToolbarColumnsButton />
           <GridToolbarDensitySelector />
           <Button color="primary" startIcon={<Add />} onClick={handleAddNewClick}>
-            {t(`${dataCategory}s.addNew${formattedDataCategory}Button`)}
+            {t(`buttons.addNew${formattedDataCategory}Button`)}
           </Button>
         </Box>
         <GridToolbarQuickFilter variant="outlined" size="small" />

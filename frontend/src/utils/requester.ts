@@ -25,8 +25,8 @@ class Requester {
   private baseURL: string = SERVER_URL.replace(/\/$/, "");
   private port: string = SERVER_PORT;
   private endpoint: UtilTypes.RequesterBaseTypes.EndpointProps = {
-    controller: "user",
-    action: "auth/validate",
+    controller: "plane",
+    action: "getAll",
   };
   private method: UtilTypes.RequesterBaseTypes.RequestMethods = "POST";
   private contentType: string = "application/json";
@@ -37,7 +37,6 @@ class Requester {
   private responseLanguage: string = i18next.language;
 
   private accessToken?: string;
-  private refreshToken?: string;
 
   private axiosInstance: AxiosInstance;
 
@@ -50,13 +49,11 @@ class Requester {
     this.method = requesterConfig.method;
     this.includeCookies = requesterConfig.includeCookies ?? false;
     this.accessToken = requesterConfig.accessToken;
-    this.refreshToken = requesterConfig.refreshToken;
     this.headers = {
       ...requesterConfig.headers,
       "Content-Type": this.contentType,
       "Accept-Language": this.responseLanguage,
       ...(this.accessToken && { Authorization: `Bearer ${this.accessToken}` }),
-      ...(this.endpoint.action === "auth/validate" && { Refresh: `Bearer ${this.refreshToken}` }),
     };
     this.payload = requesterConfig.payload;
     this.query = requesterConfig.query;

@@ -32,7 +32,7 @@ public class PlaneEntity {
 
   @Min(value = 1, message = "Passenger capacity should be greater than '1'")
   @Column(name = "passenger_capacity", nullable = false)
-  private int passengerCapacity;
+  private Integer passengerCapacity;
 
   @Min(value = 1, message = "Fuel efficiency should be greater than '1'")
   @Column(name = "fuel_efficiency", nullable = false)
@@ -76,7 +76,7 @@ public class PlaneEntity {
   }
 
   public PlaneEntity(String id, String model, String registrationNumber,
-      @Min(value = 1, message = "Passenger capacity should be greater than '1'") int passengerCapacity,
+      @Min(value = 1, message = "Passenger capacity should be greater than '1'") Integer passengerCapacity,
       @Min(value = 1, message = "Fuel efficiency should be greater than '1'") Float fuelEfficiency,
       @Min(value = 1, message = "Max flight range should be greater than '1'") Float maxFlightRange,
       Date lastMaintenance,
@@ -125,11 +125,11 @@ public class PlaneEntity {
     this.registrationNumber = registrationNumber;
   }
 
-  public int getPassengerCapacity() {
+  public Integer getPassengerCapacity() {
     return passengerCapacity;
   }
 
-  public void setPassengerCapacity(int passengerCapacity) {
+  public void setPassengerCapacity(Integer passengerCapacity) {
     this.passengerCapacity = passengerCapacity;
   }
 

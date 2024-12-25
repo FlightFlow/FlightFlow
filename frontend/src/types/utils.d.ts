@@ -1,9 +1,9 @@
 namespace UtilTypes {
-  export namespace RequesterBaseTypes {
+  namespace RequesterBaseTypes {
     type RequestProtocols = "http" | "https";
     type RequestMethods = "POST" | "PATCH" | "DELETE";
 
-    type EndpointRoutes =
+    type ResourceControllers =
       | "airport"
       | "algorithm/run"
       | "algorithm/result"
@@ -13,25 +13,17 @@ namespace UtilTypes {
       | "plane"
       | "route"
       | "runway"
-      | "systemRole"
-      | "user"
       | "vehicle";
 
-    type AlgorithmActions = ""; // TODO
-    type EndpointActions = "getById" | "getAll" | "create" | "update" | "delete";
-    type AuthActions =
-      | "auth/login"
-      | "auth/register"
-      | "auth/logout"
-      | "auth/newRefreshToken"
-      | "auth/validate";
+    type AlgorithmActions = "trigger" | "details" | "";
+    type ResourceActions = "getById" | "getAll" | "create" | "update" | "delete";
 
     interface EndpointProps {
-      controller: EndpointRoutes;
-      action: EndpointActions | AuthActions | AlgorithmActions;
+      controller: ResourceControllers;
+      action: ResourceActions | AlgorithmActions;
     }
 
-    export interface RequesterConfigParams {
+    interface RequesterConfigParams {
       protocol?: RequestProtocols;
       baseURL?: string;
       endpoint: EndpointProps;
@@ -41,7 +33,17 @@ namespace UtilTypes {
       query?: Record<string, string>;
       payload?: object;
       accessToken?: string;
-      refreshToken?: string;
+    }
+  }
+  namespace AppConfigTypes {
+    interface EnvProps {
+      VITE_APP_ENVIRONMENT: "DEV" | "TEST" | "PROD";
+      VITE_APP_SERVER_URL: string;
+      VITE_APP_SERVER_PORT: string;
+      VITE_APP_SERVER_API_VERSION: string;
+      VITE_APP_AUTH0_DOMAIN: string;
+      VITE_APP_AUTH0_CLIENT_ID: string;
+      VITE_APP_AUTH0_CALLBACK_URL: string;
     }
   }
 }

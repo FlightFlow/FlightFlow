@@ -75,5 +75,9 @@ namespace ComponentTypes {
   interface SidebarLinksProps {
     section: "resource" | "algorithm" | "external";
   }
+  interface SettingsModelProps {
+    isSettingsToggled: boolean;
+    setIsSettingsToggled: (isSettingsToggled: boolean) => void;
+  }
 }
 export default ComponentTypes;

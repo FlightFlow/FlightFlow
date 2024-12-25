@@ -47,7 +47,7 @@ public class CrewEntity {
 
   @Min(value = 0, message = "Total flight hours cannot be negative")
   @Column(name = "total_flight_hours", nullable = false)
-  private int totalFlightHours = 0;
+  private Integer totalFlightHours = 0;
 
   @ManyToOne
   @JoinColumn(name = "base_airport", nullable = false)
@@ -55,14 +55,14 @@ public class CrewEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "availability", nullable = false)
-  private CrewAvailability availability = CrewAvailability.AVAILABLE;
+  private CrewAvailability availability;
 
   public CrewEntity() {
   }
 
   public CrewEntity(String id, String fullName, @Email(message = "E-Mail is invalid") String email, Integer phoneNumber,
       CrewRole role, List<CertificationEntity> certifications,
-      @Min(value = 0, message = "Total flight hours cannot be negative") int totalFlightHours,
+      @Min(value = 0, message = "Total flight hours cannot be negative") Integer totalFlightHours,
       AirportEntity baseAirport, CrewAvailability availability) {
     this.id = id;
     this.fullName = fullName;
@@ -123,11 +123,11 @@ public class CrewEntity {
     this.certifications = certifications;
   }
 
-  public int getTotalFlightHours() {
+  public Integer getTotalFlightHours() {
     return totalFlightHours;
   }
 
-  public void setTotalFlightHours(int totalFlightHours) {
+  public void setTotalFlightHours(Integer totalFlightHours) {
     this.totalFlightHours = totalFlightHours;
   }
 
