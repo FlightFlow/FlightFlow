@@ -3,6 +3,7 @@
     "airport": {
       "id": "Table ID",
       "uniqueId": "Database ID",
+      "name": "Airport Name",
       "iataCode": "IATA Code",
       "icaoCode": "ICAO Code",
       "countryCode": "CountryCode",

@@ -45,22 +45,12 @@ const AirportsPage = () => {
       icaoCode: airport.icaoCode,
       countryCode: airport.countryCode,
       type: Enums.AirportType[airport.type as keyof typeof Enums.AirportType],
-      runwayIds: airport.runwayIds.map((runway: DataTransfer.RunwayDTO) => runway.id).join(", "),
-      vehiclesPresentIds: airport.vehiclesPresentIds
-        .map((vehicle: DataTransfer.VehicleDTO) => vehicle.id)
-        .join(", "),
-      planesPresentIds: airport.planesPresentIds
-        .map((plane: DataTransfer.PlaneDTO) => plane.id)
-        .join(", "),
-      routesOriginatingFromAirportIds: airport.routesOriginatingFromAirportIds
-        .map((route: DataTransfer.RouteDTO) => route.id)
-        .join(", "),
-      routesDestinedForAirportIds: airport.routesDestinedForAirportIds
-        .map((route: DataTransfer.RouteDTO) => route.id)
-        .join(", "),
-      crewMembersPresentIds: airport.crewMembersPresentIds
-        .map((crew: DataTransfer.CrewDTO) => crew.id)
-        .join(", "),
+      runwayIds: airport.runwayIds.join(", "),
+      vehiclesPresentIds: airport.vehiclesPresentIds.join(", "),
+      planesPresentIds: airport.planesPresentIds.join(", "),
+      routesOriginatingFromAirportIds: airport.routesOriginatingFromAirportIds.join(", ") as string,
+      routesDestinedForAirportIds: airport.routesDestinedForAirportIds.join(", "),
+      crewMembersPresentIds: airport.crewMembersPresentIds.join(", "),
     }),
   );
 
@@ -79,6 +69,15 @@ const AirportsPage = () => {
       headerName: t("columns.airport.uniqueId"),
       flex: 1,
       editable: false,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "name",
+      type: "string",
+      headerName: t("columns.airport.name"),
+      flex: 1,
+      editable: true,
       headerAlign: "left",
       align: "left",
     },
@@ -124,7 +123,7 @@ const AirportsPage = () => {
       ],
     },
     {
-      field: "runways",
+      field: "runwayIds",
       type: "string",
       headerName: t("columns.airport.runways"),
       flex: 1,
@@ -133,7 +132,7 @@ const AirportsPage = () => {
       align: "left",
     },
     {
-      field: "vehiclesPresent",
+      field: "vehiclesPresentIds",
       type: "string",
       headerName: t("columns.airport.vehiclesPresent"),
       flex: 1,
@@ -142,7 +141,7 @@ const AirportsPage = () => {
       align: "left",
     },
     {
-      field: "planesPresent",
+      field: "planesPresentIds",
       type: "string",
       headerName: t("columns.airport.planesPresent"),
       flex: 1,
@@ -151,7 +150,7 @@ const AirportsPage = () => {
       align: "left",
     },
     {
-      field: "routesOriginatingFromAirport",
+      field: "routesOriginatingFromAirportIds",
       type: "string",
       headerName: t("columns.airport.routesOriginatingFromAirport"),
       flex: 1,
@@ -160,7 +159,7 @@ const AirportsPage = () => {
       align: "left",
     },
     {
-      field: "routesDestinedForAirport",
+      field: "routesDestinedForAirportIds",
       type: "string",
       headerName: t("columns.airport.routesDestinedForAirport"),
       flex: 1,
@@ -169,7 +168,7 @@ const AirportsPage = () => {
       align: "left",
     },
     {
-      field: "crewMembersPresent",
+      field: "crewMembersPresentIds",
       type: "string",
       headerName: t("columns.airport.crewMembersPresent"),
       flex: 1,

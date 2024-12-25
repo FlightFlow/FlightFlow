@@ -1,4 +1,7 @@
 {
+  "buttons": {
+    "addNewAirportButton": "Add New Airport"
+  },
   "overlay": {
     "loadingMessage": "Loading data...",
     "errorMessage": "An error occurred. Try re-logging."
