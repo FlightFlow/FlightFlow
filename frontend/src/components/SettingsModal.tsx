@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { BORDER, LIGHT_COLOR, LIGHT_ICON_STYLES } from "@/shared/global.style";
 import ComponentTypes from "@/types/components";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   CloseRounded,
   DarkModeRounded,
@@ -81,6 +82,7 @@ const SettingsModal = ({
   isSettingsToggled,
   setIsSettingsToggled,
 }: ComponentTypes.SettingsModelProps) => {
+  const { logout } = useAuth0();
   const { t, i18n } = useTranslation();
   const { isLightMode, setIsLightMode } = useContext(themeContext);
 
@@ -141,7 +143,8 @@ const SettingsModal = ({
           <Button
             variant="contained"
             startIcon={<LogoutRounded sx={LIGHT_ICON_STYLES} />}
-            sx={LOGOUT_BUTTON_STYLES}>
+            sx={LOGOUT_BUTTON_STYLES}
+            onClick={() => logout()}>
             {t("settings.account.logout")}
           </Button>
         </Grid>
