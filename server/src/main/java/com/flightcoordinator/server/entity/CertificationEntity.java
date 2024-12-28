@@ -17,6 +17,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 
@@ -54,13 +56,21 @@ public class CertificationEntity {
   @Column(name = "description", nullable = false)
   private String description;
 
+@ManyToMany
+@JoinTable(
+    name = "certification_crew_members", 
+    joinColumns = @JoinColumn(name = "certification_id"),
+    inverseJoinColumns = @JoinColumn(name = "crew_id") 
+)
+private List<CrewEntity> assignedCrewMembers;
+
   public CertificationEntity() {
   }
 
   public CertificationEntity(String id, String name, CertificationIssuer issuer,
       CertificationIssuingCountry issuingCountry, Date expirationDate,
       @Min(value = 1, message = "Validity period should be greater than '1'") Integer validityPeriod,
-      List<CrewRole> assignableRoles, String description) {
+      List<CrewRole> assignableRoles, String description, List<CrewEntity> assignedCrewMembers) {
     this.id = id;
     this.name = name;
     this.issuer = issuer;
@@ -69,6 +79,7 @@ public class CertificationEntity {
     this.validityPeriod = validityPeriod;
     this.assignableRoles = assignableRoles;
     this.description = description;
+    this.assignedCrewMembers = assignedCrewMembers;
   }
 
   public String getId() {
@@ -134,4 +145,14 @@ public class CertificationEntity {
   public void setDescription(String description) {
     this.description = description;
   }
+
+  public List<CrewEntity> getAssignedCrewMembers() {
+    return assignedCrewMembers;
+  }
+
+  public void setAssignedCrewMembers(List<CrewEntity> assignedCrewMembers) {
+    this.assignedCrewMembers = assignedCrewMembers;
+  }
+
+  
 }
