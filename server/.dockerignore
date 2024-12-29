@@ -1,7 +1,5 @@
 target/
 .m2/
-application.yml**
-example.application.yml**
 
 *.log
 
@@ -11,4 +9,3 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
-
