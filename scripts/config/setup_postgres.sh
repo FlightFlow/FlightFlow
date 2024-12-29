@@ -57,4 +57,11 @@ test_connection() {
   echo "Info: Successfully tested database connection."
 }
 
+start_postgres
+setup_database
+check_user_roles
+update_pg_hba
+restart_postgres
+test_connection
+
 echo "Info: Successfully completed PostgreSQL setup."
