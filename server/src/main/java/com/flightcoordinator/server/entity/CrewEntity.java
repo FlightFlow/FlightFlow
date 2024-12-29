@@ -35,7 +35,7 @@ public class CrewEntity {
   private String email;
 
   @Column(name = "phone_number", nullable = false)
-  private Integer phoneNumber;
+  private Long phoneNumber;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "role", nullable = false)
@@ -60,7 +60,7 @@ public class CrewEntity {
   public CrewEntity() {
   }
 
-  public CrewEntity(String id, String fullName, @Email(message = "E-Mail is invalid") String email, Integer phoneNumber,
+  public CrewEntity(String id, String fullName, @Email(message = "E-Mail is invalid") String email, Long phoneNumber,
       CrewRole role, List<CertificationEntity> certifications,
       @Min(value = 0, message = "Total flight hours cannot be negative") Integer totalFlightHours,
       AirportEntity baseAirport, CrewAvailability availability) {
@@ -99,11 +99,11 @@ public class CrewEntity {
     this.email = email;
   }
 
-  public Integer getPhoneNumber() {
+  public Long getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(Integer phoneNumber) {
+  public void setPhoneNumber(Long phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 
