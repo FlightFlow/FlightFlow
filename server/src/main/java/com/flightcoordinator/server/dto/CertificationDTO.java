@@ -16,6 +16,7 @@ public class CertificationDTO {
   private Integer validityPeriod;
   private List<CrewRole> assignableRoles;
   private String description;
+  private List<String> assignedCrewMembers;
 
   public CertificationDTO() {
   }
@@ -82,5 +83,13 @@ public class CertificationDTO {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public List<String> getAssignedCrewMembers() {
+    return assignedCrewMembers;
+  }
+
+  public void setAssignedCrewMembers(List<String> assignedCrewMembers) {
+    this.assignedCrewMembers = assignedCrewMembers;
   }
 }
