@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/${server.api-version}/dev-tools")
+@RequestMapping("/api/${server.api-version}/devTools")
 @Tag(name = "Development Tools' Controller", description = "Endpoint for various tools for development operations.")
 public class DevToolsController {
   @Autowired
