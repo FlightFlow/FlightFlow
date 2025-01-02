@@ -110,5 +110,55 @@ namespace ResourceTypes {
       type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.VehicleDTO, "id">;
     }
   }
+
+  namespace Flight {
+    type FlightId = { flightId: string };
+    namespace Mutations {
+      type CreateMutationParams = DataTransfer.FlightDTO;
+      type UpdateMutationParams = FlightId & DataTransfer.FlightDTO;
+      type DeleteMutationParams = FlightId;
+    }
+    namespace Queries {
+      type QueryByIdRequestParams = FlightId;
+      type QueryResponseParams = DataTransfer.FlightDTO[];
+    }
+    namespace Page {
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.FlightDTO, "id">;
+    }
+  }
+
+  namespace AlgorithmResult {
+    type AlgorithmResultId = { algorithmResultId: string };
+    namespace Mutations {
+      type CreateMutationParams = DataTransfer.AlgorithmResultDTO;
+      type UpdateMutationParams = AlgorithmResultId & DataTransfer.AlgorithmResultDTO;
+      type DeleteMutationParams = AlgorithmResultId;
+    }
+    namespace Queries {
+      type QueryByIdRequestParams = AlgorithmResultId;
+      type QueryResponseParams = DataTransfer.AlgorithmResultDTO[];
+    }
+    namespace Page {
+      type RowParams = ComponentTypes.BaseDataGridRowParams &
+        Omit<DataTransfer.AlgorithmResultDTO, "id">;
+    }
+  }
+
+  namespace AlgorithmRun {
+    type AlgorithmRunId = { algorithmRunId: string };
+    namespace Mutations {
+      type CreateMutationParams = DataTransfer.AlgorithmRunDTO;
+      type UpdateMutationParams = AlgorithmRunId & DataTransfer.AlgorithmRunDTO;
+      type DeleteMutationParams = AlgorithmRunId;
+    }
+    namespace Queries {
+      type QueryByIdRequestParams = AlgorithmRunId;
+      type QueryResponseParams = DataTransfer.AlgorithmRunDTO[];
+    }
+    namespace Page {
+      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.AlgorithmRunDTO, "id">;
+    }
+  }
 }
+
 export default ResourceTypes;
