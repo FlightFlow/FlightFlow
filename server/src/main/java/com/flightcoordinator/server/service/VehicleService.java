@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.VehicleDTO;
 import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.entity.VehicleEntity;
@@ -25,15 +26,16 @@ public class VehicleService {
   @Autowired
   private AirportRepository airportRepository;
 
-  public VehicleDTO getSingleVehicleById(String vehicleId) {
-    VehicleEntity vehicle = vehicleRepository.findById(vehicleId)
+  public VehicleDTO getSingleVehicleById(EntityIdDTO entityIdDTO) {
+    VehicleEntity vehicle = vehicleRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
     VehicleDTO vehicleDTO = ObjectMapper.toVehicleDTO(vehicle);
     return vehicleDTO;
   }
 
-  public List<VehicleDTO> getMultipleVehicleById(List<String> vehicleIds) {
-    List<VehicleEntity> vehicles = vehicleRepository.findAllById(vehicleIds);
+  public List<VehicleDTO> getMultipleVehicleById(List<EntityIdDTO> entityIdDTOs) {
+    List<VehicleEntity> vehicles = vehicleRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (vehicles.isEmpty()) {
       throw new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value());
     }
@@ -65,11 +67,11 @@ public class VehicleService {
     vehicleRepository.save(newVehicleEntity);
   }
 
-  public void updateVehicle(String vehicleId, VehicleDTO updatedVehicleDTO) {
+  public void updateVehicle(VehicleDTO updatedVehicleDTO) {
     AirportEntity newAirportEntity = airportRepository.findById(updatedVehicleDTO.getAirportId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
-    VehicleEntity existingVehicle = vehicleRepository.findById(vehicleId)
+    VehicleEntity existingVehicle = vehicleRepository.findById(updatedVehicleDTO.getId())
         .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
 
     existingVehicle.setType(updatedVehicleDTO.getType());
@@ -82,22 +84,22 @@ public class VehicleService {
     vehicleRepository.save(existingVehicle);
   }
 
-  public void deleteVehicle(String vehicleId) {
-    VehicleEntity existingVehicle = vehicleRepository.findById(vehicleId)
+  public void deleteVehicle(EntityIdDTO entityIdDTO) {
+    VehicleEntity existingVehicle = vehicleRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.vehicle", HttpStatus.NOT_FOUND.value()));
     vehicleRepository.delete(existingVehicle);
   }
 
   public Boolean doesSingleVehicleExist(VehicleEntity vehicle) {
-    String vehicleId = vehicle.getId();
-    Optional<VehicleEntity> vehicleFound = vehicleRepository.findById(vehicleId);
+    String id = vehicle.getId();
+    Optional<VehicleEntity> vehicleFound = vehicleRepository.findById(id);
     return vehicleFound.isPresent();
   }
 
   public Boolean doesMultipleVehiclesExist(List<VehicleEntity> vehicles) {
-    List<String> vehicleIds = new ArrayList<>();
-    vehicles.forEach(vehicle -> vehicleIds.add(vehicle.getId()));
-    List<VehicleEntity> vehiclesFound = vehicleRepository.findAllById(vehicleIds);
+    List<String> ids = new ArrayList<>();
+    vehicles.forEach(vehicle -> ids.add(vehicle.getId()));
+    List<VehicleEntity> vehiclesFound = vehicleRepository.findAllById(ids);
     if (vehicles.size() != vehiclesFound.size()) {
       return false;
     }

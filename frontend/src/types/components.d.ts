@@ -29,6 +29,7 @@ namespace ComponentTypes {
       TDelete,
       unknown
     >;
+    columnVisibilityStates: Record<GridColDef["field"], boolean>;
   }
   interface GridOverlayProps {
     type: "loading" | "error";

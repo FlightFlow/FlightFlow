@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flightcoordinator.server.dto.AirportDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
+import com.flightcoordinator.server.dto.create_update.AirportCreateUpdateDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.AirportService;
@@ -36,14 +38,14 @@ public class AirportController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
-  public ResponseEntity<ResponseObject<AirportDTO>> getAirportById(@RequestBody String airportId) {
-    AirportDTO airport = airportService.getSingleAirportById(airportId);
+  public ResponseEntity<ResponseObject<AirportDTO>> getAirportById(@RequestBody EntityIdDTO id) {
+    AirportDTO airport = airportService.getSingleAirportById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airport);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
-  public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportDTO newAirport) {
+  public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportCreateUpdateDTO newAirport) {
     airportService.createAirport(newAirport);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse",
         null);
@@ -51,16 +53,15 @@ public class AirportController {
 
   @PatchMapping("/update")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
-  public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody String airportId,
-      @RequestBody AirportDTO updatedAirport) {
-    airportService.updateAirport(airportId, updatedAirport);
+  public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody AirportCreateUpdateDTO updatedAirport) {
+    airportService.updateAirport(updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
-  public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody String airportId) {
-    airportService.deleteAirport(airportId);
+  public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody EntityIdDTO id) {
+    airportService.deleteAirport(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

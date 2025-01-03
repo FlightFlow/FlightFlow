@@ -38,6 +38,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   newDataFunction,
   updateDataFunction,
   deleteDataFunction,
+  columnVisibilityStates,
 }: ComponentTypes.DataGridProps<TNew, TUpdate, TDelete>) => {
   const { t } = useTranslation(["data_grid"]);
 
@@ -167,9 +168,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   const handleDeleteClick = async (id: GridRowId) => {
     const rowToBeDeleted = rows.filter((row) => row.id === id);
     setDataState((currentState) => ({ ...currentState, isLoading: true }));
-    const response = await deleteDataFunction({
-      [`${dataCategory}Id`]: rowToBeDeleted[0].uniqueId,
-    } as TDelete);
+    const response = await deleteDataFunction({ ["id"]: rowToBeDeleted[0].uniqueId } as TDelete);
 
     return setDataState(() => ({
       snackbarState: { isOpen: true, message: response.message },
@@ -257,8 +256,13 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         onProcessRowUpdateError={(error) => console.error(error)}
-        initialState={{ pagination: { paginationModel } }}
-        slots={{ toolbar: CustomToolbar as GridSlots["toolbar"] }}
+        initialState={{
+          pagination: { paginationModel },
+          columns: { columnVisibilityModel: columnVisibilityStates },
+        }}
+        slots={{
+          toolbar: CustomToolbar as GridSlots["toolbar"],
+        }}
         localeText={dataGridLocalization}
       />
     </>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.RouteDTO;
 import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.entity.RouteEntity;
@@ -25,15 +26,16 @@ public class RouteService {
   @Autowired
   private AirportRepository airportRepository;
 
-  public RouteDTO getSingleRouteById(String routeId) {
-    RouteEntity route = routeRepository.findById(routeId)
+  public RouteDTO getSingleRouteById(EntityIdDTO entityIdDTO) {
+    RouteEntity route = routeRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.route", HttpStatus.NOT_FOUND.value()));
     RouteDTO routeDTO = ObjectMapper.toRouteDTO(route);
     return routeDTO;
   }
 
-  public List<RouteDTO> getMultipleRouteById(List<String> routeIds) {
-    List<RouteEntity> routes = routeRepository.findAllById(routeIds);
+  public List<RouteDTO> getMultipleRouteById(List<EntityIdDTO> entityIdDTOs) {
+    List<RouteEntity> routes = routeRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (routes.isEmpty()) {
       throw new AppError("notFound.route", HttpStatus.NOT_FOUND.value());
     }
@@ -65,13 +67,13 @@ public class RouteService {
     routeRepository.save(newRouteEntity);
   }
 
-  public void updateRoute(String routeId, RouteDTO updatedRouteDTO) {
+  public void updateRoute(RouteDTO updatedRouteDTO) {
     AirportEntity originAirportEntity = airportRepository.findById(updatedRouteDTO.getOriginAirportId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
     AirportEntity destinationAirportEntity = airportRepository.findById(updatedRouteDTO.getDestinationAirportId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
-    RouteEntity existingRoute = routeRepository.findById(routeId)
+    RouteEntity existingRoute = routeRepository.findById(updatedRouteDTO.getId())
         .orElseThrow(() -> new AppError("notFound.route", HttpStatus.NOT_FOUND.value()));
 
     existingRoute.setOriginAirport(originAirportEntity);
@@ -82,22 +84,22 @@ public class RouteService {
     routeRepository.save(existingRoute);
   }
 
-  public void deleteRoute(String routeId) {
-    RouteEntity existingRoute = routeRepository.findById(routeId)
+  public void deleteRoute(EntityIdDTO entityIdDTO) {
+    RouteEntity existingRoute = routeRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.route", HttpStatus.NOT_FOUND.value()));
     routeRepository.delete(existingRoute);
   }
 
   public Boolean doesSingleRouteExist(RouteEntity route) {
-    String routeId = route.getId();
-    Optional<RouteEntity> routeFound = routeRepository.findById(routeId);
+    String id = route.getId();
+    Optional<RouteEntity> routeFound = routeRepository.findById(id);
     return routeFound.isPresent();
   }
 
   public Boolean doesMultipleRoutesExist(List<RouteEntity> routes) {
-    List<String> routeIds = new ArrayList<>();
-    routes.forEach(route -> routeIds.add(route.getId()));
-    List<RouteEntity> routesFound = routeRepository.findAllById(routeIds);
+    List<String> ids = new ArrayList<>();
+    routes.forEach(route -> ids.add(route.getId()));
+    List<RouteEntity> routesFound = routeRepository.findAllById(ids);
     if (routes.size() != routesFound.size()) {
       return false;
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.RunwayDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
@@ -36,8 +37,8 @@ public class RunwayController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get a runway by id", description = "Retrieve the details of a spesific runway using it's ID.")
-  public ResponseEntity<ResponseObject<RunwayDTO>> getRunwayById(@RequestBody String runwayId) {
-    RunwayDTO runway = runwayService.getSingleRunwayById(runwayId);
+  public ResponseEntity<ResponseObject<RunwayDTO>> getRunwayById(@RequestBody EntityIdDTO id) {
+    RunwayDTO runway = runwayService.getSingleRunwayById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", runway);
   }
 
@@ -50,16 +51,15 @@ public class RunwayController {
 
   @PatchMapping("/update")
   @Operation(summary = "Update a runway", description = "Update an existing runway.")
-  public ResponseEntity<ResponseObject<Object>> updateRunway(@RequestBody String runwayId,
-      @RequestBody RunwayDTO updatedRunway) {
-    runwayService.updateRunway(runwayId, updatedRunway);
+  public ResponseEntity<ResponseObject<Object>> updateRunway(@RequestBody RunwayDTO updatedRunway) {
+    runwayService.updateRunway(updatedRunway);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete a runway", description = "Delete an existing runway.")
-  public ResponseEntity<ResponseObject<Object>> deleteRunway(@RequestBody String runwayId) {
-    runwayService.deleteRunway(runwayId);
+  public ResponseEntity<ResponseObject<Object>> deleteRunway(@RequestBody EntityIdDTO id) {
+    runwayService.deleteRunway(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.VehicleDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
@@ -36,8 +37,8 @@ public class VehicleController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
-  public ResponseEntity<ResponseObject<VehicleDTO>> getVehicleById(@RequestBody String vehicleId) {
-    VehicleDTO vehicle = vehicleService.getSingleVehicleById(vehicleId);
+  public ResponseEntity<ResponseObject<VehicleDTO>> getVehicleById(@RequestBody EntityIdDTO id) {
+    VehicleDTO vehicle = vehicleService.getSingleVehicleById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", vehicle);
   }
 
@@ -50,16 +51,15 @@ public class VehicleController {
 
   @PatchMapping("/update")
   @Operation(summary = "Update an vehicle", description = "Update an existing vehicle.")
-  public ResponseEntity<ResponseObject<Object>> updateVehicle(@RequestBody String vehicleId,
-      @RequestBody VehicleDTO updatedVehicle) {
-    vehicleService.updateVehicle(vehicleId, updatedVehicle);
+  public ResponseEntity<ResponseObject<Object>> updateVehicle(@RequestBody VehicleDTO updatedVehicle) {
+    vehicleService.updateVehicle(updatedVehicle);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an vehicle", description = "Delete an existing vehicle.")
-  public ResponseEntity<ResponseObject<Object>> deleteVehicle(@RequestBody String vehicleId) {
-    vehicleService.deleteVehicle(vehicleId);
+  public ResponseEntity<ResponseObject<Object>> deleteVehicle(@RequestBody EntityIdDTO id) {
+    vehicleService.deleteVehicle(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

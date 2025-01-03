@@ -62,6 +62,7 @@ const AirportsPage = () => {
       editable: false,
       headerAlign: "left",
       align: "left",
+      hideable: false,
     },
     {
       field: "uniqueId",
@@ -71,12 +72,13 @@ const AirportsPage = () => {
       editable: false,
       headerAlign: "left",
       align: "left",
+      hideable: false,
     },
     {
       field: "name",
       type: "string",
       headerName: t("columns.airport.name"),
-      flex: 1,
+      width: 400,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -178,6 +180,22 @@ const AirportsPage = () => {
     },
   ];
 
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    id: true,
+    uniqueId: true,
+    name: true,
+    iataCode: true,
+    icaoCode: true,
+    countryCode: true,
+    type: true,
+    runwayIds: false,
+    vehiclesPresentIds: false,
+    planesPresentIds: false,
+    routesOriginatingFromAirportIds: false,
+    routesDestinedForAirportIds: false,
+    crewMembersPresentIds: false,
+  };
+
   const airportNewDataObject: Omit<DataTransfer.AirportDTO, "id"> = {
     name: "",
     iataCode: "",
@@ -206,6 +224,7 @@ const AirportsPage = () => {
       newDataFunction={airportCreateMutation}
       updateDataFunction={airportUpdateMutation}
       deleteDataFunction={airportDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
     />
   );
 };

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flightcoordinator.server.dto.AlgorithmResultDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.AlgorithmResultService;
@@ -35,9 +36,8 @@ public class AlgorithmResultController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get an algorithm result by id", description = "Retrieve the details of a spesific algorithm result using it's ID.")
-  public ResponseEntity<ResponseObject<AlgorithmResultDTO>> getAlgorithmResultById(
-      @RequestBody String algorithmResultId) {
-    AlgorithmResultDTO algorithmResult = algorithmResultService.getSingleAlgorithmResultById(algorithmResultId);
+  public ResponseEntity<ResponseObject<AlgorithmResultDTO>> getAlgorithmResultById(@RequestBody EntityIdDTO id) {
+    AlgorithmResultDTO algorithmResult = algorithmResultService.getSingleAlgorithmResultById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmResult);
   }
 
@@ -51,8 +51,8 @@ public class AlgorithmResultController {
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an algorithm result", description = "Delete an algorithm result.")
-  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@RequestBody String algorithmResultId) {
-    algorithmResultService.deleteAlgorithmResult(algorithmResultId);
+  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmResult(@RequestBody EntityIdDTO id) {
+    algorithmResultService.deleteAlgorithmResult(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

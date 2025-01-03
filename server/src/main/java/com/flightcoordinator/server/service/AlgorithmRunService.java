@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.dto.AlgorithmRunDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.entity.AlgorithmResultEntity;
 import com.flightcoordinator.server.entity.AlgorithmRunEntity;
 import com.flightcoordinator.server.exception.AppError;
@@ -25,15 +26,16 @@ public class AlgorithmRunService {
   @Autowired
   private AlgorithmResultRepository algorithmResultRepository;
 
-  public AlgorithmRunDTO getSingleAlgorithmRunById(String algorithmRunId) {
-    AlgorithmRunEntity algorithmRun = algorithmRunRepository.findById(algorithmRunId)
+  public AlgorithmRunDTO getSingleAlgorithmRunById(EntityIdDTO entityIdDTO) {
+    AlgorithmRunEntity algorithmRun = algorithmRunRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value()));
     AlgorithmRunDTO algorithmRunDTO = ObjectMapper.toAlgorithmRunDTO(algorithmRun);
     return algorithmRunDTO;
   }
 
-  public List<AlgorithmRunDTO> getMultipleAlgorithmRunsById(List<String> algorithmRunIds) {
-    List<AlgorithmRunEntity> algorithmRuns = algorithmRunRepository.findAllById(algorithmRunIds);
+  public List<AlgorithmRunDTO> getMultipleAlgorithmRunsById(List<EntityIdDTO> entityIdDTOs) {
+    List<AlgorithmRunEntity> algorithmRuns = algorithmRunRepository.findAllById(
+        entityIdDTOs.stream().map(entityId -> entityId.getId()).collect(Collectors.toList()));
     if (algorithmRuns.isEmpty()) {
       throw new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value());
     }
@@ -77,22 +79,22 @@ public class AlgorithmRunService {
     algorithmRunRepository.save(algorithmRunEntity);
   }
 
-  public void deleteAlgorithmRun(String algorithmRunId) {
-    AlgorithmRunEntity existingAlgorithmRun = algorithmRunRepository.findById(algorithmRunId)
+  public void deleteAlgorithmRun(EntityIdDTO entityIdDTO) {
+    AlgorithmRunEntity existingAlgorithmRun = algorithmRunRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.algorithmRun", HttpStatus.NOT_FOUND.value()));
     algorithmRunRepository.delete(existingAlgorithmRun);
   }
 
   public Boolean doesSingleAlgorithmRunExist(AlgorithmRunEntity algorithmRun) {
-    String algorithmRunId = algorithmRun.getId();
-    Optional<AlgorithmRunEntity> algorithmRunFound = algorithmRunRepository.findById(algorithmRunId);
+    String id = algorithmRun.getId();
+    Optional<AlgorithmRunEntity> algorithmRunFound = algorithmRunRepository.findById(id);
     return algorithmRunFound.isPresent();
   }
 
   public Boolean doesMultipleAlgorithmRunsExist(List<AlgorithmRunEntity> algorithmRuns) {
-    List<String> algorithmRunIds = new ArrayList<>();
-    algorithmRuns.forEach(algorithmRun -> algorithmRunIds.add(algorithmRun.getId()));
-    List<AlgorithmRunEntity> algorithmRunsFound = algorithmRunRepository.findAllById(algorithmRunIds);
+    List<String> ids = new ArrayList<>();
+    algorithmRuns.forEach(algorithmRun -> ids.add(algorithmRun.getId()));
+    List<AlgorithmRunEntity> algorithmRunsFound = algorithmRunRepository.findAllById(ids);
     if (algorithmRuns.size() != algorithmRunsFound.size()) {
       return false;
     }

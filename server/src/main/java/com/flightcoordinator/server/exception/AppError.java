@@ -6,6 +6,7 @@ public class AppError extends RuntimeException {
   public AppError(String message, int status) {
     super(message);
     this.status = status;
+    System.out.println(message);
   }
 
   public int getStatus() {

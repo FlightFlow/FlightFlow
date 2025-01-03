@@ -21,6 +21,7 @@ import jakarta.persistence.Table;
 public class AirportEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
+  @Column(name = "id")
   private String id;
 
   @Column(name = "name", nullable = false)

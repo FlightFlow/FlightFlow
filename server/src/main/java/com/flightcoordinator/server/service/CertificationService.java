@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.dto.CertificationDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
+import com.flightcoordinator.server.dto.create_update.CertificationCreateUpdateDTO;
 import com.flightcoordinator.server.entity.CertificationEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.CertificationRepository;
@@ -20,15 +22,16 @@ public class CertificationService {
   @Autowired
   private CertificationRepository certificationRepository;
 
-  public CertificationDTO getSingleCertificationById(String certificationId) {
-    CertificationEntity certification = certificationRepository.findById(certificationId)
+  public CertificationDTO getSingleCertificationById(EntityIdDTO entityIdDTO) {
+    CertificationEntity certification = certificationRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
     CertificationDTO certificationDTO = ObjectMapper.toCertificationDTO(certification);
     return certificationDTO;
   }
 
-  public List<CertificationDTO> getMultipleCertificationsById(List<String> certificationIds) {
-    List<CertificationEntity> certifications = certificationRepository.findAllById(certificationIds);
+  public List<CertificationDTO> getMultipleCertificationsById(List<EntityIdDTO> entityIdDTOs) {
+    List<CertificationEntity> certifications = certificationRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (certifications.isEmpty()) {
       throw new AppError("notFound.certification", HttpStatus.NOT_FOUND.value());
     }
@@ -47,7 +50,7 @@ public class CertificationService {
     return certificationDTOs;
   }
 
-  public void createCertification(CertificationDTO newCertificationDTO) {
+  public void createCertification(CertificationCreateUpdateDTO newCertificationDTO) {
     CertificationEntity certificationEntity = new CertificationEntity();
     certificationEntity.setName(newCertificationDTO.getName());
     certificationEntity.setIssuer(newCertificationDTO.getIssuer());
@@ -60,8 +63,8 @@ public class CertificationService {
     certificationRepository.save(certificationEntity);
   }
 
-  public void updateCertification(String certificationId, CertificationDTO updatedCertificationDTO) {
-    CertificationEntity existingCertification = certificationRepository.findById(certificationId)
+  public void updateCertification(CertificationCreateUpdateDTO updatedCertificationDTO) {
+    CertificationEntity existingCertification = certificationRepository.findById(updatedCertificationDTO.getId())
         .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
 
     existingCertification.setName(updatedCertificationDTO.getName());
@@ -75,22 +78,22 @@ public class CertificationService {
     certificationRepository.save(existingCertification);
   }
 
-  public void deleteCertification(String certificationId) {
-    CertificationEntity existingCertification = certificationRepository.findById(certificationId)
+  public void deleteCertification(EntityIdDTO entityIdDTO) {
+    CertificationEntity existingCertification = certificationRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.certification", HttpStatus.NOT_FOUND.value()));
     certificationRepository.delete(existingCertification);
   }
 
   public Boolean doesSingleCertificationExist(CertificationEntity certification) {
-    String certificationId = certification.getId();
-    Optional<CertificationEntity> certificationFound = certificationRepository.findById(certificationId);
+    String id = certification.getId();
+    Optional<CertificationEntity> certificationFound = certificationRepository.findById(id);
     return certificationFound.isPresent();
   }
 
   public Boolean doesMultipleCertificationsExist(List<CertificationEntity> certifications) {
-    List<String> certificationIds = new ArrayList<>();
-    certifications.forEach(certification -> certificationIds.add(certification.getId()));
-    List<CertificationEntity> certificationsFound = certificationRepository.findAllById(certificationIds);
+    List<String> ids = new ArrayList<>();
+    certifications.forEach(certification -> ids.add(certification.getId()));
+    List<CertificationEntity> certificationsFound = certificationRepository.findAllById(ids);
     if (certifications.size() != certificationsFound.size()) {
       return false;
     }

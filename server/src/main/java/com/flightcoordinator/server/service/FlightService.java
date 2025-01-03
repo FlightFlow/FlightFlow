@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.FlightDTO;
 import com.flightcoordinator.server.entity.FlightEntity;
 import com.flightcoordinator.server.entity.RouteEntity;
@@ -25,15 +26,16 @@ public class FlightService {
   @Autowired
   private RouteRepository routeRepository;
 
-  public FlightDTO getSingleFlightById(String flightId) {
-    FlightEntity flight = flightRepository.findById(flightId)
+  public FlightDTO getSingleFlightById(EntityIdDTO entityIdDTO) {
+    FlightEntity flight = flightRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.flight", HttpStatus.NOT_FOUND.value()));
     FlightDTO flightDTO = ObjectMapper.toFlightDTO(flight);
     return flightDTO;
   }
 
-  public List<FlightDTO> getMultipleFlightsById(List<String> flightIds) {
-    List<FlightEntity> flights = flightRepository.findAllById(flightIds);
+  public List<FlightDTO> getMultipleFlightsById(List<EntityIdDTO> entityIdDTOs) {
+    List<FlightEntity> flights = flightRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (flights.isEmpty()) {
       throw new AppError("notFound.flight", HttpStatus.NOT_FOUND.value());
     }
@@ -61,11 +63,11 @@ public class FlightService {
     flightRepository.save(flightEntity);
   }
 
-  public void updateFlight(String flightId, FlightDTO updatedFlightDTO) {
-    RouteEntity newRouteEntity = routeRepository.findById(updatedFlightDTO.getId())
+  public void updateFlight(FlightDTO updatedFlightDTO) {
+    RouteEntity newRouteEntity = routeRepository.findById(updatedFlightDTO.getFlightRouteId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
-    FlightEntity existingFlight = flightRepository.findById(flightId)
+    FlightEntity existingFlight = flightRepository.findById(updatedFlightDTO.getId())
         .orElseThrow(() -> new AppError("notFound.flight", HttpStatus.NOT_FOUND.value()));
 
     existingFlight.setPassengerCount(updatedFlightDTO.getPassengerCount());
@@ -74,22 +76,22 @@ public class FlightService {
     flightRepository.save(existingFlight);
   }
 
-  public void deleteFlight(String flightId) {
-    FlightEntity existingFlight = flightRepository.findById(flightId)
+  public void deleteFlight(EntityIdDTO entityIdDTO) {
+    FlightEntity existingFlight = flightRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.flight", HttpStatus.NOT_FOUND.value()));
     flightRepository.delete(existingFlight);
   }
 
   public Boolean doesSingleFlightExist(FlightEntity flight) {
-    String flightId = flight.getId();
-    Optional<FlightEntity> flightFound = flightRepository.findById(flightId);
+    String id = flight.getId();
+    Optional<FlightEntity> flightFound = flightRepository.findById(id);
     return flightFound.isPresent();
   }
 
   public Boolean doesMultipleFlightsExist(List<FlightEntity> flights) {
-    List<String> flightIds = new ArrayList<>();
-    flights.forEach(flight -> flightIds.add(flight.getId()));
-    List<FlightEntity> flightsFound = flightRepository.findAllById(flightIds);
+    List<String> ids = new ArrayList<>();
+    flights.forEach(flight -> ids.add(flight.getId()));
+    List<FlightEntity> flightsFound = flightRepository.findAllById(ids);
     if (flights.size() != flightsFound.size()) {
       return false;
     }
