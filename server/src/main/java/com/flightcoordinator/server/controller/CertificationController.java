@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flightcoordinator.server.dto.CertificationDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
+import com.flightcoordinator.server.dto.create_update.CertificationCreateUpdateDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.CertificationService;
@@ -36,32 +38,31 @@ public class CertificationController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get a certification by id", description = "Retrieve the details of a spesific certification using it's ID.")
-  public ResponseEntity<ResponseObject<CertificationDTO>> getCertificationById(
-      @RequestBody String certificationId) {
-    CertificationDTO certification = certificationService.getSingleCertificationById(certificationId);
+  public ResponseEntity<ResponseObject<CertificationDTO>> getCertificationById(@RequestBody EntityIdDTO id) {
+    CertificationDTO certification = certificationService.getSingleCertificationById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", certification);
   }
 
   @PostMapping("/create")
   @Operation(summary = "Create a new certification", description = "Create a new certification.")
   public ResponseEntity<ResponseObject<Object>> createCertification(
-      @RequestBody CertificationDTO newCertification) {
+      @RequestBody CertificationCreateUpdateDTO newCertification) {
     certificationService.createCertification(newCertification);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
   @PatchMapping("/update")
   @Operation(summary = "Update a certification", description = "Update an existing certification.")
-  public ResponseEntity<ResponseObject<Object>> updateCertification(@RequestBody String certificationId,
-      @RequestBody CertificationDTO updatedCertification) {
-    certificationService.updateCertification(certificationId, updatedCertification);
+  public ResponseEntity<ResponseObject<Object>> updateCertification(
+      @RequestBody CertificationCreateUpdateDTO updatedCertification) {
+    certificationService.updateCertification(updatedCertification);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("delete")
   @Operation(summary = "Delete a certification", description = "Delete an existing certification.")
-  public ResponseEntity<ResponseObject<Object>> deleteCertification(@RequestBody String certificationId) {
-    certificationService.deleteCertification(certificationId);
+  public ResponseEntity<ResponseObject<Object>> deleteCertification(@RequestBody EntityIdDTO id) {
+    certificationService.deleteCertification(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

@@ -1,6 +1,7 @@
 package com.flightcoordinator.server.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flightcoordinator.server.dto.AlgorithmRunDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
 import com.flightcoordinator.server.service.AlgorithmRunService;
@@ -35,15 +37,15 @@ public class AlgorithmRunController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get an algorithm run by id", description = "Retrieve the details of a spesific algorithm run using it's ID.")
-  public ResponseEntity<ResponseObject<AlgorithmRunDTO>> getAlgorithmRunById(@RequestBody String algorithmRunId) {
-    AlgorithmRunDTO algorithmRun = algorithmRunService.getSingleAlgorithmRunById(algorithmRunId);
+  public ResponseEntity<ResponseObject<AlgorithmRunDTO>> getAlgorithmRunById(@RequestBody EntityIdDTO id) {
+    AlgorithmRunDTO algorithmRun = algorithmRunService.getSingleAlgorithmRunById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmRun);
   }
 
   @PostMapping("/trigger")
   @Operation(summary = "Create a new algorithm run", description = "Create a new algorithm run. (Not intended for manual use)")
-  public ResponseEntity<ResponseObject<Object>> triggerAlgorithmRun(@RequestBody String algorithmName) {
-    algorithmRunService.triggerAlgorithmRun(algorithmName);
+  public ResponseEntity<ResponseObject<Object>> triggerAlgorithmRun(@RequestBody Map<String, String> algorithmName) {
+    algorithmRunService.triggerAlgorithmRun(algorithmName.get("algorithmName"));
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse", null);
   }
 
@@ -57,8 +59,8 @@ public class AlgorithmRunController {
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an algorithm run", description = "Delete an algorithm run.")
-  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmRun(@RequestBody String algorithmRunId) {
-    algorithmRunService.deleteAlgorithmRun(algorithmRunId);
+  public ResponseEntity<ResponseObject<Object>> deleteAlgorithmRun(@RequestBody EntityIdDTO id) {
+    algorithmRunService.deleteAlgorithmRun(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

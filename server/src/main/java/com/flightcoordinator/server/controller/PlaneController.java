@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.PlaneDTO;
 import com.flightcoordinator.server.response.ResponseHelper;
 import com.flightcoordinator.server.response.ResponseObject;
@@ -36,8 +37,8 @@ public class PlaneController {
 
   @PostMapping("/getById")
   @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID.")
-  public ResponseEntity<ResponseObject<PlaneDTO>> getPlaneById(@RequestBody String planeId) {
-    PlaneDTO plane = planeService.getSinglePlaneById(planeId);
+  public ResponseEntity<ResponseObject<PlaneDTO>> getPlaneById(@RequestBody EntityIdDTO id) {
+    PlaneDTO plane = planeService.getSinglePlaneById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", plane);
   }
 
@@ -50,16 +51,15 @@ public class PlaneController {
 
   @PatchMapping("/update")
   @Operation(summary = "Update an plane", description = "Update an existing plane.")
-  public ResponseEntity<ResponseObject<Object>> updatePlane(@RequestBody String planeId,
-      @RequestBody PlaneDTO updatedPlane) {
-    planeService.updatePlane(planeId, updatedPlane);
+  public ResponseEntity<ResponseObject<Object>> updatePlane(@RequestBody PlaneDTO updatedPlane) {
+    planeService.updatePlane(updatedPlane);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
 
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an plane", description = "Delete an existing plane.")
-  public ResponseEntity<ResponseObject<Object>> deletePlane(@RequestBody String planeId) {
-    planeService.deletePlane(planeId);
+  public ResponseEntity<ResponseObject<Object>> deletePlane(@RequestBody EntityIdDTO id) {
+    planeService.deletePlane(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.deleteResponse", null);
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.PlaneDTO;
 import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.entity.PlaneEntity;
@@ -25,15 +26,16 @@ public class PlaneService {
   @Autowired
   private AirportRepository airportRepository;
 
-  public PlaneDTO getSinglePlaneById(String planeId) {
-    PlaneEntity plane = planeRepository.findById(planeId)
+  public PlaneDTO getSinglePlaneById(EntityIdDTO entityIdDTO) {
+    PlaneEntity plane = planeRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.plane", HttpStatus.NOT_FOUND.value()));
     PlaneDTO planeDTO = ObjectMapper.toPlaneDTO(plane);
     return planeDTO;
   }
 
-  public List<PlaneDTO> getMultiplePlaneById(List<String> planeIds) {
-    List<PlaneEntity> planes = planeRepository.findAllById(planeIds);
+  public List<PlaneDTO> getMultiplePlaneById(List<EntityIdDTO> entityIdDTOs) {
+    List<PlaneEntity> planes = planeRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (planes.isEmpty()) {
       throw new AppError("notFound.plane", HttpStatus.NOT_FOUND.value());
     }
@@ -72,11 +74,11 @@ public class PlaneService {
     planeRepository.save(planeEntity);
   }
 
-  public void updatePlane(String planeId, PlaneDTO updatedPlaneDTO) {
+  public void updatePlane(PlaneDTO updatedPlaneDTO) {
     AirportEntity newAirportEntity = airportRepository.findById(updatedPlaneDTO.getCurrentLocationId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
-    PlaneEntity existingPlane = planeRepository.findById(planeId)
+    PlaneEntity existingPlane = planeRepository.findById(updatedPlaneDTO.getId())
         .orElseThrow(() -> new AppError("notFound.plane", HttpStatus.NOT_FOUND.value()));
 
     existingPlane.setModel(updatedPlaneDTO.getModel());
@@ -96,22 +98,22 @@ public class PlaneService {
     planeRepository.save(existingPlane);
   }
 
-  public void deletePlane(String planeId) {
-    PlaneEntity existingPlane = planeRepository.findById(planeId)
+  public void deletePlane(EntityIdDTO entityIdDTO) {
+    PlaneEntity existingPlane = planeRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.plane", HttpStatus.NOT_FOUND.value()));
     planeRepository.delete(existingPlane);
   }
 
   public Boolean doesSinglePlaneExist(PlaneEntity plane) {
-    String planeId = plane.getId();
-    Optional<PlaneEntity> planeFound = planeRepository.findById(planeId);
+    String id = plane.getId();
+    Optional<PlaneEntity> planeFound = planeRepository.findById(id);
     return planeFound.isPresent();
   }
 
   public Boolean doesMultiplePlanesExist(List<PlaneEntity> planes) {
-    List<String> planeIds = new ArrayList<>();
-    planes.forEach(plane -> planeIds.add(plane.getId()));
-    List<PlaneEntity> planesFound = planeRepository.findAllById(planeIds);
+    List<String> ids = new ArrayList<>();
+    planes.forEach(plane -> ids.add(plane.getId()));
+    List<PlaneEntity> planesFound = planeRepository.findAllById(ids);
     if (planes.size() != planesFound.size()) {
       return false;
     }

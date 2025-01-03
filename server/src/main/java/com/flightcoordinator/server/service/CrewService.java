@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.dto.CrewDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
+import com.flightcoordinator.server.dto.create_update.CrewCreateUpdateDTO;
 import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.CrewRepository;
@@ -20,15 +22,16 @@ public class CrewService {
   @Autowired
   private CrewRepository crewRepository;
 
-  public CrewDTO getSingleCrewMemberById(String crewMemberId) {
-    CrewEntity crewMember = crewRepository.findById(crewMemberId)
+  public CrewDTO getSingleCrewMemberById(EntityIdDTO entityIdDTO) {
+    CrewEntity crewMember = crewRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.crew", HttpStatus.NOT_FOUND.value()));
     CrewDTO crewDTO = ObjectMapper.toCrewDTO(crewMember);
     return crewDTO;
   }
 
-  public List<CrewDTO> getMultipleCrewMemberById(List<String> crewMemberIds) {
-    List<CrewEntity> crewMembers = crewRepository.findAllById(crewMemberIds);
+  public List<CrewDTO> getMultipleCrewMemberById(List<EntityIdDTO> entityIdDTOs) {
+    List<CrewEntity> crewMembers = crewRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (crewMembers.isEmpty()) {
       throw new AppError("notFound.crew", HttpStatus.NOT_FOUND.value());
     }
@@ -45,7 +48,7 @@ public class CrewService {
     return crewDTOs;
   }
 
-  public void createCrewMember(CrewDTO newCrewMemberDTO) {
+  public void createCrewMember(CrewCreateUpdateDTO newCrewMemberDTO) {
     CrewEntity crewEntity = new CrewEntity();
     crewEntity.setFullName(newCrewMemberDTO.getFullName());
     crewEntity.setEmail(newCrewMemberDTO.getEmail());
@@ -57,13 +60,13 @@ public class CrewService {
     crewRepository.save(crewEntity);
   }
 
-  public void updateCrewMember(String crewMemberId, CrewDTO updatedCrewMemberDTO) {
+  public void updateCrewMember(CrewCreateUpdateDTO updatedCrewMemberDTO) {
     Boolean doesPhoneNumberValid = isPhoneNumberValid(updatedCrewMemberDTO.getPhoneNumber());
     if (doesPhoneNumberValid) {
       throw new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value());
     }
 
-    CrewEntity existingCrewMember = crewRepository.findById(crewMemberId)
+    CrewEntity existingCrewMember = crewRepository.findById(updatedCrewMemberDTO.getId())
         .orElseThrow(() -> new AppError("notFound.crew", HttpStatus.NOT_FOUND.value()));
 
     existingCrewMember.setFullName(updatedCrewMemberDTO.getFullName());
@@ -76,8 +79,8 @@ public class CrewService {
     crewRepository.save(existingCrewMember);
   }
 
-  public void deleteCrewMember(String crewMemberId) {
-    CrewEntity existingCrewMember = crewRepository.findById(crewMemberId)
+  public void deleteCrewMember(EntityIdDTO entityIdDTO) {
+    CrewEntity existingCrewMember = crewRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.crew", HttpStatus.NOT_FOUND.value()));
     crewRepository.delete(existingCrewMember);
   }
@@ -87,15 +90,15 @@ public class CrewService {
   }
 
   public Boolean doesSingleCrewExist(CrewEntity crewMember) {
-    String crewMemberId = crewMember.getId();
-    Optional<CrewEntity> crewMemberFound = crewRepository.findById(crewMemberId);
+    String id = crewMember.getId();
+    Optional<CrewEntity> crewMemberFound = crewRepository.findById(id);
     return crewMemberFound.isPresent();
   }
 
   public Boolean doesMultipleCrewsExist(List<CrewEntity> crewMembers) {
-    List<String> crewMemberIds = new ArrayList<>();
-    crewMembers.forEach(crewMember -> crewMemberIds.add(crewMember.getId()));
-    List<CrewEntity> crewMembersFound = crewRepository.findAllById(crewMemberIds);
+    List<String> ids = new ArrayList<>();
+    crewMembers.forEach(crewMember -> ids.add(crewMember.getId()));
+    List<CrewEntity> crewMembersFound = crewRepository.findAllById(ids);
     if (crewMembers.size() != crewMembersFound.size()) {
       return false;
     }

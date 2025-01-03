@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.dto.AlgorithmResultDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.entity.AlgorithmResultEntity;
 import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.entity.FlightEntity;
@@ -45,15 +46,17 @@ public class AlgorithmResultService {
   @Autowired
   private VehicleRepository vehicleRepository;
 
-  public AlgorithmResultDTO getSingleAlgorithmResultById(String algorithmResultId) {
-    AlgorithmResultEntity algorithmResult = algorithmResultRepository.findById(algorithmResultId)
+  public AlgorithmResultDTO getSingleAlgorithmResultById(EntityIdDTO entityIdDTO) {
+    AlgorithmResultEntity algorithmResult = algorithmResultRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value()));
     AlgorithmResultDTO algorithmResultDTO = ObjectMapper.toAlgorithmResultDTO(algorithmResult);
     return algorithmResultDTO;
   }
 
-  public List<AlgorithmResultDTO> getMultipleAlgorithmResultsById(List<String> algorithmResultIds) {
-    List<AlgorithmResultEntity> algorithmResults = algorithmResultRepository.findAllById(algorithmResultIds);
+  public List<AlgorithmResultDTO> getMultipleAlgorithmResultsById(List<EntityIdDTO> entityIdDTOs) {
+    List<AlgorithmResultEntity> algorithmResults = algorithmResultRepository.findAllById(
+        entityIdDTOs.stream().map(
+            entityId -> entityId.getId()).collect(Collectors.toList()));
     if (algorithmResults.isEmpty()) {
       throw new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value());
     }
@@ -107,22 +110,22 @@ public class AlgorithmResultService {
     algorithmResultRepository.save(algorithmResultEntity);
   }
 
-  public void deleteAlgorithmResult(String algorithmResultId) {
-    AlgorithmResultEntity existingAlgorithmResult = algorithmResultRepository.findById(algorithmResultId)
+  public void deleteAlgorithmResult(EntityIdDTO entityIdDTO) {
+    AlgorithmResultEntity existingAlgorithmResult = algorithmResultRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.algorithmResult", HttpStatus.NOT_FOUND.value()));
     algorithmResultRepository.delete(existingAlgorithmResult);
   }
 
   public Boolean doesSingleAlgorithmResultExist(AlgorithmResultEntity algorithmResult) {
-    String algorithmResultId = algorithmResult.getId();
-    Optional<AlgorithmResultEntity> algorithmResultFound = algorithmResultRepository.findById(algorithmResultId);
+    String id = algorithmResult.getId();
+    Optional<AlgorithmResultEntity> algorithmResultFound = algorithmResultRepository.findById(id);
     return algorithmResultFound.isPresent();
   }
 
   public Boolean doesMultipleAlgorithmResultsExist(List<AlgorithmResultEntity> algorithmResults) {
-    List<String> algorithmResultIds = new ArrayList<>();
-    algorithmResults.forEach(algorithmResult -> algorithmResultIds.add(algorithmResult.getId()));
-    List<AlgorithmResultEntity> algorithmResultsFound = algorithmResultRepository.findAllById(algorithmResultIds);
+    List<String> ids = new ArrayList<>();
+    algorithmResults.forEach(algorithmResult -> ids.add(algorithmResult.getId()));
+    List<AlgorithmResultEntity> algorithmResultsFound = algorithmResultRepository.findAllById(ids);
     if (algorithmResults.size() != algorithmResultsFound.size()) {
       return false;
     }

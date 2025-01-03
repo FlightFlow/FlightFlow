@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.flightcoordinator.server.dto.AirportDTO;
+import com.flightcoordinator.server.dto.EntityIdDTO;
+import com.flightcoordinator.server.dto.create_update.AirportCreateUpdateDTO;
 import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.AirportRepository;
@@ -20,15 +22,16 @@ public class AirportService {
   @Autowired
   private AirportRepository airportRepository;
 
-  public AirportDTO getSingleAirportById(String airportId) {
-    AirportEntity airport = airportRepository.findById(airportId)
+  public AirportDTO getSingleAirportById(EntityIdDTO entityIdDTO) {
+    AirportEntity airport = airportRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.airport", HttpStatus.NOT_FOUND.value()));
     AirportDTO airportDto = ObjectMapper.toAirportDTO(airport);
     return airportDto;
   }
 
-  public List<AirportDTO> getMultipleAirportsById(List<String> airportIds) {
-    List<AirportEntity> airports = airportRepository.findAllById(airportIds);
+  public List<AirportDTO> getMultipleAirportsById(List<EntityIdDTO> entityIdDTOs) {
+    List<AirportEntity> airports = airportRepository.findAllById(entityIdDTOs.stream().map(
+        entityId -> entityId.getId()).collect(Collectors.toList()));
     if (airports.isEmpty()) {
       throw new AppError("notFound.airport", HttpStatus.NOT_FOUND.value());
     }
@@ -45,18 +48,20 @@ public class AirportService {
     return airportDTOs;
   }
 
-  public void createAirport(AirportDTO newAirportDTO) {
+  public void createAirport(AirportCreateUpdateDTO newAirportDTO) {
     AirportEntity newAirportEntity = new AirportEntity();
+
     newAirportEntity.setName(newAirportDTO.getName());
     newAirportEntity.setIataCode(newAirportDTO.getIataCode());
     newAirportEntity.setIcaoCode(newAirportDTO.getIcaoCode());
     newAirportEntity.setCountryCode(newAirportDTO.getCountryCode());
     newAirportEntity.setType(newAirportDTO.getType());
+
     airportRepository.save(newAirportEntity);
   }
 
-  public void updateAirport(String airportId, AirportDTO updatedAirportDTO) {
-    AirportEntity existingAirport = airportRepository.findById(airportId)
+  public void updateAirport(AirportCreateUpdateDTO updatedAirportDTO) {
+    AirportEntity existingAirport = airportRepository.findById(updatedAirportDTO.getId())
         .orElseThrow(() -> new AppError("notFound.airport", HttpStatus.NOT_FOUND.value()));
 
     existingAirport.setName(updatedAirportDTO.getName());
@@ -68,22 +73,22 @@ public class AirportService {
     airportRepository.save(existingAirport);
   }
 
-  public void deleteAirport(String airportId) {
-    AirportEntity existingAirport = airportRepository.findById(airportId)
+  public void deleteAirport(EntityIdDTO entityIdDTO) {
+    AirportEntity existingAirport = airportRepository.findById(entityIdDTO.getId())
         .orElseThrow(() -> new AppError("notFound.airport", HttpStatus.NOT_FOUND.value()));
     airportRepository.delete(existingAirport);
   }
 
   public Boolean doesSingleAirportExist(AirportEntity airport) {
-    String airportId = airport.getId();
-    Optional<AirportEntity> airportFound = airportRepository.findById(airportId);
+    String id = airport.getId();
+    Optional<AirportEntity> airportFound = airportRepository.findById(id);
     return airportFound.isPresent();
   }
 
   public Boolean doesMultipleAirportsExist(List<AirportEntity> airports) {
-    List<String> airportIds = new ArrayList<>();
-    airports.forEach(airport -> airportIds.add(airport.getId()));
-    List<AirportEntity> airportsFound = airportRepository.findAllById(airportIds);
+    List<String> ids = new ArrayList<>();
+    airports.forEach(airport -> ids.add(airport.getId()));
+    List<AirportEntity> airportsFound = airportRepository.findAllById(ids);
     if (airports.size() != airportsFound.size()) {
       return false;
     }
