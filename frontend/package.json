@@ -55,7 +55,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.62.10",
+    "@tanstack/react-query-devtools": "^5.62.15",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/lodash": "^4.17.13",
     "@types/react": "^18.3.18",
