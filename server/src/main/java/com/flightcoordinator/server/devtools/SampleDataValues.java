@@ -110,17 +110,10 @@ public class SampleDataValues {
       "Covers first-aid and emergency medical response protocols for crew members.",
       "Focuses on communication, teamwork, and decision-making skills for crews.");
 
-  public static List<List<CrewRole>> sampleCertificationAssignableRoles = Arrays.asList(
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER, CrewRole.SECOND_OFFICER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER, CrewRole.SECOND_OFFICER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER, CrewRole.FLIGHT_ENGINEER),
-      Arrays.asList(CrewRole.PURSER, CrewRole.FLIGHT_ATTENDANT),
-      Arrays.asList(CrewRole.FLIGHT_ATTENDANT, CrewRole.LOADMASTER),
-      Arrays.asList(CrewRole.FLIGHT_MEDIC, CrewRole.PURSER),
-      Arrays.asList(CrewRole.CAPTAIN, CrewRole.FIRST_OFFICER, CrewRole.FLIGHT_ATTENDANT, CrewRole.RELIEF_CREW_MEMBER));
+  public static List<CrewRole> sampleCertificationAssignableRoles = Arrays.asList(
+      CrewRole.CAPTAIN, CrewRole.CAPTAIN, CrewRole.CAPTAIN, CrewRole.CAPTAIN,
+      CrewRole.CAPTAIN, CrewRole.FLIGHT_ENGINEER, CrewRole.PURSER, CrewRole.FLIGHT_ATTENDANT,
+      CrewRole.FLIGHT_MEDIC, CrewRole.CAPTAIN);
 
   public static List<CertificationIssuer> sampleCertificationIssuers = Arrays.asList(
       CertificationIssuer.FAA, CertificationIssuer.EASA, CertificationIssuer.CAA,

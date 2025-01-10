@@ -54,7 +54,7 @@ public class CertificationService {
     certificationEntity.setIssuingCountry(newCertificationDTO.getIssuingCountry());
     certificationEntity.setExpirationDate(newCertificationDTO.getExpirationDate());
     certificationEntity.setValidityPeriod(newCertificationDTO.getValidityPeriod());
-    certificationEntity.setAssignableRoles(newCertificationDTO.getAssignableRoles());
+    certificationEntity.setAssignableRole(newCertificationDTO.getAssignableRole());
     certificationEntity.setDescription(newCertificationDTO.getDescription());
 
     certificationRepository.save(certificationEntity);
@@ -69,7 +69,7 @@ public class CertificationService {
     existingCertification.setIssuingCountry(updatedCertificationDTO.getIssuingCountry());
     existingCertification.setExpirationDate(updatedCertificationDTO.getExpirationDate());
     existingCertification.setValidityPeriod(updatedCertificationDTO.getValidityPeriod());
-    existingCertification.setAssignableRoles(updatedCertificationDTO.getAssignableRoles());
+    existingCertification.setAssignableRole(updatedCertificationDTO.getAssignableRole());
     existingCertification.setDescription(updatedCertificationDTO.getDescription());
 
     certificationRepository.save(existingCertification);

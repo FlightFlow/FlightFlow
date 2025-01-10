@@ -7,9 +7,7 @@ import com.flightcoordinator.server.enums.CertificationIssuer;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
 import com.flightcoordinator.server.enums.CrewRole;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -47,22 +45,16 @@ public class CertificationEntity {
   @Column(name = "validity_period", nullable = false)
   private Integer validityPeriod;
 
-  @ElementCollection(targetClass = CrewRole.class)
   @Enumerated(EnumType.STRING)
-  @CollectionTable(name = "assignable_roles_list", joinColumns = @JoinColumn(name = "certification_id"))
   @Column(name = "assignable_roles", nullable = false)
-  private List<CrewRole> assignableRoles;
+  private CrewRole assignableRole;
 
   @Column(name = "description", nullable = false)
   private String description;
 
-@ManyToMany
-@JoinTable(
-    name = "certification_crew_members", 
-    joinColumns = @JoinColumn(name = "certification_id"),
-    inverseJoinColumns = @JoinColumn(name = "crew_id") 
-)
-private List<CrewEntity> assignedCrewMembers;
+  @ManyToMany
+  @JoinTable(name = "certification_crew_members", joinColumns = @JoinColumn(name = "certification_id"), inverseJoinColumns = @JoinColumn(name = "crew_id"))
+  private List<CrewEntity> assignedCrewMembers;
 
   public CertificationEntity() {
   }
@@ -70,14 +62,14 @@ private List<CrewEntity> assignedCrewMembers;
   public CertificationEntity(String id, String name, CertificationIssuer issuer,
       CertificationIssuingCountry issuingCountry, Date expirationDate,
       @Min(value = 1, message = "Validity period should be greater than '1'") Integer validityPeriod,
-      List<CrewRole> assignableRoles, String description, List<CrewEntity> assignedCrewMembers) {
+      CrewRole assignableRole, String description, List<CrewEntity> assignedCrewMembers) {
     this.id = id;
     this.name = name;
     this.issuer = issuer;
     this.issuingCountry = issuingCountry;
     this.expirationDate = expirationDate;
     this.validityPeriod = validityPeriod;
-    this.assignableRoles = assignableRoles;
+    this.assignableRole = assignableRole;
     this.description = description;
     this.assignedCrewMembers = assignedCrewMembers;
   }
@@ -130,12 +122,12 @@ private List<CrewEntity> assignedCrewMembers;
     this.validityPeriod = validityPeriod;
   }
 
-  public List<CrewRole> getAssignableRoles() {
-    return assignableRoles;
+  public CrewRole getAssignableRole() {
+    return assignableRole;
   }
 
-  public void setAssignableRoles(List<CrewRole> assignableRoles) {
-    this.assignableRoles = assignableRoles;
+  public void setAssignableRole(CrewRole assignableRole) {
+    this.assignableRole = assignableRole;
   }
 
   public String getDescription() {
@@ -154,5 +146,4 @@ private List<CrewEntity> assignedCrewMembers;
     this.assignedCrewMembers = assignedCrewMembers;
   }
 
-  
 }

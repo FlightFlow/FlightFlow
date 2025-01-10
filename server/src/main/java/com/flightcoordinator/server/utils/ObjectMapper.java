@@ -90,7 +90,7 @@ public class ObjectMapper {
     certificationDTO.setIssuingCountry(certificationEntity.getIssuingCountry());
     certificationDTO.setExpirationDate(certificationEntity.getExpirationDate());
     certificationDTO.setValidityPeriod(certificationEntity.getValidityPeriod());
-    certificationDTO.setAssignableRoles(certificationEntity.getAssignableRoles());
+    certificationDTO.setAssignableRole(certificationEntity.getAssignableRole());
     certificationDTO.setDescription(certificationEntity.getDescription());
     certificationDTO.setAssignedCrewMembers(certificationEntity.getAssignedCrewMembers().stream()
         .map(crewMember -> crewMember.getId()).collect(Collectors.toList()));
