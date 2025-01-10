@@ -14,7 +14,7 @@ const AuthCheck = ({ children }: ComponentTypes.AuthCheckProps) => {
   useEffect(() => {
     if (isAuthenticated) {
       if (isAtRoot) {
-        navigate("/app/airport");
+        navigate("/app/certification");
         return;
       }
     } else {

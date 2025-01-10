@@ -78,7 +78,7 @@ public class SampleDataGenerator {
       certification.setIssuingCountry(SampleDataValues.sampleCertificationIssuingCountries.get(i));
       certification.setExpirationDate(new Date());
       certification.setValidityPeriod(12);
-      certification.setAssignableRoles(SampleDataValues.sampleCertificationAssignableRoles.get(i));
+      certification.setAssignableRole(SampleDataValues.sampleCertificationAssignableRoles.get(i));
       certification.setDescription(SampleDataValues.sampleCertificationDescriptions.get(i));
       certificationRepository.save(certification);
     }
@@ -97,7 +97,7 @@ public class SampleDataGenerator {
       crewMember.setRole(SampleDataValues.sampleCrewMemberRoles.get(i));
       crewMember.setCertifications(
           allCertifications.stream()
-              .filter(certification -> certification.getAssignableRoles().contains(crewMember.getRole()))
+              .filter(certification -> certification.getAssignableRole().equals(crewMember.getRole()))
               .collect(Collectors.toList()));
       crewMember.setTotalFlightHours(randomValue.nextInt(50000));
       crewMember.setBaseAirport(allAirports.get((allAirports.size() - 1) - i));

@@ -57,7 +57,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/app/plane");
+      navigate("/app/certification");
     }
     return;
   }, [isAuthenticated, navigate]);

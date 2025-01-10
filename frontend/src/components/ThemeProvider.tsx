@@ -1,7 +1,4 @@
-import { createContext, useState } from "react";
-
 import {
-  BACKGROUND,
   BORDER,
   DARK_COLOR,
   LIGHT_COLOR,
@@ -14,14 +11,7 @@ import { createTheme, ThemeProvider as MUIThemeProvider, PaletteOptions } from "
 import { CssBaseline } from "@mui/material";
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
-export const themeContext = createContext<ComponentTypes.ThemeContextProps>({
-  isLightMode: true,
-  setIsLightMode: () => {},
-});
-
 const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
-  const [isLightMode, setIsLightMode] = useState<boolean>(true);
-
   const typography: TypographyOptions = {
     fontFamily: "Inter",
     fontSize: 14,
@@ -35,15 +25,6 @@ const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
     h6: { fontSize: "1rem" },
   };
 
-  const darkPalette: PaletteOptions = {
-    mode: "dark",
-    primary: { main: PRIMARY_COLOR },
-    secondary: { main: SECONDARY_COLOR },
-    background: { default: BACKGROUND },
-    text: { primary: DARK_COLOR },
-    divider: BORDER,
-  };
-
   const lightPalette: PaletteOptions = {
     mode: "light",
     primary: { main: PRIMARY_COLOR },
@@ -54,7 +35,7 @@ const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
   };
 
   const theme: Theme = createTheme({
-    palette: isLightMode ? lightPalette : darkPalette,
+    palette: lightPalette,
     typography,
     components: {
       MuiSvgIcon: {
@@ -71,10 +52,8 @@ const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
 
   return (
     <MUIThemeProvider theme={theme}>
-      <themeContext.Provider value={{ isLightMode, setIsLightMode }}>
-        <CssBaseline />
-        {children}
-      </themeContext.Provider>
+      <CssBaseline />
+      {children}
     </MUIThemeProvider>
   );
 };
