@@ -46,7 +46,7 @@ namespace EntityTypes {
     issuingCountry: Enums.CertificationIssuingCountry;
     expirationDate: Date;
     validityPeriod: number;
-    assignableRole: Enums.CrewRoles[];
+    assignableRole: Enums.CrewRoles;
     description: string;
   }
   export interface CrewEntity extends BaseEntity {

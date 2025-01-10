@@ -1,15 +1,9 @@
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 import { BORDER, LIGHT_COLOR, LIGHT_ICON_STYLES } from "@/shared/global.style";
 import ComponentTypes from "@/types/components";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  CloseRounded,
-  DarkModeRounded,
-  LightModeRounded,
-  LogoutRounded,
-} from "@mui/icons-material";
+import { CloseRounded, LogoutRounded } from "@mui/icons-material";
 import {
   Button,
   ButtonGroup,
@@ -21,8 +15,6 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
-
-import { themeContext } from "./ThemeProvider";
 
 const SETTINGS_CONTAINER_STYLES: SxProps = {
   width: "350px",
@@ -84,7 +76,6 @@ const SettingsModal = ({
 }: ComponentTypes.SettingsModelProps) => {
   const { logout } = useAuth0();
   const { t, i18n } = useTranslation();
-  const { isLightMode, setIsLightMode } = useContext(themeContext);
 
   return (
     <Modal open={isSettingsToggled} onClose={setIsSettingsToggled}>
@@ -96,26 +87,6 @@ const SettingsModal = ({
           <IconButton onClick={() => setIsSettingsToggled(false)}>
             <CloseRounded />
           </IconButton>
-        </Grid>
-        <Divider flexItem />
-        <Grid container sx={SETTINGS_ROW_STYLES}>
-          <Typography textAlign={"center"} fontWeight={650}>
-            {t("settings.theme.title")}
-          </Typography>
-          <ButtonGroup fullWidth sx={BUTTON_GROUP_STYLES}>
-            <Button
-              startIcon={<DarkModeRounded />}
-              sx={isLightMode ? SETTINGS_BUTTON_STYLES : SETTINGS_ACTIVE_BUTTON_STYLES}
-              onClick={() => setIsLightMode(!isLightMode)}>
-              {t("settings.theme.darkTheme")}
-            </Button>
-            <Button
-              startIcon={<LightModeRounded />}
-              sx={isLightMode ? SETTINGS_ACTIVE_BUTTON_STYLES : SETTINGS_BUTTON_STYLES}
-              onClick={() => setIsLightMode(!isLightMode)}>
-              {t("settings.theme.lightTheme")}
-            </Button>
-          </ButtonGroup>
         </Grid>
         <Divider flexItem />
         <Grid container sx={SETTINGS_ROW_STYLES}>

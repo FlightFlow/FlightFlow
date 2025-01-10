@@ -44,7 +44,7 @@ namespace DataTransfer {
     issuingCountry: Enums.CertificationIssuingCountry;
     expirationDate: Date;
     validityPeriod: number;
-    assignableRole: Enums.CrewRoles[];
+    assignableRole: Enums.CrewRoles;
     description: string;
   }
   interface CrewDTO extends BaseDTO {

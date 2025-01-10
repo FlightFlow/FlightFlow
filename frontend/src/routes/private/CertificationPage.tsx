@@ -2,7 +2,9 @@ import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
 import DataTransfer from "@/types/dto";
-
+import ResourceTypes from "@/types/resource";
+import { GridColDef } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";
@@ -11,7 +13,6 @@ import useCertificationQuery from "@/hooks/certification/useCertificationAllQuer
 import useCertificationCreateMutation from "@/hooks/certification/useCertificationCreateMutation";
 import useCertificationDeleteMutation from "@/hooks/certification/useCertificationDeleteMutation";
 import useCertificationUpdateMutation from "@/hooks/certification/useCertificationUpdateMutation";
-import ResourceTypes from "@/types/resource";
 
 const CertificationsPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -20,7 +21,8 @@ const CertificationsPage = () => {
   const { mutateAsync: certificationUpdateMutation } = useCertificationUpdateMutation();
   const { mutateAsync: certificationDeleteMutation } = useCertificationDeleteMutation();
 
-  const { data: certificationQueryData, isLoading: isCertificationQueryLoading } = useCertificationQuery();
+  const { data: certificationQueryData, isLoading: isCertificationQueryLoading } =
+    useCertificationQuery();
 
   if (isCertificationQueryLoading) {
     return <GridOverlay type="loading" />;
@@ -40,16 +42,20 @@ const CertificationsPage = () => {
       id: index + 1,
       uniqueId: certification.id,
       name: certification.name,
-      issuer: Enums.CertificationIssuer[certification.issuer],
-      issuingCountry: Enums.CertificationIssuingCountry[certification.issuingCountry],
-      expirationDate: certification.expirationDate.toLocaleDateString(),
-      validityPeriod: `${certification.validityPeriod} years`,
-      assignableRole: certification.assignableRole.join(", "),
+      issuer:
+        Enums.CertificationIssuer[certification.issuer as keyof typeof Enums.CertificationIssuer],
+      issuingCountry:
+        Enums.CertificationIssuingCountry[
+          certification.issuingCountry as keyof typeof Enums.CertificationIssuingCountry
+        ],
+      expirationDate: dayjs(certification.expirationDate).toDate(),
+      validityPeriod: certification.validityPeriod,
+      assignableRole: Enums.CrewRole[certification.assignableRole as keyof typeof Enums.CrewRole],
       description: certification.description,
     }),
   );
 
-  const certificationColumns: xDataGrid.GridColDef[] = [
+  const certificationColumns: GridColDef[] = [
     {
       field: "id",
       headerName: t("columns.certification.id"),
@@ -78,7 +84,7 @@ const CertificationsPage = () => {
     },
     {
       field: "issuer",
-      type: "string",
+      type: "singleSelect",
       headerName: t("columns.certification.issuer"),
       flex: 1,
       editable: true,
@@ -88,7 +94,7 @@ const CertificationsPage = () => {
     },
     {
       field: "issuingCountry",
-      type: "string",
+      type: "singleSelect",
       headerName: t("columns.certification.issuingCountry"),
       flex: 1,
       editable: true,
@@ -116,12 +122,13 @@ const CertificationsPage = () => {
     },
     {
       field: "assignableRole",
-      type: "string",
+      type: "singleSelect",
       headerName: t("columns.certification.assignableRole"),
       flex: 1,
       editable: true,
       headerAlign: "left",
       align: "left",
+      valueOptions: Object.values(Enums.CrewRole),
     },
     {
       field: "description",
@@ -136,17 +143,17 @@ const CertificationsPage = () => {
 
   const certificationNewDataObject: Omit<DataTransfer.CertificationDTO, "id"> = {
     name: "",
-    issuer: Enums.CertificationIssuer.DEFAULT,
-    issuingCountry: Enums.CertificationIssuingCountry.DEFAULT,
+    issuer: Enums.CertificationIssuer.AIRBUS,
+    issuingCountry: Enums.CertificationIssuingCountry.GLOBAL,
     expirationDate: new Date(),
     validityPeriod: 1,
-    assignableRole: [],
+    assignableRole: Enums.CrewRole.FLIGHT_ATTENDANT,
     description: "",
   };
 
   return (
     <DataGrid<
-      Resource.Types.Certification.Mutations.CreateMutationParams,
+      ResourceTypes.Certification.Mutations.CreateMutationParams,
       ResourceTypes.Certification.Mutations.UpdateMutationParams,
       ResourceTypes.Certification.Mutations.DeleteMutationParams
     >

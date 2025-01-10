@@ -1,16 +1,17 @@
 import { useTranslation } from "react-i18next";
 
 import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";
 
 import usePlaneQuery from "@/hooks/plane/usePlaneAllQuery";
 import usePlaneCreateMutation from "@/hooks/plane/usePlaneCreateMutation";
-import usePlaneUpdateMutation from "@/hooks/plane/usePlaneUpdateMutation";
 import usePlaneDeleteMutation from "@/hooks/plane/usePlaneDeleteMutation";
-import ResourceTypes from "@/types/resource";
+import usePlaneUpdateMutation from "@/hooks/plane/usePlaneUpdateMutation";
 
 const PlanePage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -42,7 +43,7 @@ const PlanePage = () => {
     passengerCapacity: plane.passengerCapacity,
     fuelEfficiency: plane.fuelEfficiency,
     maxFlightRange: plane.maxFlightRange,
-    lastMaintenance: plane.lastMaintenance,
+    lastMaintenance: dayjs(plane.lastMaintenance).toDate(),
     totalFlightHours: plane.totalFlightHours,
     maxTakeoffWeight: plane.maxTakeoffWeight,
     shortestRunwayLengthRequired: plane.shortestRunwayLengthRequired,
@@ -53,21 +54,99 @@ const PlanePage = () => {
   }));
 
   const planeColumns: GridColDef[] = [
-    { field: "id", headerName: t("columns.plane.id"), width: 80, editable: false },
-    { field: "uniqueId", headerName: t("columns.plane.uniqueId"), width: 150, editable: false },
-    { field: "model", headerName: t("columns.plane.model"), flex: 1, editable: true },
-    { field: "registrationNumber", headerName: t("columns.plane.registrationNumber"), flex: 1, editable: true },
-    { field: "passengerCapacity", headerName: t("columns.plane.passengerCapacity"), type: "number", flex: 1, editable: true },
-    { field: "fuelEfficiency", headerName: t("columns.plane.fuelEfficiency"), type: "number", flex: 1, editable: true },
-    { field: "maxFlightRange", headerName: t("columns.plane.maxFlightRange"), type: "number", flex: 1, editable: true },
-    { field: "lastMaintenance", headerName: t("columns.plane.lastMaintenance"), type: "date", flex: 1, editable: true },
-    { field: "totalFlightHours", headerName: t("columns.plane.totalFlightHours"), type: "number", flex: 1, editable: true },
-    { field: "maxTakeoffWeight", headerName: t("columns.plane.maxTakeoffWeight"), type: "number", flex: 1, editable: true },
-    { field: "shortestRunwayLengthRequired", headerName: t("columns.plane.shortestRunwayLengthRequired"), type: "number", flex: 1, editable: true },
-    { field: "shortestRunwayWidthRequired", headerName: t("columns.plane.shortestRunwayWidthRequired"), type: "number", flex: 1, editable: true },
+    {
+      field: "id",
+      headerName: t("columns.plane.id"),
+      width: 80,
+      editable: false,
+    },
+    {
+      field: "uniqueId",
+      headerName: t("columns.plane.uniqueId"),
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "model",
+      headerName: t("columns.plane.model"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "registrationNumber",
+      headerName: t("columns.plane.registrationNumber"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "passengerCapacity",
+      headerName: t("columns.plane.passengerCapacity"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "fuelEfficiency",
+      headerName: t("columns.plane.fuelEfficiency"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "maxFlightRange",
+      headerName: t("columns.plane.maxFlightRange"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "lastMaintenance",
+      headerName: t("columns.plane.lastMaintenance"),
+      type: "date",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "totalFlightHours",
+      headerName: t("columns.plane.totalFlightHours"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "maxTakeoffWeight",
+      headerName: t("columns.plane.maxTakeoffWeight"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "shortestRunwayLengthRequired",
+      headerName: t("columns.plane.shortestRunwayLengthRequired"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "shortestRunwayWidthRequired",
+      headerName: t("columns.plane.shortestRunwayWidthRequired"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
     { field: "planeStatus", headerName: t("columns.plane.planeStatus"), flex: 1, editable: true },
-    { field: "currentLocationId", headerName: t("columns.plane.currentLocationId"), flex: 1, editable: true },
-    { field: "aircraftOperator", headerName: t("columns.plane.aircraftOperator"), flex: 1, editable: true },
+    {
+      field: "currentLocationId",
+      headerName: t("columns.plane.currentLocationId"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "aircraftOperator",
+      headerName: t("columns.plane.aircraftOperator"),
+      flex: 1,
+      editable: true,
+    },
   ];
 
   const planeNewDataObject: Omit<DataTransfer.PlaneDTO, "id"> = {

@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
 import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
@@ -11,7 +12,6 @@ import useCrewQuery from "@/hooks/crew/useCrewAllQuery";
 import useCrewCreateMutation from "@/hooks/crew/useCrewCreateMutation";
 import useCrewDeleteMutation from "@/hooks/crew/useCrewDeleteMutation";
 import useCrewUpdateMutation from "@/hooks/crew/useCrewUpdateMutation";
-import ResourceTypes from "@/types/resource";
 
 const CrewPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -41,7 +41,7 @@ const CrewPage = () => {
     fullName: crew.fullName,
     email: crew.email,
     phoneNumber: crew.phoneNumber,
-    role: Enums.CrewRoles[crew.role],
+    role: Enums.CrewRole[crew.role as keyof typeof Enums.CrewRole],
     certificationIds: crew.certificationIds.join(", "),
     totalFlightHours: crew.totalFlightHours,
     baseAirportId: crew.baseAirportId,
@@ -95,7 +95,7 @@ const CrewPage = () => {
     },
     {
       field: "role",
-      type: "string",
+      type: "singleSelect",
       headerName: t("columns.crew.role"),
       flex: 1,
       editable: true,
@@ -145,7 +145,7 @@ const CrewPage = () => {
     fullName: "",
     email: "",
     phoneNumber: 0,
-    role: Enums.CrewRole.DEFAULT,
+    role: Enums.CrewRole.FLIGHT_ATTENDANT,
     certificationIds: [],
     totalFlightHours: 0,
     baseAirportId: "",

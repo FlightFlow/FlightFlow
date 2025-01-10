@@ -164,11 +164,7 @@ const SidebarLinks = ({ section }: ComponentTypes.SidebarLinksProps) => {
             <MenuItem
               key={sectionElement.elementKey}
               sx={MENU_ITEM_STYLES}
-              onClick={() =>
-                selectedList === sidebarExternalsList
-                  ? (window.location.href = sectionElement.elementPath)
-                  : navigate(sectionElement.elementPath)
-              }>
+              onClick={() => navigate(sectionElement.elementPath, {})}>
               <ListItemIcon>{sectionElement.elementIcon}</ListItemIcon>
               <ListItemText>{t(sectionElement.elementText)}</ListItemText>
             </MenuItem>
