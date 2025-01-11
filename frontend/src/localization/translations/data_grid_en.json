@@ -1,8 +1,9 @@
 {
   "columns": {
+    "id": "Table ID",
+    "uniqueId": "Database ID",
+    "actions": "Edit",
     "airport": {
-      "id": "Table ID",
-      "uniqueId": "Database ID",
       "name": "Name",
       "iataCode": "IATA Code",
       "icaoCode": "ICAO Code",
@@ -22,35 +23,80 @@
       "": ""
     },
     "certification": {
-      "": ""
+      "name": "Name",
+      "issuer": "Issuer",
+      "issuingCountry": "Issuing Country",
+      "expirationDate": "Expiration Date",
+      "validityPeriod": "Validity Period",
+      "assignableRole": "Assignable Role",
+      "description": "Description"
     },
     "crew": {
-      "": ""
+      "fullName": "Full Name",
+      "email": "E-Mail",
+      "phoneNumber": "Phone Number",
+      "role": "Role",
+      "certificationIds": "Certification ID's",
+      "totalFlightHours": "Total Flight Hours",
+      "baseAirportId": "Base Airport Id",
+      "availability": "Availability"
     },
     "flight": {
-      "": ""
+      "passengerCount": "Passenger Count",
+      "flightRouteId": "Flight Route ID"
     },
     "plane": {
-      "": ""
+      "model": "Model",
+      "registrationNumber": "Registration No",
+      "passengerCapacity": "Passenger Capacity",
+      "fuelEfficiency": "Fuel Efficiency",
+      "maxFlightRange": "Maximum Flight Range",
+      "lastMaintenance": "Last Maintenance Date",
+      "totalFlightHours": "Total Flight Hours",
+      "maxTakeoffWeight": "Maximum Takeoff Weight",
+      "shortestRunwayLengthRequired": "Shortest Required Runway Length",
+      "shortestRunwayWidthRequired": "Shortest Required Runway Length",
+      "planeStatus": "Availability",
+      "currentLocationId": "Current Location ID",
+      "aircraftOperator": "Operator"
     },
     "route": {
-      "": ""
+      "originAirportId": "Origin Airport ID",
+      "destinationAirportId": "Destination Airport ID",
+      "distance": "Distance",
+      "estimatedTime": "Estimated Flight Time"
     },
     "runway": {
-      "": ""
+      "length": "Length",
+      "width": "Width",
+      "surfaceType": "Surface Type",
+      "maxWeightCapacity": "Maximum Weight Capacity",
+      "orientation": "Orientation",
+      "airportId": "Airport ID"
     },
     "vehicle": {
-      "": ""
+      "type": "Type",
+      "vehicleCode": "Vehicle Code",
+      "capacity": "Spesific Capacity",
+      "availability": "Availability",
+      "maintenanceDue": "Maintenance Due Date"
     }
   },
   "buttons": {
-    "addNewAirportButton": "Add New Airport"
+    "addNewAirportButton": "Add New Airport",
+    "addNewCertificationButton": "Add New Certification",
+    "addNewCrewButton": "Add New Crew Member",
+    "addNewFlightButton": "Add New Flight",
+    "addNewPlaneButton": "Add New Plane",
+    "addNewRouteButton": "Add New Route",
+    "addNewRunwayButton": "Add New Runway",
+    "addNewVehicleButton": "Add New Vehicle"
   },
   "overlay": {
     "loadingMessage": "Loading data...",
     "errorMessage": "An error occurred. Try re-logging."
   },
-  "noRowsLabel": "No Rows",
+  "noRowsLabel": "There isn't any data",
   "noResultsOverlayLabel": "No Results Found",
   "toolbarDensity": "Density",
   "toolbarDensityLabel": "Toolbar Density",

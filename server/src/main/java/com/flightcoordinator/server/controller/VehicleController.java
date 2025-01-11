@@ -32,14 +32,14 @@ public class VehicleController {
   @Operation(summary = "Get all the vehicles", description = "Retrieve the details of all vehicles.")
   public ResponseEntity<ResponseObject<List<VehicleDTO>>> getAllVehicles() {
     List<VehicleDTO> vehicles = vehicleService.getAllVehicles();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", vehicles);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", vehicles);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get a vehicle by id", description = "Retrieve the details of a spesific vehicle using it's ID.")
   public ResponseEntity<ResponseObject<VehicleDTO>> getVehicleById(@RequestBody EntityIdDTO id) {
     VehicleDTO vehicle = vehicleService.getSingleVehicleById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", vehicle);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", vehicle);
   }
 
   @PostMapping("/create")

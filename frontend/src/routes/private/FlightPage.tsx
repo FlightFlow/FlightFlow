@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
@@ -8,9 +9,8 @@ import GridOverlay from "@/components/GridOverlay";
 
 import useFlightQuery from "@/hooks/flight/useFlightAllQuery";
 import useFlightCreateMutation from "@/hooks/flight/useFlightCreateMutation";
-import useFlightUpdateMutation from "@/hooks/flight/useFlightUpdateMutation";
 import useFlightDeleteMutation from "@/hooks/flight/useFlightDeleteMutation";
-import ResourceTypes from "@/types/resource";
+import useFlightUpdateMutation from "@/hooks/flight/useFlightUpdateMutation";
 
 const FlightPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -44,7 +44,7 @@ const FlightPage = () => {
   const flightColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("columns.flight.id"),
+      headerName: t("columns.id"),
       width: 100,
       editable: false,
       headerAlign: "left",
@@ -53,7 +53,7 @@ const FlightPage = () => {
     {
       field: "uniqueId",
       type: "string",
-      headerName: t("columns.flight.uniqueId"),
+      headerName: t("columns.uniqueId"),
       flex: 1,
       editable: false,
       headerAlign: "left",
@@ -79,6 +79,11 @@ const FlightPage = () => {
     },
   ];
 
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    passengerCount: true,
+    flightRouteId: true,
+  };
+
   const flightNewDataObject: Omit<DataTransfer.FlightDTO, "id"> = {
     passengerCount: 0,
     flightRouteId: "",
@@ -98,6 +103,7 @@ const FlightPage = () => {
       newDataFunction={flightCreateMutation}
       updateDataFunction={flightUpdateMutation}
       deleteDataFunction={flightDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
     />
   );
 };

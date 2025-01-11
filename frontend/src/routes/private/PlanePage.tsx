@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 
+import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
 import DataTransfer from "@/types/dto";
 import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
@@ -56,76 +58,102 @@ const PlanePage = () => {
   const planeColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("columns.plane.id"),
+      type: "string",
+      headerName: t("columns.id"),
       width: 80,
       editable: false,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "uniqueId",
-      headerName: t("columns.plane.uniqueId"),
-      width: 150,
+      type: "string",
+      headerName: t("columns.uniqueId"),
+      width: 120,
       editable: false,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "model",
+      type: "string",
       headerName: t("columns.plane.model"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "registrationNumber",
+      type: "string",
       headerName: t("columns.plane.registrationNumber"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "passengerCapacity",
-      headerName: t("columns.plane.passengerCapacity"),
       type: "number",
+      headerName: t("columns.plane.passengerCapacity"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "fuelEfficiency",
-      headerName: t("columns.plane.fuelEfficiency"),
       type: "number",
+      headerName: t("columns.plane.fuelEfficiency"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "maxFlightRange",
-      headerName: t("columns.plane.maxFlightRange"),
       type: "number",
+      headerName: t("columns.plane.maxFlightRange"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "lastMaintenance",
-      headerName: t("columns.plane.lastMaintenance"),
       type: "date",
+      headerName: t("columns.plane.lastMaintenance"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "totalFlightHours",
-      headerName: t("columns.plane.totalFlightHours"),
       type: "number",
+      headerName: t("columns.plane.totalFlightHours"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "maxTakeoffWeight",
-      headerName: t("columns.plane.maxTakeoffWeight"),
       type: "number",
+      headerName: t("columns.plane.maxTakeoffWeight"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "shortestRunwayLengthRequired",
-      headerName: t("columns.plane.shortestRunwayLengthRequired"),
       type: "number",
+      headerName: t("columns.plane.shortestRunwayLengthRequired"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "shortestRunwayWidthRequired",
@@ -133,21 +161,52 @@ const PlanePage = () => {
       type: "number",
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
-    { field: "planeStatus", headerName: t("columns.plane.planeStatus"), flex: 1, editable: true },
+    {
+      field: "planeStatus",
+      type: "singleSelect",
+      headerName: t("columns.plane.planeStatus"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+      valueOptions: Object.values(EnumValues.PlaneAvailability),
+    },
     {
       field: "currentLocationId",
       headerName: t("columns.plane.currentLocationId"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "aircraftOperator",
       headerName: t("columns.plane.aircraftOperator"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    model: true,
+    registrationNumber: true,
+    passengerCapacity: true,
+    fuelEfficiency: false,
+    maxFlightRange: false,
+    lastMaintenance: true,
+    totalFlightHours: true,
+    maxTakeoffWeight: false,
+    shortestRunwayLengthRequired: false,
+    shortestRunwayWidthRequired: false,
+    planeStatus: true,
+    currentLocationId: true,
+    aircraftOperator: true,
+  };
 
   const planeNewDataObject: Omit<DataTransfer.PlaneDTO, "id"> = {
     model: "",
@@ -160,7 +219,7 @@ const PlanePage = () => {
     maxTakeoffWeight: 0,
     shortestRunwayLengthRequired: 0,
     shortestRunwayWidthRequired: 0,
-    planeStatus: "AVAILABLE", // Varsayılan değer.
+    planeStatus: Enums.PlaneAvailability.AVAILABLE,
     currentLocationId: "",
     aircraftOperator: "",
   };
@@ -179,6 +238,7 @@ const PlanePage = () => {
       newDataFunction={planeCreateMutation}
       updateDataFunction={planeUpdateMutation}
       deleteDataFunction={planeDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
     />
   );
 };

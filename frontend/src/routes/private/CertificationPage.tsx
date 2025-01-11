@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
 import DataTransfer from "@/types/dto";
 import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
@@ -42,15 +43,11 @@ const CertificationsPage = () => {
       id: index + 1,
       uniqueId: certification.id,
       name: certification.name,
-      issuer:
-        Enums.CertificationIssuer[certification.issuer as keyof typeof Enums.CertificationIssuer],
-      issuingCountry:
-        Enums.CertificationIssuingCountry[
-          certification.issuingCountry as keyof typeof Enums.CertificationIssuingCountry
-        ],
+      issuer: certification.issuer,
+      issuingCountry: certification.issuingCountry,
       expirationDate: dayjs(certification.expirationDate).toDate(),
       validityPeriod: certification.validityPeriod,
-      assignableRole: Enums.CrewRole[certification.assignableRole as keyof typeof Enums.CrewRole],
+      assignableRole: certification.assignableRole,
       description: certification.description,
     }),
   );
@@ -58,20 +55,22 @@ const CertificationsPage = () => {
   const certificationColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("columns.certification.id"),
+      headerName: t("columns.id"),
       width: 100,
       editable: false,
       headerAlign: "left",
       align: "left",
+      hideable: false,
     },
     {
       field: "uniqueId",
       type: "string",
-      headerName: t("columns.certification.uniqueId"),
+      headerName: t("columns.uniqueId"),
       flex: 1,
       editable: false,
       headerAlign: "left",
       align: "left",
+      hideable: false,
     },
     {
       field: "name",
@@ -90,7 +89,7 @@ const CertificationsPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: Object.values(Enums.CertificationIssuer),
+      valueOptions: Object.values(EnumValues.CertificationIssuer),
     },
     {
       field: "issuingCountry",
@@ -100,7 +99,12 @@ const CertificationsPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: Object.values(Enums.CertificationIssuingCountry),
+      valueOptions: () => {
+        console.log(parsedCertificationData[0].issuingCountry)
+        const values = Object.values(EnumValues.CertificationIssuingCountry)
+        console.log(values);
+        return values
+      },
     },
     {
       field: "expirationDate",
@@ -113,7 +117,7 @@ const CertificationsPage = () => {
     },
     {
       field: "validityPeriod",
-      type: "string",
+      type: "number",
       headerName: t("columns.certification.validityPeriod"),
       flex: 1,
       editable: true,
@@ -128,7 +132,7 @@ const CertificationsPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: Object.values(Enums.CrewRole),
+      valueOptions: Object.values(EnumValues.CrewRole),
     },
     {
       field: "description",
@@ -140,6 +144,16 @@ const CertificationsPage = () => {
       align: "left",
     },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    name: true,
+    issuer: true,
+    issuingCountry: true,
+    expirationDate: true,
+    validityPeriod: true,
+    assignableRole: true,
+    description: true,
+  };
 
   const certificationNewDataObject: Omit<DataTransfer.CertificationDTO, "id"> = {
     name: "",
@@ -165,6 +179,7 @@ const CertificationsPage = () => {
       newDataFunction={certificationCreateMutation}
       updateDataFunction={certificationUpdateMutation}
       deleteDataFunction={certificationDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
     />
   );
 };

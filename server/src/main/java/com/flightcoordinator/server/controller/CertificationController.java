@@ -33,14 +33,14 @@ public class CertificationController {
   @Operation(summary = "Get all the certifications", description = "Retrieve the details of all certifications.")
   public ResponseEntity<ResponseObject<List<CertificationDTO>>> getAllCertification() {
     List<CertificationDTO> certifications = certificationService.getAllCertifications();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", certifications);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", certifications);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get a certification by id", description = "Retrieve the details of a spesific certification using it's ID.")
   public ResponseEntity<ResponseObject<CertificationDTO>> getCertificationById(@RequestBody EntityIdDTO id) {
     CertificationDTO certification = certificationService.getSingleCertificationById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", certification);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", certification);
   }
 
   @PostMapping("/create")

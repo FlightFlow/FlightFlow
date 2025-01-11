@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 
 import DataGrid from "@/components/DataGrid";
@@ -8,9 +9,8 @@ import GridOverlay from "@/components/GridOverlay";
 
 import useRouteQuery from "@/hooks/route/useRouteAllQuery";
 import useRouteCreateMutation from "@/hooks/route/useRouteCreateMutation";
-import useRouteUpdateMutation from "@/hooks/route/useRouteUpdateMutation";
 import useRouteDeleteMutation from "@/hooks/route/useRouteDeleteMutation";
-import ResourceTypes from "@/types/resource";
+import useRouteUpdateMutation from "@/hooks/route/useRouteUpdateMutation";
 
 const RoutePage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -44,13 +44,55 @@ const RoutePage = () => {
   }));
 
   const routeColumns: GridColDef[] = [
-    { field: "id", headerName: t("columns.route.id"), width: 80, editable: false },
-    { field: "uniqueId", headerName: t("columns.route.uniqueId"), width: 150, editable: false },
-    { field: "originAirportId", headerName: t("columns.route.originAirportId"), flex: 1, editable: true },
-    { field: "destinationAirportId", headerName: t("columns.route.destinationAirportId"), flex: 1, editable: true },
-    { field: "distance", headerName: t("columns.route.distance"), type: "number", flex: 1, editable: true },
-    { field: "estimatedTime", headerName: t("columns.route.estimatedTime"), type: "number", flex: 1, editable: true },
+    {
+      field: "id",
+      headerName: t("columns.id"),
+      width: 80,
+      editable: false,
+    },
+    {
+      field: "uniqueId",
+      type: "string",
+      headerName: t("columns.uniqueId"),
+      width: 160,
+      editable: false,
+    },
+    {
+      field: "originAirportId",
+      type: "string",
+      headerName: t("columns.route.originAirportId"),
+      width: 180,
+      editable: true,
+    },
+    {
+      field: "destinationAirportId",
+      type: "string",
+      headerName: t("columns.route.destinationAirportId"),
+      width: 180,
+      editable: true,
+    },
+    {
+      field: "distance",
+      headerName: t("columns.route.distance"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "estimatedTime",
+      headerName: t("columns.route.estimatedTime"),
+      type: "number",
+      flex: 1,
+      editable: true,
+    },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    originAirportId: true,
+    destinationAirportId: true,
+    distance: true,
+    estimatedTime: true,
+  };
 
   const routeNewDataObject: Omit<DataTransfer.RouteDTO, "id"> = {
     originAirportId: "",
@@ -73,6 +115,7 @@ const RoutePage = () => {
       newDataFunction={routeCreateMutation}
       updateDataFunction={routeUpdateMutation}
       deleteDataFunction={routeDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
     />
   );
 };

@@ -1,8 +1,9 @@
 {
   "columns": {
+    "id": "Tablo ID",
+    "uniqueId": "Veritabanı ID",
+    "actions": "Düzenle",
     "airport": {
-      "id": "Tablo ID",
-      "uniqueId": "Veritabanı ID",
       "name": "Adı",
       "iataCode": "IATA Kodu",
       "icaoCode": "ICAO Kodu",
@@ -22,35 +23,80 @@
       "": ""
     },
     "certification": {
-      "": ""
+      "name": "Adı",
+      "issuer": "Veren Kurum",
+      "issuingCountry": "Verildiği Ülke",
+      "expirationDate": "Süresinin Dolma Tarihi",
+      "validityPeriod": "Geçerlilik Süresi",
+      "assignableRole": "Atanabilir Rol",
+      "description": "Açıklama"
     },
     "crew": {
-      "": ""
+      "fullName": "Tam Adı",
+      "email": "E-Posta",
+      "phoneNumber": "Telefon",
+      "role": "Rolü",
+      "certificationIds": "Sertifika ID'leri",
+      "totalFlightHours": "Toplam Uçuş Saati",
+      "baseAirportId": "Ana Havaalanı ID'si",
+      "availability": "Müsaitlik"
     },
     "flight": {
-      "": ""
+      "passengerCount": "Yolcu Sayısı",
+      "flightRouteId": "Uçuş Rotası ID'si"
     },
     "plane": {
-      "": ""
+      "model": "Model",
+      "registrationNumber": "Kayıt No",
+      "passengerCapacity": "Yolcu Kapasitesi",
+      "fuelEfficiency": "Yakıt Verimliliği",
+      "maxFlightRange": "Maksimum Uçuş Mesafesi",
+      "lastMaintenance": "Son Bakım Tarihi",
+      "totalFlightHours": "Toplam Uçuş Saati",
+      "maxTakeoffWeight": "Maksimum Kalkış Ağırlığı",
+      "shortestRunwayLengthRequired": "Minimum Gerekli Pist Uzunluğu",
+      "shortestRunwayWidthRequired": "Minimum Gerekli Pist Genişliği",
+      "planeStatus": "Müsaitlik",
+      "currentLocationId": "Mevcut Konum ID'si",
+      "aircraftOperator": "Operatörü"
     },
     "route": {
-      "": ""
+      "originAirportId": "Başlangıç Havaalanı ID'si",
+      "destinationAirportId": "Hedef Havaalanı ID'si",
+      "distance": "Mesafe",
+      "estimatedTime": "Tahmini Uçuş Süresi"
     },
     "runway": {
-      "": ""
+      "length": "Uzunluk",
+      "width": "Genişlik",
+      "surfaceType": "Yüzey Tipi",
+      "maxWeightCapacity": "Maksimum Ağırlık Kapasitesi",
+      "orientation": "Yönelimi",
+      "airportId": "Havalimanı ID'si"
     },
     "vehicle": {
-      "": ""
+      "type": "Tür",
+      "vehicleCode": "Araç Kodu",
+      "capacity": "Özel Kapasitesi",
+      "availability": "Müsaitlik",
+      "maintenanceDue": "Bakım Tarihi"
     }
   },
   "buttons": {
-    "addNewAirportButton": "Yeni Havaalanı ekle"
+    "addNewAirportButton": "Yeni Havaalanı Ekle",
+    "addNewCertificationButton": "Yeni Sertifika Ekle",
+    "addNewCrewButton": "Yeni Mürettebat Ekle",
+    "addNewFlightButton": "Yeni Uçuş Ekle",
+    "addNewPlaneButton": "Yeni Uçak Ekle",
+    "addNewRouteButton": "Yeni Rota Ekle",
+    "addNewRunwayButton": "Yeni Pist Ekle",
+    "addNewVehicleButton": "Yeni Araç Ekle"
   },
   "overlay": {
     "loadingMessage": "Veriler yükleniyor...",
     "errorMessage": "Bir hata oluştu. Yeniden giriş yapmayı deneyin."
   },
-  "noRowsLabel": "Satır yok",
+  "noRowsLabel": "Hiç veri yok",
   "noResultsOverlayLabel": "Sonuç bulunamadı",
   "toolbarDensity": "Görünüm",
   "toolbarDensityLabel": "Araç Çubuğu Görünümü",

@@ -215,8 +215,10 @@ const DataGrid = <TNew, TUpdate, TDelete>({
           {
             field: "actions",
             type: "actions",
-            headerName: t("actions.header"),
+            headerName: t("columns.actions"),
             width: 100,
+            headerAlign: "left",
+            align: "left",
             getActions: ({ id }) => {
               const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
