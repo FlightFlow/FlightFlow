@@ -30,6 +30,7 @@ namespace ComponentTypes {
       unknown
     >;
     columnVisibilityStates: Record<GridColDef["field"], boolean>;
+    columnEditibilityStates: Record<GridColDef["field"], boolean>;
   }
   interface GridOverlayProps {
     type: "loading" | "error";

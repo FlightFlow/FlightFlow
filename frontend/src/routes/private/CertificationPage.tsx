@@ -99,12 +99,7 @@ const CertificationsPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: () => {
-        console.log(parsedCertificationData[0].issuingCountry)
-        const values = Object.values(EnumValues.CertificationIssuingCountry)
-        console.log(values);
-        return values
-      },
+      valueOptions: Object.values(EnumValues.CertificationIssuingCountry),
     },
     {
       field: "expirationDate",
@@ -155,6 +150,18 @@ const CertificationsPage = () => {
     description: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
+    name: true,
+    issuer: true,
+    issuingCountry: true,
+    expirationDate: true,
+    validityPeriod: true,
+    assignableRole: true,
+    description: true,
+  };
+
   const certificationNewDataObject: Omit<DataTransfer.CertificationDTO, "id"> = {
     name: "",
     issuer: Enums.CertificationIssuer.AIRBUS,
@@ -180,6 +187,7 @@ const CertificationsPage = () => {
       updateDataFunction={certificationUpdateMutation}
       deleteDataFunction={certificationDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

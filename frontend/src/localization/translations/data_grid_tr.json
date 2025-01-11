@@ -92,6 +92,7 @@
     "addNewRunwayButton": "Yeni Pist Ekle",
     "addNewVehicleButton": "Yeni Araç Ekle"
   },
+  "validationFail": "Lütfen gerekli sütunları doldurunuz",
   "overlay": {
     "loadingMessage": "Veriler yükleniyor...",
     "errorMessage": "Bir hata oluştu. Yeniden giriş yapmayı deneyin."

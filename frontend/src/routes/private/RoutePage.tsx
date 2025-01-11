@@ -94,6 +94,13 @@ const RoutePage = () => {
     estimatedTime: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    originAirportId: true,
+    destinationAirportId: true,
+    distance: true,
+    estimatedTime: true,
+  };
+
   const routeNewDataObject: Omit<DataTransfer.RouteDTO, "id"> = {
     originAirportId: "",
     destinationAirportId: "",
@@ -116,6 +123,7 @@ const RoutePage = () => {
       updateDataFunction={routeUpdateMutation}
       deleteDataFunction={routeDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

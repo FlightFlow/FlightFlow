@@ -172,8 +172,22 @@ const AirportsPage = () => {
   ];
 
   const columnVisibilities: Record<GridColDef["field"], boolean> = {
-    id: true,
-    uniqueId: true,
+    name: true,
+    iataCode: true,
+    icaoCode: true,
+    countryCode: true,
+    type: true,
+    runwayIds: false,
+    vehiclesPresentIds: false,
+    planesPresentIds: false,
+    routesOriginatingFromAirportIds: false,
+    routesDestinedForAirportIds: false,
+    crewMembersPresentIds: false,
+  };
+
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
     name: true,
     iataCode: true,
     icaoCode: true,
@@ -216,6 +230,7 @@ const AirportsPage = () => {
       updateDataFunction={airportUpdateMutation}
       deleteDataFunction={airportDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

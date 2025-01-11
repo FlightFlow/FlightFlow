@@ -84,6 +84,13 @@ const FlightPage = () => {
     flightRouteId: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
+    passengerCount: true,
+    flightRouteId: true,
+  };
+
   const flightNewDataObject: Omit<DataTransfer.FlightDTO, "id"> = {
     passengerCount: 0,
     flightRouteId: "",
@@ -104,6 +111,7 @@ const FlightPage = () => {
       updateDataFunction={flightUpdateMutation}
       deleteDataFunction={flightDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

@@ -153,6 +153,19 @@ const CrewPage = () => {
     availability: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    role: true,
+    certificationIds: false,
+    totalFlightHours: true,
+    baseAirportId: true,
+    availability: true,
+  };
+
   const crewNewDataObject: Omit<DataTransfer.CrewDTO, "id"> = {
     fullName: "",
     email: "",
@@ -179,6 +192,7 @@ const CrewPage = () => {
       updateDataFunction={crewUpdateMutation}
       deleteDataFunction={crewDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

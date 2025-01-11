@@ -39,6 +39,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   updateDataFunction,
   deleteDataFunction,
   columnVisibilityStates,
+  columnEditibilityStates
 }: ComponentTypes.DataGridProps<TNew, TUpdate, TDelete>) => {
   const { t } = useTranslation(["data_grid"]);
 
@@ -94,7 +95,6 @@ const DataGrid = <TNew, TUpdate, TDelete>({
     let isNew = false;
 
     for (const key in row) {
-      const column = columnsProp.find((column) => column.field === key);
       if (key === "isNew" && row[key] === true) {
         isNew = true;
       }
@@ -108,14 +108,14 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         delete row["uniqueId"];
       }
 
-      if (column?.editable && !row[key]) {
+      if (columnEditibilityStates[key] && !row[key]) {
         return setDataState(() => ({
-          snackbarState: { isOpen: true, message: t("validationFail") },
+          snackbarState: { isOpen: true, message: t(`validationFail`) + `: ${key}` },
           isLoading: false,
           isSuccess: false,
         }));
       }
-      if (!column?.editable) {
+      if (!columnEditibilityStates[key]) {
         delete row[key];
       }
     }
@@ -217,8 +217,6 @@ const DataGrid = <TNew, TUpdate, TDelete>({
             type: "actions",
             headerName: t("columns.actions"),
             width: 100,
-            headerAlign: "left",
-            align: "left",
             getActions: ({ id }) => {
               const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 

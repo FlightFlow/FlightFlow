@@ -208,6 +208,25 @@ const PlanePage = () => {
     aircraftOperator: true,
   };
 
+
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
+    model: true,
+    registrationNumber: true,
+    passengerCapacity: true,
+    fuelEfficiency: true,
+    maxFlightRange: true,
+    lastMaintenance: true,
+    totalFlightHours: true,
+    maxTakeoffWeight: true,
+    shortestRunwayLengthRequired: true,
+    shortestRunwayWidthRequired: true,
+    planeStatus: true,
+    currentLocationId: true,
+    aircraftOperator: true,
+  };
+
   const planeNewDataObject: Omit<DataTransfer.PlaneDTO, "id"> = {
     model: "",
     registrationNumber: "",
@@ -239,6 +258,7 @@ const PlanePage = () => {
       updateDataFunction={planeUpdateMutation}
       deleteDataFunction={planeDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

@@ -125,6 +125,14 @@ const VehiclePage = () => {
     maintenanceDue: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    type: true,
+    vehicleCode: true,
+    capacity: true,
+    availability: true,
+    maintenanceDue: true,
+  };
+
   const vehicleNewDataObject: Omit<DataTransfer.VehicleDTO, "id"> = {
     type: Enums.GroundVehicleType.TUG,
     vehicleCode: "",
@@ -148,6 +156,7 @@ const VehiclePage = () => {
       updateDataFunction={vehicleUpdateMutation}
       deleteDataFunction={vehicleDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

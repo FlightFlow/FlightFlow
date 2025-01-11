@@ -116,6 +116,15 @@ const RunwayPage = () => {
     airportId: true,
   };
 
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    length: true,
+    width: true,
+    surfaceType: true,
+    maxWeightCapacity: true,
+    orientation: true,
+    airportId: true,
+  };
+
   const runwayNewDataObject: Omit<DataTransfer.RunwayDTO, "id"> = {
     length: 0,
     width: 0,
@@ -140,6 +149,7 @@ const RunwayPage = () => {
       updateDataFunction={runwayUpdateMutation}
       deleteDataFunction={runwayDeleteMutation}
       columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };
