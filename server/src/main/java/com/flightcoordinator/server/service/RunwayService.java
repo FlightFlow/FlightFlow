@@ -53,7 +53,7 @@ public class RunwayService {
   }
 
   public void createRunway(RunwayDTO newRunwayDTO) {
-    AirportEntity airportEntity = airportRepository.findById(newRunwayDTO.getId())
+    AirportEntity airportEntity = airportRepository.findById(newRunwayDTO.getAirportId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
     RunwayEntity newRunwayEntity = new RunwayEntity();

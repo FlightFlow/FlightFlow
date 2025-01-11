@@ -33,14 +33,14 @@ public class CrewController {
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<List<CrewDTO>>> getAllCrewMembers() {
     List<CrewDTO> crewMembers = crewService.getAllCrewMembers();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", crewMembers);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", crewMembers);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get a crew member by id", description = "Retrieve the details of a spesific crew member by their ID.")
   public ResponseEntity<ResponseObject<CrewDTO>> getCrewMemberById(@RequestBody EntityIdDTO id) {
     CrewDTO crewMember = crewService.getSingleCrewMemberById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", crewMember);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", crewMember);
   }
 
   @PostMapping("/create")

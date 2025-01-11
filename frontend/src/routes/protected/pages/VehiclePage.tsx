@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
 import DataTransfer from "@/types/dto";
 import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
@@ -51,49 +52,86 @@ const VehiclePage = () => {
   const vehicleColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("columns.vehicle.id"),
-      width: 80,
+      type: "string",
+      headerName: t("columns.id"),
+      width: 100,
       editable: false,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "uniqueId",
-      headerName: t("columns.vehicle.uniqueId"),
-      width: 150,
+      type: "string",
+      headerName: t("columns.uniqueId"),
+      width: 350,
       editable: false,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "type",
+      type: "singleSelect",
       headerName: t("columns.vehicle.type"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
+      valueOptions: Object.values(EnumValues.GroundVehicleType),
     },
     {
       field: "vehicleCode",
+      type: "string",
       headerName: t("columns.vehicle.vehicleCode"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "capacity",
-      headerName: t("columns.vehicle.capacity"),
       type: "number",
+      headerName: t("columns.vehicle.capacity"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
     {
       field: "availability",
+      type: "singleSelect",
       headerName: t("columns.vehicle.availability"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
+      valueOptions: Object.values(EnumValues.GroundVehicleAvailability),
     },
     {
       field: "maintenanceDue",
-      headerName: t("columns.vehicle.maintenanceDue"),
       type: "date",
+      headerName: t("columns.vehicle.maintenanceDue"),
       flex: 1,
       editable: true,
+      headerAlign: "left",
+      align: "left",
     },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    type: true,
+    vehicleCode: true,
+    capacity: false,
+    availability: true,
+    maintenanceDue: true,
+  };
+
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    type: true,
+    vehicleCode: true,
+    capacity: true,
+    availability: true,
+    maintenanceDue: true,
+  };
 
   const vehicleNewDataObject: Omit<DataTransfer.VehicleDTO, "id"> = {
     type: Enums.GroundVehicleType.TUG,
@@ -117,6 +155,8 @@ const VehiclePage = () => {
       newDataFunction={vehicleCreateMutation}
       updateDataFunction={vehicleUpdateMutation}
       deleteDataFunction={vehicleDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

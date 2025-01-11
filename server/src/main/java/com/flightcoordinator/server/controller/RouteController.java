@@ -32,14 +32,14 @@ public class RouteController {
   @Operation(summary = "Get all the routes", description = "Retrieve the details of all routes.")
   public ResponseEntity<ResponseObject<List<RouteDTO>>> getAllRoutes() {
     List<RouteDTO> routes = routeService.getAllRoutes();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", routes);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", routes);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get a route by id", description = "Retrieve the details of a spesific route using it's ID.")
   public ResponseEntity<ResponseObject<RouteDTO>> getRouteById(@RequestBody EntityIdDTO id) {
     RouteDTO route = routeService.getSingleRouteById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", route);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", route);
   }
 
   @PostMapping("/create")

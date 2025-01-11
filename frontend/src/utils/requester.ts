@@ -57,7 +57,6 @@ class Requester {
     };
     this.payload = requesterConfig.payload;
     this.query = requesterConfig.query;
-    Logger.info(`received access token: ${this.accessToken}`);
     return this;
   }
 

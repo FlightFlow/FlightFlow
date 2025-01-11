@@ -32,14 +32,14 @@ public class PlaneController {
   @Operation(summary = "Get all the planes", description = "Retrieve the details of all planes.")
   public ResponseEntity<ResponseObject<List<PlaneDTO>>> getAllPlanes() {
     List<PlaneDTO> planes = planeService.getAllPlanes();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", planes);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", planes);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get a plane by id", description = "Retrieve the details of a spesific plane using it's ID.")
   public ResponseEntity<ResponseObject<PlaneDTO>> getPlaneById(@RequestBody EntityIdDTO id) {
     PlaneDTO plane = planeService.getSinglePlaneById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", plane);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", plane);
   }
 
   @PostMapping("/create")

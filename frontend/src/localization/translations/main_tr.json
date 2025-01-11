@@ -5,8 +5,7 @@
   "sidebar": {
     "sectionTitles": {
       "resources": "Kaynaklar",
-      "algorithm": "Algoritma",
-      "external": "Harici Linkler"
+      "algorithm": "Algoritma"
     },
     "linkTexts": {
       "plane": "Uçaklar",
@@ -18,19 +17,12 @@
       "airport": "Havaalanları",
       "runway": "Pistler",
       "algorithmRun": "Algoritma Döngüleri",
-      "algorithmResult": "Algoritma Sonuçları",
-      "documentation": "Dökümantasyona git",
-      "repository": "GitHub repo'suna git"
+      "algorithmResult": "Algoritma Sonuçları"
     },
     "relogin": "Lütfen tekrar giriş yapın"
   },
   "settings": {
     "title": "Settings",
-    "theme": {
-      "title": "Tema",
-      "darkTheme": "Karanlık",
-      "lightTheme": "Aydınlık"
-    },
     "language": {
       "title": "Dil",
       "english": "İngilizce",
@@ -41,8 +33,38 @@
       "logout": "Çıkış Yap"
     }
   },
-  "introPage": {
-    "pageTitle": "Welcome to FC",
-    "authButton": "Continue to Authentication"
-  }
+  "landingPage": {
+    "subTitle": "Otomasyon Servisi",
+    "menu": {
+      "statusLink": "Sistem Durumu",
+      "docsLink": "Dökümantasyon",
+      "repoLink": "GitHub Reposu"
+    },
+    "authButton": "Kayıt Ol veya Giriş Yap",
+    "footer": {
+      "main": "FlightCoordinator, açık kaynaklı bir uygulamadır ve",
+      "license": "MIT Lisansı ile lisanslıdır."
+    },
+    "hero": {
+      "line_1": "Hızlı Uçuş Yönetimi,",
+      "line_2": "Tek Tık Uzakta."
+    }
+  },
+  "mainResourcePage": {
+    "title": "FlightCoordinator'e Hoşgeldiniz",
+    "subtitle": "Başlamak için sol menüden bir kaynak seçebilirsiniz!"
+  },
+  "statusPage": {
+    "subTitle": "Servis Durumu",
+    "operational": "Sunucular işlevsel durumda",
+    "hasProblems": "Sunucular problemler yaşıyor",
+    "returnButton": "Anasayfaya Dön",
+    "loading": "Sunucu pingleniyor"
+  },
+  "notFoundPage": {
+    "title": "Hey, 404'e benziyor!",
+    "subtitle": "Aradığınız sayfayı bulamadık",
+    "returnButton": "Anasayfaya Dön"
+  },
+  "pageNotReady": "Bu sayfa şu anda çalışma altındadır"
 }

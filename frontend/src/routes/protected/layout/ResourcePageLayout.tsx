@@ -26,7 +26,7 @@ const SIDEBAR_WRAPPER_STYLES: SxProps = {
 };
 
 const SIDEBAR_MENU_STYLES: SxProps = {
-  width: "280px",
+  minWidth: "280px",
   height: "calc(100vh - 69px)",
   alignItems: "start",
   justifyContent: "start",
@@ -74,6 +74,7 @@ const SIDEBAR_USER_DETAILS_STYLES: SxProps = {
 
 const CONTENT_STYLES: SxProps = {
   width: "calc(100vw - 280px)",
+  overflowX: "auto",
   height: "100vh",
   paddingLeft: 3,
   paddingRight: 3,
@@ -136,10 +137,6 @@ const ResourcePageLayout = () => {
             <Divider flexItem />
             <Box sx={SIDEBAR_PADDING}>
               <SidebarLinks section="resource" />
-            </Box>
-            <Divider flexItem />
-            <Box sx={SIDEBAR_PADDING}>
-              <SidebarLinks section="external" />
             </Box>
           </Grid>
           <Grid container sx={SIDEBAR_USER_INFO_STYLES}>

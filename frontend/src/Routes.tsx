@@ -1,13 +1,14 @@
 import { Routes as BrowserRoutes, Route } from "react-router";
 
 import * as AppRoutes from "./routes";
-import ResourcePageLayout from "./routes/private/layout/ResourcePageLayout";
+import ResourcePageLayout from "./routes/protected/layout/ResourcePageLayout";
 
 const Routes = () => {
   return (
     <BrowserRoutes>
       {/* Protected Routes */}
       <Route path="/app" element={<ResourcePageLayout />}>
+        <Route path="/app" element={<AppRoutes.MainPage />} />
         <Route path="plane" element={<AppRoutes.PlanePage />} />
         <Route path="vehicle" element={<AppRoutes.VehiclePage />} />
         <Route path="flight" element={<AppRoutes.FlightPage />} />
@@ -24,8 +25,7 @@ const Routes = () => {
 
       {/* Public Routes */}
       <Route path="/" element={<AppRoutes.LandingPage />} />
-
-      {/* Not Found Page */}
+      <Route path="/status" element={<AppRoutes.ServiceStatus />} />
       <Route path="*" element={<AppRoutes.NotFoundPage />} />
     </BrowserRoutes>
   );

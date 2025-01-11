@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
 import DataTransfer from "@/types/dto";
 import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
@@ -41,7 +42,7 @@ const CrewPage = () => {
     fullName: crew.fullName,
     email: crew.email,
     phoneNumber: crew.phoneNumber,
-    role: Enums.CrewRole[crew.role as keyof typeof Enums.CrewRole],
+    role: crew.role,
     certificationIds: crew.certificationIds.join(", "),
     totalFlightHours: crew.totalFlightHours,
     baseAirportId: crew.baseAirportId,
@@ -51,8 +52,8 @@ const CrewPage = () => {
   const crewColumns: GridColDef[] = [
     {
       field: "id",
-      headerName: t("columns.crew.id"),
-      width: 100,
+      headerName: t("columns.id"),
+      width: 80,
       editable: false,
       headerAlign: "left",
       align: "left",
@@ -60,8 +61,8 @@ const CrewPage = () => {
     {
       field: "uniqueId",
       type: "string",
-      headerName: t("columns.crew.uniqueId"),
-      flex: 1,
+      headerName: t("columns.uniqueId"),
+      width: 160,
       editable: false,
       headerAlign: "left",
       align: "left",
@@ -70,7 +71,7 @@ const CrewPage = () => {
       field: "fullName",
       type: "string",
       headerName: t("columns.crew.fullName"),
-      flex: 1,
+      width: 160,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -79,7 +80,7 @@ const CrewPage = () => {
       field: "email",
       type: "string",
       headerName: t("columns.crew.email"),
-      flex: 1,
+      width: 250,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -88,7 +89,7 @@ const CrewPage = () => {
       field: "phoneNumber",
       type: "number",
       headerName: t("columns.crew.phoneNumber"),
-      flex: 1,
+      width: 160,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -97,17 +98,17 @@ const CrewPage = () => {
       field: "role",
       type: "singleSelect",
       headerName: t("columns.crew.role"),
-      flex: 1,
+      width: 160,
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: Object.values(Enums.CrewRole),
+      valueOptions: Object.values(EnumValues.CrewRole),
     },
     {
       field: "certificationIds",
       type: "string",
       headerName: t("columns.crew.certificationIds"),
-      flex: 1,
+      width: 250,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -116,7 +117,7 @@ const CrewPage = () => {
       field: "totalFlightHours",
       type: "number",
       headerName: t("columns.crew.totalFlightHours"),
-      flex: 1,
+      width: 100,
       editable: true,
       headerAlign: "left",
       align: "left",
@@ -125,21 +126,45 @@ const CrewPage = () => {
       field: "baseAirportId",
       type: "string",
       headerName: t("columns.crew.baseAirportId"),
-      flex: 1,
       editable: true,
       headerAlign: "left",
       align: "left",
     },
     {
       field: "availability",
-      type: "string",
+      type: "singleSelect",
       headerName: t("columns.crew.availability"),
-      flex: 1,
+      width: 120,
       editable: true,
       headerAlign: "left",
       align: "left",
+      valueOptions: Object.values(EnumValues.CrewAvailability)
     },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    role: true,
+    certificationIds: true,
+    totalFlightHours: false,
+    baseAirportId: false,
+    availability: true,
+  };
+
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    id: false,
+    uniqueId: false,
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    role: true,
+    certificationIds: false,
+    totalFlightHours: true,
+    baseAirportId: true,
+    availability: true,
+  };
 
   const crewNewDataObject: Omit<DataTransfer.CrewDTO, "id"> = {
     fullName: "",
@@ -166,6 +191,8 @@ const CrewPage = () => {
       newDataFunction={crewCreateMutation}
       updateDataFunction={crewUpdateMutation}
       deleteDataFunction={crewDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };
