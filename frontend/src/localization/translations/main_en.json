@@ -5,8 +5,7 @@
   "sidebar": {
     "sectionTitles": {
       "resources": "Resources",
-      "algorithm": "Algorithm",
-      "external": "External Links"
+      "algorithm": "Algorithm"
     },
     "linkTexts": {
       "plane": "Planes",
@@ -18,19 +17,12 @@
       "airport": "Airports",
       "runway": "Runways",
       "algorithmRun": "Algorithm Runs",
-      "algorithmResult": "Algorithm Results",
-      "documentation": "See Documentation",
-      "repository": "See GitHub repository"
+      "algorithmResult": "Algorithm Results"
     },
     "relogin": "Please re-login"
   },
   "settings": {
     "title": "Settings",
-    "theme": {
-      "title": "Theme",
-      "darkTheme": "Dark",
-      "lightTheme": "Light"
-    },
     "language": {
       "title": "Language",
       "english": "English",
@@ -41,8 +33,38 @@
       "logout": "Logout"
     }
   },
-  "introPage": {
-    "pageTitle": "Welcome to FC",
-    "authButton": "Continue to Authentication"
-  }
+  "landingPage": {
+    "subTitle": "Automation Service",
+    "menu": {
+      "statusLink": "System Status",
+      "docsLink": "Documentation",
+      "repoLink": "GitHub Repository"
+    },
+    "authButton": "Login or Register",
+    "footer": {
+      "main": "FlightCoordinator is an Open Source project and licensed under",
+      "license": "MIT License"
+    },
+    "hero": {
+      "line_1": "Effortless Flight Management,",
+      "line_2": "One Click Away."
+    }
+  },
+  "mainResourcePage": {
+    "title": "Welcome to FlightCoordinator",
+    "subtitle": "Select a resource from the left sidebar to start!"
+  },
+  "statusPage": {
+    "subTitle": "Service Status",
+    "operational": "Servers are operational",
+    "hasProblems": "Servers are experiencing problems",
+    "returnButton": "Return to Homepage",
+    "loading": "Pinging servers"
+  },
+  "notFoundPage": {
+    "title": "Hey, looks like a 404!",
+    "subtitle": "We couldn't find the page you are looking for",
+    "returnButton": "Return to Homepage"
+  },
+  "pageNotReady": "This page is currently being worked on"
 }

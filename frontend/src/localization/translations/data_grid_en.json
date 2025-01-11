@@ -95,7 +95,7 @@
   "validationFail": "Please fill all the required columns",
   "overlay": {
     "loadingMessage": "Loading data...",
-    "errorMessage": "An error occurred. Try re-logging."
+    "errorTitle": "Error"
   },
   "noRowsLabel": "There isn't any data",
   "noResultsOverlayLabel": "No Results Found",

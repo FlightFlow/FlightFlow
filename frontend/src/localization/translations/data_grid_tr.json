@@ -95,7 +95,7 @@
   "validationFail": "Lütfen gerekli sütunları doldurunuz",
   "overlay": {
     "loadingMessage": "Veriler yükleniyor...",
-    "errorMessage": "Bir hata oluştu. Yeniden giriş yapmayı deneyin."
+    "errorTitle": "Hata"
   },
   "noRowsLabel": "Hiç veri yok",
   "noResultsOverlayLabel": "Sonuç bulunamadı",

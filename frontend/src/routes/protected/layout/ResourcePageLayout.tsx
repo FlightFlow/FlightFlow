@@ -138,10 +138,6 @@ const ResourcePageLayout = () => {
             <Box sx={SIDEBAR_PADDING}>
               <SidebarLinks section="resource" />
             </Box>
-            <Divider flexItem />
-            <Box sx={SIDEBAR_PADDING}>
-              <SidebarLinks section="external" />
-            </Box>
           </Grid>
           <Grid container sx={SIDEBAR_USER_INFO_STYLES}>
             {user?.picture ? (

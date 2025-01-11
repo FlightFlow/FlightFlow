@@ -7,18 +7,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 const AuthCheck = ({ children }: ComponentTypes.AuthCheckProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const isAtRoot: boolean = pathname === "/";
 
   useEffect(() => {
     if (isAuthenticated) {
       if (isAtRoot) {
-        navigate("/app/certification");
+        navigate("/app");
         return;
       }
     } else {
-      navigate("/");
+      loginWithRedirect();
       return;
     }
   }, [isAuthenticated, isAtRoot, navigate]);

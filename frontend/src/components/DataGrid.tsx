@@ -39,7 +39,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   updateDataFunction,
   deleteDataFunction,
   columnVisibilityStates,
-  columnEditibilityStates
+  columnEditibilityStates,
 }: ComponentTypes.DataGridProps<TNew, TUpdate, TDelete>) => {
   const { t } = useTranslation(["data_grid"]);
 
@@ -195,9 +195,6 @@ const DataGrid = <TNew, TUpdate, TDelete>({
     columnsProp.forEach((column) => visibleFields.push(column.field));
     return columnsProp.filter((column) => visibleFields.includes(column.field));
   }, [columnsProp]);
-
-  // TODO
-  // add confirmation option that when toggled, displays a confirmation popup for deletions and updates
 
   return (
     <>

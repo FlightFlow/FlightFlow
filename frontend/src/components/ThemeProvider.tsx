@@ -27,9 +27,12 @@ const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
 
   const lightPalette: PaletteOptions = {
     mode: "light",
+    common: {
+      black: DARK_COLOR,
+      white: LIGHT_COLOR,
+    },
     primary: { main: PRIMARY_COLOR },
     secondary: { main: SECONDARY_COLOR },
-    background: { default: LIGHT_COLOR },
     text: { primary: DARK_COLOR },
     divider: BORDER,
   };
