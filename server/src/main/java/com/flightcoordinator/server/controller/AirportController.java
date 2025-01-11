@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,36 +30,41 @@ public class AirportController {
   @Autowired
   private AirportService airportService;
 
-  public AirportController(AirportService airportService) {
-    this.airportService = airportService;
-}
-
   @PostMapping("/getAll")
+  @PreAuthorize("hasAuthority('SCOPE_read:all_airports')")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportDTO>>> getAllAirports() {
     List<AirportDTO> airports = airportService.getAllAirports();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airports);
   }
+
   @PostMapping("/getById")
+  @PreAuthorize("hasAuthority('SCOPE_read:single_airport')")
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportDTO>> getAirportById(@RequestBody EntityIdDTO id) {
     AirportDTO airport = airportService.getSingleAirportById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airport);
   }
+
   @PostMapping("/create")
+  @PreAuthorize("hasAuthority('SCOPE_read:create_airport')")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
   public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportCreateUpdateDTO newAirport) {
     airportService.createAirport(newAirport);
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse",
         null);
   };
+
   @PatchMapping("/update")
+  @PreAuthorize("hasAuthority('SCOPE_read:update_airport')")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
   public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody AirportCreateUpdateDTO updatedAirport) {
     airportService.updateAirport(updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
+
   @DeleteMapping("/delete")
+  @PreAuthorize("hasAuthority('SCOPE_read:delete_airport')")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
   public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody EntityIdDTO id) {
     airportService.deleteAirport(id);
