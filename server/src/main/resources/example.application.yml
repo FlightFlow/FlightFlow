@@ -25,3 +25,15 @@ springdoc:
 server:
   port: 8081
   api-version: v1
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: https://dev-fp4y6flvwxovw666.us.auth0.com/
+        jwk-set-uri: https://dev-fp4y6flvwxovw666.us.auth0.com/.well-known/jwks.json
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
