@@ -29,20 +29,22 @@ public class AirportController {
   @Autowired
   private AirportService airportService;
 
+  public AirportController(AirportService airportService) {
+    this.airportService = airportService;
+}
+
   @PostMapping("/getAll")
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportDTO>>> getAllAirports() {
     List<AirportDTO> airports = airportService.getAllAirports();
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", airports);
   }
-
   @PostMapping("/getById")
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportDTO>> getAirportById(@RequestBody EntityIdDTO id) {
     AirportDTO airport = airportService.getSingleAirportById(id);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", airport);
   }
-
   @PostMapping("/create")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")
   public ResponseEntity<ResponseObject<Object>> createAirport(@RequestBody AirportCreateUpdateDTO newAirport) {
@@ -50,14 +52,12 @@ public class AirportController {
     return ResponseHelper.generateResponse(HttpStatus.CREATED.value(), true, "controllers.createResponse",
         null);
   };
-
   @PatchMapping("/update")
   @Operation(summary = "Update an airport", description = "Update an existing airport.")
   public ResponseEntity<ResponseObject<Object>> updateAirport(@RequestBody AirportCreateUpdateDTO updatedAirport) {
     airportService.updateAirport(updatedAirport);
     return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.updateResponse", null);
   }
-
   @DeleteMapping("/delete")
   @Operation(summary = "Delete an airport", description = "Delete an existing airport.")
   public ResponseEntity<ResponseObject<Object>> deleteAirport(@RequestBody EntityIdDTO id) {

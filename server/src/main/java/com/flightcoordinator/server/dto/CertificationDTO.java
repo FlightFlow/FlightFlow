@@ -14,7 +14,7 @@ public class CertificationDTO {
   private CertificationIssuingCountry issuingCountry;
   private Date expirationDate;
   private Integer validityPeriod;
-  private CrewRole assignableRole;
+  private List<CrewRole> assignableRole;
   private String description;
   private List<String> assignedCrewMembers;
 
@@ -69,11 +69,11 @@ public class CertificationDTO {
     this.validityPeriod = validityPeriod;
   }
 
-  public CrewRole getAssignableRole() {
+  public List<CrewRole> getAssignableRole() {
     return assignableRole;
   }
 
-  public void setAssignableRole(CrewRole assignableRole) {
+  public void setAssignableRole( List<CrewRole> assignableRole) {
     this.assignableRole = assignableRole;
   }
 
