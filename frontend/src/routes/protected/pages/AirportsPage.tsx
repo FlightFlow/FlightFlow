@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 
 import { GridColDef } from "@mui/x-data-grid";
 
-import useAirportQuery from "@/hooks/airport/useAirportAllQuery";
-import useAirportCreateMutation from "@/hooks/airport/useAirportCreateMutation";
-import useAirportDeleteMutation from "@/hooks/airport/useAirportDeleteMutation";
-import useAirportUpdateMutation from "@/hooks/airport/useAirportUpdateMutation";
+import useAirportQuery from "@/hooks/resource/airport/useAirportAllQuery";
+import useAirportCreateMutation from "@/hooks/resource/airport/useAirportCreateMutation";
+import useAirportDeleteMutation from "@/hooks/resource/airport/useAirportDeleteMutation";
+import useAirportUpdateMutation from "@/hooks/resource/airport/useAirportUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 
 import { GridColDef } from "@mui/x-data-grid";
 
-import useRouteQuery from "@/hooks/route/useRouteAllQuery";
-import useRouteCreateMutation from "@/hooks/route/useRouteCreateMutation";
-import useRouteDeleteMutation from "@/hooks/route/useRouteDeleteMutation";
-import useRouteUpdateMutation from "@/hooks/route/useRouteUpdateMutation";
+import useRouteQuery from "@/hooks/resource/route/useRouteAllQuery";
+import useRouteCreateMutation from "@/hooks/resource/route/useRouteCreateMutation";
+import useRouteDeleteMutation from "@/hooks/resource/route/useRouteDeleteMutation";
+import useRouteUpdateMutation from "@/hooks/resource/route/useRouteUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

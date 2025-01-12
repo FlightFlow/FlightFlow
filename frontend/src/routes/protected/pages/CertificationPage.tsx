@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 
-import useCertificationQuery from "@/hooks/certification/useCertificationAllQuery";
-import useCertificationCreateMutation from "@/hooks/certification/useCertificationCreateMutation";
-import useCertificationDeleteMutation from "@/hooks/certification/useCertificationDeleteMutation";
-import useCertificationUpdateMutation from "@/hooks/certification/useCertificationUpdateMutation";
+import useCertificationQuery from "@/hooks/resource/certification/useCertificationAllQuery";
+import useCertificationCreateMutation from "@/hooks/resource/certification/useCertificationCreateMutation";
+import useCertificationDeleteMutation from "@/hooks/resource/certification/useCertificationDeleteMutation";
+import useCertificationUpdateMutation from "@/hooks/resource/certification/useCertificationUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

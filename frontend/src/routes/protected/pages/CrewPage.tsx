@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 
 import { GridColDef } from "@mui/x-data-grid";
 
-import useCrewQuery from "@/hooks/crew/useCrewAllQuery";
-import useCrewCreateMutation from "@/hooks/crew/useCrewCreateMutation";
-import useCrewDeleteMutation from "@/hooks/crew/useCrewDeleteMutation";
-import useCrewUpdateMutation from "@/hooks/crew/useCrewUpdateMutation";
+import useCrewQuery from "@/hooks/resource/crew/useCrewAllQuery";
+import useCrewCreateMutation from "@/hooks/resource/crew/useCrewCreateMutation";
+import useCrewDeleteMutation from "@/hooks/resource/crew/useCrewDeleteMutation";
+import useCrewUpdateMutation from "@/hooks/resource/crew/useCrewUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

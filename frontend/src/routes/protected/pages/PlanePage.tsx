@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 
-import usePlaneQuery from "@/hooks/plane/usePlaneAllQuery";
-import usePlaneCreateMutation from "@/hooks/plane/usePlaneCreateMutation";
-import usePlaneDeleteMutation from "@/hooks/plane/usePlaneDeleteMutation";
-import usePlaneUpdateMutation from "@/hooks/plane/usePlaneUpdateMutation";
+import usePlaneQuery from "@/hooks/resource/plane/usePlaneAllQuery";
+import usePlaneCreateMutation from "@/hooks/resource/plane/usePlaneCreateMutation";
+import usePlaneDeleteMutation from "@/hooks/resource/plane/usePlaneDeleteMutation";
+import usePlaneUpdateMutation from "@/hooks/resource/plane/usePlaneUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

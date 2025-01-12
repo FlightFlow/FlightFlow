@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 
-import useVehicleQuery from "@/hooks/vehicle/useVehicleAllQuery";
-import useVehicleCreateMutation from "@/hooks/vehicle/useVehicleCreateMutation";
-import useVehicleDeleteMutation from "@/hooks/vehicle/useVehicleDeleteMutation";
-import useVehicleUpdateMutation from "@/hooks/vehicle/useVehicleUpdateMutation";
+import useVehicleQuery from "@/hooks/resource/vehicle/useVehicleAllQuery";
+import useVehicleCreateMutation from "@/hooks/resource/vehicle/useVehicleCreateMutation";
+import useVehicleDeleteMutation from "@/hooks/resource/vehicle/useVehicleDeleteMutation";
+import useVehicleUpdateMutation from "@/hooks/resource/vehicle/useVehicleUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";

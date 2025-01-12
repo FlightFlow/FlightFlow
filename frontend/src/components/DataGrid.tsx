@@ -22,7 +22,7 @@ import {
 } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import lodash from "lodash";
+import _ from "lodash";
 
 import dataGridLocalization from "@/localization/dataGridLocalization";
 
@@ -92,7 +92,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   };
 
   const processRowUpdate = async (updatedRow: GridRowModel) => {
-    const row = lodash.cloneDeep(updatedRow);
+    const row = _.cloneDeep(updatedRow);
     let isNew = false;
 
     for (const key in row) {
@@ -109,7 +109,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         delete row["uniqueId"];
       }
 
-      if (columnEditibilityStates[key] && !row[key]) {
+      if (columnEditibilityStates[key] && typeof row[key] !== "number" && !row[key]) {
         return setDataState(() => ({
           snackbarState: { isOpen: true, message: t(`validationFail`) + `: ${key}` },
           isLoading: false,
@@ -253,7 +253,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         onRowModesModelChange={handleRowModesModelChange}
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
-        onProcessRowUpdateError={(error) => console.error(error)}
+        onProcessRowUpdateError={() => {}}
         initialState={{
           pagination: { paginationModel },
           columns: { columnVisibilityModel: columnVisibilityStates },

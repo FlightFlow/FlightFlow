@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import useServerHealthQuery from "@/hooks/useServerHealthQuery";
+import useServiceStatusQuery from "@/hooks/useServiceStatusQuery";
 
 import { DARK_COLOR, LIGHT_COLOR } from "@/shared/global.style";
 
@@ -77,17 +77,21 @@ const LIGHT_COLOR_STYLES: SxProps = { color: LIGHT_COLOR };
 const ServiceStatusPage = () => {
   const { t } = useTranslation();
 
-  const { data: serverHealth, isLoading: isServerHealthLoading } = useServerHealthQuery();
+  const {
+    dataServiceStatus: { data: dataServiceStatus, isLoading: isDataServiceStatusLoading },
+    algorithmServiceStatus: {
+      data: algorithmServiceStatus,
+      isLoading: isAlgorithmServiceStatusLoading,
+    },
+  } = useServiceStatusQuery();
 
-  // TODO add refresh
-
-  const isDataServiceOperational: boolean = serverHealth?.dataServiceStatus === "UP";
-  const isAlgorithmServiceOperational: boolean = serverHealth?.algorithmServiceStatus === "UP";
+  const isDataServiceOperational: boolean = dataServiceStatus?.status === "UP";
+  const isAlgorithmServiceOperational: boolean = algorithmServiceStatus?.status === "UP";
 
   return (
     <Grid sx={MAIN_CONTAINER_STYLES}>
       <Paper elevation={5} sx={PAPER_STYLES}>
-        {isServerHealthLoading ? (
+        {isAlgorithmServiceStatusLoading || isDataServiceStatusLoading ? (
           <Box sx={LOADING_BOX_STYLES}>
             <CircularProgress size={30} />
             {t("statusPage.loading")}
@@ -140,7 +144,7 @@ const ServiceStatusPage = () => {
           </>
         )}
       </Paper>
-      {!isServerHealthLoading && (
+      {!(isAlgorithmServiceStatusLoading || isDataServiceStatusLoading) && (
         <Link component={RouterLink} to="/" sx={RETURN_LINK_STYLES}>
           {t("statusPage.returnButton")}
         </Link>
