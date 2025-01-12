@@ -32,14 +32,14 @@ public class AlgorithmRunController {
   @Operation(summary = "Get all the algorithm runs", description = "Retrieve the details of all a spesific algorithm runs.")
   public ResponseEntity<ResponseObject<List<AlgorithmRunDTO>>> getAllAlgorithms() {
     List<AlgorithmRunDTO> algorithmRuns = algorithmRunService.getAllAlgorithmRuns();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmRuns);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", algorithmRuns);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get an algorithm run by id", description = "Retrieve the details of a spesific algorithm run using it's ID.")
   public ResponseEntity<ResponseObject<AlgorithmRunDTO>> getAlgorithmRunById(@RequestBody EntityIdDTO id) {
     AlgorithmRunDTO algorithmRun = algorithmRunService.getSingleAlgorithmRunById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmRun);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", algorithmRun);
   }
 
   @PostMapping("/trigger")

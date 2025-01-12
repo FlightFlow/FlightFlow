@@ -1,17 +1,20 @@
 import { useTranslation } from "react-i18next";
 
-import DataTransfer from "@/types/dto";
 import { GridColDef } from "@mui/x-data-grid";
+
+import useRunwayQuery from "@/hooks/runway/useRunwayAllQuery";
+import useRunwayCreateMutation from "@/hooks/runway/useRunwayCreateMutation";
+import useRunwayDeleteMutation from "@/hooks/runway/useRunwayDeleteMutation";
+import useRunwayUpdateMutation from "@/hooks/runway/useRunwayUpdateMutation";
 
 import DataGrid from "@/components/DataGrid";
 import GridOverlay from "@/components/GridOverlay";
 
-import useRunwayQuery from "@/hooks/runway/useRunwayAllQuery";
-import useRunwayCreateMutation from "@/hooks/runway/useRunwayCreateMutation";
-import useRunwayUpdateMutation from "@/hooks/runway/useRunwayUpdateMutation";
-import useRunwayDeleteMutation from "@/hooks/runway/useRunwayDeleteMutation";
-import ResourceTypes from "@/types/resource";
 import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
+
+import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 
 const RunwayPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -47,20 +50,87 @@ const RunwayPage = () => {
   }));
 
   const runwayColumns: GridColDef[] = [
-    { field: "id", headerName: t("columns.runway.id"), width: 80, editable: false },
-    { field: "uniqueId", headerName: t("columns.runway.uniqueId"), width: 150, editable: false },
-    { field: "length", headerName: t("columns.runway.length"), type: "number", flex: 1, editable: true },
-    { field: "width", headerName: t("columns.runway.width"), type: "number", flex: 1, editable: true },
-    { field: "surfaceType", headerName: t("columns.runway.surfaceType"), flex: 1, editable: true },
-    { field: "maxWeightCapacity", headerName: t("columns.runway.maxWeightCapacity"), type: "number", flex: 1, editable: true },
-    { field: "orientation", headerName: t("columns.runway.orientation"), flex: 1, editable: true },
-    { field: "airportId", headerName: t("columns.runway.airportId"), flex: 1, editable: true },
+    {
+      field: "id",
+      type: "string",
+      headerName: t("columns.id"),
+      width: 80,
+      editable: false,
+    },
+    {
+      field: "uniqueId",
+      type: "string",
+      headerName: t("columns.uniqueId"),
+      width: 150,
+      editable: false,
+    },
+    {
+      field: "length",
+      type: "number",
+      headerName: t("columns.runway.length"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "width",
+      type: "number",
+      headerName: t("columns.runway.width"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "surfaceType",
+      type: "singleSelect",
+      headerName: t("columns.runway.surfaceType"),
+      flex: 1,
+      editable: true,
+      valueOptions: Object.values(EnumValues.RunwaySurfaceType),
+    },
+    {
+      field: "maxWeightCapacity",
+      type: "number",
+      headerName: t("columns.runway.maxWeightCapacity"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "orientation",
+      type: "string",
+      headerName: t("columns.runway.orientation"),
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: "airportId",
+      type: "string",
+      headerName: t("columns.runway.airportId"),
+      flex: 1,
+      editable: true,
+    },
   ];
+
+  const columnVisibilities: Record<GridColDef["field"], boolean> = {
+    length: true,
+    width: true,
+    surfaceType: true,
+    maxWeightCapacity: true,
+    orientation: true,
+    airportId: true,
+  };
+
+  const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
+    length: true,
+    width: true,
+    surfaceType: true,
+    maxWeightCapacity: true,
+    orientation: true,
+    airportId: true,
+  };
 
   const runwayNewDataObject: Omit<DataTransfer.RunwayDTO, "id"> = {
     length: 0,
     width: 0,
-    surfaceType: "" as Enums.RunwaySurfaceType,
+    surfaceType: Enums.RunwaySurfaceType.ASPHALT,
     maxWeightCapacity: 0,
     orientation: "",
     airportId: "",
@@ -80,6 +150,8 @@ const RunwayPage = () => {
       newDataFunction={runwayCreateMutation}
       updateDataFunction={runwayUpdateMutation}
       deleteDataFunction={runwayDeleteMutation}
+      columnVisibilityStates={columnVisibilities}
+      columnEditibilityStates={columnEditibilityStates}
     />
   );
 };

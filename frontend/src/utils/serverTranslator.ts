@@ -1,5 +1,6 @@
-import GlobalTypes from "@/types/globals";
 import i18next from "i18next";
+
+import GlobalTypes from "@/types/globals";
 
 import Logger from "./logger";
 
@@ -15,7 +16,7 @@ class ServerTranslator {
   }
 
   private static translateResponse(translationKey: string): string {
-    if (!i18next.exists(translationKey)) {
+    if (translationKey.trim() !== "" && !i18next.exists(translationKey)) {
       Logger.error(`Translation key not found: ${translationKey}`);
       return translationKey;
     }

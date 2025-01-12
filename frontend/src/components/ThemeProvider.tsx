@@ -1,3 +1,8 @@
+import { Theme } from "@emotion/react";
+import { createTheme, ThemeProvider as MUIThemeProvider, PaletteOptions } from "@mui/material";
+import { CssBaseline } from "@mui/material";
+import { TypographyOptions } from "@mui/material/styles/createTypography";
+
 import {
   BORDER,
   DARK_COLOR,
@@ -5,11 +10,8 @@ import {
   PRIMARY_COLOR,
   SECONDARY_COLOR,
 } from "@/shared/global.style";
+
 import ComponentTypes from "@/types/components";
-import { Theme } from "@emotion/react";
-import { createTheme, ThemeProvider as MUIThemeProvider, PaletteOptions } from "@mui/material";
-import { CssBaseline } from "@mui/material";
-import { TypographyOptions } from "@mui/material/styles/createTypography";
 
 const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
   const typography: TypographyOptions = {
@@ -27,9 +29,12 @@ const ThemeProvider = ({ children }: ComponentTypes.ThemeProviderProps) => {
 
   const lightPalette: PaletteOptions = {
     mode: "light",
+    common: {
+      black: DARK_COLOR,
+      white: LIGHT_COLOR,
+    },
     primary: { main: PRIMARY_COLOR },
     secondary: { main: SECONDARY_COLOR },
-    background: { default: LIGHT_COLOR },
     text: { primary: DARK_COLOR },
     divider: BORDER,
   };

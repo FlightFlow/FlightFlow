@@ -9,6 +9,6 @@ If you discover a security vulnerability in this project, please report it to us
 
 Please provide the following details when reporting a vulnerability:
 
-* Description of the vulnerability.
-* Steps to reproduce or proof of concept (if applicable).
-* Any potential impact or severity assessment.
+- Description of the vulnerability.
+- Steps to reproduce or proof of concept (if applicable).
+- Any potential impact or severity assessment.

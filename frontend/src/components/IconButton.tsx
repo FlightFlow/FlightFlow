@@ -1,5 +1,6 @@
-import ComponentTypes from "@/types/components";
 import { IconButton as IconButtonComponent, Tooltip } from "@mui/material";
+
+import ComponentTypes from "@/types/components";
 
 const IconButton = ({ icon, tooltipText, onclick }: ComponentTypes.IconButtonProps) => {
   return (

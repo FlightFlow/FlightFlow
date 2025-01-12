@@ -5,6 +5,7 @@ ROOT_DIR="$SCRIPT_DIR/.."
 
 FRONTEND_PATH="$ROOT_DIR/frontend"
 BACKEND_PATH="$ROOT_DIR/server"
+LOGIC_PATH="$ROOT_DIR/logic"
 
 
 echo "Info: Running frontend tests..."
@@ -22,3 +23,12 @@ cd "$BACKEND_PATH"
 ./mvnw test
 
 echo "Info: Completed server tests."
+
+echo "---"
+
+echo "Info: Running logic tests..."
+
+cd "$LOGIC_PATH"
+# TODO run tests
+
+echo "Info: Completed logic tests."

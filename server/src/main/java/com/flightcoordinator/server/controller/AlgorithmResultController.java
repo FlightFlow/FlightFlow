@@ -31,14 +31,14 @@ public class AlgorithmResultController {
   @Operation(summary = "Get all the algorithm results", description = "Retrieve the details of all a spesific algorithm results.")
   public ResponseEntity<ResponseObject<List<AlgorithmResultDTO>>> getAllAlgorithms() {
     List<AlgorithmResultDTO> algorithmResults = algorithmResultService.getAllAlgorithmResults();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmResults);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", algorithmResults);
   }
 
   @PostMapping("/getById")
   @Operation(summary = "Get an algorithm result by id", description = "Retrieve the details of a spesific algorithm result using it's ID.")
   public ResponseEntity<ResponseObject<AlgorithmResultDTO>> getAlgorithmResultById(@RequestBody EntityIdDTO id) {
     AlgorithmResultDTO algorithmResult = algorithmResultService.getSingleAlgorithmResultById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", algorithmResult);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", algorithmResult);
   }
 
   @PostMapping("/create")

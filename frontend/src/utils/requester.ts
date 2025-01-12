@@ -1,5 +1,3 @@
-import GlobalTypes from "@/types/globals";
-import UtilTypes from "@/types/utils";
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -8,6 +6,9 @@ import axios, {
   RawAxiosRequestHeaders,
 } from "axios";
 import i18next from "i18next";
+
+import GlobalTypes from "@/types/globals";
+import UtilTypes from "@/types/utils";
 
 import appConfig from "./appConfig";
 import Logger from "./logger";
@@ -57,7 +58,6 @@ class Requester {
     };
     this.payload = requesterConfig.payload;
     this.query = requesterConfig.query;
-    Logger.info(`received access token: ${this.accessToken}`);
     return this;
   }
 

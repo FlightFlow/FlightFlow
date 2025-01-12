@@ -1,5 +1,7 @@
 package com.flightcoordinator.server.exception;
 
+import java.util.ArrayList;
+
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,12 @@ import com.flightcoordinator.server.response.ResponseObject;
 public class GlobalExceptionHandler {
   @ExceptionHandler(AppError.class)
   public ResponseEntity<ResponseObject<Object>> handleAppError(AppError exception) {
+    boolean isNotFound = exception.getStatus() == HttpStatus.NOT_FOUND.value();
     return ResponseHelper.generateResponse(
         exception.getStatus(),
-        false,
+        isNotFound,
         exception.getMessage(),
-        null);
+        isNotFound ? new ArrayList<>() : null);
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)

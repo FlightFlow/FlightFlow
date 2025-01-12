@@ -1,30 +1,17 @@
 {
   "genericMessages": {
-    "internalServerError": "A server error ocurred. Please try again later.",
-    "badRequest": ""
+    "internalServerError": "A server error occurred. Please try again later.",
+    "badRequest": "A server error occurred. Please try again later."
   },
   "controllers": {
-    "getResponse": "Successfully fetched resource details.",
-    "createResponse": "Successfully created resource.",
-    "updateResponse": "Successfully updated resource.",
-    "deleteResponse": "Successfully deleted resource."
-  },
-  "notfound": {
-    "airport": "",
-    "algorithmResult": "",
-    "algorithmRun": "",
-    "certification": "",
-    "crew": "",
-    "flight": "",
-    "plane": "",
-    "route": "",
-    "runway": "",
-    "systemRole": "",
-    "vehicle": ""
+    "getResponse": "Successfully fetched requested resource",
+    "createResponse": "Successfully created a new entry",
+    "updateResponse": "Successfully updated selected entry",
+    "deleteResponse": "Successfully deleted selected entry"
   },
   "exceptions": {
-    "enumValidationError": "",
-    "illegalArgumentException": "",
-    "optimisticLockingFailureException": ""
+    "enumValidationError": "Selected value is invalid.",
+    "illegalArgumentException": "Selected value is invalid.",
+    "optimisticLockingFailureException": "A server error occurred. Please try again later."
   }
 }

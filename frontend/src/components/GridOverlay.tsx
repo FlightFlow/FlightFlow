@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import ComponentTypes from "@/types/components";
 import { ErrorOutline } from "@mui/icons-material";
 import { Box, CircularProgress, SxProps, Typography } from "@mui/material";
+
+import ComponentTypes from "@/types/components";
 
 const GridOverlayStyles: SxProps = {
   width: "100%",
@@ -26,7 +27,7 @@ const GridOverlay: FC<ComponentTypes.GridOverlayProps> = ({ type, message }) => 
     <Box sx={GridOverlayStyles}>
       {type === "loading" ? <CircularProgress size={30} /> : <ErrorOutline sx={IconStyles} />}
       <Typography>
-        {type === "loading" ? t("overlay.loadingMessage") : t("overlay.errorMessage")}
+        {type === "loading" ? t("overlay.loadingMessage") : t("overlay.errorTitle")}
       </Typography>
       <Typography>{type === "error" && message}</Typography>
     </Box>

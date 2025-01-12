@@ -13,7 +13,7 @@ public class CertificationCreateUpdateDTO {
   private CertificationIssuingCountry issuingCountry;
   private Date expirationDate;
   private Integer validityPeriod;
-  private CrewRole assignableRoles;
+  private CrewRole assignableRole;
   private String description;
 
   public CertificationCreateUpdateDTO() {
@@ -67,12 +67,12 @@ public class CertificationCreateUpdateDTO {
     this.validityPeriod = validityPeriod;
   }
 
-  public CrewRole getAssignableRoles() {
-    return assignableRoles;
+  public CrewRole getAssignableRole() {
+    return assignableRole;
   }
 
-  public void setAssignableRoles(CrewRole assignableRoles) {
-    this.assignableRoles = assignableRoles;
+  public void setAssignableRoles(CrewRole assignableRole) {
+    this.assignableRole = assignableRole;
   }
 
   public String getDescription() {

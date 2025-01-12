@@ -1,5 +1,6 @@
-import ComponentTypes from "@/types/components";
 import { Alert, Fade, Snackbar as SnackbarComponent } from "@mui/material";
+
+import ComponentTypes from "@/types/components";
 
 const Snackbar = ({ snackbarState, setSnackbarState, severity }: ComponentTypes.SnackbarProps) => {
   return (

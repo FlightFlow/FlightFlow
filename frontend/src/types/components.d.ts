@@ -1,9 +1,10 @@
 import type { Dispatch, MouseEventHandler, ReactNode, SetStateAction } from "react";
 
-import type GlobalTypes from "@/types/globals";
 import type { AlertColor } from "@mui/material";
 import type { GridColDef, GridPaginationModel, GridRowsProp } from "@mui/x-data-grid";
 import type { UseMutateAsyncFunction } from "@tanstack/react-query";
+
+import type GlobalTypes from "@/types/globals";
 
 namespace ComponentTypes {
   interface BaseDataGridRowParams {
@@ -30,6 +31,7 @@ namespace ComponentTypes {
       unknown
     >;
     columnVisibilityStates: Record<GridColDef["field"], boolean>;
+    columnEditibilityStates: Record<GridColDef["field"], boolean>;
   }
   interface GridOverlayProps {
     type: "loading" | "error";

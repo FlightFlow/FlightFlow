@@ -1,15 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
-import { DARK_GRAY_COLOR } from "@/shared/global.style";
-import ComponentTypes from "@/types/components";
-import ConstantTypes from "@/types/constants";
 import {
   AirportShuttleRounded,
   EditRoadRounded,
   FlightTakeoffRounded,
-  GitHub,
-  InsertDriveFileRounded,
   LocalAirportRounded,
   LuggageRounded,
   PersonRounded,
@@ -27,6 +22,11 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
+
+import { DARK_GRAY_COLOR } from "@/shared/global.style";
+
+import ComponentTypes from "@/types/components";
+import ConstantTypes from "@/types/constants";
 
 const sidebarAlgorithmsList: ConstantTypes.SidebarSectionProps = {
   sectionKey: "algorithm",
@@ -102,25 +102,6 @@ const sidebarResourcesList: ConstantTypes.SidebarSectionProps = {
   ],
 };
 
-const sidebarExternalsList: ConstantTypes.SidebarSectionProps = {
-  sectionKey: "external",
-  sectionName: "sidebar.sectionTitles.external",
-  elements: [
-    {
-      elementKey: "documentations",
-      elementIcon: <InsertDriveFileRounded />,
-      elementText: "sidebar.linkTexts.documentation",
-      elementPath: "https://github.com/FlightCoordinator/Documentation",
-    },
-    {
-      elementKey: "repository",
-      elementIcon: <GitHub />,
-      elementText: "sidebar.linkTexts.repository",
-      elementPath: "https://github.com/FlightCoordinator/FlightCoordinator",
-    },
-  ],
-};
-
 const SECTION_CONTAINER_STYLES: SxProps = {
   flexDirection: "column",
   rowGap: 0,
@@ -147,11 +128,7 @@ const SidebarLinks = ({ section }: ComponentTypes.SidebarLinksProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const selectedList: ConstantTypes.SidebarSectionProps =
-    section === "algorithm"
-      ? sidebarAlgorithmsList
-      : section === "resource"
-        ? sidebarResourcesList
-        : sidebarExternalsList;
+    section === "algorithm" ? sidebarAlgorithmsList : sidebarResourcesList;
 
   return (
     <>

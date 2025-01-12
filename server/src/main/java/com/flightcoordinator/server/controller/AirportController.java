@@ -37,13 +37,13 @@ public class AirportController {
   @Operation(summary = "Get all the airports", description = "Retrieve the details of all airports.")
   public ResponseEntity<ResponseObject<List<AirportDTO>>> getAllAirports() {
     List<AirportDTO> airports = airportService.getAllAirports();
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airports);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", airports);
   }
   @PostMapping("/getById")
   @Operation(summary = "Get an airport by id", description = "Retrieve the details of a spesific airpot using it's ID.")
   public ResponseEntity<ResponseObject<AirportDTO>> getAirportById(@RequestBody EntityIdDTO id) {
     AirportDTO airport = airportService.getSingleAirportById(id);
-    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "controllers.getResponse", airport);
+    return ResponseHelper.generateResponse(HttpStatus.OK.value(), true, "", airport);
   }
   @PostMapping("/create")
   @Operation(summary = "Create a new airport", description = "Create a new airport.")

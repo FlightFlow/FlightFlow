@@ -5,6 +5,7 @@ ROOT_DIR="$SCRIPT_DIR/.."
 
 FRONTEND_PATH="$ROOT_DIR/frontend"
 BACKEND_PATH="$ROOT_DIR/server"
+LOGIC_PATH="$ROOT_DIR/logic"
 
 build_frontend() {
   echo "Info: Building frontend..."
@@ -35,15 +36,31 @@ build_server() {
   fi
 }
 
+build_server() {
+  echo "Info: Building logic server..."
+
+  cd "$LOGIC_PATH"
+  # code here
+
+  if [ $? -eq 0 ]; then
+    echo "Info: Successfully built backend server."
+  else
+    echo "Error: Failed to build backend server."
+    exit 1
+  fi
+}
 
 if [ "$1" == "frontend" ]; then
   build_frontend
 elif [ "$1" == "server" ]; then
   build_server
+elif [ "$1" == "logic" ]; then
+  build_server
 elif [ "$1" == "full_app" ]; then
   build_frontend
   build_server
+  build_logic
 else
-  echo "Usage: ./build.sh [frontend|server|full_app]"
+  echo "Usage: ./build.sh [frontend|server|logic|full_app]"
   exit 1
 fi

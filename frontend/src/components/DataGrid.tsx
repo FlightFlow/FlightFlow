@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import ComponentTypes from "@/types/components";
 import { Add, Cancel, Delete, Edit, Save } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import {
@@ -27,6 +26,8 @@ import lodash from "lodash";
 
 import dataGridLocalization from "@/localization/dataGridLocalization";
 
+import ComponentTypes from "@/types/components";
+
 import Snackbar from "./Snackbar";
 
 const DataGrid = <TNew, TUpdate, TDelete>({
@@ -39,6 +40,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
   updateDataFunction,
   deleteDataFunction,
   columnVisibilityStates,
+  columnEditibilityStates,
 }: ComponentTypes.DataGridProps<TNew, TUpdate, TDelete>) => {
   const { t } = useTranslation(["data_grid"]);
 
@@ -94,7 +96,6 @@ const DataGrid = <TNew, TUpdate, TDelete>({
     let isNew = false;
 
     for (const key in row) {
-      const column = columnsProp.find((column) => column.field === key);
       if (key === "isNew" && row[key] === true) {
         isNew = true;
       }
@@ -108,14 +109,14 @@ const DataGrid = <TNew, TUpdate, TDelete>({
         delete row["uniqueId"];
       }
 
-      if (column?.editable && !row[key]) {
+      if (columnEditibilityStates[key] && !row[key]) {
         return setDataState(() => ({
-          snackbarState: { isOpen: true, message: t("validationFail") },
+          snackbarState: { isOpen: true, message: t(`validationFail`) + `: ${key}` },
           isLoading: false,
           isSuccess: false,
         }));
       }
-      if (!column?.editable) {
+      if (!columnEditibilityStates[key]) {
         delete row[key];
       }
     }
@@ -196,9 +197,6 @@ const DataGrid = <TNew, TUpdate, TDelete>({
     return columnsProp.filter((column) => visibleFields.includes(column.field));
   }, [columnsProp]);
 
-  // TODO
-  // add confirmation option that when toggled, displays a confirmation popup for deletions and updates
-
   return (
     <>
       <Snackbar
@@ -215,7 +213,7 @@ const DataGrid = <TNew, TUpdate, TDelete>({
           {
             field: "actions",
             type: "actions",
-            headerName: t("actions.header"),
+            headerName: t("columns.actions"),
             width: 100,
             getActions: ({ id }) => {
               const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
