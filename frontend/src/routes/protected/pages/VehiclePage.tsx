@@ -48,6 +48,7 @@ const VehiclePage = () => {
       capacity: vehicle.capacity,
       availability: vehicle.availability,
       maintenanceDue: dayjs(vehicle.maintenanceDue).toDate(),
+      airportId: vehicle.airportId,
     }),
   );
 
@@ -117,14 +118,24 @@ const VehiclePage = () => {
       headerAlign: "left",
       align: "left",
     },
+    {
+      field: "airportId",
+      type: "string",
+      headerName: t("columns.vehicle.airportId"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+    },
   ];
 
   const columnVisibilities: Record<GridColDef["field"], boolean> = {
     type: true,
     vehicleCode: true,
-    capacity: false,
+    capacity: true,
     availability: true,
     maintenanceDue: true,
+    airportId: true,
   };
 
   const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
@@ -133,6 +144,7 @@ const VehiclePage = () => {
     capacity: true,
     availability: true,
     maintenanceDue: true,
+    airportId: true,
   };
 
   const vehicleNewDataObject: Omit<DataTransfer.VehicleDTO, "id"> = {
@@ -141,6 +153,7 @@ const VehiclePage = () => {
     capacity: 0,
     availability: Enums.GroundVehicleAvailability.AVAILABLE,
     maintenanceDue: new Date(),
+    airportId: "",
   };
 
   return (

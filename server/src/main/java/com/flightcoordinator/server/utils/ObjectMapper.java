@@ -86,14 +86,14 @@ public class ObjectMapper {
     CertificationDTO certificationDTO = new CertificationDTO();
     certificationDTO.setId(certificationEntity.getId());
     certificationDTO.setName(certificationEntity.getName());
+    certificationDTO.setCertificationNumber(certificationEntity.getCertificationNumber());
     certificationDTO.setIssuer(certificationEntity.getIssuer());
     certificationDTO.setIssuingCountry(certificationEntity.getIssuingCountry());
     certificationDTO.setExpirationDate(certificationEntity.getExpirationDate());
     certificationDTO.setValidityPeriod(certificationEntity.getValidityPeriod());
     certificationDTO.setAssignableRole(certificationEntity.getAssignableRole());
     certificationDTO.setDescription(certificationEntity.getDescription());
-    certificationDTO.setAssignedCrewMembers(certificationEntity.getAssignedCrewMembers().stream()
-        .map(crewMember -> crewMember.getId()).collect(Collectors.toList()));
+    certificationDTO.setAssignedCrewMember(certificationEntity.getAssignedCrewMember().getId());
     return certificationDTO;
   }
 

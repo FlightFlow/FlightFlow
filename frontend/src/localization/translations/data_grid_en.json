@@ -24,12 +24,14 @@
     },
     "certification": {
       "name": "Name",
+      "certificationNumber": "Certification Number",
       "issuer": "Issuer",
       "issuingCountry": "Issuing Country",
       "expirationDate": "Expiration Date",
       "validityPeriod": "Validity Period",
       "assignableRole": "Assignable Role",
-      "description": "Description"
+      "description": "Description",
+      "assignedCrewMember": "Assigned Crew Member"
     },
     "crew": {
       "fullName": "Full Name",

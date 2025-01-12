@@ -13,8 +13,8 @@ public class DevToolsService {
   public void createSampleData() {
     sampleDataService
         .generateSampleAirports()
-        .generateSampleCertifications()
         .generateSampleCrewMembers()
+        .generateSampleCertifications()
         .generateSampleRoutes()
         .generateSampleFlights()
         .generateSamplePlanes()

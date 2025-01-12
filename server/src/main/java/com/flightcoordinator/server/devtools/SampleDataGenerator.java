@@ -71,15 +71,19 @@ public class SampleDataGenerator {
   }
 
   public SampleDataGenerator generateSampleCertifications() {
+    List<CrewEntity> allCrewEntities = crewRepository.findAll();
+
     for (int i = 0; i < 10; i++) {
       CertificationEntity certification = new CertificationEntity();
       certification.setName(SampleDataValues.sampleCertificationNames.get(i));
+      certification.setCertificationNumber(randomValue.nextInt(100000000, 999999999));
       certification.setIssuer(SampleDataValues.sampleCertificationIssuers.get(i));
       certification.setIssuingCountry(SampleDataValues.sampleCertificationIssuingCountries.get(i));
       certification.setExpirationDate(new Date());
       certification.setValidityPeriod(12);
       certification.setAssignableRole(SampleDataValues.sampleCertificationAssignableRoles.get(i));
       certification.setDescription(SampleDataValues.sampleCertificationDescriptions.get(i));
+      certification.setAssignedCrewMember(allCrewEntities.get(i));
       certificationRepository.save(certification);
     }
     return this;

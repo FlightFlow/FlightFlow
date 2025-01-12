@@ -24,12 +24,14 @@
     },
     "certification": {
       "name": "Adı",
+      "certificationNumber": "Sertifika No.",
       "issuer": "Veren Kurum",
       "issuingCountry": "Verildiği Ülke",
       "expirationDate": "Süresinin Dolma Tarihi",
       "validityPeriod": "Geçerlilik Süresi",
       "assignableRole": "Atanabilir Rol",
-      "description": "Açıklama"
+      "description": "Açıklama",
+      "assignedCrewMember": "Atanan Mürettebat"
     },
     "crew": {
       "fullName": "Tam Adı",

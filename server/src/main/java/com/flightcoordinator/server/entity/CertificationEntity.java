@@ -1,7 +1,6 @@
 package com.flightcoordinator.server.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import com.flightcoordinator.server.enums.CertificationIssuer;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
@@ -11,12 +10,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 
@@ -29,6 +27,9 @@ public class CertificationEntity {
 
   @Column(name = "name", nullable = false)
   private String name;
+
+  @Column(name = "certification_number", nullable = false)
+  private Integer certificationNumber;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "issuer", nullable = false)
@@ -52,26 +53,26 @@ public class CertificationEntity {
   @Column(name = "description", nullable = false)
   private String description;
 
-  @ManyToMany
-  @JoinTable(name = "certification_crew_members", joinColumns = @JoinColumn(name = "certification_id"), inverseJoinColumns = @JoinColumn(name = "crew_id"))
-  private List<CrewEntity> assignedCrewMembers;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private CrewEntity assignedCrewMember;
 
   public CertificationEntity() {
   }
 
-  public CertificationEntity(String id, String name, CertificationIssuer issuer,
+  public CertificationEntity(String id, String name, Integer certificationNumber, CertificationIssuer issuer,
       CertificationIssuingCountry issuingCountry, Date expirationDate,
       @Min(value = 1, message = "Validity period should be greater than '1'") Integer validityPeriod,
-      CrewRole assignableRole, String description, List<CrewEntity> assignedCrewMembers) {
+      CrewRole assignableRole, String description, CrewEntity assignedCrewMember) {
     this.id = id;
     this.name = name;
+    this.certificationNumber = certificationNumber;
     this.issuer = issuer;
     this.issuingCountry = issuingCountry;
     this.expirationDate = expirationDate;
     this.validityPeriod = validityPeriod;
     this.assignableRole = assignableRole;
     this.description = description;
-    this.assignedCrewMembers = assignedCrewMembers;
+    this.assignedCrewMember = assignedCrewMember;
   }
 
   public String getId() {
@@ -88,6 +89,14 @@ public class CertificationEntity {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getCertificationNumber() {
+    return certificationNumber;
+  }
+
+  public void setCertificationNumber(Integer certificationNumber) {
+    this.certificationNumber = certificationNumber;
   }
 
   public CertificationIssuer getIssuer() {
@@ -138,12 +147,12 @@ public class CertificationEntity {
     this.description = description;
   }
 
-  public List<CrewEntity> getAssignedCrewMembers() {
-    return assignedCrewMembers;
+  public CrewEntity getAssignedCrewMember() {
+    return assignedCrewMember;
   }
 
-  public void setAssignedCrewMembers(List<CrewEntity> assignedCrewMembers) {
-    this.assignedCrewMembers = assignedCrewMembers;
+  public void setAssignedCrewMember(CrewEntity assignedCrewMember) {
+    this.assignedCrewMember = assignedCrewMember;
   }
 
 }

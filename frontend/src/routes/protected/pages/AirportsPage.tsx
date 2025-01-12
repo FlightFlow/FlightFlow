@@ -47,12 +47,12 @@ const AirportsPage = () => {
       icaoCode: airport.icaoCode,
       countryCode: airport.countryCode,
       type: airport.type,
-      runwayIds: airport.runwayIds.join(", "),
-      vehiclesPresentIds: airport.vehiclesPresentIds.join(", "),
-      planesPresentIds: airport.planesPresentIds.join(", "),
-      routesOriginatingFromAirportIds: airport.routesOriginatingFromAirportIds.join(", "),
-      routesDestinedForAirportIds: airport.routesDestinedForAirportIds.join(", "),
-      crewMembersPresentIds: airport.crewMembersPresentIds.join(", "),
+      runwayIds: airport.runwayIds,
+      vehiclesPresentIds: airport.vehiclesPresentIds,
+      planesPresentIds: airport.planesPresentIds,
+      routesOriginatingFromAirportIds: airport.routesOriginatingFromAirportIds,
+      routesDestinedForAirportIds: airport.routesDestinedForAirportIds,
+      crewMembersPresentIds: airport.crewMembersPresentIds,
     }),
   );
 

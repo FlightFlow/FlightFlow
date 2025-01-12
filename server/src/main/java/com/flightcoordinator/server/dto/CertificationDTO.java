@@ -1,7 +1,6 @@
 package com.flightcoordinator.server.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import com.flightcoordinator.server.enums.CertificationIssuer;
 import com.flightcoordinator.server.enums.CertificationIssuingCountry;
@@ -10,13 +9,14 @@ import com.flightcoordinator.server.enums.CrewRole;
 public class CertificationDTO {
   private String id;
   private String name;
+  private Integer certificationNumber;
   private CertificationIssuer issuer;
   private CertificationIssuingCountry issuingCountry;
   private Date expirationDate;
   private Integer validityPeriod;
   private CrewRole assignableRole;
   private String description;
-  private List<String> assignedCrewMembers;
+  private String assignedCrewMember;
 
   public CertificationDTO() {
   }
@@ -35,6 +35,14 @@ public class CertificationDTO {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getCertificationNumber() {
+    return certificationNumber;
+  }
+
+  public void setCertificationNumber(Integer certificationNumber) {
+    this.certificationNumber = certificationNumber;
   }
 
   public CertificationIssuer getIssuer() {
@@ -85,11 +93,11 @@ public class CertificationDTO {
     this.description = description;
   }
 
-  public List<String> getAssignedCrewMembers() {
-    return assignedCrewMembers;
+  public String getAssignedCrewMember() {
+    return assignedCrewMember;
   }
 
-  public void setAssignedCrewMembers(List<String> assignedCrewMembers) {
-    this.assignedCrewMembers = assignedCrewMembers;
+  public void setAssignedCrewMember(String assignedCrewMember) {
+    this.assignedCrewMember = assignedCrewMember;
   }
 }

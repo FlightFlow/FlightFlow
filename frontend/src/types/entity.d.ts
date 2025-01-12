@@ -42,12 +42,14 @@ namespace EntityTypes {
   }
   export interface CertificationEntity extends BaseEntity {
     name: string;
+    certificationNumber: string;
     issuer: Enums.CertificationIssuer;
     issuingCountry: Enums.CertificationIssuingCountry;
     expirationDate: Date;
     validityPeriod: number;
     assignableRole: Enums.CrewRoles;
     description: string;
+    assignedCrewMember: CrewEntity;
   }
   export interface CrewEntity extends BaseEntity {
     fullName: string;
@@ -98,6 +100,7 @@ namespace EntityTypes {
     capacity: number;
     availability: Enums.GroundVehicleAvailability;
     maintenanceDue: Date;
+    airport: AirportEntity;
   }
 }
 export default EntityTypes;

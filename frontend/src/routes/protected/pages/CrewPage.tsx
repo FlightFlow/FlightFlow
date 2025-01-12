@@ -111,7 +111,7 @@ const CrewPage = () => {
       type: "string",
       headerName: t("columns.crew.certificationIds"),
       width: 250,
-      editable: true,
+      editable: false,
       headerAlign: "left",
       align: "left",
     },

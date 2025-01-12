@@ -40,12 +40,14 @@ namespace DataTransfer {
   }
   interface CertificationDTO extends BaseDTO {
     name: string;
+    certificationNumber: string;
     issuer: Enums.CertificationIssuer;
     issuingCountry: Enums.CertificationIssuingCountry;
     expirationDate: Date;
     validityPeriod: number;
     assignableRole: Enums.CrewRoles;
     description: string;
+    assignedCrewMember: string;
   }
   interface CrewDTO extends BaseDTO {
     fullName: string;
@@ -96,6 +98,7 @@ namespace DataTransfer {
     capacity: number;
     availability: Enums.GroundVehicleAvailability;
     maintenanceDue: Date;
+    airportId: string;
   }
 }
 export default DataTransfer;

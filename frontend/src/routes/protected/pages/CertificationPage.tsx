@@ -45,12 +45,14 @@ const CertificationsPage = () => {
       id: index + 1,
       uniqueId: certification.id,
       name: certification.name,
+      certificationNumber: certification.certificationNumber,
       issuer: certification.issuer,
       issuingCountry: certification.issuingCountry,
       expirationDate: dayjs(certification.expirationDate).toDate(),
       validityPeriod: certification.validityPeriod,
       assignableRole: certification.assignableRole,
       description: certification.description,
+      assignedCrewMember: certification.assignedCrewMember,
     }),
   );
 
@@ -78,6 +80,15 @@ const CertificationsPage = () => {
       field: "name",
       type: "string",
       headerName: t("columns.certification.name"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "certificationNumber",
+      type: "string",
+      headerName: t("columns.certification.certificationNumber"),
       flex: 1,
       editable: true,
       headerAlign: "left",
@@ -140,10 +151,20 @@ const CertificationsPage = () => {
       headerAlign: "left",
       align: "left",
     },
+    {
+      field: "assignedCrewMember",
+      type: "string",
+      headerName: t("columns.certification.assignedCrewMember"),
+      flex: 1,
+      editable: true,
+      headerAlign: "left",
+      align: "left",
+    },
   ];
 
   const columnVisibilities: Record<GridColDef["field"], boolean> = {
     name: true,
+    certificationNumber: true,
     issuer: true,
     issuingCountry: true,
     expirationDate: true,
@@ -156,6 +177,7 @@ const CertificationsPage = () => {
     id: false,
     uniqueId: false,
     name: true,
+    certificationNumber: true,
     issuer: true,
     issuingCountry: true,
     expirationDate: true,
@@ -166,12 +188,14 @@ const CertificationsPage = () => {
 
   const certificationNewDataObject: Omit<DataTransfer.CertificationDTO, "id"> = {
     name: "",
+    certificationNumber: "",
     issuer: Enums.CertificationIssuer.AIRBUS,
     issuingCountry: Enums.CertificationIssuingCountry.GLOBAL,
     expirationDate: new Date(),
     validityPeriod: 1,
     assignableRole: Enums.CrewRole.FLIGHT_ATTENDANT,
     description: "",
+    assignedCrewMember: "",
   };
 
   return (

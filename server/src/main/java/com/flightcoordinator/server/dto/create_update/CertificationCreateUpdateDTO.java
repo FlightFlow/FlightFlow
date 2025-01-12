@@ -9,6 +9,7 @@ import com.flightcoordinator.server.enums.CrewRole;
 public class CertificationCreateUpdateDTO {
   private String id;
   private String name;
+  private Integer certificationNumber;
   private CertificationIssuer issuer;
   private CertificationIssuingCountry issuingCountry;
   private Date expirationDate;
@@ -33,6 +34,14 @@ public class CertificationCreateUpdateDTO {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Integer getCertificationNumber() {
+    return certificationNumber;
+  }
+
+  public void setCertificationNumber(Integer certificationNumber) {
+    this.certificationNumber = certificationNumber;
   }
 
   public CertificationIssuer getIssuer() {
