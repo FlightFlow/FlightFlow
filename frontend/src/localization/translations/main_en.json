@@ -56,8 +56,14 @@
   },
   "statusPage": {
     "subTitle": "Service Status",
-    "operational": "Servers are operational",
-    "hasProblems": "Servers are experiencing problems",
+    "operational": {
+      "dataService": "Data Service is operational",
+      "algorithmService": "Algorithm service is operational"
+    },
+    "hasProblems": {
+      "dataService": "Data Service is down",
+      "algorithmService": "Algorithm service is down"
+    },
     "returnButton": "Return to Homepage",
     "loading": "Pinging servers"
   },

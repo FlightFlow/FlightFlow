@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import ComponentTypes from "@/types/components";
 import { ErrorOutline } from "@mui/icons-material";
 import { Box, CircularProgress, SxProps, Typography } from "@mui/material";
+
+import ComponentTypes from "@/types/components";
 
 const GridOverlayStyles: SxProps = {
   width: "100%",

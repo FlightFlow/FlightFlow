@@ -1,5 +1,6 @@
-import UtilTypes from "@/types/utils";
 import { z, ZodSchema } from "zod";
+
+import UtilTypes from "@/types/utils";
 
 import Logger from "./logger";
 

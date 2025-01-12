@@ -2,7 +2,6 @@ import { CSSProperties, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router";
 
-import { BACKGROUND, BORDER, DARK_GRAY_COLOR } from "@/shared/global.style";
 import { useAuth0 } from "@auth0/auth0-react";
 import { SettingsRounded } from "@mui/icons-material";
 import { Box, Divider, Grid2 as Grid, SxProps, Typography } from "@mui/material";
@@ -11,6 +10,8 @@ import AuthCheck from "@/components/AuthCheck";
 import IconButton from "@/components/IconButton";
 import SettingsModal from "@/components/SettingsModal";
 import SidebarLinks from "@/components/SidebarLinks";
+
+import { BACKGROUND, BORDER, DARK_GRAY_COLOR } from "@/shared/global.style";
 
 const MAIN_STYLES: CSSProperties = {
   display: "flex",
@@ -120,7 +121,7 @@ const ResourcePageLayout = () => {
           <Grid container sx={SIDEBAR_MENU_STYLES}>
             <Grid container sx={SIDEBAR_LOGO_CONTAINER_STYLES}>
               <img
-                src="../../../public/assets/logo.png"
+                src="./assets/logo.png"
                 alt="FlightCoordinator Logo"
                 style={SIDEBAR_LOGO_IMAGE_STYLES}
               />

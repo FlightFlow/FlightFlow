@@ -156,7 +156,8 @@ namespace ResourceTypes {
       type QueryResponseParams = DataTransfer.AlgorithmRunDTO[];
     }
     namespace Page {
-      type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.AlgorithmRunDTO, "id">;
+      type RowParams = ComponentTypes.BaseDataGridRowParams &
+        Omit<DataTransfer.AlgorithmRunDTO, "id">;
     }
   }
 }

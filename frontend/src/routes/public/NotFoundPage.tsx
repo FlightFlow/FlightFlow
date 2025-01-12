@@ -2,9 +2,10 @@ import { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 
-import { DARK_COLOR, LIGHT_COLOR, SECONDARY_COLOR } from "@/shared/global.style";
 import { ArrowBackRounded } from "@mui/icons-material";
 import { Grid2 as Grid, Link, SxProps, Typography } from "@mui/material";
+
+import { DARK_COLOR, LIGHT_COLOR, SECONDARY_COLOR } from "@/shared/global.style";
 
 const MAIN_STYLES: CSSProperties = {
   width: "100vw",
@@ -63,11 +64,7 @@ const NotFoundPage = () => {
   return (
     <main style={MAIN_STYLES}>
       <Grid sx={CONTAINER_STYLES}>
-        <img
-          src="./public/assets/logo_bordered.png"
-          alt="FlightCoordinator Logo"
-          style={LOGO_STYLES}
-        />
+        <img src="./assets/logo_bordered.png" alt="FlightCoordinator Logo" style={LOGO_STYLES} />
         <Typography variant="h2" sx={TITLE_STYLES}>
           {t("notFoundPage.title")}
         </Typography>

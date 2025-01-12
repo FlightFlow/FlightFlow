@@ -1,24 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 interface ServerHealthResponseParams {
-  status: string;
+  dataServiceStatus: string;
+  algorithmServiceStatus: string;
 }
 
 const useServerHealthQuery = () => {
   const serverHealth = useQuery({
     queryKey: ["serverHealth"],
     queryFn: async () => {
-      const axiosConfig: AxiosRequestConfig = {
-        baseURL: "http://localhost:8081/actuator/health",
-        url: "http://localhost:8081/actuator/health",
-        method: "GET",
-      };
       try {
-        const response: AxiosResponse = await axios.create().request(axiosConfig);
-        return response.data as ServerHealthResponseParams;
+        const dataServiceResponse: AxiosResponse = await axios.create().request({
+          baseURL: "http://localhost:8081/actuator/health",
+          url: "http://localhost:8081/actuator/health",
+          method: "GET",
+        });
+        const algorithmServiceResponse: AxiosResponse = await axios.create().request({
+          baseURL: "http://localhost:8082/health",
+          url: "http://localhost:8082/health",
+          method: "GET",
+        });
+        return {
+          dataServiceStatus: dataServiceResponse.data,
+          algorithmServiceStatus: algorithmServiceResponse.data,
+        } as ServerHealthResponseParams;
       } catch (error) {
-        return { status: "DOWN" } as ServerHealthResponseParams;
+        return {
+          dataServiceStatus: "DOWN",
+          algorithmServiceStatus: "DOWN",
+        } as ServerHealthResponseParams;
       }
     },
   });

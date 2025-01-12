@@ -1,9 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
-import { DARK_GRAY_COLOR } from "@/shared/global.style";
-import ComponentTypes from "@/types/components";
-import ConstantTypes from "@/types/constants";
 import {
   AirportShuttleRounded,
   EditRoadRounded,
@@ -25,6 +22,11 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
+
+import { DARK_GRAY_COLOR } from "@/shared/global.style";
+
+import ComponentTypes from "@/types/components";
+import ConstantTypes from "@/types/constants";
 
 const sidebarAlgorithmsList: ConstantTypes.SidebarSectionProps = {
   sectionKey: "algorithm",

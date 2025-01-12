@@ -2,7 +2,6 @@ import { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 
-import { DARK_COLOR, LIGHT_COLOR } from "@/shared/global.style";
 import { CheckCircle, ErrorOutline } from "@mui/icons-material";
 import {
   Alert,
@@ -16,6 +15,8 @@ import {
 } from "@mui/material";
 
 import useServerHealthQuery from "@/hooks/useServerHealthQuery";
+
+import { DARK_COLOR, LIGHT_COLOR } from "@/shared/global.style";
 
 const MAIN_CONTAINER_STYLES: SxProps = {
   width: "100vw",
@@ -78,7 +79,10 @@ const ServiceStatusPage = () => {
 
   const { data: serverHealth, isLoading: isServerHealthLoading } = useServerHealthQuery();
 
-  const isOperational: boolean = serverHealth?.status === "UP";
+  // TODO add refresh
+
+  const isDataServiceOperational: boolean = serverHealth?.dataServiceStatus === "UP";
+  const isAlgorithmServiceOperational: boolean = serverHealth?.algorithmServiceStatus === "UP";
 
   return (
     <Grid sx={MAIN_CONTAINER_STYLES}>
@@ -91,11 +95,7 @@ const ServiceStatusPage = () => {
         ) : (
           <>
             <Grid sx={LOGO_CONTAINER_STYLES}>
-              <img
-                src="./public/assets/logo.png"
-                alt="FlightCoordinator Logo"
-                style={LOGO_STYLES}
-              />
+              <img src="./assets/logo.png" alt="FlightCoordinator Logo" style={LOGO_STYLES} />
               <Grid sx={TITLE_STYLES}>
                 <Typography
                   variant="h3"
@@ -109,16 +109,33 @@ const ServiceStatusPage = () => {
             </Grid>
             <Alert
               icon={
-                isOperational ? (
+                isDataServiceOperational ? (
                   <CheckCircle sx={LIGHT_COLOR_STYLES} />
                 ) : (
                   <ErrorOutline sx={LIGHT_COLOR_STYLES} />
                 )
               }
-              severity={isOperational ? "success" : "error"}
+              severity={isDataServiceOperational ? "success" : "error"}
               variant="filled"
               sx={LIGHT_COLOR_STYLES}>
-              {isOperational ? t("statusPage.operational") : t("statusPage.hasProblems")}
+              {isDataServiceOperational
+                ? t("statusPage.operational.dataService")
+                : t("statusPage.hasProblems.dataService")}
+            </Alert>
+            <Alert
+              icon={
+                isAlgorithmServiceOperational ? (
+                  <CheckCircle sx={LIGHT_COLOR_STYLES} />
+                ) : (
+                  <ErrorOutline sx={LIGHT_COLOR_STYLES} />
+                )
+              }
+              severity={isAlgorithmServiceOperational ? "success" : "error"}
+              variant="filled"
+              sx={LIGHT_COLOR_STYLES}>
+              {isAlgorithmServiceOperational
+                ? t("statusPage.operational.algorithmService")
+                : t("statusPage.hasProblems.algorithmService")}
             </Alert>
           </>
         )}

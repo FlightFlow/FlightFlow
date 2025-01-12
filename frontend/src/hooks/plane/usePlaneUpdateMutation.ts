@@ -1,7 +1,8 @@
-import ResourceTypes from "@/types/resource";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Requester from "@/utils/requester";
+
+import ResourceTypes from "@/types/resource";
 
 import useAccessToken from "../useAccessToken";
 
@@ -10,9 +11,7 @@ const usePlaneUpdateMutation = () => {
   const accessToken = useAccessToken();
   const updatePlane = useMutation({
     mutationKey: ["updatePlaneMutation"],
-    mutationFn: async (
-      usePlaneUpdateData: ResourceTypes.Plane.Mutations.UpdateMutationParams,
-    ) => {
+    mutationFn: async (usePlaneUpdateData: ResourceTypes.Plane.Mutations.UpdateMutationParams) => {
       const { planeId, ...requestData } = usePlaneUpdateData;
       const response = await new Requester()
         .setConfig({

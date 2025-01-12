@@ -1,5 +1,6 @@
-import GlobalTypes from "@/types/globals";
 import i18next from "i18next";
+
+import GlobalTypes from "@/types/globals";
 
 import Logger from "./logger";
 

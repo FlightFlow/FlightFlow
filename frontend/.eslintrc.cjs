@@ -1,21 +1,18 @@
 module.exports = {
-  "root": true,
-  "env": { "browser": true, "es2020": true },
-  "extends": [
+  root: true,
+  env: { browser: true, es2020: true },
+  extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "next/core-web-vitals",
-    "next/typescript"
+    "next/typescript",
   ],
-  "ignorePatterns": ["dist", ".eslintrc.cjs"],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["react-refresh"],
-  "rules": {
-    "react-refresh/only-export-components": [
-      "warn",
-      { "allowConstantExport": true }
-    ],
+  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["react-refresh"],
+  rules: {
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "no-alert": "warn",
     "no-console": "warn",
     "no-constant-condition": "error",
@@ -24,7 +21,7 @@ module.exports = {
     "no-duplicate-case": "error",
     "no-unreachable": "error",
     "use-isnan": "error",
-    "eqeqeq": ["error", "smart"],
+    eqeqeq: ["error", "smart"],
     "no-eval": "error",
     "no-floating-decimal": "error",
     "no-new": "error",
@@ -34,10 +31,10 @@ module.exports = {
     "no-var": "error",
     "no-unused-vars": "error",
     "comma-dangle": ["error", "always-multiline"],
-    "comma-spacing": ["error", { "before": false, "after": true }],
+    "comma-spacing": ["error", { before: false, after: true }],
     "comma-style": ["error", "last"],
     "new-parens": "error",
-    "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
-    "quotes": ["error", "double", { "avoidEscape": true }]
-  }
-}
+    "no-multiple-empty-lines": ["error", { max: 2, maxEOF: 1 }],
+    quotes: ["error", "double", { avoidEscape: true }],
+  },
+};

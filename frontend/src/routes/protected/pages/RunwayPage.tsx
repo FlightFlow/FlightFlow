@@ -1,18 +1,20 @@
 import { useTranslation } from "react-i18next";
 
-import Enums from "@/constants/enums";
-import DataTransfer from "@/types/dto";
-import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
-
-import DataGrid from "@/components/DataGrid";
-import GridOverlay from "@/components/GridOverlay";
 
 import useRunwayQuery from "@/hooks/runway/useRunwayAllQuery";
 import useRunwayCreateMutation from "@/hooks/runway/useRunwayCreateMutation";
 import useRunwayDeleteMutation from "@/hooks/runway/useRunwayDeleteMutation";
 import useRunwayUpdateMutation from "@/hooks/runway/useRunwayUpdateMutation";
+
+import DataGrid from "@/components/DataGrid";
+import GridOverlay from "@/components/GridOverlay";
+
+import Enums from "@/constants/enums";
 import EnumValues from "@/constants/enumValues";
+
+import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 
 const RunwayPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -82,7 +84,7 @@ const RunwayPage = () => {
       headerName: t("columns.runway.surfaceType"),
       flex: 1,
       editable: true,
-      valueOptions: Object.values(EnumValues.RunwaySurfaceType)
+      valueOptions: Object.values(EnumValues.RunwaySurfaceType),
     },
     {
       field: "maxWeightCapacity",

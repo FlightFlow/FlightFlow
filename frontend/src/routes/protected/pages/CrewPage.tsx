@@ -1,18 +1,20 @@
 import { useTranslation } from "react-i18next";
 
-import Enums from "@/constants/enums";
-import EnumValues from "@/constants/enumValues";
-import DataTransfer from "@/types/dto";
-import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
-
-import DataGrid from "@/components/DataGrid";
-import GridOverlay from "@/components/GridOverlay";
 
 import useCrewQuery from "@/hooks/crew/useCrewAllQuery";
 import useCrewCreateMutation from "@/hooks/crew/useCrewCreateMutation";
 import useCrewDeleteMutation from "@/hooks/crew/useCrewDeleteMutation";
 import useCrewUpdateMutation from "@/hooks/crew/useCrewUpdateMutation";
+
+import DataGrid from "@/components/DataGrid";
+import GridOverlay from "@/components/GridOverlay";
+
+import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
+
+import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 
 const CrewPage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -138,7 +140,7 @@ const CrewPage = () => {
       editable: true,
       headerAlign: "left",
       align: "left",
-      valueOptions: Object.values(EnumValues.CrewAvailability)
+      valueOptions: Object.values(EnumValues.CrewAvailability),
     },
   ];
 

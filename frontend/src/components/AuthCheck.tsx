@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import ComponentTypes from "@/types/components";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import ComponentTypes from "@/types/components";
 
 const AuthCheck = ({ children }: ComponentTypes.AuthCheckProps) => {
   const navigate = useNavigate();

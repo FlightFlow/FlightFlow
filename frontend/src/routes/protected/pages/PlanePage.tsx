@@ -1,19 +1,21 @@
 import { useTranslation } from "react-i18next";
 
-import Enums from "@/constants/enums";
-import EnumValues from "@/constants/enumValues";
-import DataTransfer from "@/types/dto";
-import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
-
-import DataGrid from "@/components/DataGrid";
-import GridOverlay from "@/components/GridOverlay";
 
 import usePlaneQuery from "@/hooks/plane/usePlaneAllQuery";
 import usePlaneCreateMutation from "@/hooks/plane/usePlaneCreateMutation";
 import usePlaneDeleteMutation from "@/hooks/plane/usePlaneDeleteMutation";
 import usePlaneUpdateMutation from "@/hooks/plane/usePlaneUpdateMutation";
+
+import DataGrid from "@/components/DataGrid";
+import GridOverlay from "@/components/GridOverlay";
+
+import Enums from "@/constants/enums";
+import EnumValues from "@/constants/enumValues";
+
+import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 
 const PlanePage = () => {
   const { t } = useTranslation(["data_grid"]);
@@ -207,7 +209,6 @@ const PlanePage = () => {
     currentLocationId: true,
     aircraftOperator: true,
   };
-
 
   const columnEditibilityStates: Record<GridColDef["field"], boolean> = {
     id: false,

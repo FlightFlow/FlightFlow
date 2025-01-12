@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import ComponentTypes from "@/types/components";
 import { Add, Cancel, Delete, Edit, Save } from "@mui/icons-material";
 import { Box, Button } from "@mui/material";
 import {
@@ -26,6 +25,8 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import lodash from "lodash";
 
 import dataGridLocalization from "@/localization/dataGridLocalization";
+
+import ComponentTypes from "@/types/components";
 
 import Snackbar from "./Snackbar";
 

@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-import { BORDER, LIGHT_COLOR, LIGHT_ICON_STYLES } from "@/shared/global.style";
-import ComponentTypes from "@/types/components";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CloseRounded, LogoutRounded } from "@mui/icons-material";
 import {
@@ -15,6 +13,10 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
+
+import { BORDER, LIGHT_COLOR, LIGHT_ICON_STYLES } from "@/shared/global.style";
+
+import ComponentTypes from "@/types/components";
 
 const SETTINGS_CONTAINER_STYLES: SxProps = {
   width: "350px",

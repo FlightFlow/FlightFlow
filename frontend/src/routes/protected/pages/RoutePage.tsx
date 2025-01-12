@@ -1,16 +1,17 @@
 import { useTranslation } from "react-i18next";
 
-import DataTransfer from "@/types/dto";
-import ResourceTypes from "@/types/resource";
 import { GridColDef } from "@mui/x-data-grid";
-
-import DataGrid from "@/components/DataGrid";
-import GridOverlay from "@/components/GridOverlay";
 
 import useRouteQuery from "@/hooks/route/useRouteAllQuery";
 import useRouteCreateMutation from "@/hooks/route/useRouteCreateMutation";
 import useRouteDeleteMutation from "@/hooks/route/useRouteDeleteMutation";
 import useRouteUpdateMutation from "@/hooks/route/useRouteUpdateMutation";
+
+import DataGrid from "@/components/DataGrid";
+import GridOverlay from "@/components/GridOverlay";
+
+import DataTransfer from "@/types/dto";
+import ResourceTypes from "@/types/resource";
 
 const RoutePage = () => {
   const { t } = useTranslation(["data_grid"]);

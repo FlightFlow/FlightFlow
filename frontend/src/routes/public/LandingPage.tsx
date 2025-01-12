@@ -2,10 +2,11 @@ import { CSSProperties, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router";
 
-import { LANDING_PAGE_LIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR } from "@/shared/global.style";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ArticleRounded, GitHub, MonitorHeartRounded } from "@mui/icons-material";
 import { Box, Button, Grid2 as Grid, Link, SxProps, Typography } from "@mui/material";
+
+import { LANDING_PAGE_LIGHT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR } from "@/shared/global.style";
 
 const MAIN_STYLES: CSSProperties = {
   width: "100vw",
@@ -108,11 +109,7 @@ const PublicPageLayout = () => {
     <main style={MAIN_STYLES}>
       <Grid sx={HEADER_CONTAINER_STYLES}>
         <Grid sx={HEADER_CONTAINER_LEFT_SECTION_STYLES}>
-          <img
-            src="./public/assets/logo_bordered.png"
-            alt="FlightCoordinator Logo"
-            style={LOGO_STYLES}
-          />
+          <img src="./assets/logo_bordered.png" alt="FlightCoordinator Logo" style={LOGO_STYLES} />
           <Grid sx={HEADER_TITLE_STYLES}>
             <Typography
               variant="h3"
