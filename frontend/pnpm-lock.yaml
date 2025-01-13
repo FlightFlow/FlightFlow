@@ -33,8 +33,8 @@ importers:
         specifier: ^5.62.15
         version: 5.62.15(eslint@8.57.1)(typescript@5.7.3)
       '@tanstack/react-query':
-        specifier: ^5.62.11
-        version: 5.62.15(react@18.3.1)
+        specifier: ^5.64.1
+        version: 5.64.1(react@18.3.1)
       '@types/eslint-plugin-react-refresh':
         specifier: ^0.4.0
         version: 0.4.0
@@ -74,7 +74,7 @@ importers:
     devDependencies:
       '@tanstack/react-query-devtools':
         specifier: ^5.62.15
-        version: 5.62.15(@tanstack/react-query@5.62.15(react@18.3.1))(react@18.3.1)
+        version: 5.62.15(@tanstack/react-query@5.64.1(react@18.3.1))(react@18.3.1)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.3.0
         version: 4.3.0(prettier@3.4.2)
@@ -928,8 +928,8 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
-  '@tanstack/query-core@5.62.15':
-    resolution: {integrity: sha512-wT20X14CxcWY8YLJ/1pnsXn/y1Q2uRJZYWW93PWRtZt+3/JlGZyiyTcO4pGnqycnP7CokCROAyatsraosqZsDA==}
+  '@tanstack/query-core@5.64.1':
+    resolution: {integrity: sha512-978Wx4Wl4UJZbmvU/rkaM9cQtXXrbhK0lsz/UZhYIbyKYA8E4LdomTwyh2GHZ4oU0BKKoDH4YlKk2VscCUgNmg==}
 
   '@tanstack/query-devtools@5.62.9':
     resolution: {integrity: sha512-b1NZzDLVf6laJsB1Cfm3ieuYzM+WqoO8qpm9v+3Etwd+Ph4zkhUMiT+wcWj5AhEPsXiRodKYiiW048VDNdBxNg==}
@@ -940,8 +940,8 @@ packages:
       '@tanstack/react-query': ^5.62.15
       react: ^18 || ^19
 
-  '@tanstack/react-query@5.62.15':
-    resolution: {integrity: sha512-Ny3xxsOWmEQCFyHiV3CF7t6+QAV+LpBEREiXyllKR4+tStyd8smOAa98ZHmEx0ZNy36M31K8enifB5wTSYAKJw==}
+  '@tanstack/react-query@5.64.1':
+    resolution: {integrity: sha512-vW5ggHpIO2Yjj44b4sB+Fd3cdnlMJppXRBJkEHvld6FXh3j5dwWJoQo7mGtKI2RbSFyiyu/PhGAy0+Vv5ev9Eg==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -3457,19 +3457,19 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tanstack/query-core@5.62.15': {}
+  '@tanstack/query-core@5.64.1': {}
 
   '@tanstack/query-devtools@5.62.9': {}
 
-  '@tanstack/react-query-devtools@5.62.15(@tanstack/react-query@5.62.15(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-query-devtools@5.62.15(@tanstack/react-query@5.64.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/query-devtools': 5.62.9
-      '@tanstack/react-query': 5.62.15(react@18.3.1)
+      '@tanstack/react-query': 5.64.1(react@18.3.1)
       react: 18.3.1
 
-  '@tanstack/react-query@5.62.15(react@18.3.1)':
+  '@tanstack/react-query@5.64.1(react@18.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.62.15
+      '@tanstack/query-core': 5.64.1
       react: 18.3.1
 
   '@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.4.2)':
