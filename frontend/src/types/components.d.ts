@@ -47,33 +47,13 @@ namespace ComponentTypes {
     setSnackbarState: Dispatch<SetStateAction<DataStateProps>>;
     severity: AlertColor;
   }
-  interface SubmitButtonProps {
-    label: string;
-    isLoading: boolean;
-    isSuccess: boolean;
-  }
   interface AuthCheckProps {
     children: ReactNode;
-  }
-  interface FormHeaderProps {
-    title: string;
-    subtitle: string;
-  }
-  interface TranslatePopoverProps {
-    anchor: HTMLButtonElement | null;
-    setAnchor: (anchor: HTMLButtonElement | null) => void;
   }
   interface IconButtonProps {
     icon: ReactNode;
     tooltipText?: string;
     onclick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  }
-  interface ThemeContextProps {
-    isLightMode: boolean;
-    setIsLightMode: (isLightMode: boolean) => void;
-  }
-  interface ThemeProviderProps {
-    children: ReactNode;
   }
   interface SidebarLinksProps {
     section: "resource" | "algorithm" | "external";

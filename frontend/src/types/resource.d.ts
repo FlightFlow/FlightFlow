@@ -89,7 +89,7 @@ namespace ResourceTypes {
     }
     namespace Queries {
       type QueryByIdRequestParams = RunwayId;
-      type QueryResponseParams = EntityTypes.RunwayEntity[];
+      type QueryResponseParams = DataTransfer.RunwayDTO[];
     }
     namespace Page {
       type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.RunwayDTO, "id">;
@@ -104,7 +104,7 @@ namespace ResourceTypes {
     }
     namespace Queries {
       type QueryByIdRequestParams = VehicleId;
-      type QueryResponseParams = EntityTypes.VehicleEntity[];
+      type QueryResponseParams = DataTransfer.VehicleDTO[];
     }
     namespace Page {
       type RowParams = ComponentTypes.BaseDataGridRowParams & Omit<DataTransfer.VehicleDTO, "id">;
