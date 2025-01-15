@@ -9,6 +9,16 @@
       "name": "server.algorithm.secret_key",
       "type": "java.lang.String",
       "description": "Secret key to validate requests between backend and algorithm service."
+    },
+    {
+      "name": "security.oauth2.resourceserver.jwt.audience",
+      "type": "java.lang.String",
+      "description": "Audicence for Auth0 service"
+    },
+    {
+      "name": "security.oauth2.resourceserver.jwt.issuer-uri",
+      "type": "java.lang.String",
+      "description": "Issuer URI for Auth0 service"
     }
   ]
 }
