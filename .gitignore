@@ -1,7 +1,7 @@
 __pycache__**
 .venv*
 node_modules*
-.env*
+.env
 
 .temp*
 temp*
