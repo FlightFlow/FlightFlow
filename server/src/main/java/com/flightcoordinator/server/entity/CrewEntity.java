@@ -41,7 +41,7 @@ public class CrewEntity {
   @Column(name = "role", nullable = false)
   private CrewRole role;
 
-  @OneToMany(mappedBy = "assignedCrewMember", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "assignedCrewMember", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<CertificationEntity> certifications;
 
   @Min(value = 0, message = "Total flight hours cannot be negative")

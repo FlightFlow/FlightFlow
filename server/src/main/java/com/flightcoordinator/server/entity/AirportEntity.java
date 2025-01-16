@@ -40,22 +40,22 @@ public class AirportEntity {
   @Column(name = "type", nullable = false)
   private AirportType type;
 
-  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<RunwayEntity> runways;
 
-  @OneToMany(mappedBy = "airport", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "airport", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private List<VehicleEntity> vehiclesPresent;
 
-  @OneToMany(mappedBy = "currentLocation", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "currentLocation", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<PlaneEntity> planesPresent;
 
-  @OneToMany(mappedBy = "originAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "originAirport", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<RouteEntity> routesOriginatingFromAirport;
 
-  @OneToMany(mappedBy = "destinationAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "destinationAirport", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<RouteEntity> routesDestinedForAirport;
 
-  @OneToMany(mappedBy = "baseAirport", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "baseAirport", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private List<CrewEntity> crewMembersPresent;
 
   public AirportEntity() {
