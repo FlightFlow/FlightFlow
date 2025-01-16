@@ -9,9 +9,11 @@
     "updateResponse": "Successfully updated selected entry",
     "deleteResponse": "Successfully deleted selected entry"
   },
-  "exceptions": {
+  "exception": {
     "enumValidationError": "Selected value is invalid.",
     "illegalArgumentException": "Selected value is invalid.",
-    "optimisticLockingFailureException": "A server error occurred. Please try again later."
+    "optimisticLockingFailureException": "A server error occurred. Please try again later.",
+    "dataIntegrityViolationException": "This record cannot be deleted because it is being used elsewhere.",
+    "constraintValidationException": "This record cannot be deleted because it is being used elsewhere."
   }
 }

@@ -20,7 +20,7 @@ class ServerTranslator {
       Logger.error(`Translation key not found: ${translationKey}`);
       return translationKey;
     }
-    return i18next.t(`server_msg:${translationKey}`);
+    return i18next.t(translationKey, { ns: "server_msg", lng: i18next.language });
   }
 }
 

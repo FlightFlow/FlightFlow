@@ -30,7 +30,7 @@ public class AlgorithmResultEntity {
   @JoinColumn(name = "plane_id", nullable = false)
   private PlaneEntity plane;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinTable(name = "algorithm_result_crew_members", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "crew_member_id"))
   private List<CrewEntity> crewMembers;
 
@@ -42,11 +42,11 @@ public class AlgorithmResultEntity {
   @JoinColumn(name = "landing_runway_id", nullable = false)
   private RunwayEntity landingRunway;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinTable(name = "algorithm_result_ground_vehicles_origin", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
   private List<VehicleEntity> originAirportGroundVehicles;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinTable(name = "algorithm_result_ground_vehicles_destination", joinColumns = @JoinColumn(name = "algorithm_result_id"), inverseJoinColumns = @JoinColumn(name = "ground_vehicle_id"))
   private List<VehicleEntity> destinationAirportGroundVehicles;
 

@@ -2,6 +2,8 @@ package com.flightcoordinator.server.exception;
 
 import java.util.ArrayList;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ public class GlobalExceptionHandler {
     return ResponseHelper.generateResponse(
         HttpStatus.BAD_REQUEST.value(),
         false,
-        "exceptions.enumValidationError",
+        "exception.enumValidationError",
         null);
   }
 
@@ -92,6 +94,25 @@ public class GlobalExceptionHandler {
         HttpStatus.FORBIDDEN.value(),
         false,
         "exception.authenticationException",
+        null);
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<ResponseObject<Object>> handleDataIntegrityViolationException(
+      DataIntegrityViolationException ex) {
+    return ResponseHelper.generateResponse(
+        HttpStatus.FORBIDDEN.value(),
+        false,
+        "exception.dataIntegrityViolationException",
+        null);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<ResponseObject<Object>> handleConstrainViolationException(ConstraintViolationException ex) {
+    return ResponseHelper.generateResponse(
+        HttpStatus.FORBIDDEN.value(),
+        false,
+        "exception.constraintValidationException",
         null);
   }
 }
