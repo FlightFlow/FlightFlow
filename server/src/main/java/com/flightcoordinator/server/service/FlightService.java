@@ -53,7 +53,7 @@ public class FlightService {
   }
 
   public void createFlight(FlightDTO newFlightDTO) {
-    RouteEntity routeEntity = routeRepository.findById(newFlightDTO.getId())
+    RouteEntity routeEntity = routeRepository.findById(newFlightDTO.getFlightRouteId())
         .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
 
     FlightEntity flightEntity = new FlightEntity();

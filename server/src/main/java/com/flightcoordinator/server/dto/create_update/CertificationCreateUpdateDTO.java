@@ -15,6 +15,16 @@ public class CertificationCreateUpdateDTO {
   private Date expirationDate;
   private Integer validityPeriod;
   private CrewRole assignableRole;
+  private String assignedCrewMemberId;
+
+  public String getAssignedCrewMemberId() {
+    return assignedCrewMemberId;
+  }
+
+  public void setAssignedCrewMemberId(String assignedCrewMemberId) {
+    this.assignedCrewMemberId = assignedCrewMemberId;
+  }
+
   private String description;
 
   public CertificationCreateUpdateDTO() {

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.flightcoordinator.server.dto.CrewDTO;
 import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.create_update.CrewCreateUpdateDTO;
+import com.flightcoordinator.server.entity.AirportEntity;
 import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.exception.AppError;
+import com.flightcoordinator.server.repository.AirportRepository;
 import com.flightcoordinator.server.repository.CrewRepository;
 import com.flightcoordinator.server.utils.ObjectMapper;
 
@@ -21,6 +23,9 @@ import com.flightcoordinator.server.utils.ObjectMapper;
 public class CrewService {
   @Autowired
   private CrewRepository crewRepository;
+
+  @Autowired
+  private AirportRepository airportRepository;
 
   public CrewDTO getSingleCrewMemberById(EntityIdDTO entityIdDTO) {
     CrewEntity crewMember = crewRepository.findById(entityIdDTO.getId())
@@ -49,11 +54,15 @@ public class CrewService {
   }
 
   public void createCrewMember(CrewCreateUpdateDTO newCrewMemberDTO) {
+    AirportEntity airportEntity = airportRepository.findById(newCrewMemberDTO.getBaseAirportId())
+        .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
+
     CrewEntity crewEntity = new CrewEntity();
     crewEntity.setFullName(newCrewMemberDTO.getFullName());
     crewEntity.setEmail(newCrewMemberDTO.getEmail());
     crewEntity.setPhoneNumber(newCrewMemberDTO.getPhoneNumber());
     crewEntity.setRole(newCrewMemberDTO.getRole());
+    crewEntity.setBaseAirport(airportEntity);
     crewEntity.setTotalFlightHours(newCrewMemberDTO.getTotalFlightHours());
     crewEntity.setAvailability(newCrewMemberDTO.getAvailability());
 

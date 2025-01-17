@@ -13,14 +13,19 @@ import com.flightcoordinator.server.dto.CertificationDTO;
 import com.flightcoordinator.server.dto.EntityIdDTO;
 import com.flightcoordinator.server.dto.create_update.CertificationCreateUpdateDTO;
 import com.flightcoordinator.server.entity.CertificationEntity;
+import com.flightcoordinator.server.entity.CrewEntity;
 import com.flightcoordinator.server.exception.AppError;
 import com.flightcoordinator.server.repository.CertificationRepository;
+import com.flightcoordinator.server.repository.CrewRepository;
 import com.flightcoordinator.server.utils.ObjectMapper;
 
 @Service
 public class CertificationService {
   @Autowired
   private CertificationRepository certificationRepository;
+
+  @Autowired
+  private CrewRepository crewRepository;
 
   public CertificationDTO getSingleCertificationById(EntityIdDTO entityIdDTO) {
     CertificationEntity certification = certificationRepository.findById(entityIdDTO.getId())
@@ -51,6 +56,9 @@ public class CertificationService {
   }
 
   public void createCertification(CertificationCreateUpdateDTO newCertificationDTO) {
+    CrewEntity crewEntity = crewRepository.findById(newCertificationDTO.getAssignedCrewMemberId())
+        .orElseThrow(() -> new AppError("genericMessages.badRequest", HttpStatus.BAD_REQUEST.value()));
+
     CertificationEntity certificationEntity = new CertificationEntity();
     certificationEntity.setName(newCertificationDTO.getName());
     certificationEntity.setIssuer(newCertificationDTO.getIssuer());
@@ -58,6 +66,7 @@ public class CertificationService {
     certificationEntity.setExpirationDate(newCertificationDTO.getExpirationDate());
     certificationEntity.setValidityPeriod(newCertificationDTO.getValidityPeriod());
     certificationEntity.setAssignableRole(newCertificationDTO.getAssignableRole());
+    certificationEntity.setAssignedCrewMember(crewEntity);
     certificationEntity.setDescription(newCertificationDTO.getDescription());
 
     certificationRepository.save(certificationEntity);
